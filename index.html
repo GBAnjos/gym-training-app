@@ -166,9 +166,21 @@
           </select>
         </div>
         
-        <!-- Gráfico -->
-        <div class="mt-6">
+        <!-- Container do gráfico + placeholder -->
+        <div class="mt-6 relative">
+          <!-- Canvas do gráfico -->
           <canvas id="progressChart" class="max-h-[400px]"></canvas>
+          
+          <!-- Placeholder (quando não tem dados) -->
+          <div id="emptyChartPlaceholder" class="hidden absolute inset-0 flex items-center justify-center">
+            <div class="text-center max-w-md px-6">
+              <div class="text-6xl mb-4">📊</div>
+              <h3 class="text-xl font-bold text-white mb-2">Nenhum dado registrado ainda</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">
+                Comece a registrar o peso deste exercício nos seus treinos e o gráfico de progressão aparecerá aqui automaticamente.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
