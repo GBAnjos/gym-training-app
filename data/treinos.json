@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Full Body Beginner",
+    "duration": 45,
+    "exercises": [
+      { "name": "Squats", "reps": "3x12" },
+      { "name": "Push-ups", "reps": "3x10" },
+      { "name": "Plank", "reps": "3x30s" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Upper Body Strength",
+    "duration": 40,
+    "exercises": [
+      { "name": "Bench Press", "reps": "4x6" },
+      { "name": "Pull-ups", "reps": "4x6" },
+      { "name": "Shoulder Press", "reps": "3x8" }
+    ]
+  }
+]
