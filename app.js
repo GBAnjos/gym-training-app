@@ -25,7 +25,7 @@ function init() {
   Object.keys(treinos).forEach(dia => {
     const opt = document.createElement("option");
     opt.value = dia;
-    opt.textContent = dia.toUpperCase();
+    opt.textContent = dia.charAt(0).toUpperCase() + dia.slice(1);
     selector.appendChild(opt);
   });
 
@@ -47,35 +47,91 @@ function renderWorkout(dia) {
   const treino = treinos[dia];
   if (!treino) return;
 
+  // Header do treino
+  const header = document.createElement("div");
+  header.className = "workout-header";
+  header.innerHTML = `
+    <h2>${treino.nome}</h2>
+    <p>${treino.grupos.join(", ")}</p>
+  `;
+  container.appendChild(header);
+
+  // Progress bar
+  const progressDiv = document.createElement("div");
+  progressDiv.className = "progress-container";
+  progressDiv.innerHTML = `
+    <div class="progress-info">
+      <span id="progressText">0 de ${treino.exercicios.length} exercícios</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+  `;
+  container.appendChild(progressDiv);
+
+  // Exercícios
   treino.exercicios.forEach(ex => {
     const key = `${dia}_${ex.id}`;
     const saved = JSON.parse(localStorage.getItem(key)) || {};
 
     const div = document.createElement("div");
-    div.className = "exercise";
+    div.className = `exercise ${saved.feito ? 'completed' : ''}`;
     div.innerHTML = `
-      <h3>${ex.nome}</h3>
-      <p>${ex.series}x${ex.reps} ${ex.obs || ""}</p>
+      <h3>
+        ${saved.feito ? '✓' : '○'} ${ex.nome}
+      </h3>
+      
+      <div class="exercise-info">
+        <span class="info-badge">${ex.series}x${ex.reps}</span>
+        ${ex.obs ? `<span class="info-badge obs">${ex.obs}</span>` : ''}
+      </div>
 
-      <label>
-        Peso (kg):
-        <input type="number" step="0.5" value="${saved.peso || ""}"
-          onchange="savePeso('${key}', this.value)">
-      </label>
+      <div class="exercise-controls">
+        <div class="input-group">
+          <label>Peso (kg)</label>
+          <input type="number" step="0.5" value="${saved.peso || ""}"
+            onchange="savePeso('${key}', this.value, '${dia}')">
+        </div>
 
-      <label>
-        <input type="checkbox" ${saved.feito ? "checked" : ""}
-          onchange="toggleDone('${key}', this.checked)">
-        Feito
-      </label>
+        <div class="checkbox-container">
+          <input type="checkbox" id="check_${key}" ${saved.feito ? "checked" : ""}
+            onchange="toggleDone('${key}', this.checked, '${dia}')">
+          <label for="check_${key}">Concluído</label>
+        </div>
+      </div>
     `;
     container.appendChild(div);
   });
 
+  updateProgress(dia);
   saveTrainingDay();
 }
 
-function savePeso(key, peso) {
+function updateProgress(dia) {
+  const treino = treinos[dia];
+  if (!treino) return;
+
+  let completed = 0;
+  treino.exercicios.forEach(ex => {
+    const key = `${dia}_${ex.id}`;
+    const saved = JSON.parse(localStorage.getItem(key)) || {};
+    if (saved.feito) completed++;
+  });
+
+  const total = treino.exercicios.length;
+  const percent = Math.round((completed / total) * 100);
+
+  const progressText = document.getElementById("progressText");
+  const progressPercent = document.getElementById("progressPercent");
+  const progressFill = document.getElementById("progressFill");
+
+  if (progressText) progressText.textContent = `${completed} de ${total} exercícios`;
+  if (progressPercent) progressPercent.textContent = `${percent}%`;
+  if (progressFill) progressFill.style.width = `${percent}%`;
+}
+
+function savePeso(key, peso, dia) {
   const data = JSON.parse(localStorage.getItem(key)) || {};
   data.peso = peso;
   data.data = new Date().toISOString().split("T")[0];
@@ -86,10 +142,12 @@ function savePeso(key, peso) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-function toggleDone(key, done) {
+function toggleDone(key, done, dia) {
   const data = JSON.parse(localStorage.getItem(key)) || {};
   data.feito = done;
   localStorage.setItem(key, JSON.stringify(data));
+  
+  renderWorkout(dia);
 }
 
 function saveTrainingDay() {
@@ -106,14 +164,21 @@ function startTimer(seconds) {
   clearInterval(timerInterval);
   let remaining = seconds;
   const display = document.getElementById("timerDisplay");
+  display.classList.remove("finished");
 
   timerInterval = setInterval(() => {
-    display.textContent = `Descanso: ${remaining}s`;
+    display.textContent = `${remaining}s`;
     remaining--;
 
     if (remaining < 0) {
       clearInterval(timerInterval);
-      display.textContent = "Descanso finalizado!";
+      display.textContent = "✓ Descanso finalizado!";
+      display.classList.add("finished");
+      
+      // Vibração no mobile (se disponível)
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200]);
+      }
     }
   }, 1000);
 }
@@ -122,7 +187,7 @@ function exportCSV() {
   let csv = "data,exercicio,peso\n";
 
   Object.keys(localStorage).forEach(key => {
-    if (key.includes("_")) {
+    if (key.includes("_") && !key.startsWith("training")) {
       const d = JSON.parse(localStorage.getItem(key));
       if (d.historico) {
         d.historico.forEach(h => {
@@ -136,7 +201,15 @@ function exportCSV() {
 }
 
 function exportJSON() {
-  download(JSON.stringify(localStorage, null, 2), "progresso.json");
+  const dataToExport = {};
+  
+  Object.keys(localStorage).forEach(key => {
+    if (key.includes("_") || key === "training_days") {
+      dataToExport[key] = JSON.parse(localStorage.getItem(key));
+    }
+  });
+
+  download(JSON.stringify(dataToExport, null, 2), "progresso.json");
 }
 
 function download(content, fileName) {
