@@ -519,37 +519,60 @@ function updateExerciseSelector() {
     exerciseSelector.appendChild(opt);
   });
   
-  // Limpar gráfico
+  // Limpar gráfico e placeholder
+  const placeholder = document.getElementById('emptyChartPlaceholder');
+  const canvas = document.getElementById('progressChart');
+  
   if (progressChart) {
     progressChart.destroy();
     progressChart = null;
   }
+  
+  if (placeholder) placeholder.classList.add('hidden');
+  if (canvas) canvas.classList.add('hidden');
 }
 
 function updateProgressChart() {
   const selector = document.getElementById('exerciseSelector');
-  if (!selector) return;
+  const placeholder = document.getElementById('emptyChartPlaceholder');
+  const canvas = document.getElementById('progressChart');
+  
+  if (!selector || !placeholder || !canvas) return;
   
   const exerciseKey = selector.value;
   
+  // Se não selecionou nenhum exercício
   if (!exerciseKey) {
+    // Esconder gráfico e placeholder
     if (progressChart) {
       progressChart.destroy();
       progressChart = null;
     }
+    placeholder.classList.add('hidden');
+    canvas.classList.add('hidden');
     return;
   }
   
   const data = JSON.parse(localStorage.getItem(exerciseKey)) || {};
   const historico = data.historico || [];
   
+  // Se não tem dados
   if (historico.length === 0) {
+    // Mostrar placeholder
+    placeholder.classList.remove('hidden');
+    canvas.classList.add('hidden');
+    
+    // Limpar gráfico se existir
     if (progressChart) {
       progressChart.destroy();
       progressChart = null;
     }
     return;
   }
+  
+  // Se tem dados, esconder placeholder e mostrar gráfico
+  placeholder.classList.add('hidden');
+  canvas.classList.remove('hidden');
   
   historico.sort((a, b) => new Date(a.data) - new Date(b.data));
   
@@ -560,14 +583,11 @@ function updateProgressChart() {
   
   const pesos = historico.map(h => parseFloat(h.peso) || 0);
   
-  const ctx = document.getElementById('progressChart');
-  if (!ctx) return;
-  
   if (progressChart) {
     progressChart.destroy();
   }
   
-  progressChart = new Chart(ctx, {
+  progressChart = new Chart(canvas, {
     type: 'line',
     data: {
       labels: labels,
