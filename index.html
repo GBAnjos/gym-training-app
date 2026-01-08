@@ -1,18 +1,32 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gym Training App</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
-    <h1>Gym Training App</h1>
+    <h1>🏋️ Gym Training</h1>
+    <select id="daySelector"></select>
   </header>
-  <main>
-    <div id="workouts"></div>
-  </main>
+
+  <main id="workout"></main>
+
+  <section class="timer">
+    <h2>⏱ Descanso</h2>
+    <button onclick="startTimer(60)">60s</button>
+    <button onclick="startTimer(90)">90s</button>
+    <button onclick="startTimer(120)">120s</button>
+    <p id="timerDisplay"></p>
+  </section>
+
+  <footer>
+    <button onclick="exportCSV()">Exportar CSV</button>
+    <button onclick="exportJSON()">Exportar JSON</button>
+  </footer>
+
   <script src="app.js"></script>
 </body>
 </html>
