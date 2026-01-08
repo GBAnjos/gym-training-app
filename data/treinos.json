@@ -37,4 +37,21 @@
       { "id": "panturrilha_pe", "nome": "Panturrilha em pé", "series": "4", "reps": "15–20", "obs": "" }
     ]
   }
+
+  ,
+"quinta": {
+  "nome": "Push B",
+  "grupos": ["Peito", "Ombros", "Tríceps"],
+  "exercicios": []
+},
+"sexta": {
+  "nome": "Pull B",
+  "grupos": ["Costas", "Bíceps", "Trapézio"],
+  "exercicios": []
+},
+"sabado": {
+  "nome": "Legs B",
+  "grupos": ["Posterior", "Glúteos"],
+  "exercicios": []
+}
 }
