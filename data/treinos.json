@@ -1,22 +1,40 @@
-[
-  {
-    "id": 1,
-    "name": "Full Body Beginner",
-    "duration": 45,
-    "exercises": [
-      { "name": "Squats", "reps": "3x12" },
-      { "name": "Push-ups", "reps": "3x10" },
-      { "name": "Plank", "reps": "3x30s" }
+{
+  "segunda": {
+    "nome": "Push A",
+    "grupos": ["Peito", "Ombros", "Tríceps"],
+    "exercicios": [
+      { "id": "supino_reto", "nome": "Supino reto com barra", "series": "4", "reps": "6–8", "obs": "Carga pesada" },
+      { "id": "supino_inclinado_haltere", "nome": "Supino inclinado com halteres", "series": "3", "reps": "8–10", "obs": "Concêntrica explosiva" },
+      { "id": "desenvolvimento_militar", "nome": "Desenvolvimento militar", "series": "4", "reps": "6–8", "obs": "" },
+      { "id": "elevacao_lateral", "nome": "Elevação lateral", "series": "3", "reps": "12–15", "obs": "" },
+      { "id": "triceps_testa", "nome": "Tríceps testa", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "triceps_corda", "nome": "Tríceps corda", "series": "3", "reps": "12–15", "obs": "" }
     ]
   },
-  {
-    "id": 2,
-    "name": "Upper Body Strength",
-    "duration": 40,
-    "exercises": [
-      { "name": "Bench Press", "reps": "4x6" },
-      { "name": "Pull-ups", "reps": "4x6" },
-      { "name": "Shoulder Press", "reps": "3x8" }
+
+  "terca": {
+    "nome": "Pull A",
+    "grupos": ["Costas", "Bíceps"],
+    "exercicios": [
+      { "id": "barra_fixa", "nome": "Barra fixa / Pulldown", "series": "4", "reps": "6–8", "obs": "Adicionar peso se possível" },
+      { "id": "remada_curvada", "nome": "Remada curvada com barra", "series": "4", "reps": "6–8", "obs": "" },
+      { "id": "remada_unilateral", "nome": "Remada unilateral com halter", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "pullover", "nome": "Pullover", "series": "3", "reps": "12–15", "obs": "" },
+      { "id": "rosca_direta", "nome": "Rosca direta com barra", "series": "3", "reps": "8–10", "obs": "" },
+      { "id": "rosca_martelo", "nome": "Rosca martelo", "series": "3", "reps": "10–12", "obs": "" }
+    ]
+  },
+
+  "quarta": {
+    "nome": "Legs A",
+    "grupos": ["Quadríceps", "Glúteos", "Panturrilhas"],
+    "exercicios": [
+      { "id": "agachamento", "nome": "Agachamento livre", "series": "4", "reps": "6–8", "obs": "Carga pesada" },
+      { "id": "jump_squat", "nome": "Jump squat", "series": "3", "reps": "8–10", "obs": "Explosivo" },
+      { "id": "leg_press", "nome": "Leg press", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "afundo", "nome": "Afundo caminhando", "series": "3", "reps": "12 passos", "obs": "" },
+      { "id": "extensora", "nome": "Extensora", "series": "3", "reps": "12–15", "obs": "" },
+      { "id": "panturrilha_pe", "nome": "Panturrilha em pé", "series": "4", "reps": "15–20", "obs": "" }
     ]
   }
-]
+}
