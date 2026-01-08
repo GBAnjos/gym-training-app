@@ -2,7 +2,8 @@ let treinos = {};
 let timerInterval = null;
 let frequencyChart = null;
 let progressChart = null;
-let currentView = 'workout'; // 'workout' ou 'analytics'
+let currentView = 'workout';
+let allExercises = []; // Cache de todos os exercícios
 
 const mapDia = {
   "domingo": "domingo",
@@ -11,7 +12,20 @@ const mapDia = {
   "quarta-feira": "quarta",
   "quinta-feira": "quinta",
   "sexta-feira": "sexta",
-  "sábado": "sabado"
+  "sábado": "sabado"};
+
+// Mapa de cores por grupo muscular
+const muscleColors = {
+  "Peito": { bg: "bg-red-950/30", text: "text-red-300", border: "border-red-800/30" },
+  "Costas": { bg: "bg-blue-950/30", text: "text-blue-300", border: "border-blue-800/30" },
+  "Ombros": { bg: "bg-purple-950/30", text: "text-purple-300", border: "border-purple-800/30" },
+  "Bíceps": { bg: "bg-cyan-950/30", text: "text-cyan-300", border: "border-cyan-800/30" },
+  "Tríceps": { bg: "bg-pink-950/30", text: "text-pink-300", border: "border-pink-800/30" },
+  "Quadríceps": { bg: "bg-green-950/30", text: "text-green-300", border: "border-green-800/30" },
+  "Posterior": { bg: "bg-yellow-950/30", text: "text-yellow-300", border: "border-yellow-800/30" },
+  "Glúteos": { bg: "bg-indigo-950/30", text: "text-indigo-300", border: "border-indigo-800/30" },
+  "Panturrilhas": { bg: "bg-teal-950/30", text: "text-teal-300", border: "border-teal-800/30" },
+  "Trapézio": { bg: "bg-orange-950/30", text: "text-orange-300", border: "border-orange-800/30" }
 };
 
 fetch("data/treinos.json")
@@ -42,8 +56,8 @@ function init() {
   selector.onchange = () => renderWorkout(selector.value);
   renderWorkout(selector.value);
   
-  // Popular seletor de exercícios para analytics
-  populateExerciseSelector();
+  // Popular filtros para analytics
+  populateFilters();
 }
 
 function renderWorkout(dia) {
@@ -103,12 +117,19 @@ function renderWorkout(dia) {
         : 'bg-[#1a1a1a] border-[#2a2a2a] hover:border-[#3a3a3a]'
     }`;
 
+    // Criar tags de músculos
+    const muscleTags = ex.musculos.map(m => {
+      const color = muscleColors[m] || { bg: "bg-gray-950/30", text: "text-gray-300", border: "border-gray-800/30" };
+      return `<span class="px-2 py-1 ${color.bg} ${color.text} text-xs font-semibold rounded-md border ${color.border}">${m}</span>`;
+    }).join("");
+
     div.innerHTML = `
       <div class="flex items-start gap-3 mb-3">
         <span class="text-2xl mt-0.5">${isCompleted ? '✅' : '⚪'}</span>
         <div class="flex-1">
-          <h3 class="text-lg font-bold text-white mb-1">${ex.nome}</h3>
-          <div class="flex flex-wrap gap-2">
+          <h3 class="text-lg font-bold text-white mb-2">${ex.nome}</h3>
+          
+          <div class="flex flex-wrap gap-2 mb-2">
             <span class="px-3 py-1 bg-[#2a2a2a] text-gray-300 text-sm font-semibold rounded-lg">
               ${ex.series}x${ex.reps}
             </span>
@@ -117,6 +138,11 @@ function renderWorkout(dia) {
                 ${ex.obs}
               </span>
             ` : ''}
+          </div>
+          
+          <!-- Tags de músculos -->
+          <div class="flex flex-wrap gap-1.5">
+            ${muscleTags}
           </div>
         </div>
       </div>
@@ -226,7 +252,6 @@ function toggleView() {
   const viewText = document.getElementById('viewText');
   
   if (currentView === 'workout') {
-    // Mudar para Analytics
     workoutView.classList.add('hidden');
     analyticsView.classList.remove('hidden');
     daySelector.classList.add('hidden');
@@ -234,10 +259,8 @@ function toggleView() {
     viewText.textContent = 'Treino';
     currentView = 'analytics';
     
-    // Renderizar analytics
     renderAnalytics();
   } else {
-    // Voltar para Workout
     analyticsView.classList.add('hidden');
     workoutView.classList.remove('hidden');
     daySelector.classList.remove('hidden');
@@ -256,15 +279,12 @@ function renderAnalytics() {
 function calculateStats() {
   const history = JSON.parse(localStorage.getItem("training_days")) || [];
   
-  // Total de treinos
   document.getElementById('totalWorkouts').textContent = history.length;
   
-  // Média semanal
   const weeks = history.length > 0 ? Math.ceil((Date.now() - new Date(history[0]).getTime()) / (7 * 24 * 60 * 60 * 1000)) : 1;
   const weeklyAvg = (history.length / weeks).toFixed(1);
   document.getElementById('weeklyAvg').textContent = weeklyAvg;
   
-  // Esta semana
   const today = new Date();
   const startOfWeek = new Date(today);
   startOfWeek.setDate(today.getDate() - today.getDay());
@@ -273,7 +293,6 @@ function calculateStats() {
   const thisWeek = history.filter(date => new Date(date) >= startOfWeek).length;
   document.getElementById('thisWeek').textContent = thisWeek;
   
-  // Este mês
   const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const thisMonth = history.filter(date => new Date(date) >= startOfMonth).length;
   document.getElementById('thisMonth').textContent = thisMonth;
@@ -282,7 +301,6 @@ function calculateStats() {
 function renderFrequencyChart() {
   const history = JSON.parse(localStorage.getItem("training_days")) || [];
   
-  // Agrupar por semana (últimas 12 semanas)
   const weeks = {};
   const today = new Date();
   
@@ -357,28 +375,79 @@ function renderFrequencyChart() {
   });
 }
 
-function populateExerciseSelector() {
-  const selector = document.getElementById('exerciseSelector');
-  const exercises = new Set();
+function populateFilters() {
+  // Cache de todos os exercícios
+  allExercises = [];
+  const allMuscles = new Set();
   
-  // Coletar todos os exercícios únicos
   Object.keys(treinos).forEach(dia => {
     treinos[dia].exercicios.forEach(ex => {
-      exercises.add(JSON.stringify({
+      allExercises.push({
+        dia: dia,
+        diaLabel: dia.charAt(0).toUpperCase() + dia.slice(1),
         id: `${dia}_${ex.id}`,
-        nome: ex.nome
-      }));
+        nome: ex.nome,
+        musculos: ex.musculos
+      });
+      
+      ex.musculos.forEach(m => allMuscles.add(m));
     });
   });
   
-  // Popular o select
-  Array.from(exercises).forEach(exStr => {
-    const ex = JSON.parse(exStr);
+  // Popular filtro de dias
+  const dayFilter = document.getElementById('dayFilter');
+  Object.keys(treinos).forEach(dia => {
+    const opt = document.createElement('option');
+    opt.value = dia;
+    opt.textContent = dia.charAt(0).toUpperCase() + dia.slice(1);
+    dayFilter.appendChild(opt);
+  });
+  
+  // Popular filtro de músculos
+  const muscleFilter = document.getElementById('muscleFilter');
+  Array.from(allMuscles).sort().forEach(muscle => {
+    const opt = document.createElement('option');
+    opt.value = muscle;
+    opt.textContent = muscle;
+    muscleFilter.appendChild(opt);
+  });
+  
+  // Popular lista inicial de exercícios
+  filterExercises();
+}
+
+function filterExercises() {
+  const dayFilter = document.getElementById('dayFilter').value;
+  const muscleFilter = document.getElementById('muscleFilter').value;
+  const exerciseSelector = document.getElementById('exerciseSelector');
+  
+  // Limpar seletor
+  exerciseSelector.innerHTML = '<option value="">Selecione um exercício</option>';
+  
+  // Filtrar exercícios
+  let filtered = allExercises;
+  
+  if (dayFilter) {
+    filtered = filtered.filter(ex => ex.dia === dayFilter);
+  }
+  
+  if (muscleFilter) {
+    filtered = filtered.filter(ex => ex.musculos.includes(muscleFilter));
+  }
+  
+  // Popular seletor com exercícios filtrados
+  filtered.forEach(ex => {
     const opt = document.createElement('option');
     opt.value = ex.id;
-    opt.textContent = ex.nome;
-    selector.appendChild(opt);
+    opt.textContent = `${ex.nome} (${ex.diaLabel})`;
+    exerciseSelector.appendChild(opt);
   });
+  
+  // Limpar gráfico
+  if (progressChart) {
+    progressChart.destroy();
+    progressChart = null;
+  }
 }
 
 function updateProgressChart() {
@@ -386,7 +455,6 @@ function updateProgressChart() {
   const exerciseKey = selector.value;
   
   if (!exerciseKey) {
-    // Limpar gráfico se nenhum exercício selecionado
     if (progressChart) {
       progressChart.destroy();
       progressChart = null;
@@ -405,7 +473,6 @@ function updateProgressChart() {
     return;
   }
   
-  // Ordenar por data
   historico.sort((a, b) => new Date(a.data) - new Date(b.data));
   
   const labels = historico.map(h => {
