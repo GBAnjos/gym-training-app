@@ -36,22 +36,44 @@
       { "id": "extensora", "nome": "Extensora", "series": "3", "reps": "12–15", "obs": "" },
       { "id": "panturrilha_pe", "nome": "Panturrilha em pé", "series": "4", "reps": "15–20", "obs": "" }
     ]
-  }
+  },
 
-  ,
-"quinta": {
-  "nome": "Push B",
-  "grupos": ["Peito", "Ombros", "Tríceps"],
-  "exercicios": []
-},
-"sexta": {
-  "nome": "Pull B",
-  "grupos": ["Costas", "Bíceps", "Trapézio"],
-  "exercicios": []
-},
-"sabado": {
-  "nome": "Legs B",
-  "grupos": ["Posterior", "Glúteos"],
-  "exercicios": []
-}
+  "quinta": {
+    "nome": "Push B",
+    "grupos": ["Peito", "Ombros", "Tríceps"],
+    "exercicios": [
+      { "id": "supino_inclinado_barra", "nome": "Supino inclinado com barra", "series": "4", "reps": "6–8", "obs": "" },
+      { "id": "crucifixo_inclinado", "nome": "Crucifixo inclinado", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "push_press", "nome": "Push press", "series": "3", "reps": "6–8", "obs": "Explosivo" },
+      { "id": "elevacao_frontal", "nome": "Elevação frontal", "series": "3", "reps": "12–15", "obs": "" },
+      { "id": "paralelas", "nome": "Paralelas / Mergulho", "series": "3", "reps": "8–10", "obs": "" },
+      { "id": "triceps_overhead", "nome": "Extensão de tríceps overhead", "series": "3", "reps": "12–15", "obs": "" }
+    ]
+  },
+
+  "sexta": {
+    "nome": "Pull B",
+    "grupos": ["Costas", "Bíceps", "Trapézio"],
+    "exercicios": [
+      { "id": "terra", "nome": "Levantamento terra", "series": "4", "reps": "5–6", "obs": "Carga máxima" },
+      { "id": "remada_cavalinho", "nome": "Remada cavalinho", "series": "3", "reps": "8–10", "obs": "" },
+      { "id": "pulldown_fechado", "nome": "Pulldown pegada fechada", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "face_pull", "nome": "Face pull", "series": "3", "reps": "15–20", "obs": "" },
+      { "id": "encolhimento", "nome": "Encolhimento com barra", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "rosca_scott", "nome": "Rosca Scott", "series": "3", "reps": "10–12", "obs": "" }
+    ]
+  },
+
+  "sabado": {
+    "nome": "Legs B",
+    "grupos": ["Posterior", "Glúteos", "Panturrilhas"],
+    "exercicios": [
+      { "id": "stiff", "nome": "Stiff", "series": "4", "reps": "8–10", "obs": "" },
+      { "id": "mesa_flexora", "nome": "Mesa flexora", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "agachamento_bulgaro", "nome": "Agachamento búlgaro", "series": "3", "reps": "10–12", "obs": "" },
+      { "id": "hip_thrust", "nome": "Hip thrust", "series": "4", "reps": "10–12", "obs": "Explosivo na subida" },
+      { "id": "abdutora", "nome": "Cadeira abdutora", "series": "3", "reps": "15–20", "obs": "" },
+      { "id": "panturrilha_sentado", "nome": "Panturrilha sentado", "series": "3", "reps": "15–20", "obs": "" }
+    ]
+  }
 }
