@@ -52,7 +52,7 @@ function renderWorkout(dia) {
   header.className = "mb-6";
   header.innerHTML = `
     <h2 class="text-2xl font-bold text-white mb-2">${treino.nome}</h2>
-    <p class="text-slate-400 text-sm">${treino.grupos.join(" • ")}</p>
+    <p class="text-gray-400 text-sm">${treino.grupos.join(" • ")}</p>
   `;
   container.appendChild(header);
 
@@ -69,14 +69,14 @@ function renderWorkout(dia) {
 
   // Progress bar
   const progressDiv = document.createElement("div");
-  progressDiv.className = "mb-6 bg-slate-900 rounded-xl p-4 border border-slate-800";
+  progressDiv.className = "mb-6 bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]";
   progressDiv.innerHTML = `
     <div class="flex justify-between items-center mb-2 text-sm">
-      <span class="text-slate-400 font-medium">${completed} de ${total} exercícios</span>
-      <span class="text-blue-400 font-bold">${percent}%</span>
+      <span class="text-gray-400 font-medium">${completed} de ${total} exercícios</span>
+      <span class="text-[#4a9eff] font-bold">${percent}%</span>
     </div>
-    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300" 
+    <div class="w-full h-3 bg-[#2a2a2a] rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-[#4a9eff] to-[#66b3ff] rounded-full transition-all duration-300" 
         style="width: ${percent}%">
       </div>
     </div>
@@ -93,8 +93,8 @@ function renderWorkout(dia) {
     
     div.className = `mb-4 rounded-2xl p-5 border-2 transition-all ${
       isCompleted 
-        ? 'bg-emerald-950/30 border-emerald-800/50' 
-        : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+        ? 'bg-[#1a2a1a] border-[#2d4a2d]' 
+        : 'bg-[#1a1a1a] border-[#2a2a2a] hover:border-[#3a3a3a]'
     }`;
 
     div.innerHTML = `
@@ -104,11 +104,11 @@ function renderWorkout(dia) {
         <div class="flex-1">
           <h3 class="text-lg font-bold text-white mb-1">${ex.nome}</h3>
           <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-slate-800 text-slate-300 text-sm font-semibold rounded-lg">
+            <span class="px-3 py-1 bg-[#2a2a2a] text-gray-300 text-sm font-semibold rounded-lg">
               ${ex.series}x${ex.reps}
             </span>
             ${ex.obs ? `
-              <span class="px-3 py-1 bg-orange-950/50 text-orange-300 text-sm font-semibold rounded-lg border border-orange-800/30">
+              <span class="px-3 py-1 bg-[#3a2a1a] text-[#ffaa66] text-sm font-semibold rounded-lg border border-[#4a3a2a]">
                 ${ex.obs}
               </span>
             ` : ''}
@@ -120,26 +120,26 @@ function renderWorkout(dia) {
       <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mt-4">
         <!-- Input de peso -->
         <div class="flex-1">
-          <label class="block text-xs font-medium text-slate-400 mb-1.5">Peso (kg)</label>
+          <label class="block text-xs font-medium text-gray-500 mb-1.5">Peso (kg)</label>
           <input 
             type="number" 
             step="0.5" 
             value="${saved.peso || ""}"
             placeholder="0.0"
             onchange="savePeso('${key}', this.value, '${dia}')"
-            class="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white text-lg font-bold text-center transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-600">
+            class="w-full px-4 py-3 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-lg font-bold text-center transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent placeholder-gray-600">
         </div>
 
         <!-- Checkbox -->
-        <div class="flex items-center gap-3 px-4 py-3 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-all"
+        <div class="flex items-center gap-3 px-4 py-3 bg-[#252525] rounded-lg cursor-pointer hover:bg-[#2a2a2a] transition-all"
           onclick="this.querySelector('input').click()">
           <input 
             type="checkbox" 
             id="check_${key}" 
             ${isCompleted ? "checked" : ""}
             onchange="toggleDone('${key}', this.checked, '${dia}')"
-            class="w-6 h-6 cursor-pointer accent-blue-500">
-          <label for="check_${key}" class="text-base font-semibold text-slate-200 cursor-pointer select-none">
+            class="w-6 h-6 cursor-pointer accent-[#4a9eff]">
+          <label for="check_${key}" class="text-base font-semibold text-gray-200 cursor-pointer select-none">
             Concluído
           </label>
         </div>
@@ -195,7 +195,7 @@ function startTimer(seconds) {
   
   // Remove animação anterior
   display.classList.remove("animate-pulse-slow", "text-green-400");
-  display.classList.add("text-blue-400");
+  display.classList.add("text-[#4a9eff]");
 
   timerInterval = setInterval(() => {
     const minutes = Math.floor(remaining / 60);
@@ -206,7 +206,7 @@ function startTimer(seconds) {
     if (remaining < 0) {
       clearInterval(timerInterval);
       display.textContent = "✓ Descanso finalizado!";
-      display.classList.remove("text-blue-400");
+      display.classList.remove("text-[#4a9eff]");
       display.classList.add("text-green-400", "animate-pulse-slow");
       
       // Vibração no mobile
