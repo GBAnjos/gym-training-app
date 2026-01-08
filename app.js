@@ -17,8 +17,23 @@ function init() {
     selector.appendChild(opt);
   });
 
-  const hoje = new Date().toLocaleDateString("pt-BR", { weekday: "long" }).split("-")[0];
-  if (treinos[hoje]) selector.value = hoje;
+  const mapDia = {
+  "domingo": "domingo",
+  "segunda-feira": "segunda",
+  "terça-feira": "terca",
+  "quarta-feira": "quarta",
+  "quinta-feira": "quinta",
+  "sexta-feira": "sexta",
+  "sábado": "sabado"
+};
+
+const hojeRaw = new Date().toLocaleDateString("pt-BR", { weekday: "long" });
+const hoje = mapDia[hojeRaw];
+
+if (treinos[hoje]) {
+  selector.value = hoje;
+}
+
 
   selector.onchange = () => renderWorkout(selector.value);
   renderWorkout(selector.value);
