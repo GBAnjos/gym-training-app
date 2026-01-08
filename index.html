@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#0a0a0a">
   <title>Gym Training App</title>
   
   <!-- Tailwind CSS via CDN -->
@@ -15,8 +15,10 @@
       theme: {
         extend: {
           colors: {
-            'gym-dark': '#0f172a',
-            'gym-darker': '#0a0f1e',
+            'gym-black': '#0a0a0a',
+            'gym-dark': '#121212',
+            'gym-card': '#1a1a1a',
+            'gym-border': '#2a2a2a',
           }
         }
       }
@@ -35,10 +37,10 @@
   </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 font-sans antialiased pb-24">
+<body class="bg-[#0d0d0d] text-gray-200 font-sans antialiased pb-24">
   
   <!-- Header -->
-  <header class="sticky top-0 z-50 bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg border-b border-slate-700">
+  <header class="sticky top-0 z-50 bg-gradient-to-r from-[#1a1a1a] to-[#1e1e1e] shadow-lg border-b border-[#2a2a2a]">
     <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
       <h1 class="text-2xl font-bold text-white flex items-center gap-2">
         <span class="text-3xl">🏋️</span>
@@ -47,7 +49,7 @@
       </h1>
       
       <select id="daySelector" 
-        class="px-4 py-2.5 bg-slate-800 text-white border-2 border-slate-700 rounded-lg font-semibold text-base cursor-pointer transition-all hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        class="px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold text-base cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
       </select>
     </div>
   </header>
@@ -59,7 +61,7 @@
 
   <!-- Timer Section -->
   <section class="max-w-4xl mx-auto px-4 mb-6">
-    <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 shadow-xl border border-slate-700">
+    <div class="bg-gradient-to-br from-[#1a1a2e] to-[#2a2a3e] rounded-2xl p-6 shadow-xl border border-[#3a3a3a]">
       <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
         <span class="text-2xl">⏱</span>
         Timer de Descanso
@@ -67,35 +69,35 @@
       
       <div class="flex flex-wrap gap-3 justify-center mb-4">
         <button onclick="startTimer(60)" 
-          class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-slate-600">
+          class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
           60s
         </button>
         <button onclick="startTimer(90)" 
-          class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-slate-600">
+          class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
           90s
         </button>
         <button onclick="startTimer(120)" 
-          class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-slate-600">
+          class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
           120s
         </button>
       </div>
       
       <div id="timerDisplay" 
-        class="text-4xl font-bold text-blue-400 text-center min-h-[3rem] flex items-center justify-center">
+        class="text-4xl font-bold text-[#4a9eff] text-center min-h-[3rem] flex items-center justify-center">
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 shadow-2xl">
+  <footer class="fixed bottom-0 left-0 right-0 bg-[#1a1a1a] border-t border-[#2a2a2a] shadow-2xl">
     <div class="max-w-4xl mx-auto px-4 py-3 flex gap-3 justify-center">
       <button onclick="exportCSV()" 
-        class="flex-1 max-w-[200px] px-4 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg transition-all active:scale-95 border border-slate-700 flex items-center justify-center gap-2">
+        class="flex-1 max-w-[200px] px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all active:scale-95 border border-[#3a3a3a] flex items-center justify-center gap-2">
         <span>📊</span>
         <span>CSV</span>
       </button>
       <button onclick="exportJSON()" 
-        class="flex-1 max-w-[200px] px-4 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg transition-all active:scale-95 border border-slate-700 flex items-center justify-center gap-2">
+        class="flex-1 max-w-[200px] px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all active:scale-95 border border-[#3a3a3a] flex items-center justify-center gap-2">
         <span>💾</span>
         <span>JSON</span>
       </button>
