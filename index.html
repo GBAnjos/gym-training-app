@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#1a1a1a">
   <title>Gym Training App</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
@@ -15,16 +16,18 @@
   <main id="workout"></main>
 
   <section class="timer">
-    <h2>⏱ Descanso</h2>
-    <button onclick="startTimer(60)">60s</button>
-    <button onclick="startTimer(90)">90s</button>
-    <button onclick="startTimer(120)">120s</button>
+    <h2>⏱ Timer de Descanso</h2>
+    <div class="timer-buttons">
+      <button onclick="startTimer(60)">60s</button>
+      <button onclick="startTimer(90)">90s</button>
+      <button onclick="startTimer(120)">120s</button>
+    </div>
     <p id="timerDisplay"></p>
   </section>
 
   <footer>
-    <button onclick="exportCSV()">Exportar CSV</button>
-    <button onclick="exportJSON()">Exportar JSON</button>
+    <button onclick="exportCSV()">📊 CSV</button>
+    <button onclick="exportJSON()">💾 JSON</button>
   </footer>
 
   <script src="app.js"></script>
