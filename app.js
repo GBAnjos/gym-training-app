@@ -49,69 +49,14 @@ function renderWorkout(dia) {
 
   // Header do treino
   const header = document.createElement("div");
-  header.className = "workout-header";
+  header.className = "mb-6";
   header.innerHTML = `
-    <h2>${treino.nome}</h2>
-    <p>${treino.grupos.join(", ")}</p>
+    <h2 class="text-2xl font-bold text-white mb-2">${treino.nome}</h2>
+    <p class="text-slate-400 text-sm">${treino.grupos.join(" • ")}</p>
   `;
   container.appendChild(header);
 
-  // Progress bar
-  const progressDiv = document.createElement("div");
-  progressDiv.className = "progress-container";
-  progressDiv.innerHTML = `
-    <div class="progress-info">
-      <span id="progressText">0 de ${treino.exercicios.length} exercícios</span>
-      <span id="progressPercent">0%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-    </div>
-  `;
-  container.appendChild(progressDiv);
-
-  // Exercícios
-  treino.exercicios.forEach(ex => {
-    const key = `${dia}_${ex.id}`;
-    const saved = JSON.parse(localStorage.getItem(key)) || {};
-
-    const div = document.createElement("div");
-    div.className = `exercise ${saved.feito ? 'completed' : ''}`;
-    div.innerHTML = `
-      <h3>
-        ${saved.feito ? '✓' : '○'} ${ex.nome}
-      </h3>
-      
-      <div class="exercise-info">
-        <span class="info-badge">${ex.series}x${ex.reps}</span>
-        ${ex.obs ? `<span class="info-badge obs">${ex.obs}</span>` : ''}
-      </div>
-
-      <div class="exercise-controls">
-        <div class="input-group">
-          <label>Peso (kg)</label>
-          <input type="number" step="0.5" value="${saved.peso || ""}"
-            onchange="savePeso('${key}', this.value, '${dia}')">
-        </div>
-
-        <div class="checkbox-container">
-          <input type="checkbox" id="check_${key}" ${saved.feito ? "checked" : ""}
-            onchange="toggleDone('${key}', this.checked, '${dia}')">
-          <label for="check_${key}">Concluído</label>
-        </div>
-      </div>
-    `;
-    container.appendChild(div);
-  });
-
-  updateProgress(dia);
-  saveTrainingDay();
-}
-
-function updateProgress(dia) {
-  const treino = treinos[dia];
-  if (!treino) return;
-
+  // Calcular progresso
   let completed = 0;
   treino.exercicios.forEach(ex => {
     const key = `${dia}_${ex.id}`;
@@ -122,13 +67,89 @@ function updateProgress(dia) {
   const total = treino.exercicios.length;
   const percent = Math.round((completed / total) * 100);
 
-  const progressText = document.getElementById("progressText");
-  const progressPercent = document.getElementById("progressPercent");
-  const progressFill = document.getElementById("progressFill");
+  // Progress bar
+  const progressDiv = document.createElement("div");
+  progressDiv.className = "mb-6 bg-slate-900 rounded-xl p-4 border border-slate-800";
+  progressDiv.innerHTML = `
+    <div class="flex justify-between items-center mb-2 text-sm">
+      <span class="text-slate-400 font-medium">${completed} de ${total} exercícios</span>
+      <span class="text-blue-400 font-bold">${percent}%</span>
+    </div>
+    <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full transition-all duration-300" 
+        style="width: ${percent}%">
+      </div>
+    </div>
+  `;
+  container.appendChild(progressDiv);
 
-  if (progressText) progressText.textContent = `${completed} de ${total} exercícios`;
-  if (progressPercent) progressPercent.textContent = `${percent}%`;
-  if (progressFill) progressFill.style.width = `${percent}%`;
+  // Exercícios
+  treino.exercicios.forEach(ex => {
+    const key = `${dia}_${ex.id}`;
+    const saved = JSON.parse(localStorage.getItem(key)) || {};
+
+    const div = document.createElement("div");
+    const isCompleted = saved.feito;
+    
+    div.className = `mb-4 rounded-2xl p-5 border-2 transition-all ${
+      isCompleted 
+        ? 'bg-emerald-950/30 border-emerald-800/50' 
+        : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+    }`;
+
+    div.innerHTML = `
+      <!-- Título do exercício -->
+      <div class="flex items-start gap-3 mb-3">
+        <span class="text-2xl mt-0.5">${isCompleted ? '✅' : '⚪'}</span>
+        <div class="flex-1">
+          <h3 class="text-lg font-bold text-white mb-1">${ex.nome}</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-slate-800 text-slate-300 text-sm font-semibold rounded-lg">
+              ${ex.series}x${ex.reps}
+            </span>
+            ${ex.obs ? `
+              <span class="px-3 py-1 bg-orange-950/50 text-orange-300 text-sm font-semibold rounded-lg border border-orange-800/30">
+                ${ex.obs}
+              </span>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mt-4">
+        <!-- Input de peso -->
+        <div class="flex-1">
+          <label class="block text-xs font-medium text-slate-400 mb-1.5">Peso (kg)</label>
+          <input 
+            type="number" 
+            step="0.5" 
+            value="${saved.peso || ""}"
+            placeholder="0.0"
+            onchange="savePeso('${key}', this.value, '${dia}')"
+            class="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white text-lg font-bold text-center transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-slate-600">
+        </div>
+
+        <!-- Checkbox -->
+        <div class="flex items-center gap-3 px-4 py-3 bg-slate-800/50 rounded-lg cursor-pointer hover:bg-slate-800 transition-all"
+          onclick="this.querySelector('input').click()">
+          <input 
+            type="checkbox" 
+            id="check_${key}" 
+            ${isCompleted ? "checked" : ""}
+            onchange="toggleDone('${key}', this.checked, '${dia}')"
+            class="w-6 h-6 cursor-pointer accent-blue-500">
+          <label for="check_${key}" class="text-base font-semibold text-slate-200 cursor-pointer select-none">
+            Concluído
+          </label>
+        </div>
+      </div>
+    `;
+    
+    container.appendChild(div);
+  });
+
+  saveTrainingDay();
 }
 
 function savePeso(key, peso, dia) {
@@ -137,7 +158,14 @@ function savePeso(key, peso, dia) {
   data.data = new Date().toISOString().split("T")[0];
 
   if (!data.historico) data.historico = [];
-  data.historico.push({ data: data.data, peso });
+  
+  // Evitar duplicatas na mesma data
+  const existingIndex = data.historico.findIndex(h => h.data === data.data);
+  if (existingIndex >= 0) {
+    data.historico[existingIndex].peso = peso;
+  } else {
+    data.historico.push({ data: data.data, peso });
+  }
 
   localStorage.setItem(key, JSON.stringify(data));
 }
@@ -164,18 +192,24 @@ function startTimer(seconds) {
   clearInterval(timerInterval);
   let remaining = seconds;
   const display = document.getElementById("timerDisplay");
-  display.classList.remove("finished");
+  
+  // Remove animação anterior
+  display.classList.remove("animate-pulse-slow", "text-green-400");
+  display.classList.add("text-blue-400");
 
   timerInterval = setInterval(() => {
-    display.textContent = `${remaining}s`;
+    const minutes = Math.floor(remaining / 60);
+    const secs = remaining % 60;
+    display.textContent = `${minutes}:${secs.toString().padStart(2, '0')}`;
     remaining--;
 
     if (remaining < 0) {
       clearInterval(timerInterval);
       display.textContent = "✓ Descanso finalizado!";
-      display.classList.add("finished");
+      display.classList.remove("text-blue-400");
+      display.classList.add("text-green-400", "animate-pulse-slow");
       
-      // Vibração no mobile (se disponível)
+      // Vibração no mobile
       if (navigator.vibrate) {
         navigator.vibrate([200, 100, 200]);
       }
