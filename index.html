@@ -9,7 +9,10 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Tailwind Config (customização) -->
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <!-- Tailwind Config -->
   <script>
     tailwind.config = {
       theme: {
@@ -26,7 +29,6 @@
   </script>
   
   <style>
-    /* Custom animations */
     @keyframes pulse-slow {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.6; }
@@ -48,45 +50,102 @@
         <span class="sm:hidden">Treino</span>
       </h1>
       
-      <select id="daySelector" 
-        class="px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold text-base cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
-      </select>
+      <div class="flex items-center gap-3">
+        <!-- Botão Analytics -->
+        <button id="toggleViewBtn" onclick="toggleView()" 
+          class="px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+          <span id="viewIcon">📊</span>
+          <span id="viewText" class="hidden sm:inline">Analytics</span>
+        </button>
+        
+        <!-- Seletor de dias (só aparece na view de treino) -->
+        <select id="daySelector" 
+          class="px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold text-base cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+        </select>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-4 py-6">
-    <div id="workout"></div>
-  </main>
+  <!-- WORKOUT VIEW -->
+  <div id="workoutView">
+    <main class="max-w-4xl mx-auto px-4 py-6">
+      <div id="workout"></div>
+    </main>
 
-  <!-- Timer Section -->
-  <section class="max-w-4xl mx-auto px-4 mb-6">
-    <div class="bg-gradient-to-br from-[#1a1a2e] to-[#2a2a3e] rounded-2xl p-6 shadow-xl border border-[#3a3a3a]">
-      <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-        <span class="text-2xl">⏱</span>
-        Timer de Descanso
-      </h2>
-      
-      <div class="flex flex-wrap gap-3 justify-center mb-4">
-        <button onclick="startTimer(60)" 
-          class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
-          60s
-        </button>
-        <button onclick="startTimer(90)" 
-          class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
-          90s
-        </button>
-        <button onclick="startTimer(120)" 
-          class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
-          120s
-        </button>
+    <!-- Timer Section -->
+    <section class="max-w-4xl mx-auto px-4 mb-6">
+      <div class="bg-gradient-to-br from-[#1a1a2e] to-[#2a2a3e] rounded-2xl p-6 shadow-xl border border-[#3a3a3a]">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="text-2xl">⏱</span>
+          Timer de Descanso
+        </h2>
+        
+        <div class="flex flex-wrap gap-3 justify-center mb-4">
+          <button onclick="startTimer(60)" 
+            class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
+            60s
+          </button>
+          <button onclick="startTimer(90)" 
+            class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
+            90s
+          </button>
+          <button onclick="startTimer(120)" 
+            class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
+            120s
+          </button>
+        </div>
+        
+        <div id="timerDisplay" 
+          class="text-4xl font-bold text-[#4a9eff] text-center min-h-[3rem] flex items-center justify-center">
+        </div>
       </div>
+    </section>
+  </div>
+
+  <!-- ANALYTICS VIEW (inicialmente escondida) -->
+  <div id="analyticsView" class="hidden">
+    <main class="max-w-6xl mx-auto px-4 py-6">
       
-      <div id="timerDisplay" 
-        class="text-4xl font-bold text-[#4a9eff] text-center min-h-[3rem] flex items-center justify-center">
+      <!-- Estatísticas gerais -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Total de Treinos</div>
+          <div id="totalWorkouts" class="text-3xl font-bold text-white">0</div>
+        </div>
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Média Semanal</div>
+          <div id="weeklyAvg" class="text-3xl font-bold text-[#4a9eff]">0</div>
+        </div>
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Esta Semana</div>
+          <div id="thisWeek" class="text-3xl font-bold text-green-400">0</div>
+        </div>
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Este Mês</div>
+          <div id="thisMonth" class="text-3xl font-bold text-[#ffaa66]">0</div>
+        </div>
       </div>
-    </div>
-  </section>
+
+      <!-- Gráfico de frequência -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
+        <h2 class="text-xl font-bold text-white mb-4">📅 Frequência de Treinos</h2>
+        <canvas id="frequencyChart" class="max-h-[300px]"></canvas>
+      </div>
+
+      <!-- Seletor de exercício + Gráfico de progressão -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a]">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <h2 class="text-xl font-bold text-white">📈 Progressão de Carga</h2>
+          <select id="exerciseSelector" onchange="updateProgressChart()"
+            class="px-4 py-2 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+            <option value="">Selecione um exercício</option>
+          </select>
+        </div>
+        <canvas id="progressChart" class="max-h-[400px]"></canvas>
+      </div>
+
+    </main>
+  </div>
 
   <!-- Footer -->
   <footer class="fixed bottom-0 left-0 right-0 bg-[#1a1a1a] border-t border-[#2a2a2a] shadow-2xl">
