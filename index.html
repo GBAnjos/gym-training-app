@@ -134,14 +134,42 @@
 
       <!-- Seletor de exercício + Gráfico de progressão -->
       <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a]">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <h2 class="text-xl font-bold text-white">📈 Progressão de Carga</h2>
+        <h2 class="text-xl font-bold text-white mb-4">📈 Progressão de Carga</h2>
+        
+        <!-- Filtros -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <!-- Filtro por dia -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Dia do Treino</label>
+            <select id="dayFilter" onchange="filterExercises()"
+              class="w-full px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+              <option value="">Todos os dias</option>
+            </select>
+          </div>
+          
+          <!-- Filtro por grupo muscular -->
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Grupo Muscular</label>
+            <select id="muscleFilter" onchange="filterExercises()"
+              class="w-full px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+              <option value="">Todos os grupos</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Lista de exercícios filtrados -->
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Exercício</label>
           <select id="exerciseSelector" onchange="updateProgressChart()"
-            class="px-4 py-2 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+            class="w-full px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
             <option value="">Selecione um exercício</option>
           </select>
         </div>
-        <canvas id="progressChart" class="max-h-[400px]"></canvas>
+        
+        <!-- Gráfico -->
+        <div class="mt-6">
+          <canvas id="progressChart" class="max-h-[400px]"></canvas>
+        </div>
       </div>
 
     </main>
