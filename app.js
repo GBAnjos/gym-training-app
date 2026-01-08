@@ -1,5 +1,8 @@
 let treinos = {};
 let timerInterval = null;
+let frequencyChart = null;
+let progressChart = null;
+let currentView = 'workout'; // 'workout' ou 'analytics'
 
 const mapDia = {
   "domingo": "domingo",
@@ -38,6 +41,9 @@ function init() {
 
   selector.onchange = () => renderWorkout(selector.value);
   renderWorkout(selector.value);
+  
+  // Popular seletor de exercícios para analytics
+  populateExerciseSelector();
 }
 
 function renderWorkout(dia) {
@@ -98,7 +104,6 @@ function renderWorkout(dia) {
     }`;
 
     div.innerHTML = `
-      <!-- Título do exercício -->
       <div class="flex items-start gap-3 mb-3">
         <span class="text-2xl mt-0.5">${isCompleted ? '✅' : '⚪'}</span>
         <div class="flex-1">
@@ -116,9 +121,7 @@ function renderWorkout(dia) {
         </div>
       </div>
 
-      <!-- Controles -->
       <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mt-4">
-        <!-- Input de peso -->
         <div class="flex-1">
           <label class="block text-xs font-medium text-gray-500 mb-1.5">Peso (kg)</label>
           <input 
@@ -130,7 +133,6 @@ function renderWorkout(dia) {
             class="w-full px-4 py-3 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-lg font-bold text-center transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent placeholder-gray-600">
         </div>
 
-        <!-- Checkbox -->
         <div class="flex items-center gap-3 px-4 py-3 bg-[#252525] rounded-lg cursor-pointer hover:bg-[#2a2a2a] transition-all"
           onclick="this.querySelector('input').click()">
           <input 
@@ -159,7 +161,6 @@ function savePeso(key, peso, dia) {
 
   if (!data.historico) data.historico = [];
   
-  // Evitar duplicatas na mesma data
   const existingIndex = data.historico.findIndex(h => h.data === data.data);
   if (existingIndex >= 0) {
     data.historico[existingIndex].peso = peso;
@@ -193,7 +194,6 @@ function startTimer(seconds) {
   let remaining = seconds;
   const display = document.getElementById("timerDisplay");
   
-  // Remove animação anterior
   display.classList.remove("animate-pulse-slow", "text-green-400");
   display.classList.add("text-[#4a9eff]");
 
@@ -209,12 +209,265 @@ function startTimer(seconds) {
       display.classList.remove("text-[#4a9eff]");
       display.classList.add("text-green-400", "animate-pulse-slow");
       
-      // Vibração no mobile
       if (navigator.vibrate) {
         navigator.vibrate([200, 100, 200]);
       }
     }
   }, 1000);
+}
+
+// ========== ANALYTICS ==========
+
+function toggleView() {
+  const workoutView = document.getElementById('workoutView');
+  const analyticsView = document.getElementById('analyticsView');
+  const daySelector = document.getElementById('daySelector');
+  const viewIcon = document.getElementById('viewIcon');
+  const viewText = document.getElementById('viewText');
+  
+  if (currentView === 'workout') {
+    // Mudar para Analytics
+    workoutView.classList.add('hidden');
+    analyticsView.classList.remove('hidden');
+    daySelector.classList.add('hidden');
+    viewIcon.textContent = '🏋️';
+    viewText.textContent = 'Treino';
+    currentView = 'analytics';
+    
+    // Renderizar analytics
+    renderAnalytics();
+  } else {
+    // Voltar para Workout
+    analyticsView.classList.add('hidden');
+    workoutView.classList.remove('hidden');
+    daySelector.classList.remove('hidden');
+    viewIcon.textContent = '📊';
+    viewText.textContent = 'Analytics';
+    currentView = 'workout';
+  }
+}
+
+function renderAnalytics() {
+  calculateStats();
+  renderFrequencyChart();
+  updateProgressChart();
+}
+
+function calculateStats() {
+  const history = JSON.parse(localStorage.getItem("training_days")) || [];
+  
+  // Total de treinos
+  document.getElementById('totalWorkouts').textContent = history.length;
+  
+  // Média semanal
+  const weeks = history.length > 0 ? Math.ceil((Date.now() - new Date(history[0]).getTime()) / (7 * 24 * 60 * 60 * 1000)) : 1;
+  const weeklyAvg = (history.length / weeks).toFixed(1);
+  document.getElementById('weeklyAvg').textContent = weeklyAvg;
+  
+  // Esta semana
+  const today = new Date();
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+  
+  const thisWeek = history.filter(date => new Date(date) >= startOfWeek).length;
+  document.getElementById('thisWeek').textContent = thisWeek;
+  
+  // Este mês
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const thisMonth = history.filter(date => new Date(date) >= startOfMonth).length;
+  document.getElementById('thisMonth').textContent = thisMonth;
+}
+
+function renderFrequencyChart() {
+  const history = JSON.parse(localStorage.getItem("training_days")) || [];
+  
+  // Agrupar por semana (últimas 12 semanas)
+  const weeks = {};
+  const today = new Date();
+  
+  for (let i = 11; i >= 0; i--) {
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - today.getDay() - (i * 7));
+    weekStart.setHours(0, 0, 0, 0);
+    
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    weekEnd.setHours(23, 59, 59, 999);
+    
+    const weekKey = `${weekStart.getDate()}/${weekStart.getMonth() + 1}`;
+    weeks[weekKey] = 0;
+    
+    history.forEach(date => {
+      const d = new Date(date);
+      if (d >= weekStart && d <= weekEnd) {
+        weeks[weekKey]++;
+      }
+    });
+  }
+  
+  const ctx = document.getElementById('frequencyChart');
+  
+  if (frequencyChart) {
+    frequencyChart.destroy();
+  }
+  
+  frequencyChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(weeks),
+      datasets: [{
+        label: 'Treinos por semana',
+        data: Object.values(weeks),
+        backgroundColor: '#4a9eff',
+        borderColor: '#66b3ff',
+        borderWidth: 2,
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: '#999',
+            stepSize: 1
+          },
+          grid: {
+            color: '#2a2a2a'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#999'
+          },
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
+}
+
+function populateExerciseSelector() {
+  const selector = document.getElementById('exerciseSelector');
+  const exercises = new Set();
+  
+  // Coletar todos os exercícios únicos
+  Object.keys(treinos).forEach(dia => {
+    treinos[dia].exercicios.forEach(ex => {
+      exercises.add(JSON.stringify({
+        id: `${dia}_${ex.id}`,
+        nome: ex.nome
+      }));
+    });
+  });
+  
+  // Popular o select
+  Array.from(exercises).forEach(exStr => {
+    const ex = JSON.parse(exStr);
+    const opt = document.createElement('option');
+    opt.value = ex.id;
+    opt.textContent = ex.nome;
+    selector.appendChild(opt);
+  });
+}
+
+function updateProgressChart() {
+  const selector = document.getElementById('exerciseSelector');
+  const exerciseKey = selector.value;
+  
+  if (!exerciseKey) {
+    // Limpar gráfico se nenhum exercício selecionado
+    if (progressChart) {
+      progressChart.destroy();
+      progressChart = null;
+    }
+    return;
+  }
+  
+  const data = JSON.parse(localStorage.getItem(exerciseKey)) || {};
+  const historico = data.historico || [];
+  
+  if (historico.length === 0) {
+    if (progressChart) {
+      progressChart.destroy();
+      progressChart = null;
+    }
+    return;
+  }
+  
+  // Ordenar por data
+  historico.sort((a, b) => new Date(a.data) - new Date(b.data));
+  
+  const labels = historico.map(h => {
+    const d = new Date(h.data);
+    return `${d.getDate()}/${d.getMonth() + 1}`;
+  });
+  
+  const pesos = historico.map(h => parseFloat(h.peso) || 0);
+  
+  const ctx = document.getElementById('progressChart');
+  
+  if (progressChart) {
+    progressChart.destroy();
+  }
+  
+  progressChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Carga (kg)',
+        data: pesos,
+        borderColor: '#4a9eff',
+        backgroundColor: 'rgba(74, 158, 255, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 6,
+        pointBackgroundColor: '#4a9eff',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          ticks: {
+            color: '#999'
+          },
+          grid: {
+            color: '#2a2a2a'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#999'
+          },
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
 }
 
 function exportCSV() {
