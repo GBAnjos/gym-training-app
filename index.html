@@ -56,17 +56,24 @@
         <span class="sm:hidden">Treino</span>
       </h1>
       
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <!-- Botão Analytics -->
-        <button id="toggleViewBtn" onclick="toggleView()" 
-          class="px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
-          <span id="viewIcon">📊</span>
-          <span id="viewText" class="hidden sm:inline">Analytics</span>
+        <button id="toggleAnalyticsBtn" onclick="showView('analytics')" 
+          class="px-3 sm:px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+          <span>📊</span>
+          <span class="hidden sm:inline">Analytics</span>
+        </button>
+
+        <!-- Botão Settings -->
+        <button id="toggleSettingsBtn" onclick="showView('settings')" 
+          class="px-3 sm:px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+          <span>⚙️</span>
+          <span class="hidden sm:inline">Settings</span>
         </button>
         
         <!-- Seletor de dias (só aparece na view de treino) -->
         <select id="daySelector" 
-          class="px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold text-base cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+          class="px-3 sm:px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold text-sm sm:text-base cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
         </select>
       </div>
     </div>
@@ -112,6 +119,13 @@
   <div id="analyticsView" class="hidden">
     <main class="max-w-6xl mx-auto px-4 py-6">
       
+      <!-- Botão voltar -->
+      <button onclick="showView('workout')" 
+        class="mb-6 px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+        <span>←</span>
+        <span>Voltar ao Treino</span>
+      </button>
+
       <!-- Estatísticas gerais -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
@@ -146,7 +160,6 @@
         
         <!-- Filtros -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <!-- Filtro por dia -->
           <div>
             <label class="block text-sm font-medium text-gray-400 mb-2">Dia do Treino</label>
             <select id="dayFilter" onchange="filterExercises()"
@@ -155,7 +168,6 @@
             </select>
           </div>
           
-          <!-- Filtro por grupo muscular -->
           <div>
             <label class="block text-sm font-medium text-gray-400 mb-2">Grupo Muscular</label>
             <select id="muscleFilter" onchange="filterExercises()"
@@ -165,7 +177,6 @@
           </div>
         </div>
         
-        <!-- Lista de exercícios filtrados -->
         <div>
           <label class="block text-sm font-medium text-gray-400 mb-2">Exercício</label>
           <select id="exerciseSelector" onchange="updateProgressChart()"
@@ -174,9 +185,7 @@
           </select>
         </div>
         
-        <!-- Container do gráfico + placeholder -->
         <div class="mt-6">
-          <!-- Placeholder (quando não tem dados) -->
           <div id="emptyChartPlaceholder" class="hidden rounded-xl bg-[#0d0d0d] border-2 border-dashed border-[#3a3a3a] p-8 sm:p-12 flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
             <div class="text-center max-w-md px-4 sm:px-6">
               <div class="text-5xl sm:text-6xl mb-3 sm:mb-4">📊</div>
@@ -187,7 +196,6 @@
             </div>
           </div>
           
-          <!-- Canvas do gráfico -->
           <div id="progressChartContainer" class="hidden w-full" style="position: relative; height: 300px;">
             <canvas id="progressChart"></canvas>
           </div>
@@ -195,6 +203,102 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- SETTINGS VIEW (inicialmente escondida) -->
+  <div id="settingsView" class="hidden">
+    <main class="max-w-4xl mx-auto px-4 py-6">
+      
+      <!-- Botão voltar -->
+      <button onclick="showView('workout')" 
+        class="mb-6 px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+        <span>←</span>
+        <span>Voltar ao Treino</span>
+      </button>
+
+      <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+        <span class="text-4xl">⚙️</span>
+        Configurações
+      </h2>
+
+      <!-- Card de informações -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
+        <h3 class="text-xl font-bold text-white mb-4">📊 Seus Dados</h3>
+        <div class="space-y-3 text-gray-300">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400">Total de exercícios registrados:</span>
+            <span id="totalExercises" class="font-bold text-white">0</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400">Total de treinos realizados:</span>
+            <span id="totalTrainings" class="font-bold text-white">0</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400">Dados ocupando no navegador:</span>
+            <span id="storageSize" class="font-bold text-white">0 KB</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zona de perigo -->
+      <div class="bg-red-950/20 border-2 border-red-800/50 rounded-2xl p-6">
+        <h3 class="text-xl font-bold text-red-400 mb-2 flex items-center gap-2">
+          <span>⚠️</span>
+          Zona de Perigo
+        </h3>
+        <p class="text-gray-400 text-sm mb-6">
+          As ações abaixo são irreversíveis. Tenha certeza antes de prosseguir.
+        </p>
+
+        <button onclick="showResetModal()" 
+          class="w-full sm:w-auto px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all active:scale-95 border-2 border-red-500">
+          🗑️ Resetar Todos os Dados
+        </button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal de Confirmação de Reset -->
+  <div id="resetModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-red-600/50 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl">
+      <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-3xl">⚠️</span>
+        Confirmar Reset
+      </h3>
+      
+      <div class="bg-red-950/30 border border-red-800/30 rounded-lg p-4 mb-6">
+        <p class="text-red-300 text-sm font-semibold mb-2">Esta ação irá apagar permanentemente:</p>
+        <ul class="text-red-200 text-sm space-y-1 list-disc list-inside">
+          <li>Todos os pesos registrados</li>
+          <li>Todo o histórico de treinos</li>
+          <li>Todas as progressões de carga</li>
+          <li>Exercícios marcados como concluídos</li>
+        </ul>
+      </div>
+
+      <p class="text-gray-300 mb-4">
+        Para confirmar, digite <span class="font-bold text-red-400">RESETAR</span> no campo abaixo:
+      </p>
+
+      <input 
+        type="text" 
+        id="resetConfirmInput" 
+        placeholder="Digite RESETAR"
+        class="w-full px-4 py-3 bg-[#2a2a2a] border-2 border-[#3a3a3a] rounded-lg text-white font-mono text-center text-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent mb-6"
+        onkeyup="checkResetInput(event)">
+
+      <div class="flex gap-3">
+        <button onclick="closeResetModal()" 
+          class="flex-1 px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a]">
+          Cancelar
+        </button>
+        <button id="confirmResetBtn" onclick="confirmReset()" disabled
+          class="flex-1 px-4 py-3 bg-red-600 text-white font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-700 disabled:hover:bg-red-600">
+          Confirmar Reset
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Footer -->
