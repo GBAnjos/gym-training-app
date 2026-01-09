@@ -36,6 +36,12 @@
     .animate-pulse-slow {
       animation: pulse-slow 2s infinite;
     }
+    
+    /* Fix para Chart.js no mobile */
+    canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
   </style>
 </head>
 
@@ -129,7 +135,9 @@
       <!-- Gráfico de frequência -->
       <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
         <h2 class="text-xl font-bold text-white mb-4">📅 Frequência de Treinos</h2>
-        <canvas id="frequencyChart" class="max-h-[300px]"></canvas>
+        <div class="w-full" style="position: relative; height: 300px;">
+          <canvas id="frequencyChart"></canvas>
+        </div>
       </div>
 
       <!-- Seletor de exercício + Gráfico de progressão -->
@@ -167,19 +175,21 @@
         </div>
         
         <!-- Container do gráfico + placeholder -->
-        <div class="mt-6 relative">
-          <!-- Canvas do gráfico -->
-          <canvas id="progressChart" class="max-h-[400px]"></canvas>
-          
+        <div class="mt-6">
           <!-- Placeholder (quando não tem dados) -->
-          <div id="emptyChartPlaceholder" class="hidden absolute inset-0 flex items-center justify-center">
-            <div class="text-center max-w-md px-6">
-              <div class="text-6xl mb-4">📊</div>
-              <h3 class="text-xl font-bold text-white mb-2">Nenhum dado registrado ainda</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">
+          <div id="emptyChartPlaceholder" class="hidden rounded-xl bg-[#0d0d0d] border-2 border-dashed border-[#3a3a3a] p-8 sm:p-12 flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
+            <div class="text-center max-w-md px-4 sm:px-6">
+              <div class="text-5xl sm:text-6xl mb-3 sm:mb-4">📊</div>
+              <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Nenhum dado registrado ainda</h3>
+              <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
                 Comece a registrar o peso deste exercício nos seus treinos e o gráfico de progressão aparecerá aqui automaticamente.
               </p>
             </div>
+          </div>
+          
+          <!-- Canvas do gráfico -->
+          <div id="progressChartContainer" class="hidden w-full" style="position: relative; height: 300px;">
+            <canvas id="progressChart"></canvas>
           </div>
         </div>
       </div>
