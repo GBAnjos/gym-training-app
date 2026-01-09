@@ -249,6 +249,46 @@
         </div>
       </div>
 
+      <!-- Card de Backup/Restore -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
+        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <span>💾</span>
+          Backup & Restauração
+        </h3>
+        <p class="text-gray-400 text-sm mb-6">
+          Faça backup dos seus dados ou restaure de um arquivo anterior.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Importar Dados -->
+          <div>
+            <input 
+              type="file" 
+              id="importFileInput" 
+              accept=".json,.csv"
+              class="hidden"
+              onchange="handleFileSelect(event)">
+            
+            <button onclick="document.getElementById('importFileInput').click()" 
+              class="w-full px-6 py-3 bg-[#2a4a2a] hover:bg-[#3a5a3a] text-green-300 font-bold rounded-lg transition-all active:scale-95 border-2 border-green-800 flex items-center justify-center gap-2">
+              <span>📥</span>
+              <span>Importar Dados</span>
+            </button>
+            <p class="text-xs text-gray-500 mt-2 text-center">Aceita JSON ou CSV</p>
+          </div>
+
+          <!-- Exportar JSON -->
+          <div>
+            <button onclick="exportJSON()" 
+              class="w-full px-6 py-3 bg-[#2a2a4a] hover:bg-[#3a3a5a] text-blue-300 font-bold rounded-lg transition-all active:scale-95 border-2 border-blue-800 flex items-center justify-center gap-2">
+              <span>💾</span>
+              <span>Exportar Backup</span>
+            </button>
+            <p class="text-xs text-gray-500 mt-2 text-center">Salva tudo em JSON</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Zona de perigo -->
       <div class="bg-red-950/20 border-2 border-red-800/50 rounded-2xl p-6">
         <h3 class="text-xl font-bold text-red-400 mb-2 flex items-center gap-2">
@@ -266,6 +306,58 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- Modal de Preview de Import -->
+  <div id="importModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-3xl">📥</span>
+        Importar Dados
+      </h3>
+      
+      <div id="importPreview" class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-4 mb-6">
+        <!-- Preview será inserido aqui pelo JavaScript -->
+      </div>
+
+      <div class="mb-6">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input 
+            type="radio" 
+            name="importMode" 
+            value="replace" 
+            checked
+            class="w-5 h-5 cursor-pointer accent-[#4a9eff]">
+          <div>
+            <span class="text-white font-semibold">Substituir dados existentes</span>
+            <p class="text-gray-400 text-sm">Apaga tudo e substitui pelos novos dados</p>
+          </div>
+        </label>
+        
+        <label class="flex items-center gap-3 cursor-pointer mt-4">
+          <input 
+            type="radio" 
+            name="importMode" 
+            value="merge"
+            class="w-5 h-5 cursor-pointer accent-[#4a9eff]">
+          <div>
+            <span class="text-white font-semibold">Mesclar com dados existentes</span>
+            <p class="text-gray-400 text-sm">Mantém dados atuais e adiciona os novos</p>
+          </div>
+        </label>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="closeImportModal()" 
+          class="flex-1 px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a]">
+          Cancelar
+        </button>
+        <button id="confirmImportBtn" onclick="confirmImport()"
+          class="flex-1 px-4 py-3 bg-[#4a9eff] hover:bg-[#3a8eef] text-white font-bold rounded-lg transition-all">
+          Confirmar Importação
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Modal de Confirmação de Reset -->
