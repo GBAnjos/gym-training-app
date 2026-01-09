@@ -4,6 +4,7 @@ let frequencyChart = null;
 let progressChart = null;
 let currentView = 'workout';
 let allExercises = [];
+let importedData = null; // Cache para dados importados
 
 const mapDia = {
   "domingo": "domingo",
@@ -704,7 +705,196 @@ function confirmReset() {
   window.location.reload();
 }
 
-// ========== EXPORT ==========
+// ========== IMPORT/EXPORT ==========
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const content = e.target.result;
+      const fileType = file.name.split('.').pop().toLowerCase();
+      
+      if (fileType === 'json') {
+        importedData = JSON.parse(content);
+        showImportPreview(importedData, 'json');
+      } else if (fileType === 'csv') {
+        importedData = parseCSV(content);
+        showImportPreview(importedData, 'csv');
+      } else {
+        alert('❌ Formato não suportado. Use JSON ou CSV.');
+        return;
+      }
+      
+    } catch (error) {
+      console.error('Erro ao ler arquivo:', error);
+      alert('❌ Erro ao ler o arquivo. Verifique se está no formato correto.');
+    }
+  };
+  
+  reader.readAsText(file);
+  
+  // Limpar input para permitir re-upload do mesmo arquivo
+  event.target.value = '';
+}
+
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  const data = {};
+  
+  // Pular header
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    const [date, exerciseKey, weight] = line.split(',');
+    
+    if (!data[exerciseKey]) {
+      data[exerciseKey] = {
+        peso: weight,
+        data: date,
+        historico: []
+      };
+    }
+    
+    data[exerciseKey].historico.push({
+      data: date,
+      peso: weight
+    });
+  }
+  
+  return data;
+}
+
+function showImportPreview(data, type) {
+  const modal = document.getElementById('importModal');
+  const preview = document.getElementById('importPreview');
+  
+  if (!modal || !preview) return;
+  
+  let exerciseCount = 0;
+  let trainingDaysCount = 0;
+  let totalRecords = 0;
+  
+  Object.keys(data).forEach(key => {
+    if (key === 'training_days') {
+      trainingDaysCount = data[key].length;
+    } else if (key.includes('_')) {
+      exerciseCount++;
+      if (data[key].historico) {
+        totalRecords += data[key].historico.length;
+      }
+    }
+  });
+  
+  preview.innerHTML = `
+    <h4 class="text-lg font-bold text-white mb-3">Preview dos Dados</h4>
+    <div class="space-y-2 text-sm">
+      <div class="flex justify-between">
+        <span class="text-gray-400">Formato:</span>
+        <span class="text-white font-semibold">${type.toUpperCase()}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-400">Exercícios encontrados:</span>
+        <span class="text-[#4a9eff] font-bold">${exerciseCount}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-400">Total de registros:</span>
+        <span class="text-[#4a9eff] font-bold">${totalRecords}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-400">Dias de treino:</span>
+        <span class="text-[#4a9eff] font-bold">${trainingDaysCount}</span>
+      </div>
+    </div>
+  `;
+  
+  modal.classList.remove('hidden');
+}
+
+function closeImportModal() {
+  const modal = document.getElementById('importModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+  importedData = null;
+}
+
+function confirmImport() {
+  if (!importedData) {
+    alert('❌ Nenhum dado para importar.');
+    return;
+  }
+  
+  const mode = document.querySelector('input[name="importMode"]:checked').value;
+  
+  try {
+    if (mode === 'replace') {
+      // Limpar tudo e substituir
+      localStorage.clear();
+      Object.keys(importedData).forEach(key => {
+        localStorage.setItem(key, JSON.stringify(importedData[key]));
+      });
+      alert('✓ Dados importados com sucesso!\n\nTodos os dados anteriores foram substituídos.');
+    } else {
+      // Mesclar
+      Object.keys(importedData).forEach(key => {
+        const existing = localStorage.getItem(key);
+        
+        if (key === 'training_days') {
+          // Mesclar arrays de dias sem duplicar
+          const existingDays = existing ? JSON.parse(existing) : [];
+          const newDays = importedData[key];
+          const merged = [...new Set([...existingDays, ...newDays])];
+          localStorage.setItem(key, JSON.stringify(merged));
+        } else if (existing) {
+          // Mesclar históricos de exercícios
+          const existingData = JSON.parse(existing);
+          const newData = importedData[key];
+          
+          if (newData.historico && existingData.historico) {
+            // Mesclar históricos sem duplicar datas
+            const allRecords = [...existingData.historico, ...newData.historico];
+            const uniqueRecords = {};
+            allRecords.forEach(record => {
+              if (!uniqueRecords[record.data] || parseFloat(record.peso) > parseFloat(uniqueRecords[record.data].peso)) {
+                uniqueRecords[record.data] = record;
+              }
+            });
+            existingData.historico = Object.values(uniqueRecords);
+          }
+          
+          // Manter peso mais recente
+          if (newData.peso && newData.data) {
+            if (!existingData.data || newData.data > existingData.data) {
+              existingData.peso = newData.peso;
+              existingData.data = newData.data;
+            }
+          }
+          
+          localStorage.setItem(key, JSON.stringify(existingData));
+        } else {
+          // Novo exercício, adicionar direto
+          localStorage.setItem(key, JSON.stringify(importedData[key]));
+        }
+      });
+      
+      alert('✓ Dados mesclados com sucesso!\n\nOs novos dados foram combinados com os existentes.');
+    }
+    
+    closeImportModal();
+    
+    // Recarregar página para mostrar novos dados
+    window.location.reload();
+    
+  } catch (error) {
+    console.error('Erro ao importar:', error);
+    alert('❌ Erro ao importar dados. Tente novamente.');
+  }
+}
 
 function exportCSV() {
   let csv = "data,exercicio,peso\n";
@@ -757,7 +947,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Detectar se pode instalar PWA
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
