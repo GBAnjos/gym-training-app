@@ -695,8 +695,21 @@ function confirmReset() {
     return;
   }
   
-  // Limpar todo o localStorage
-  localStorage.clear();
+  // Debug: verificar o que existe antes de limpar
+  console.log('=== ANTES DO RESET ===');
+  console.log('Keys no localStorage:', Object.keys(localStorage));
+  console.log('training_days:', localStorage.getItem('training_days'));
+  
+  // Limpar TUDO explicitamente
+  const allKeys = Object.keys(localStorage);
+  allKeys.forEach(key => {
+    localStorage.removeItem(key);
+  });
+  
+  // Verificar se realmente limpou
+  console.log('=== DEPOIS DO RESET ===');
+  console.log('Keys no localStorage:', Object.keys(localStorage));
+  console.log('Length:', localStorage.length);
   
   // Fechar modal
   closeResetModal();
@@ -704,7 +717,7 @@ function confirmReset() {
   // Mostrar feedback
   alert('✓ Todos os dados foram resetados com sucesso!\n\nA página será recarregada.');
   
-  // Recarregar a página para limpar o cache do JavaScript
+  // Recarregar a página
   window.location.reload();
 }
 
