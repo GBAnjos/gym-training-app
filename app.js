@@ -3,7 +3,7 @@ let timerInterval = null;
 let frequencyChart = null;
 let progressChart = null;
 let currentView = 'workout';
-let allExercises = []; // Cache de todos os exercícios
+let allExercises = [];
 
 const mapDia = {
   "domingo": "domingo",
@@ -15,7 +15,6 @@ const mapDia = {
   "sábado": "sabado"
 };
 
-// Mapa de cores por grupo muscular
 const muscleColors = {
   "Peito": { bg: "bg-red-950/30", text: "text-red-300", border: "border-red-800/30" },
   "Costas": { bg: "bg-blue-950/30", text: "text-blue-300", border: "border-blue-800/30" },
@@ -63,7 +62,6 @@ function init() {
   selector.onchange = () => renderWorkout(selector.value);
   renderWorkout(selector.value);
   
-  // Popular filtros para analytics
   populateFilters();
 }
 
@@ -76,7 +74,6 @@ function renderWorkout(dia) {
   const treino = treinos[dia];
   if (!treino) return;
 
-  // Header do treino
   const header = document.createElement("div");
   header.className = "mb-6";
   header.innerHTML = `
@@ -85,7 +82,6 @@ function renderWorkout(dia) {
   `;
   container.appendChild(header);
 
-  // Calcular progresso
   let completed = 0;
   treino.exercicios.forEach(ex => {
     const key = `${dia}_${ex.id}`;
@@ -96,7 +92,6 @@ function renderWorkout(dia) {
   const total = treino.exercicios.length;
   const percent = Math.round((completed / total) * 100);
 
-  // Progress bar
   const progressDiv = document.createElement("div");
   progressDiv.className = "mb-6 bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]";
   progressDiv.innerHTML = `
@@ -112,7 +107,6 @@ function renderWorkout(dia) {
   `;
   container.appendChild(progressDiv);
 
-  // Exercícios
   treino.exercicios.forEach(ex => {
     const key = `${dia}_${ex.id}`;
     const saved = JSON.parse(localStorage.getItem(key)) || {};
@@ -126,7 +120,6 @@ function renderWorkout(dia) {
         : 'bg-[#1a1a1a] border-[#2a2a2a] hover:border-[#3a3a3a]'
     }`;
 
-    // Criar tags de músculos
     const muscleTags = ex.musculos ? ex.musculos.map(m => {
       const color = muscleColors[m] || { bg: "bg-gray-950/30", text: "text-gray-300", border: "border-gray-800/30" };
       return `<span class="px-2 py-1 ${color.bg} ${color.text} text-xs font-semibold rounded-md border ${color.border}">${m}</span>`;
@@ -371,7 +364,7 @@ function renderFrequencyChart() {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: false
@@ -403,7 +396,6 @@ function renderFrequencyChart() {
 
 function populateFilters() {
   try {
-    // Cache de todos os exercícios
     allExercises = [];
     
     Object.keys(treinos).forEach(dia => {
@@ -420,7 +412,6 @@ function populateFilters() {
       }
     });
     
-    // Popular filtro de dias
     const dayFilter = document.getElementById('dayFilter');
     if (dayFilter) {
       dayFilter.innerHTML = '<option value="">Todos os dias</option>';
@@ -432,7 +423,6 @@ function populateFilters() {
       });
     }
     
-    // Popular filtros iniciais
     updateMuscleFilter();
     updateExerciseSelector();
   } catch (error) {
@@ -458,13 +448,11 @@ function updateMuscleFilter() {
   const dayValue = dayFilter.value;
   const currentMuscle = muscleFilter.value;
   
-  // Filtrar exercícios por dia
   let filtered = allExercises;
   if (dayValue) {
     filtered = filtered.filter(ex => ex.dia === dayValue);
   }
   
-  // Coletar músculos únicos dos exercícios filtrados
   const availableMuscles = new Set();
   filtered.forEach(ex => {
     if (ex.musculos) {
@@ -472,7 +460,6 @@ function updateMuscleFilter() {
     }
   });
   
-  // Repopular o select de músculos
   muscleFilter.innerHTML = '<option value="">Todos os grupos</option>';
   Array.from(availableMuscles).sort().forEach(muscle => {
     const opt = document.createElement('option');
@@ -481,7 +468,6 @@ function updateMuscleFilter() {
     muscleFilter.appendChild(opt);
   });
   
-  // Tentar restaurar seleção anterior se ainda existir
   if (currentMuscle && availableMuscles.has(currentMuscle)) {
     muscleFilter.value = currentMuscle;
   }
@@ -497,10 +483,8 @@ function updateExerciseSelector() {
   const dayValue = dayFilter.value;
   const muscleValue = muscleFilter.value;
   
-  // Limpar seletor
   exerciseSelector.innerHTML = '<option value="">Selecione um exercício</option>';
   
-  // Filtrar exercícios
   let filtered = allExercises;
   
   if (dayValue) {
@@ -511,7 +495,6 @@ function updateExerciseSelector() {
     filtered = filtered.filter(ex => ex.musculos && ex.musculos.includes(muscleValue));
   }
   
-  // Popular seletor com exercícios filtrados
   filtered.forEach(ex => {
     const opt = document.createElement('option');
     opt.value = ex.id;
@@ -519,9 +502,8 @@ function updateExerciseSelector() {
     exerciseSelector.appendChild(opt);
   });
   
-  // Limpar gráfico e placeholder
   const placeholder = document.getElementById('emptyChartPlaceholder');
-  const canvas = document.getElementById('progressChart');
+  const chartContainer = document.getElementById('progressChartContainer');
   
   if (progressChart) {
     progressChart.destroy();
@@ -529,40 +511,35 @@ function updateExerciseSelector() {
   }
   
   if (placeholder) placeholder.classList.add('hidden');
-  if (canvas) canvas.classList.add('hidden');
+  if (chartContainer) chartContainer.classList.add('hidden');
 }
 
 function updateProgressChart() {
   const selector = document.getElementById('exerciseSelector');
   const placeholder = document.getElementById('emptyChartPlaceholder');
-  const canvas = document.getElementById('progressChart');
+  const chartContainer = document.getElementById('progressChartContainer');
   
-  if (!selector || !placeholder || !canvas) return;
+  if (!selector || !placeholder || !chartContainer) return;
   
   const exerciseKey = selector.value;
   
-  // Se não selecionou nenhum exercício
   if (!exerciseKey) {
-    // Esconder gráfico e placeholder
     if (progressChart) {
       progressChart.destroy();
       progressChart = null;
     }
     placeholder.classList.add('hidden');
-    canvas.classList.add('hidden');
+    chartContainer.classList.add('hidden');
     return;
   }
   
   const data = JSON.parse(localStorage.getItem(exerciseKey)) || {};
   const historico = data.historico || [];
   
-  // Se não tem dados
   if (historico.length === 0) {
-    // Mostrar placeholder
     placeholder.classList.remove('hidden');
-    canvas.classList.add('hidden');
+    chartContainer.classList.add('hidden');
     
-    // Limpar gráfico se existir
     if (progressChart) {
       progressChart.destroy();
       progressChart = null;
@@ -570,9 +547,8 @@ function updateProgressChart() {
     return;
   }
   
-  // Se tem dados, esconder placeholder e mostrar gráfico
   placeholder.classList.add('hidden');
-  canvas.classList.remove('hidden');
+  chartContainer.classList.remove('hidden');
   
   historico.sort((a, b) => new Date(a.data) - new Date(b.data));
   
@@ -582,6 +558,9 @@ function updateProgressChart() {
   });
   
   const pesos = historico.map(h => parseFloat(h.peso) || 0);
+  
+  const canvas = document.getElementById('progressChart');
+  if (!canvas) return;
   
   if (progressChart) {
     progressChart.destroy();
@@ -607,7 +586,7 @@ function updateProgressChart() {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: false
