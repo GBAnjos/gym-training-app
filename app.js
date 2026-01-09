@@ -259,14 +259,12 @@ function showView(view) {
     return;
   }
   
-  // Esconder todas as views
   workoutView.classList.add('hidden');
   analyticsView.classList.add('hidden');
   settingsView.classList.add('hidden');
   
   currentView = view;
   
-  // Mostrar a view solicitada
   if (view === 'workout') {
     workoutView.classList.remove('hidden');
     daySelector.classList.remove('hidden');
@@ -697,16 +695,17 @@ function confirmReset() {
     return;
   }
   
+  // Limpar todo o localStorage
   localStorage.clear();
+  
+  // Fechar modal
   closeResetModal();
-  showView('workout');
   
-  const selector = document.getElementById('daySelector');
-  if (selector && selector.value) {
-    renderWorkout(selector.value);
-  }
+  // Mostrar feedback
+  alert('✓ Todos os dados foram resetados com sucesso!\n\nA página será recarregada.');
   
-  alert('✓ Todos os dados foram resetados com sucesso!');
+  // Recarregar a página para limpar o cache do JavaScript
+  window.location.reload();
 }
 
 // ========== EXPORT ==========
