@@ -180,7 +180,7 @@ function renderWorkout(dia) {
     container.appendChild(div);
   });
 
-  saveTrainingDay();
+  // REMOVIDO: saveTrainingDay() não é mais chamado aqui!
 }
 
 function savePeso(key, peso, dia) {
@@ -198,12 +198,20 @@ function savePeso(key, peso, dia) {
   }
 
   localStorage.setItem(key, JSON.stringify(data));
+  
+  // ADICIONADO: Salvar dia de treino quando registra peso
+  saveTrainingDay();
 }
 
 function toggleDone(key, done, dia) {
   const data = JSON.parse(localStorage.getItem(key)) || {};
   data.feito = done;
   localStorage.setItem(key, JSON.stringify(data));
+  
+  // ADICIONADO: Salvar dia de treino quando marca como concluído
+  if (done) {
+    saveTrainingDay();
+  }
   
   renderWorkout(dia);
 }
@@ -695,21 +703,8 @@ function confirmReset() {
     return;
   }
   
-  // Debug: verificar o que existe antes de limpar
-  console.log('=== ANTES DO RESET ===');
-  console.log('Keys no localStorage:', Object.keys(localStorage));
-  console.log('training_days:', localStorage.getItem('training_days'));
-  
-  // Limpar TUDO explicitamente
-  const allKeys = Object.keys(localStorage);
-  allKeys.forEach(key => {
-    localStorage.removeItem(key);
-  });
-  
-  // Verificar se realmente limpou
-  console.log('=== DEPOIS DO RESET ===');
-  console.log('Keys no localStorage:', Object.keys(localStorage));
-  console.log('Length:', localStorage.length);
+  // Limpar localStorage
+  localStorage.clear();
   
   // Fechar modal
   closeResetModal();
