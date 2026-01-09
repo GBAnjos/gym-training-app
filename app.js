@@ -179,8 +179,6 @@ function renderWorkout(dia) {
     
     container.appendChild(div);
   });
-
-  // REMOVIDO: saveTrainingDay() não é mais chamado aqui!
 }
 
 function savePeso(key, peso, dia) {
@@ -198,8 +196,6 @@ function savePeso(key, peso, dia) {
   }
 
   localStorage.setItem(key, JSON.stringify(data));
-  
-  // ADICIONADO: Salvar dia de treino quando registra peso
   saveTrainingDay();
 }
 
@@ -208,7 +204,6 @@ function toggleDone(key, done, dia) {
   data.feito = done;
   localStorage.setItem(key, JSON.stringify(data));
   
-  // ADICIONADO: Salvar dia de treino quando marca como concluído
   if (done) {
     saveTrainingDay();
   }
@@ -703,16 +698,9 @@ function confirmReset() {
     return;
   }
   
-  // Limpar localStorage
   localStorage.clear();
-  
-  // Fechar modal
   closeResetModal();
-  
-  // Mostrar feedback
   alert('✓ Todos os dados foram resetados com sucesso!\n\nA página será recarregada.');
-  
-  // Recarregar a página
   window.location.reload();
 }
 
@@ -754,3 +742,31 @@ function download(content, fileName) {
   a.download = fileName;
   a.click();
 }
+
+// ========== PWA SERVICE WORKER ==========
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/gym-training-app/service-worker.js')
+      .then(registration => {
+        console.log('✓ Service Worker registrado:', registration.scope);
+      })
+      .catch(error => {
+        console.error('✗ Erro ao registrar Service Worker:', error);
+      });
+  });
+}
+
+// Detectar se pode instalar PWA
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('PWA pode ser instalado!');
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('✓ PWA instalado com sucesso!');
+  deferredPrompt = null;
+});
