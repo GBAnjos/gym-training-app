@@ -9,7 +9,7 @@ let importedData = null;
 // Google Drive OAuth
 let googleAccessToken = null;
 let googleTokenClient = null;
-const GOOGLE_CLIENT_ID = '109415433089-ofclj565qlh8e7snf8373d27mhiopvut.apps.googleusercontent.com'; // ← COLOQUE SEU CLIENT ID AQUI!
+const GOOGLE_CLIENT_ID = '109415433089-ofclj565qlh8e7snf8373d27mhiopvut.apps.googleusercontent.com';
 const GOOGLE_SCOPES = 'https://www.googleapis.com/auth/drive.file';
 const BACKUP_FOLDER_NAME = 'GymTrainingBackups';
 
@@ -123,6 +123,9 @@ function renderWorkout(dia) {
     const div = document.createElement("div");
     const isCompleted = saved.feito;
     
+    // Contar notas
+    const notesCount = saved.notas ? saved.notas.length : 0;
+    
     div.className = `mb-4 rounded-2xl p-5 border-2 transition-all ${
       isCompleted 
         ? 'bg-[#1a2a1a] border-[#2d4a2d]' 
@@ -138,7 +141,15 @@ function renderWorkout(dia) {
       <div class="flex items-start gap-3 mb-3">
         <span class="text-2xl mt-0.5">${isCompleted ? '✅' : '⚪'}</span>
         <div class="flex-1">
-          <h3 class="text-lg font-bold text-white mb-2">${ex.nome}</h3>
+          <div class="flex items-start justify-between mb-2">
+            <h3 class="text-lg font-bold text-white">${ex.nome}</h3>
+            ${notesCount > 0 ? `
+              <button onclick="showNotesModal('${key}', '${ex.nome}')" 
+                class="px-2 py-1 bg-[#2a3a4a] hover:bg-[#3a4a5a] text-[#4a9eff] text-xs font-bold rounded-md border border-[#4a9eff]/30 transition-all flex items-center gap-1">
+                📝 ${notesCount}
+              </button>
+            ` : ''}
+          </div>
           
           <div class="flex flex-wrap gap-2 mb-2">
             <span class="px-3 py-1 bg-[#2a2a2a] text-gray-300 text-sm font-semibold rounded-lg">
@@ -184,6 +195,24 @@ function renderWorkout(dia) {
           </label>
         </div>
       </div>
+
+      <!-- Campo de Nota -->
+      <div class="mt-4">
+        <label class="block text-xs font-medium text-gray-500 mb-1.5">Nota do Treino (opcional)</label>
+        <div class="flex gap-2">
+          <input 
+            type="text" 
+            id="note_${key}"
+            placeholder="Ex: Senti muito o músculo hoje..."
+            maxlength="200"
+            class="flex-1 px-4 py-2 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent placeholder-gray-600">
+          <button 
+            onclick="saveNote('${key}', '${ex.nome}')"
+            class="px-4 py-2 bg-[#4a9eff] hover:bg-[#3a8eef] text-white font-semibold rounded-lg transition-all">
+            💾
+          </button>
+        </div>
+      </div>
     `;
     
     container.appendChild(div);
@@ -206,8 +235,6 @@ function savePeso(key, peso, dia) {
 
   localStorage.setItem(key, JSON.stringify(data));
   saveTrainingDay();
-  
-  // Backup automático para Drive (se conectado)
   autoBackupToDrive();
 }
 
@@ -221,8 +248,6 @@ function toggleDone(key, done, dia) {
   }
   
   renderWorkout(dia);
-  
-  // Backup automático para Drive (se conectado)
   autoBackupToDrive();
 }
 
@@ -235,6 +260,118 @@ function saveTrainingDay() {
     localStorage.setItem("training_days", JSON.stringify(history));
   }
 }
+
+// ========== NOTAS DO EXERCÍCIO ==========
+
+function saveNote(key, exerciseName) {
+  const input = document.getElementById(`note_${key}`);
+  if (!input) return;
+  
+  const noteText = input.value.trim();
+  
+  if (!noteText) {
+    alert('📝 Digite uma nota antes de salvar!');
+    return;
+  }
+  
+  const data = JSON.parse(localStorage.getItem(key)) || {};
+  
+  if (!data.notas) data.notas = [];
+  
+  const today = new Date().toISOString().split("T")[0];
+  
+  // Adicionar nota
+  data.notas.push({
+    data: today,
+    texto: noteText,
+    timestamp: Date.now()
+  });
+  
+  // Manter apenas últimas 50 notas
+  if (data.notas.length > 50) {
+    data.notas = data.notas.slice(-50);
+  }
+  
+  localStorage.setItem(key, JSON.stringify(data));
+  
+  // Limpar input
+  input.value = '';
+  
+  // Feedback visual
+  const btn = input.nextElementSibling;
+  const originalText = btn.textContent;
+  btn.textContent = '✓';
+  btn.classList.add('bg-green-600');
+  btn.classList.remove('bg-[#4a9eff]');
+  
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.classList.remove('bg-green-600');
+    btn.classList.add('bg-[#4a9eff]');
+    
+    // Re-renderizar para mostrar contador atualizado
+    const selector = document.getElementById("daySelector");
+    if (selector) {
+      renderWorkout(selector.value);
+    }
+  }, 1000);
+  
+  autoBackupToDrive();
+}
+
+function showNotesModal(key, exerciseName) {
+  const modal = document.getElementById('notesModal');
+  const nameEl = document.getElementById('notesExerciseName');
+  const historyEl = document.getElementById('notesHistory');
+  
+  if (!modal || !nameEl || !historyEl) return;
+  
+  nameEl.textContent = exerciseName;
+  
+  const data = JSON.parse(localStorage.getItem(key)) || {};
+  const notas = data.notas || [];
+  
+  if (notas.length === 0) {
+    historyEl.innerHTML = `
+      <div class="text-center py-8 text-gray-400">
+        <div class="text-4xl mb-2">📝</div>
+        <p>Nenhuma nota ainda para este exercício.</p>
+      </div>
+    `;
+  } else {
+    // Ordenar por data (mais recente primeiro)
+    const sortedNotas = [...notas].sort((a, b) => b.timestamp - a.timestamp);
+    
+    historyEl.innerHTML = sortedNotas.map(nota => {
+      const date = new Date(nota.data);
+      const formatted = date.toLocaleDateString('pt-BR', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric' 
+      });
+      
+      return `
+        <div class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[#4a9eff] font-semibold text-sm">📅 ${formatted}</span>
+          </div>
+          <p class="text-gray-200 text-sm leading-relaxed">${nota.texto}</p>
+        </div>
+      `;
+    }).join('');
+  }
+  
+  modal.classList.remove('hidden');
+}
+
+function closeNotesModal() {
+  const modal = document.getElementById('notesModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+}
+
+// ========== TIMER ==========
 
 function startTimer(seconds) {
   clearInterval(timerInterval);
@@ -746,13 +883,10 @@ function initGoogleDrive() {
         
         updateDriveUI(true);
         alert('✓ Conectado ao Google Drive com sucesso!');
-        
-        // Fazer backup inicial
         autoBackupToDrive();
       }
     });
     
-    // Verificar se já está autenticado
     const savedToken = localStorage.getItem('google_access_token');
     const tokenExpiry = localStorage.getItem('google_token_expiry');
     
@@ -834,7 +968,7 @@ async function updateDriveStatus() {
     if (backupCount) backupCount.textContent = backups.length;
     
     if (backups.length > 0 && lastBackupTime) {
-      const lastBackup = backups[0]; // Já vem ordenado por data
+      const lastBackup = backups[0];
       const date = new Date(lastBackup.modifiedTime);
       const formatted = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
       lastBackupTime.textContent = formatted;
@@ -853,7 +987,6 @@ async function getOrCreateBackupFolder() {
     return folderId;
   }
   
-  // Buscar pasta existente
   const searchResponse = await fetch(
     `https://www.googleapis.com/drive/v3/files?q=name='${BACKUP_FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false`,
     {
@@ -869,7 +1002,6 @@ async function getOrCreateBackupFolder() {
     return folderId;
   }
   
-  // Criar nova pasta
   const createResponse = await fetch('https://www.googleapis.com/drive/v3/files', {
     method: 'POST',
     headers: {
@@ -894,7 +1026,6 @@ let backupTimeout = null;
 function autoBackupToDrive() {
   if (!googleAccessToken) return;
   
-  // Debounce: aguardar 2 segundos após última mudança
   clearTimeout(backupTimeout);
   backupTimeout = setTimeout(async () => {
     try {
@@ -927,7 +1058,6 @@ async function backupToDrive() {
   
   const folderId = await getOrCreateBackupFolder();
   
-  // Preparar dados
   const dataToExport = {};
   Object.keys(localStorage).forEach(key => {
     if (key.includes("_") || key === "training_days") {
@@ -1001,7 +1131,6 @@ async function restoreFromDrive() {
     
     if (!confirm) return;
     
-    // Baixar arquivo
     const response = await fetch(
       `https://www.googleapis.com/drive/v3/files/${latestBackup.id}?alt=media`,
       {
@@ -1011,7 +1140,6 @@ async function restoreFromDrive() {
     
     const data = await response.json();
     
-    // Limpar localStorage e restaurar
     localStorage.clear();
     Object.keys(data).forEach(key => {
       localStorage.setItem(key, JSON.stringify(data[key]));
@@ -1198,7 +1326,6 @@ function confirmImport() {
     
     closeImportModal();
     
-    // Fazer backup automático após importar
     if (googleAccessToken) {
       autoBackupToDrive();
     }
