@@ -4,7 +4,14 @@ let frequencyChart = null;
 let progressChart = null;
 let currentView = 'workout';
 let allExercises = [];
-let importedData = null; // Cache para dados importados
+let importedData = null;
+
+// Google Drive OAuth
+let googleAccessToken = null;
+let googleTokenClient = null;
+const GOOGLE_CLIENT_ID = '109415433089-ofclj565qlh8e7snf8373d27mhiopvut.apps.googleusercontent.com'; // ← COLOQUE SEU CLIENT ID AQUI!
+const GOOGLE_SCOPES = 'https://www.googleapis.com/auth/drive.file';
+const BACKUP_FOLDER_NAME = 'GymTrainingBackups';
 
 const mapDia = {
   "domingo": "domingo",
@@ -64,6 +71,7 @@ function init() {
   renderWorkout(selector.value);
   
   populateFilters();
+  initGoogleDrive();
 }
 
 function renderWorkout(dia) {
@@ -198,6 +206,9 @@ function savePeso(key, peso, dia) {
 
   localStorage.setItem(key, JSON.stringify(data));
   saveTrainingDay();
+  
+  // Backup automático para Drive (se conectado)
+  autoBackupToDrive();
 }
 
 function toggleDone(key, done, dia) {
@@ -210,6 +221,9 @@ function toggleDone(key, done, dia) {
   }
   
   renderWorkout(dia);
+  
+  // Backup automático para Drive (se conectado)
+  autoBackupToDrive();
 }
 
 function saveTrainingDay() {
@@ -280,6 +294,7 @@ function showView(view) {
     settingsView.classList.remove('hidden');
     daySelector.classList.add('hidden');
     updateSettingsStats();
+    updateDriveStatus();
   }
 }
 
@@ -705,7 +720,313 @@ function confirmReset() {
   window.location.reload();
 }
 
-// ========== IMPORT/EXPORT ==========
+// ========== GOOGLE DRIVE INTEGRATION ==========
+
+function initGoogleDrive() {
+  if (typeof google === 'undefined' || !google.accounts) {
+    console.log('Google API ainda não carregou, tentando novamente...');
+    setTimeout(initGoogleDrive, 500);
+    return;
+  }
+  
+  try {
+    googleTokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: GOOGLE_SCOPES,
+      callback: (response) => {
+        if (response.error) {
+          console.error('Erro na autenticação:', response);
+          alert('❌ Erro ao conectar com Google Drive.');
+          return;
+        }
+        
+        googleAccessToken = response.access_token;
+        localStorage.setItem('google_access_token', googleAccessToken);
+        localStorage.setItem('google_token_expiry', Date.now() + (response.expires_in * 1000));
+        
+        updateDriveUI(true);
+        alert('✓ Conectado ao Google Drive com sucesso!');
+        
+        // Fazer backup inicial
+        autoBackupToDrive();
+      }
+    });
+    
+    // Verificar se já está autenticado
+    const savedToken = localStorage.getItem('google_access_token');
+    const tokenExpiry = localStorage.getItem('google_token_expiry');
+    
+    if (savedToken && tokenExpiry && Date.now() < parseInt(tokenExpiry)) {
+      googleAccessToken = savedToken;
+      updateDriveUI(true);
+    }
+    
+  } catch (error) {
+    console.error('Erro ao inicializar Google Drive:', error);
+  }
+}
+
+function handleDriveAuth() {
+  if (!googleTokenClient) {
+    alert('❌ Google API ainda não foi carregada. Tente novamente em alguns segundos.');
+    return;
+  }
+  
+  googleTokenClient.requestAccessToken({ prompt: '' });
+}
+
+function disconnectDrive() {
+  googleAccessToken = null;
+  localStorage.removeItem('google_access_token');
+  localStorage.removeItem('google_token_expiry');
+  localStorage.removeItem('drive_folder_id');
+  
+  if (googleAccessToken) {
+    google.accounts.oauth2.revoke(googleAccessToken);
+  }
+  
+  updateDriveUI(false);
+  alert('✓ Desconectado do Google Drive.');
+}
+
+function updateDriveUI(connected) {
+  const badge = document.getElementById('driveStatusBadge');
+  const info = document.getElementById('driveInfo');
+  const connectBtn = document.getElementById('driveConnectBtn');
+  const disconnectBtn = document.getElementById('driveDisconnectBtn');
+  const manualBackupBtn = document.getElementById('manualBackupBtn');
+  const restoreBtn = document.getElementById('restoreBtn');
+  
+  if (connected) {
+    if (badge) {
+      badge.textContent = 'Conectado';
+      badge.className = 'px-3 py-1 bg-green-700 text-green-100 text-xs font-bold rounded-full';
+    }
+    if (info) info.classList.remove('hidden');
+    if (connectBtn) connectBtn.classList.add('hidden');
+    if (disconnectBtn) disconnectBtn.classList.remove('hidden');
+    if (manualBackupBtn) manualBackupBtn.disabled = false;
+    if (restoreBtn) restoreBtn.disabled = false;
+  } else {
+    if (badge) {
+      badge.textContent = 'Desconectado';
+      badge.className = 'px-3 py-1 bg-gray-700 text-gray-300 text-xs font-bold rounded-full';
+    }
+    if (info) info.classList.add('hidden');
+    if (connectBtn) connectBtn.classList.remove('hidden');
+    if (disconnectBtn) disconnectBtn.classList.add('hidden');
+    if (manualBackupBtn) manualBackupBtn.disabled = true;
+    if (restoreBtn) restoreBtn.disabled = true;
+  }
+}
+
+async function updateDriveStatus() {
+  if (!googleAccessToken) {
+    updateDriveUI(false);
+    return;
+  }
+  
+  try {
+    const backups = await listDriveBackups();
+    const backupCount = document.getElementById('backupCount');
+    const lastBackupTime = document.getElementById('lastBackupTime');
+    
+    if (backupCount) backupCount.textContent = backups.length;
+    
+    if (backups.length > 0 && lastBackupTime) {
+      const lastBackup = backups[0]; // Já vem ordenado por data
+      const date = new Date(lastBackup.modifiedTime);
+      const formatted = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      lastBackupTime.textContent = formatted;
+    }
+    
+    updateDriveUI(true);
+  } catch (error) {
+    console.error('Erro ao atualizar status do Drive:', error);
+  }
+}
+
+async function getOrCreateBackupFolder() {
+  let folderId = localStorage.getItem('drive_folder_id');
+  
+  if (folderId) {
+    return folderId;
+  }
+  
+  // Buscar pasta existente
+  const searchResponse = await fetch(
+    `https://www.googleapis.com/drive/v3/files?q=name='${BACKUP_FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false`,
+    {
+      headers: { Authorization: `Bearer ${googleAccessToken}` }
+    }
+  );
+  
+  const searchData = await searchResponse.json();
+  
+  if (searchData.files && searchData.files.length > 0) {
+    folderId = searchData.files[0].id;
+    localStorage.setItem('drive_folder_id', folderId);
+    return folderId;
+  }
+  
+  // Criar nova pasta
+  const createResponse = await fetch('https://www.googleapis.com/drive/v3/files', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${googleAccessToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: BACKUP_FOLDER_NAME,
+      mimeType: 'application/vnd.google-apps.folder'
+    })
+  });
+  
+  const createData = await createResponse.json();
+  folderId = createData.id;
+  localStorage.setItem('drive_folder_id', folderId);
+  
+  return folderId;
+}
+
+let backupTimeout = null;
+
+function autoBackupToDrive() {
+  if (!googleAccessToken) return;
+  
+  // Debounce: aguardar 2 segundos após última mudança
+  clearTimeout(backupTimeout);
+  backupTimeout = setTimeout(async () => {
+    try {
+      await backupToDrive();
+      console.log('✓ Backup automático realizado');
+    } catch (error) {
+      console.error('Erro no backup automático:', error);
+    }
+  }, 2000);
+}
+
+async function manualBackupToDrive() {
+  if (!googleAccessToken) {
+    alert('❌ Não conectado ao Google Drive.');
+    return;
+  }
+  
+  try {
+    await backupToDrive();
+    alert('✓ Backup realizado com sucesso!');
+    updateDriveStatus();
+  } catch (error) {
+    console.error('Erro ao fazer backup:', error);
+    alert('❌ Erro ao fazer backup. Tente novamente.');
+  }
+}
+
+async function backupToDrive() {
+  if (!googleAccessToken) return;
+  
+  const folderId = await getOrCreateBackupFolder();
+  
+  // Preparar dados
+  const dataToExport = {};
+  Object.keys(localStorage).forEach(key => {
+    if (key.includes("_") || key === "training_days") {
+      dataToExport[key] = JSON.parse(localStorage.getItem(key));
+    }
+  });
+  
+  const content = JSON.stringify(dataToExport, null, 2);
+  const filename = `gym-backup-${new Date().toISOString().split('T')[0]}.json`;
+  
+  const metadata = {
+    name: filename,
+    mimeType: 'application/json',
+    parents: [folderId]
+  };
+  
+  const form = new FormData();
+  form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+  form.append('file', new Blob([content], { type: 'application/json' }));
+  
+  const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${googleAccessToken}`
+    },
+    body: form
+  });
+  
+  if (!response.ok) {
+    throw new Error('Falha no upload do backup');
+  }
+  
+  return await response.json();
+}
+
+async function listDriveBackups() {
+  if (!googleAccessToken) return [];
+  
+  const folderId = await getOrCreateBackupFolder();
+  
+  const response = await fetch(
+    `https://www.googleapis.com/drive/v3/files?q='${folderId}' in parents and trashed=false&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime)`,
+    {
+      headers: { Authorization: `Bearer ${googleAccessToken}` }
+    }
+  );
+  
+  const data = await response.json();
+  return data.files || [];
+}
+
+async function restoreFromDrive() {
+  if (!googleAccessToken) {
+    alert('❌ Não conectado ao Google Drive.');
+    return;
+  }
+  
+  try {
+    const backups = await listDriveBackups();
+    
+    if (backups.length === 0) {
+      alert('❌ Nenhum backup encontrado no Google Drive.');
+      return;
+    }
+    
+    const latestBackup = backups[0];
+    
+    const confirm = window.confirm(
+      `Restaurar backup de ${new Date(latestBackup.modifiedTime).toLocaleString('pt-BR')}?\n\nISTO VAI SUBSTITUIR TODOS OS DADOS ATUAIS!`
+    );
+    
+    if (!confirm) return;
+    
+    // Baixar arquivo
+    const response = await fetch(
+      `https://www.googleapis.com/drive/v3/files/${latestBackup.id}?alt=media`,
+      {
+        headers: { Authorization: `Bearer ${googleAccessToken}` }
+      }
+    );
+    
+    const data = await response.json();
+    
+    // Limpar localStorage e restaurar
+    localStorage.clear();
+    Object.keys(data).forEach(key => {
+      localStorage.setItem(key, JSON.stringify(data[key]));
+    });
+    
+    alert('✓ Backup restaurado com sucesso!\n\nA página será recarregada.');
+    window.location.reload();
+    
+  } catch (error) {
+    console.error('Erro ao restaurar backup:', error);
+    alert('❌ Erro ao restaurar backup. Tente novamente.');
+  }
+}
+
+// ========== IMPORT/EXPORT LOCAL ==========
 
 function handleFileSelect(event) {
   const file = event.target.files[0];
@@ -736,8 +1057,6 @@ function handleFileSelect(event) {
   };
   
   reader.readAsText(file);
-  
-  // Limpar input para permitir re-upload do mesmo arquivo
   event.target.value = '';
 }
 
@@ -745,7 +1064,6 @@ function parseCSV(csv) {
   const lines = csv.trim().split('\n');
   const data = {};
   
-  // Pular header
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
@@ -833,30 +1151,25 @@ function confirmImport() {
   
   try {
     if (mode === 'replace') {
-      // Limpar tudo e substituir
       localStorage.clear();
       Object.keys(importedData).forEach(key => {
         localStorage.setItem(key, JSON.stringify(importedData[key]));
       });
       alert('✓ Dados importados com sucesso!\n\nTodos os dados anteriores foram substituídos.');
     } else {
-      // Mesclar
       Object.keys(importedData).forEach(key => {
         const existing = localStorage.getItem(key);
         
         if (key === 'training_days') {
-          // Mesclar arrays de dias sem duplicar
           const existingDays = existing ? JSON.parse(existing) : [];
           const newDays = importedData[key];
           const merged = [...new Set([...existingDays, ...newDays])];
           localStorage.setItem(key, JSON.stringify(merged));
         } else if (existing) {
-          // Mesclar históricos de exercícios
           const existingData = JSON.parse(existing);
           const newData = importedData[key];
           
           if (newData.historico && existingData.historico) {
-            // Mesclar históricos sem duplicar datas
             const allRecords = [...existingData.historico, ...newData.historico];
             const uniqueRecords = {};
             allRecords.forEach(record => {
@@ -867,7 +1180,6 @@ function confirmImport() {
             existingData.historico = Object.values(uniqueRecords);
           }
           
-          // Manter peso mais recente
           if (newData.peso && newData.data) {
             if (!existingData.data || newData.data > existingData.data) {
               existingData.peso = newData.peso;
@@ -877,7 +1189,6 @@ function confirmImport() {
           
           localStorage.setItem(key, JSON.stringify(existingData));
         } else {
-          // Novo exercício, adicionar direto
           localStorage.setItem(key, JSON.stringify(importedData[key]));
         }
       });
@@ -887,7 +1198,11 @@ function confirmImport() {
     
     closeImportModal();
     
-    // Recarregar página para mostrar novos dados
+    // Fazer backup automático após importar
+    if (googleAccessToken) {
+      autoBackupToDrive();
+    }
+    
     window.location.reload();
     
   } catch (error) {
