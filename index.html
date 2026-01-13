@@ -1,886 +1,640 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Training Tracker</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a1a2e">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <style>
-        :root {
-            --bg-primary: #0f0f1e;
-            --bg-secondary: #1a1a2e;
-            --bg-tertiary: #252538;
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --accent: #00d9ff;
-            --accent-hover: #00b8d4;
-            --border: #2a2a3e;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --danger: #f44336;
-            --shadow: rgba(0, 0, 0, 0.3);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Gym App">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  
+  <title>Gym Training App</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <!-- Google API -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'gym-black': '#0a0a0a',
+            'gym-dark': '#121212',
+            'gym-card': '#1a1a1a',
+            'gym-border': '#2a2a2a',
+          }
         }
-
-        [data-theme="light"] {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f5f5f5;
-            --bg-tertiary: #e8e8e8;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
-            --accent: #0088cc;
-            --accent-hover: #006699;
-            --border: #d0d0d0;
-            --success: #2e7d32;
-            --warning: #f57c00;
-            --danger: #c62828;
-            --shadow: rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding: 20px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            background: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px var(--shadow);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        h1 {
-            color: var(--accent);
-            font-size: 1.8em;
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .theme-switch-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .theme-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-        }
-
-        .theme-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .theme-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--border);
-            transition: 0.3s;
-            border-radius: 30px;
-        }
-
-        .theme-slider:before {
-            position: absolute;
-            content: "🌙";
-            height: 24px;
-            width: 24px;
-            left: 3px;
-            bottom: 3px;
-            background-color: var(--bg-primary);
-            transition: 0.3s;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        input:checked + .theme-slider {
-            background-color: var(--accent);
-        }
-
-        input:checked + .theme-slider:before {
-            content: "☀️";
-            transform: translateX(30px);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .card {
-            background: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px var(--shadow);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-
-        button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 120px;
-        }
-
-        button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button.secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        button.secondary:hover {
-            background: var(--border);
-        }
-
-        button.danger {
-            background: var(--danger);
-        }
-
-        button.danger:hover {
-            background: #d32f2f;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .workout-entry {
-            background: var(--bg-tertiary);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--accent);
-        }
-
-        .workout-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .workout-date {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-        }
-
-        .exercise-list {
-            margin-top: 10px;
-        }
-
-        .exercise-item {
-            background: var(--bg-secondary);
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-
-        .exercise-name {
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 5px;
-        }
-
-        .set-info {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            margin-left: 10px;
-        }
-
-        .note-section {
-            background: var(--bg-secondary);
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 8px;
-            border-left: 3px solid var(--warning);
-        }
-
-        .note-text {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            font-style: italic;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .stat-card {
-            background: var(--bg-tertiary);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 2em;
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-
-        .tab-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-        }
-
-        .tab-button {
-            padding: 10px 20px;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            color: var(--text-primary);
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
-
-        .tab-button.active {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .delete-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .delete-btn:hover {
-            background: #d32f2f;
-        }
-
-        @media (max-width: 600px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-
-            header {
-                text-align: center;
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .status-message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .status-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .status-error {
-            background: var(--danger);
-            color: white;
-        }
-
-        .status-info {
-            background: var(--accent);
-            color: white;
-        }
-
-        #installPrompt {
-            background: linear-gradient(135deg, var(--accent), #0088cc);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px var(--shadow);
-        }
-
-        #installPrompt button {
-            background: white;
-            color: var(--accent);
-            padding: 8px 16px;
-            font-weight: 600;
-        }
-    </style>
+      }
+    }
+  </script>
+  
+  <style>
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 2s infinite;
+    }
+    
+    @keyframes flame {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.05); }
+    }
+    .animate-flame {
+      animation: flame 1s ease-in-out infinite;
+    }
+    
+    /* Fix para Chart.js no mobile */
+    canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>💪 Gym Training Tracker</h1>
-            <div class="header-actions">
-                <div class="theme-switch-wrapper">
-                    <label class="theme-switch">
-                        <input type="checkbox" id="themeToggle">
-                        <span class="theme-slider"></span>
-                    </label>
-                </div>
-            </div>
-        </header>
 
-        <div id="installPrompt" class="hidden">
-            <span>📱 Instalar app no seu dispositivo?</span>
-            <button onclick="installApp()">Instalar</button>
+<body class="bg-[#0d0d0d] text-gray-200 font-sans antialiased pb-24">
+  
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-gradient-to-r from-[#1a1a1a] to-[#1e1e1e] shadow-lg border-b border-[#2a2a2a]">
+    <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <h1 class="text-2xl font-bold text-white flex items-center gap-2">
+          <span class="text-3xl">🏋️</span>
+          <span class="hidden sm:inline">Gym Training</span>
+          <span class="sm:hidden">Treino</span>
+        </h1>
+        
+        <!-- Streak Badge -->
+        <div id="streakBadge" class="hidden px-3 py-1.5 bg-gradient-to-r from-orange-600 to-red-600 rounded-lg border-2 border-orange-400 shadow-lg">
+          <div class="flex items-center gap-1.5">
+            <span class="text-xl animate-flame">🔥</span>
+            <span id="streakCount" class="text-white font-bold text-sm">0</span>
+          </div>
         </div>
+      </div>
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Botão Analytics -->
+        <button id="toggleAnalyticsBtn" onclick="showView('analytics')" 
+          class="px-3 sm:px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+          <span>📊</span>
+          <span class="hidden sm:inline">Analytics</span>
+        </button>
 
-        <div class="tab-buttons">
-            <div class="tab-button active" onclick="switchTab('log')">📝 Registrar Treino</div>
-            <div class="tab-button" onclick="switchTab('history')">📊 Histórico</div>
-            <div class="tab-button" onclick="switchTab('stats')">📈 Estatísticas</div>
-            <div class="tab-button" onclick="switchTab('backup')">☁️ Backup</div>
-        </div>
-
-        <div id="logTab" class="tab-content active">
-            <div class="card">
-                <h2>Registrar Novo Treino</h2>
-                <input type="date" id="workoutDate" />
-                
-                <h3 style="margin-top: 20px;">Exercícios</h3>
-                <div id="exerciseInputs"></div>
-                <button onclick="addExerciseInput()" class="secondary">+ Adicionar Exercício</button>
-                <button onclick="saveWorkout()" style="margin-top: 15px;">💾 Salvar Treino</button>
-            </div>
-        </div>
-
-        <div id="historyTab" class="tab-content">
-            <div class="card">
-                <h2>Histórico de Treinos</h2>
-                <div id="workoutHistory"></div>
-            </div>
-        </div>
-
-        <div id="statsTab" class="tab-content">
-            <div class="card">
-                <h2>Estatísticas</h2>
-                <div class="stats-grid" id="statsContainer"></div>
-            </div>
-        </div>
-
-        <div id="backupTab" class="tab-content">
-            <div class="card">
-                <h2>Backup e Restauração</h2>
-                <div id="backupStatus"></div>
-                
-                <h3>Google Drive (Auto-Backup)</h3>
-                <div class="button-group">
-                    <button onclick="authenticateGoogleDrive()">🔐 Conectar Google Drive</button>
-                    <button onclick="backupToGoogleDrive()" class="secondary">☁️ Backup Manual</button>
-                    <button onclick="restoreFromGoogleDrive()" class="secondary">📥 Restaurar do Drive</button>
-                </div>
-
-                <h3 style="margin-top: 25px;">Backup Local</h3>
-                <div class="button-group">
-                    <button onclick="exportToJSON()" class="secondary">💾 Exportar JSON</button>
-                    <button onclick="exportToCSV()" class="secondary">📄 Exportar CSV</button>
-                </div>
-
-                <h3 style="margin-top: 25px;">Importar Dados</h3>
-                <input type="file" id="importFile" accept=".json,.csv" style="margin-bottom: 10px;" />
-                <button onclick="importData()" class="secondary">📂 Importar Arquivo</button>
-
-                <h3 style="margin-top: 25px;">⚠️ Zona de Perigo</h3>
-                <button onclick="clearAllData()" class="danger">🗑️ Limpar Todos os Dados</button>
-            </div>
-        </div>
+        <!-- Botão Settings -->
+        <button id="toggleSettingsBtn" onclick="showView('settings')" 
+          class="px-3 sm:px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+          <span>⚙️</span>
+          <span class="hidden sm:inline">Settings</span>
+        </button>
+        
+        <!-- Seletor de dias (só aparece na view de treino) -->
+        <select id="daySelector" 
+          class="px-3 sm:px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold text-sm sm:text-base cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+        </select>
+      </div>
     </div>
+  </header>
 
-    <script>
-        // Theme Management
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'dark';
+  <!-- WORKOUT VIEW -->
+  <div id="workoutView">
+    <main class="max-w-4xl mx-auto px-4 py-6">
+      <div id="workout"></div>
+    </main>
 
-        // Set initial theme
-        if (currentTheme === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-            themeToggle.checked = true;
-        }
+    <!-- Timer Section -->
+    <section class="max-w-4xl mx-auto px-4 mb-6">
+      <div class="bg-gradient-to-br from-[#1a1a2e] to-[#2a2a3e] rounded-2xl p-6 shadow-xl border border-[#3a3a3a]">
+        <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <span class="text-2xl">⏱</span>
+          Timer de Descanso
+        </h2>
+        
+        <div class="flex flex-wrap gap-3 justify-center mb-4">
+          <button onclick="startTimer(60)" 
+            class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
+            60s
+          </button>
+          <button onclick="startTimer(90)" 
+            class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
+            90s
+          </button>
+          <button onclick="startTimer(120)" 
+            class="px-6 py-3 bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white font-semibold rounded-lg transition-all active:scale-95 border-2 border-[#4a4a4a]">
+            120s
+          </button>
+        </div>
+        
+        <div id="timerDisplay" 
+          class="text-4xl font-bold text-[#4a9eff] text-center min-h-[3rem] flex items-center justify-center">
+        </div>
+      </div>
+    </section>
+  </div>
 
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
+  <!-- ANALYTICS VIEW (inicialmente escondida) -->
+  <div id="analyticsView" class="hidden">
+    <main class="max-w-6xl mx-auto px-4 py-6">
+      
+      <!-- Botão voltar -->
+      <button onclick="showView('workout')" 
+        class="mb-6 px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+        <span>←</span>
+        <span>Voltar ao Treino</span>
+      </button>
 
-        // PWA Installation
-        let deferredPrompt;
+      <!-- Estatísticas gerais -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Total de Treinos</div>
+          <div id="totalWorkouts" class="text-3xl font-bold text-white">0</div>
+        </div>
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Média Semanal</div>
+          <div id="weeklyAvg" class="text-3xl font-bold text-[#4a9eff]">0</div>
+        </div>
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Esta Semana</div>
+          <div id="thisWeek" class="text-3xl font-bold text-green-400">0</div>
+        </div>
+        <div class="bg-[#1a1a1a] rounded-xl p-4 border border-[#2a2a2a]">
+          <div class="text-gray-400 text-sm mb-1">Este Mês</div>
+          <div id="thisMonth" class="text-3xl font-bold text-[#ffaa66]">0</div>
+        </div>
+      </div>
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installPrompt').classList.remove('hidden');
-        });
+      <!-- Card de Streak -->
+      <div class="bg-gradient-to-br from-orange-950/30 to-red-950/30 rounded-2xl p-6 border-2 border-orange-800/30 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span class="text-3xl animate-flame">🔥</span>
+            Streak de Treinos
+          </h2>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-[#1a1a1a]/50 rounded-xl p-4 border border-orange-800/20">
+            <div class="text-orange-300 text-sm mb-1">Streak Atual</div>
+            <div id="currentStreakDisplay" class="text-4xl font-bold text-white flex items-center gap-2">
+              <span>0</span>
+              <span class="text-2xl">dias</span>
+            </div>
+          </div>
+          
+          <div class="bg-[#1a1a1a]/50 rounded-xl p-4 border border-orange-800/20">
+            <div class="text-orange-300 text-sm mb-1">Melhor Streak</div>
+            <div id="bestStreakDisplay" class="text-4xl font-bold text-orange-400 flex items-center gap-2">
+              <span>0</span>
+              <span class="text-2xl">dias</span>
+            </div>
+          </div>
+          
+          <div class="bg-[#1a1a1a]/50 rounded-xl p-4 border border-orange-800/20">
+            <div class="text-orange-300 text-sm mb-1">Último Treino</div>
+            <div id="lastWorkoutDisplay" class="text-lg font-bold text-white">
+              -
+            </div>
+          </div>
+        </div>
 
-        async function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                document.getElementById('installPrompt').classList.add('hidden');
-            }
-        }
+        <div id="streakMessage" class="mt-4 p-3 bg-orange-900/20 border border-orange-800/30 rounded-lg text-center text-orange-200 text-sm">
+          <!-- Mensagem motivacional -->
+        </div>
+      </div>
 
-        // Data Storage
-        let workouts = JSON.parse(localStorage.getItem('workouts')) || [];
-        let googleDriveToken = localStorage.getItem('googleDriveToken');
+      <!-- Gráfico de frequência -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
+        <h2 class="text-xl font-bold text-white mb-4">📅 Frequência de Treinos</h2>
+        <div class="w-full" style="position: relative; height: 300px;">
+          <canvas id="frequencyChart"></canvas>
+        </div>
+      </div>
 
-        // Initialize
-        document.getElementById('workoutDate').valueAsDate = new Date();
-        addExerciseInput();
-        loadWorkoutHistory();
-        updateStats();
+      <!-- Seletor de exercício + Gráfico de progressão -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a]">
+        <h2 class="text-xl font-bold text-white mb-4">📈 Progressão de Carga</h2>
+        
+        <!-- Filtros -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Dia do Treino</label>
+            <select id="dayFilter" onchange="filterExercises()"
+              class="w-full px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+              <option value="">Todos os dias</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Grupo Muscular</label>
+            <select id="muscleFilter" onchange="filterExercises()"
+              class="w-full px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+              <option value="">Todos os grupos</option>
+            </select>
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-2">Exercício</label>
+          <select id="exerciseSelector" onchange="updateProgressChart()"
+            class="w-full px-4 py-2.5 bg-[#2a2a2a] text-white border-2 border-[#3a3a3a] rounded-lg font-semibold cursor-pointer transition-all hover:border-[#4a9eff] focus:outline-none focus:ring-2 focus:ring-[#4a9eff]">
+            <option value="">Selecione um exercício</option>
+          </select>
+        </div>
+        
+        <div class="mt-6">
+          <div id="emptyChartPlaceholder" class="hidden rounded-xl bg-[#0d0d0d] border-2 border-dashed border-[#3a3a3a] p-8 sm:p-12 flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
+            <div class="text-center max-w-md px-4 sm:px-6">
+              <div class="text-5xl sm:text-6xl mb-3 sm:mb-4">📊</div>
+              <h3 class="text-lg sm:text-xl font-bold text-white mb-2">Nenhum dado registrado ainda</h3>
+              <p class="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                Comece a registrar o peso deste exercício nos seus treinos e o gráfico de progressão aparecerá aqui automaticamente.
+              </p>
+            </div>
+          </div>
+          
+          <div id="progressChartContainer" class="hidden w-full" style="position: relative; height: 300px;">
+            <canvas id="progressChart"></canvas>
+          </div>
+        </div>
+      </div>
 
-        if (googleDriveToken) {
-            showStatus('backupStatus', 'Conectado ao Google Drive', 'success');
-        }
+    </main>
+  </div>
 
-        // Tab Management
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+  <!-- SETTINGS VIEW (mesmo código anterior) -->
+  <div id="settingsView" class="hidden">
+    <main class="max-w-4xl mx-auto px-4 py-6">
+      
+      <!-- Botão voltar -->
+      <button onclick="showView('workout')" 
+        class="mb-6 px-4 py-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a] flex items-center gap-2">
+        <span>←</span>
+        <span>Voltar ao Treino</span>
+      </button>
+
+      <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+        <span class="text-4xl">⚙️</span>
+        Configurações
+      </h2>
+
+      <!-- Card de informações -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
+        <h3 class="text-xl font-bold text-white mb-4">📊 Seus Dados</h3>
+        <div class="space-y-3 text-gray-300">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400">Total de exercícios registrados:</span>
+            <span id="totalExercises" class="font-bold text-white">0</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400">Total de treinos realizados:</span>
+            <span id="totalTrainings" class="font-bold text-white">0</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-400">Dados ocupando no navegador:</span>
+            <span id="storageSize" class="font-bold text-white">0 KB</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card de Backup/Restore -->
+      <div class="bg-[#1a1a1a] rounded-2xl p-6 border border-[#2a2a2a] mb-6">
+        <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <span>💾</span>
+          Backup & Restauração
+        </h3>
+        <p class="text-gray-400 text-sm mb-6">
+          Faça backup dos seus dados localmente ou na nuvem.
+        </p>
+
+        <!-- Google Drive Status -->
+        <div id="driveStatus" class="mb-6 p-4 bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">☁️</span>
+              <span class="text-white font-semibold">Google Drive</span>
+            </div>
+            <span id="driveStatusBadge" class="px-3 py-1 bg-gray-700 text-gray-300 text-xs font-bold rounded-full">
+              Desconectado
+            </span>
+          </div>
+          
+          <div id="driveInfo" class="hidden text-sm text-gray-400 space-y-1">
+            <div class="flex justify-between">
+              <span>Último backup:</span>
+              <span id="lastBackupTime" class="text-white font-semibold">-</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Backups disponíveis:</span>
+              <span id="backupCount" class="text-white font-semibold">0</span>
+            </div>
+          </div>
+
+          <button id="driveConnectBtn" onclick="handleDriveAuth()" 
+            class="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all">
+            Conectar ao Google Drive
+          </button>
+
+          <button id="driveDisconnectBtn" onclick="disconnectDrive()" 
+            class="hidden w-full mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all">
+            Desconectar
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Backup Manual para Drive -->
+          <button id="manualBackupBtn" onclick="manualBackupToDrive()" disabled
+            class="px-6 py-3 bg-[#2a3a4a] text-blue-300 font-bold rounded-lg transition-all border-2 border-blue-800 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#3a4a5a] disabled:hover:bg-[#2a3a4a]">
+            <span>☁️</span>
+            <span>Backup p/ Drive</span>
+          </button>
+
+          <!-- Restaurar do Drive -->
+          <button id="restoreBtn" onclick="restoreFromDrive()" disabled
+            class="px-6 py-3 bg-[#3a2a4a] text-purple-300 font-bold rounded-lg transition-all border-2 border-purple-800 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#4a3a5a] disabled:hover:bg-[#3a2a4a]">
+            <span>📥</span>
+            <span>Restaurar do Drive</span>
+          </button>
+
+          <!-- Importar Local -->
+          <div>
+            <input 
+              type="file" 
+              id="importFileInput" 
+              accept=".json,.csv"
+              class="hidden"
+              onchange="handleFileSelect(event)">
             
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
-        }
+            <button onclick="document.getElementById('importFileInput').click()" 
+              class="w-full px-6 py-3 bg-[#2a4a2a] hover:bg-[#3a5a3a] text-green-300 font-bold rounded-lg transition-all active:scale-95 border-2 border-green-800 flex items-center justify-center gap-2">
+              <span>📥</span>
+              <span>Importar Local</span>
+            </button>
+          </div>
 
-        // Exercise Input Management
-        function addExerciseInput() {
-            const container = document.getElementById('exerciseInputs');
-            const exerciseDiv = document.createElement('div');
-            exerciseDiv.className = 'workout-entry';
-            exerciseDiv.innerHTML = `
-                <input type="text" placeholder="Nome do exercício" class="exercise-name-input" />
-                <div id="sets-${Date.now()}"></div>
-                <button onclick="addSetInput(this)" class="secondary">+ Adicionar Série</button>
-                <textarea placeholder="Observações sobre este exercício (opcional)" class="exercise-note" rows="2"></textarea>
-                <button onclick="this.parentElement.remove()" class="delete-btn" style="margin-top: 10px;">Remover Exercício</button>
-            `;
-            container.appendChild(exerciseDiv);
-            addSetInput(exerciseDiv.querySelector('button'));
-        }
+          <!-- Exportar Local -->
+          <div>
+            <button onclick="exportJSON()" 
+              class="w-full px-6 py-3 bg-[#2a2a4a] hover:bg-[#3a3a5a] text-blue-300 font-bold rounded-lg transition-all active:scale-95 border-2 border-blue-800 flex items-center justify-center gap-2">
+              <span>💾</span>
+              <span>Exportar Local</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
-        function addSetInput(button) {
-            const setsContainer = button.previousElementSibling;
-            const setDiv = document.createElement('div');
-            setDiv.className = 'form-row';
-            setDiv.innerHTML = `
-                <input type="number" placeholder="Repetições" min="1" />
-                <input type="number" placeholder="Peso (kg)" step="0.5" min="0" />
-                <button onclick="this.parentElement.remove()" class="delete-btn">Remover</button>
-            `;
-            setsContainer.appendChild(setDiv);
-        }
+      <!-- Zona de perigo -->
+      <div class="bg-red-950/20 border-2 border-red-800/50 rounded-2xl p-6">
+        <h3 class="text-xl font-bold text-red-400 mb-2 flex items-center gap-2">
+          <span>⚠️</span>
+          Zona de Perigo
+        </h3>
+        <p class="text-gray-400 text-sm mb-6">
+          As ações abaixo são irreversíveis. Tenha certeza antes de prosseguir.
+        </p>
 
-        // Save Workout
-        function saveWorkout() {
-            const date = document.getElementById('workoutDate').value;
-            if (!date) {
-                alert('Por favor, selecione uma data');
-                return;
-            }
+        <button onclick="showResetModal()" 
+          class="w-full sm:w-auto px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all active:scale-95 border-2 border-red-500">
+          🗑️ Resetar Todos os Dados
+        </button>
+      </div>
 
-            const exercises = [];
-            document.querySelectorAll('#exerciseInputs .workout-entry').forEach(entry => {
-                const name = entry.querySelector('.exercise-name-input').value;
-                const note = entry.querySelector('.exercise-note').value;
-                if (!name) return;
+    </main>
+  </div>
 
-                const sets = [];
-                entry.querySelectorAll('.form-row').forEach(setRow => {
-                    const inputs = setRow.querySelectorAll('input');
-                    const reps = parseInt(inputs[0].value);
-                    const weight = parseFloat(inputs[1].value);
-                    if (reps && weight >= 0) {
-                        sets.push({ reps, weight });
-                    }
-                });
+  <!-- Modal de Calculadora 1RM -->
+  <div id="oneRMModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+        <span class="text-3xl">💪</span>
+        Calculadora de 1RM
+      </h3>
+      
+      <div id="oneRMExerciseName" class="text-lg text-gray-300 mb-6"></div>
+      
+      <!-- Inputs para calcular -->
+      <div class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-6 mb-6">
+        <h4 class="text-lg font-bold text-white mb-4">Calcular 1RM</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Peso usado (kg)</label>
+            <input 
+              type="number" 
+              id="oneRMWeight" 
+              step="0.5"
+              placeholder="Ex: 80"
+              class="w-full px-4 py-3 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-center font-bold transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Repetições feitas</label>
+            <input 
+              type="number" 
+              id="oneRMReps" 
+              min="1"
+              max="12"
+              placeholder="Ex: 8"
+              class="w-full px-4 py-3 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-center font-bold transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+          </div>
+        </div>
+        <button onclick="calculate1RM()" 
+          class="w-full px-6 py-3 bg-[#4a9eff] hover:bg-[#3a8eef] text-white font-bold rounded-lg transition-all">
+          Calcular
+        </button>
+      </div>
 
-                if (sets.length > 0) {
-                    exercises.push({ name, sets, note: note || null });
-                }
-            });
+      <!-- Resultado -->
+      <div id="oneRMResult" class="hidden bg-gradient-to-br from-blue-950/30 to-purple-950/30 border-2 border-blue-800/30 rounded-lg p-6 mb-6">
+        <div class="text-center mb-6">
+          <div class="text-gray-400 text-sm mb-1">Seu 1RM estimado é:</div>
+          <div id="oneRMValue" class="text-5xl font-bold text-white mb-2">0 kg</div>
+          <div class="text-gray-400 text-xs">(Média das fórmulas Epley e Brzycki)</div>
+        </div>
 
-            if (exercises.length === 0) {
-                alert('Adicione pelo menos um exercício com séries');
-                return;
-            }
+        <!-- Sugestões de carga -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div class="bg-[#1a1a1a]/50 rounded-lg p-4 border border-blue-800/20">
+            <div class="text-blue-300 text-xs mb-1">💪 FORÇA (85-100%)</div>
+            <div id="strengthRange" class="text-xl font-bold text-white">0-0 kg</div>
+            <div class="text-gray-400 text-xs mt-1">1-5 reps</div>
+          </div>
+          
+          <div class="bg-[#1a1a1a]/50 rounded-lg p-4 border border-blue-800/20">
+            <div class="text-purple-300 text-xs mb-1">📈 HIPERTROFIA (67-85%)</div>
+            <div id="hypertrophyRange" class="text-xl font-bold text-white">0-0 kg</div>
+            <div class="text-gray-400 text-xs mt-1">6-12 reps</div>
+          </div>
+          
+          <div class="bg-[#1a1a1a]/50 rounded-lg p-4 border border-blue-800/20">
+            <div class="text-green-300 text-xs mb-1">🏃 RESISTÊNCIA (50-67%)</div>
+            <div id="enduranceRange" class="text-xl font-bold text-white">0-0 kg</div>
+            <div class="text-gray-400 text-xs mt-1">12-20 reps</div>
+          </div>
+        </div>
 
-            workouts.push({
-                id: Date.now(),
-                date,
-                exercises,
-                timestamp: new Date().toISOString()
-            });
+        <!-- Info adicional -->
+        <div class="bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-3 text-center text-yellow-200 text-xs">
+          ⚠️ Estes valores são estimativas. Sempre priorize a técnica e segurança.
+        </div>
+      </div>
 
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-            
-            // Clear inputs
-            document.getElementById('exerciseInputs').innerHTML = '';
-            addExerciseInput();
-            document.getElementById('workoutDate').valueAsDate = new Date();
+      <!-- Histórico de 1RM -->
+      <div id="oneRMHistory" class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-6 mb-6">
+        <h4 class="text-lg font-bold text-white mb-4">📊 Evolução do 1RM</h4>
+        <div id="oneRMChartContainer" class="w-full" style="position: relative; height: 250px;">
+          <canvas id="oneRMChart"></canvas>
+        </div>
+      </div>
 
-            loadWorkoutHistory();
-            updateStats();
-            alert('✅ Treino salvo com sucesso!');
+      <button onclick="closeOneRMModal()" 
+        class="w-full px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a]">
+        Fechar
+      </button>
+    </div>
+  </div>
 
-            // Auto-backup to Google Drive if connected
-            if (googleDriveToken) {
-                backupToGoogleDrive(true);
-            }
-        }
+  <!-- Modal de Notas do Exercício -->
+  <div id="notesModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-3xl">📝</span>
+        Notas do Exercício
+      </h3>
+      
+      <div id="notesExerciseName" class="text-lg text-gray-300 mb-6"></div>
+      
+      <div id="notesHistory" class="space-y-3 mb-6">
+        <!-- Notas serão inseridas aqui -->
+      </div>
 
-        // Load Workout History
-        function loadWorkoutHistory() {
-            const container = document.getElementById('workoutHistory');
-            if (workouts.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">Nenhum treino registrado ainda</p>';
-                return;
-            }
+      <button onclick="closeNotesModal()" 
+        class="w-full px-4 py-3 bg-[#4a9eff] hover:bg-[#3a8eef] text-white font-bold rounded-lg transition-all">
+        Fechar
+      </button>
+    </div>
+  </div>
 
-            container.innerHTML = workouts
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .map(workout => `
-                    <div class="workout-entry">
-                        <div class="workout-header">
-                            <strong>${new Date(workout.date).toLocaleDateString('pt-BR')}</strong>
-                            <button class="delete-btn" onclick="deleteWorkout(${workout.id})">🗑️ Excluir</button>
-                        </div>
-                        <div class="exercise-list">
-                            ${workout.exercises.map(ex => `
-                                <div class="exercise-item">
-                                    <div class="exercise-name">${ex.name}</div>
-                                    ${ex.sets.map((set, i) => `
-                                        <span class="set-info">Série ${i + 1}: ${set.reps} reps × ${set.weight}kg</span>
-                                    `).join('')}
-                                    ${ex.note ? `
-                                        <div class="note-section">
-                                            <div class="note-text">📝 ${ex.note}</div>
-                                        </div>
-                                    ` : ''}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `).join('');
-        }
+  <!-- Demais modais (Import, Reset) iguais ao anterior -->
+  <!-- Modal de Preview de Import -->
+  <div id="importModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-3xl">📥</span>
+        Importar Dados
+      </h3>
+      
+      <div id="importPreview" class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-4 mb-6">
+      </div>
 
-        // Delete Workout
-        function deleteWorkout(id) {
-            if (confirm('Tem certeza que deseja excluir este treino?')) {
-                workouts = workouts.filter(w => w.id !== id);
-                localStorage.setItem('workouts', JSON.stringify(workouts));
-                loadWorkoutHistory();
-                updateStats();
-                if (googleDriveToken) {
-                    backupToGoogleDrive(true);
-                }
-            }
-        }
+      <div class="mb-6">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input 
+            type="radio" 
+            name="importMode" 
+            value="replace" 
+            checked
+            class="w-5 h-5 cursor-pointer accent-[#4a9eff]">
+          <div>
+            <span class="text-white font-semibold">Substituir dados existentes</span>
+            <p class="text-gray-400 text-sm">Apaga tudo e substitui pelos novos dados</p>
+          </div>
+        </label>
+        
+        <label class="flex items-center gap-3 cursor-pointer mt-4">
+          <input 
+            type="radio" 
+            name="importMode" 
+            value="merge"
+            class="w-5 h-5 cursor-pointer accent-[#4a9eff]">
+          <div>
+            <span class="text-white font-semibold">Mesclar com dados existentes</span>
+            <p class="text-gray-400 text-sm">Mantém dados atuais e adiciona os novos</p>
+          </div>
+        </label>
+      </div>
 
-        // Update Statistics
-        function updateStats() {
-            const container = document.getElementById('statsContainer');
-            const totalWorkouts = workouts.length;
-            const totalExercises = workouts.reduce((sum, w) => sum + w.exercises.length, 0);
-            const totalSets = workouts.reduce((sum, w) => 
-                sum + w.exercises.reduce((exSum, ex) => exSum + ex.sets.length, 0), 0
-            );
-            const totalVolume = workouts.reduce((sum, w) => 
-                sum + w.exercises.reduce((exSum, ex) => 
-                    exSum + ex.sets.reduce((setSum, set) => setSum + (set.reps * set.weight), 0), 0), 0
-            );
+      <div class="flex gap-3">
+        <button onclick="closeImportModal()" 
+          class="flex-1 px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a]">
+          Cancelar
+        </button>
+        <button id="confirmImportBtn" onclick="confirmImport()"
+          class="flex-1 px-4 py-3 bg-[#4a9eff] hover:bg-[#3a8eef] text-white font-bold rounded-lg transition-all">
+          Confirmar Importação
+        </button>
+      </div>
+    </div>
+  </div>
 
-            container.innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-value">${totalWorkouts}</div>
-                    <div class="stat-label">Total de Treinos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${totalExercises}</div>
-                    <div class="stat-label">Exercícios Realizados</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${totalSets}</div>
-                    <div class="stat-label">Séries Completadas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${totalVolume.toFixed(0)}</div>
-                    <div class="stat-label">Volume Total (kg)</div>
-                </div>
-            `;
-        }
+  <!-- Modal de Confirmação de Reset -->
+  <div id="resetModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-red-600/50 rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl">
+      <h3 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <span class="text-3xl">⚠️</span>
+        Confirmar Reset
+      </h3>
+      
+      <div class="bg-red-950/30 border border-red-800/30 rounded-lg p-4 mb-6">
+        <p class="text-red-300 text-sm font-semibold mb-2">Esta ação irá apagar permanentemente:</p>
+        <ul class="text-red-200 text-sm space-y-1 list-disc list-inside">
+          <li>Todos os pesos registrados</li>
+          <li>Todo o histórico de treinos</li>
+          <li>Todas as progressões de carga</li>
+          <li>Exercícios marcados como concluídos</li>
+        </ul>
+      </div>
 
-        // Status Messages
-        function showStatus(elementId, message, type) {
-            const element = document.getElementById(elementId);
-            element.innerHTML = `<div class="status-message status-${type}">${message}</div>`;
-            setTimeout(() => element.innerHTML = '', 5000);
-        }
+      <p class="text-gray-300 mb-4">
+        Para confirmar, digite <span class="font-bold text-red-400">RESETAR</span> no campo abaixo:
+      </p>
 
-        // Export Functions
-        function exportToJSON() {
-            const dataStr = JSON.stringify(workouts, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `gym-workouts-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-        }
+      <input 
+        type="text" 
+        id="resetConfirmInput" 
+        placeholder="Digite RESETAR"
+        class="w-full px-4 py-3 bg-[#2a2a2a] border-2 border-[#3a3a3a] rounded-lg text-white font-mono text-center text-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent mb-6"
+        onkeyup="checkResetInput(event)">
 
-        function exportToCSV() {
-            let csv = 'Data,Exercício,Série,Repetições,Peso (kg),Observação\n';
-            workouts.forEach(workout => {
-                workout.exercises.forEach(exercise => {
-                    exercise.sets.forEach((set, index) => {
-                        csv += `${workout.date},${exercise.name},${index + 1},${set.reps},${set.weight},"${exercise.note || ''}"\n`;
-                    });
-                });
-            });
+      <div class="flex gap-3">
+        <button onclick="closeResetModal()" 
+          class="flex-1 px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a]">
+          Cancelar
+        </button>
+        <button id="confirmResetBtn" onclick="confirmReset()" disabled
+          class="flex-1 px-4 py-3 bg-red-600 text-white font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-red-700 disabled:hover:bg-red-600">
+          Confirmar Reset
+        </button>
+      </div>
+    </div>
+  </div>
 
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `gym-workouts-${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-        }
+  <!-- Footer -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-[#1a1a1a] border-t border-[#2a2a2a] shadow-2xl">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex gap-3 justify-center">
+      <button onclick="exportCSV()" 
+        class="flex-1 max-w-[200px] px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all active:scale-95 border border-[#3a3a3a] flex items-center justify-center gap-2">
+        <span>📊</span>
+        <span>CSV</span>
+      </button>
+      <button onclick="exportJSON()" 
+        class="flex-1 max-w-[200px] px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all active:scale-95 border border-[#3a3a3a] flex items-center justify-center gap-2">
+        <span>💾</span>
+        <span>JSON</span>
+      </button>
+    </div>
+  </footer>
 
-        // Import Function
-        function importData() {
-            const file = document.getElementById('importFile').files[0];
-            if (!file) {
-                alert('Selecione um arquivo para importar');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const imported = JSON.parse(e.target.result);
-                    if (Array.isArray(imported)) {
-                        if (confirm(`Importar ${imported.length} treinos? Isso irá ADICIONAR aos dados existentes.`)) {
-                            workouts = [...workouts, ...imported];
-                            localStorage.setItem('workouts', JSON.stringify(workouts));
-                            loadWorkoutHistory();
-                            updateStats();
-                            alert('✅ Dados importados com sucesso!');
-                        }
-                    }
-                } catch (error) {
-                    alert('❌ Erro ao importar arquivo. Verifique o formato.');
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        // Clear All Data
-        function clearAllData() {
-            if (confirm('⚠️ ATENÇÃO: Isso irá apagar TODOS os seus dados permanentemente. Tem certeza?')) {
-                if (confirm('Última confirmação: Todos os treinos serão perdidos. Continuar?')) {
-                    workouts = [];
-                    localStorage.clear();
-                    loadWorkoutHistory();
-                    updateStats();
-                    alert('Todos os dados foram removidos.');
-                }
-            }
-        }
-
-        // Google Drive Functions
-        const GOOGLE_CLIENT_ID = 'YOUR_CLIENT_ID_HERE'; // Substitua pelo seu Client ID
-        const GOOGLE_API_KEY = 'YOUR_API_KEY_HERE'; // Substitua pela sua API Key
-        const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
-        const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-
-        function authenticateGoogleDrive() {
-            gapi.load('client:auth2', async () => {
-                await gapi.client.init({
-                    apiKey: GOOGLE_API_KEY,
-                    clientId: GOOGLE_CLIENT_ID,
-                    discoveryDocs: [DISCOVERY_DOC],
-                    scope: SCOPES
-                });
-
-                const authInstance = gapi.auth2.getAuthInstance();
-                if (!authInstance.isSignedIn.get()) {
-                    await authInstance.signIn();
-                }
-
-                const token = gapi.auth.getToken().access_token;
-                localStorage.setItem('googleDriveToken', token);
-                googleDriveToken = token;
-                showStatus('backupStatus', '✅ Conectado ao Google Drive com sucesso!', 'success');
-            });
-        }
-
-        async function backupToGoogleDrive(silent = false) {
-            if (!googleDriveToken) {
-                if (!silent) alert('Primeiro conecte ao Google Drive');
-                return;
-            }
-
-            const data = JSON.stringify(workouts, null, 2);
-            const metadata = {
-                name: 'gym-training-backup.json',
-                mimeType: 'application/json'
-            };
-
-            const form = new FormData();
-            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-            form.append('file', new Blob([data], { type: 'application/json' }));
-
-            try {
-                const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${googleDriveToken}` },
-                    body: form
-                });
-
-                if (response.ok) {
-                    if (!silent) showStatus('backupStatus', '✅ Backup realizado com sucesso!', 'success');
-                } else {
-                    throw new Error('Backup failed');
-                }
-            } catch (error) {
-                if (!silent) showStatus('backupStatus', '❌ Erro ao fazer backup', 'error');
-            }
-        }
-
-        async function restoreFromGoogleDrive() {
-            if (!googleDriveToken) {
-                alert('Primeiro conecte ao Google Drive');
-                return;
-            }
-
-            // Implementation for restore would go here
-            alert('Função de restauração em desenvolvimento');
-        }
-
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker registered'))
-                .catch(err => console.log('Service Worker registration failed'));
-        }
-    </script>
-    <script src="https://apis.google.com/js/api.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
