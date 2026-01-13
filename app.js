@@ -13,6 +13,11 @@ const GOOGLE_CLIENT_ID = '109415433089-ofclj565qlh8e7snf8373d27mhiopvut.apps.goo
 const GOOGLE_SCOPES = 'https://www.googleapis.com/auth/drive.file';
 const BACKUP_FOLDER_NAME = 'GymTrainingBackups';
 
+// Calculadora 1RM
+let oneRMChart = null;
+let currentExerciseKey = null;
+let currentExerciseReps = null;
+
 const mapDia = {
   "domingo": "domingo",
   "segunda-feira": "segunda",
@@ -143,12 +148,18 @@ function renderWorkout(dia) {
         <div class="flex-1">
           <div class="flex items-start justify-between mb-2">
             <h3 class="text-lg font-bold text-white">${ex.nome}</h3>
-            ${notesCount > 0 ? `
-              <button onclick="showNotesModal('${key}', '${ex.nome}')" 
-                class="px-2 py-1 bg-[#2a3a4a] hover:bg-[#3a4a5a] text-[#4a9eff] text-xs font-bold rounded-md border border-[#4a9eff]/30 transition-all flex items-center gap-1">
-                📝 ${notesCount}
+            <div class="flex gap-2">
+              ${notesCount > 0 ? `
+                <button onclick="showNotesModal('${key}', '${ex.nome}')" 
+                  class="px-2 py-1 bg-[#2a3a4a] hover:bg-[#3a4a5a] text-[#4a9eff] text-xs font-bold rounded-md border border-[#4a9eff]/30 transition-all flex items-center gap-1">
+                  📝 ${notesCount}
+                </button>
+              ` : ''}
+              <button onclick="showOneRMModal('${key}', '${ex.nome}', ${ex.series}, ${ex.reps})" 
+                class="px-2 py-1 bg-[#2a2a4a] hover:bg-[#3a3a5a] text-purple-300 text-xs font-bold rounded-md border border-purple-800/30 transition-all flex items-center gap-1">
+                💪 1RM
               </button>
-            ` : ''}
+            </div>
           </div>
           
           <div class="flex flex-wrap gap-2 mb-2">
@@ -258,10 +269,215 @@ function saveTrainingDay() {
     history.push(today);
     localStorage.setItem("training_days", JSON.stringify(history));
     
-    // Atualizar streak
     updateStreak();
     updateStreakBadge();
   }
+}
+
+// ========== CALCULADORA 1RM ==========
+
+function showOneRMModal(exerciseKey, exerciseName, series, reps) {
+  const modal = document.getElementById('oneRMModal');
+  const nameEl = document.getElementById('oneRMExerciseName');
+  const resultDiv = document.getElementById('oneRMResult');
+  
+  if (!modal || !nameEl) return;
+  
+  currentExerciseKey = exerciseKey;
+  currentExerciseReps = reps;
+  
+  nameEl.textContent = exerciseName;
+  
+  document.getElementById('oneRMWeight').value = '';
+  document.getElementById('oneRMReps').value = reps;
+  
+  if (resultDiv) {
+    resultDiv.classList.add('hidden');
+  }
+  
+  renderOneRMHistory(exerciseKey);
+  
+  modal.classList.remove('hidden');
+}
+
+function closeOneRMModal() {
+  const modal = document.getElementById('oneRMModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+  
+  if (oneRMChart) {
+    oneRMChart.destroy();
+    oneRMChart = null;
+  }
+  
+  currentExerciseKey = null;
+  currentExerciseReps = null;
+}
+
+function calculate1RM() {
+  const weightInput = document.getElementById('oneRMWeight');
+  const repsInput = document.getElementById('oneRMReps');
+  const resultDiv = document.getElementById('oneRMResult');
+  const valueEl = document.getElementById('oneRMValue');
+  const strengthEl = document.getElementById('strengthRange');
+  const hypertrophyEl = document.getElementById('hypertrophyRange');
+  const enduranceEl = document.getElementById('enduranceRange');
+  
+  if (!weightInput || !repsInput || !resultDiv) return;
+  
+  const weight = parseFloat(weightInput.value);
+  const reps = parseInt(repsInput.value);
+  
+  if (!weight || !reps || weight <= 0 || reps < 1 || reps > 12) {
+    alert('⚠️ Por favor, insira valores válidos!\n\nPeso: maior que 0\nReps: entre 1 e 12');
+    return;
+  }
+  
+  const epley = weight * (1 + reps / 30);
+  const brzycki = weight * (36 / (37 - reps));
+  
+  const oneRM = (epley + brzycki) / 2;
+  const oneRMRounded = Math.round(oneRM * 2) / 2;
+  
+  const strengthMin = Math.round((oneRMRounded * 0.85) * 2) / 2;
+  const strengthMax = oneRMRounded;
+  
+  const hypertrophyMin = Math.round((oneRMRounded * 0.67) * 2) / 2;
+  const hypertrophyMax = Math.round((oneRMRounded * 0.85) * 2) / 2;
+  
+  const enduranceMin = Math.round((oneRMRounded * 0.50) * 2) / 2;
+  const enduranceMax = Math.round((oneRMRounded * 0.67) * 2) / 2;
+  
+  if (valueEl) valueEl.textContent = `${oneRMRounded} kg`;
+  if (strengthEl) strengthEl.textContent = `${strengthMin}-${strengthMax} kg`;
+  if (hypertrophyEl) hypertrophyEl.textContent = `${hypertrophyMin}-${hypertrophyMax} kg`;
+  if (enduranceEl) enduranceEl.textContent = `${enduranceMin}-${enduranceMax} kg`;
+  
+  resultDiv.classList.remove('hidden');
+  
+  if (currentExerciseKey) {
+    saveOneRMToHistory(currentExerciseKey, oneRMRounded, weight, reps);
+    renderOneRMHistory(currentExerciseKey);
+  }
+}
+
+function saveOneRMToHistory(exerciseKey, oneRM, weight, reps) {
+  const data = JSON.parse(localStorage.getItem(exerciseKey)) || {};
+  
+  if (!data.oneRMHistory) {
+    data.oneRMHistory = [];
+  }
+  
+  const today = new Date().toISOString().split("T")[0];
+  
+  const existingIndex = data.oneRMHistory.findIndex(h => h.data === today);
+  
+  if (existingIndex >= 0) {
+    if (oneRM > data.oneRMHistory[existingIndex].oneRM) {
+      data.oneRMHistory[existingIndex] = {
+        data: today,
+        oneRM: oneRM,
+        weight: weight,
+        reps: reps,
+        timestamp: Date.now()
+      };
+    }
+  } else {
+    data.oneRMHistory.push({
+      data: today,
+      oneRM: oneRM,
+      weight: weight,
+      reps: reps,
+      timestamp: Date.now()
+    });
+  }
+  
+  if (data.oneRMHistory.length > 100) {
+    data.oneRMHistory = data.oneRMHistory.slice(-100);
+  }
+  
+  localStorage.setItem(exerciseKey, JSON.stringify(data));
+  autoBackupToDrive();
+}
+
+function renderOneRMHistory(exerciseKey) {
+  const data = JSON.parse(localStorage.getItem(exerciseKey)) || {};
+  const history = data.oneRMHistory || [];
+  
+  const canvas = document.getElementById('oneRMChart');
+  if (!canvas) return;
+  
+  if (oneRMChart) {
+    oneRMChart.destroy();
+  }
+  
+  if (history.length === 0) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#666';
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Nenhum cálculo de 1RM ainda', canvas.width / 2, canvas.height / 2);
+    return;
+  }
+  
+  const sortedHistory = [...history].sort((a, b) => new Date(a.data) - new Date(b.data));
+  
+  const labels = sortedHistory.map(h => {
+    const d = new Date(h.data);
+    return `${d.getDate()}/${d.getMonth() + 1}`;
+  });
+  
+  const values = sortedHistory.map(h => h.oneRM);
+  
+  oneRMChart = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '1RM (kg)',
+        data: values,
+        borderColor: '#a855f7',
+        backgroundColor: 'rgba(168, 85, 247, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 6,
+        pointBackgroundColor: '#a855f7',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          ticks: {
+            color: '#999'
+          },
+          grid: {
+            color: '#2a2a2a'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#999'
+          },
+          grid: {
+            display: false
+          }
+        }
+      }
+    }
+  });
 }
 
 // ========== STREAK COUNTER ==========
@@ -273,7 +489,6 @@ function calculateStreak() {
     return { current: 0, best: 0, lastWorkout: null };
   }
   
-  // Ordenar datas
   const sortedDates = history.map(d => new Date(d)).sort((a, b) => b - a);
   
   const today = new Date();
@@ -282,7 +497,6 @@ function calculateStreak() {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   
-  // Calcular streak atual
   let currentStreak = 0;
   let checkDate = new Date(today);
   
@@ -294,12 +508,10 @@ function calculateStreak() {
       currentStreak++;
       checkDate.setDate(checkDate.getDate() - 1);
     } else if (workoutDate.getTime() < checkDate.getTime()) {
-      // Gap encontrado
       break;
     }
   }
   
-  // Calcular melhor streak histórico
   let bestStreak = 0;
   let tempStreak = 1;
   
@@ -330,17 +542,14 @@ function calculateStreak() {
 function updateStreak() {
   const streak = calculateStreak();
   
-  // Salvar no localStorage
   localStorage.setItem('current_streak', streak.current.toString());
   localStorage.setItem('best_streak', streak.best.toString());
   
-  // Verificar se é novo recorde
   const previousBest = parseInt(localStorage.getItem('previous_best_streak') || '0');
   
   if (streak.current > previousBest && streak.current >= 3) {
     localStorage.setItem('previous_best_streak', streak.current.toString());
     
-    // Notificação de novo recorde (se suportado)
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('🔥 Novo Recorde!', {
         body: `${streak.current} dias consecutivos de treino!`,
@@ -1011,7 +1220,7 @@ function confirmReset() {
   window.location.reload();
 }
 
-// ========== GOOGLE DRIVE INTEGRATION (mesmo código anterior) ==========
+// ========== GOOGLE DRIVE INTEGRATION ==========
 
 function initGoogleDrive() {
   if (typeof google === 'undefined' || !google.accounts) {
@@ -1480,7 +1689,6 @@ function confirmImport() {
     
     closeImportModal();
     
-    // Recalcular streak após importar
     updateStreak();
     
     if (googleAccessToken) {
