@@ -277,11 +277,21 @@ function saveTrainingDay() {
 // ========== CALCULADORA 1RM ==========
 
 function showOneRMModal(exerciseKey, exerciseName, series, reps) {
-  const modal = document.getElementById('oneRMModal');
-  const nameEl = document.getElementById('oneRMExerciseName');
-  const resultDiv = document.getElementById('oneRMResult');
+  console.log('showOneRMModal chamada com:', { exerciseKey, exerciseName, series, reps });
   
-  if (!modal || !nameEl) return;
+  const modal = document.getElementById('oneRMModal');
+  console.log('Modal encontrado:', modal);
+  
+  const nameEl = document.getElementById('oneRMExerciseName');
+  console.log('Nome element encontrado:', nameEl);
+  
+  const resultDiv = document.getElementById('oneRMResult');
+  console.log('Result div encontrado:', resultDiv);
+  
+  if (!modal || !nameEl) {
+    console.error('Modal ou nameEl não encontrados!');
+    return;
+  }
   
   currentExerciseKey = exerciseKey;
   currentExerciseReps = reps;
@@ -297,7 +307,9 @@ function showOneRMModal(exerciseKey, exerciseName, series, reps) {
   
   renderOneRMHistory(exerciseKey);
   
+  console.log('Removendo classe hidden do modal...');
   modal.classList.remove('hidden');
+  console.log('Classes do modal após remoção:', modal.className);
 }
 
 function closeOneRMModal() {
