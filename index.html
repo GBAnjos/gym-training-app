@@ -274,7 +274,7 @@
     </main>
   </div>
 
-  <!-- SETTINGS VIEW (inicialmente escondida) -->
+  <!-- SETTINGS VIEW (mesmo código anterior) -->
   <div id="settingsView" class="hidden">
     <main class="max-w-4xl mx-auto px-4 py-6">
       
@@ -414,6 +414,96 @@
     </main>
   </div>
 
+  <!-- Modal de Calculadora 1RM -->
+  <div id="oneRMModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+      <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+        <span class="text-3xl">💪</span>
+        Calculadora de 1RM
+      </h3>
+      
+      <div id="oneRMExerciseName" class="text-lg text-gray-300 mb-6"></div>
+      
+      <!-- Inputs para calcular -->
+      <div class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-6 mb-6">
+        <h4 class="text-lg font-bold text-white mb-4">Calcular 1RM</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Peso usado (kg)</label>
+            <input 
+              type="number" 
+              id="oneRMWeight" 
+              step="0.5"
+              placeholder="Ex: 80"
+              class="w-full px-4 py-3 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-center font-bold transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-400 mb-2">Repetições feitas</label>
+            <input 
+              type="number" 
+              id="oneRMReps" 
+              min="1"
+              max="12"
+              placeholder="Ex: 8"
+              class="w-full px-4 py-3 bg-[#252525] border-2 border-[#3a3a3a] rounded-lg text-white text-center font-bold transition-all focus:outline-none focus:ring-2 focus:ring-[#4a9eff] focus:border-transparent">
+          </div>
+        </div>
+        <button onclick="calculate1RM()" 
+          class="w-full px-6 py-3 bg-[#4a9eff] hover:bg-[#3a8eef] text-white font-bold rounded-lg transition-all">
+          Calcular
+        </button>
+      </div>
+
+      <!-- Resultado -->
+      <div id="oneRMResult" class="hidden bg-gradient-to-br from-blue-950/30 to-purple-950/30 border-2 border-blue-800/30 rounded-lg p-6 mb-6">
+        <div class="text-center mb-6">
+          <div class="text-gray-400 text-sm mb-1">Seu 1RM estimado é:</div>
+          <div id="oneRMValue" class="text-5xl font-bold text-white mb-2">0 kg</div>
+          <div class="text-gray-400 text-xs">(Média das fórmulas Epley e Brzycki)</div>
+        </div>
+
+        <!-- Sugestões de carga -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div class="bg-[#1a1a1a]/50 rounded-lg p-4 border border-blue-800/20">
+            <div class="text-blue-300 text-xs mb-1">💪 FORÇA (85-100%)</div>
+            <div id="strengthRange" class="text-xl font-bold text-white">0-0 kg</div>
+            <div class="text-gray-400 text-xs mt-1">1-5 reps</div>
+          </div>
+          
+          <div class="bg-[#1a1a1a]/50 rounded-lg p-4 border border-blue-800/20">
+            <div class="text-purple-300 text-xs mb-1">📈 HIPERTROFIA (67-85%)</div>
+            <div id="hypertrophyRange" class="text-xl font-bold text-white">0-0 kg</div>
+            <div class="text-gray-400 text-xs mt-1">6-12 reps</div>
+          </div>
+          
+          <div class="bg-[#1a1a1a]/50 rounded-lg p-4 border border-blue-800/20">
+            <div class="text-green-300 text-xs mb-1">🏃 RESISTÊNCIA (50-67%)</div>
+            <div id="enduranceRange" class="text-xl font-bold text-white">0-0 kg</div>
+            <div class="text-gray-400 text-xs mt-1">12-20 reps</div>
+          </div>
+        </div>
+
+        <!-- Info adicional -->
+        <div class="bg-yellow-900/20 border border-yellow-800/30 rounded-lg p-3 text-center text-yellow-200 text-xs">
+          ⚠️ Estes valores são estimativas. Sempre priorize a técnica e segurança.
+        </div>
+      </div>
+
+      <!-- Histórico de 1RM -->
+      <div id="oneRMHistory" class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-6 mb-6">
+        <h4 class="text-lg font-bold text-white mb-4">📊 Evolução do 1RM</h4>
+        <div id="oneRMChartContainer" class="w-full" style="position: relative; height: 250px;">
+          <canvas id="oneRMChart"></canvas>
+        </div>
+      </div>
+
+      <button onclick="closeOneRMModal()" 
+        class="w-full px-4 py-3 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white font-semibold rounded-lg transition-all border border-[#3a3a3a]">
+        Fechar
+      </button>
+    </div>
+  </div>
+
   <!-- Modal de Notas do Exercício -->
   <div id="notesModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
@@ -435,6 +525,7 @@
     </div>
   </div>
 
+  <!-- Demais modais (Import, Reset) iguais ao anterior -->
   <!-- Modal de Preview de Import -->
   <div id="importModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-[#1a1a1a] border-2 border-[#4a9eff] rounded-2xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
@@ -444,7 +535,6 @@
       </h3>
       
       <div id="importPreview" class="bg-[#0d0d0d] border border-[#2a2a2a] rounded-lg p-4 mb-6">
-        <!-- Preview será inserido aqui pelo JavaScript -->
       </div>
 
       <div class="mb-6">
