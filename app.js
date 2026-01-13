@@ -155,10 +155,15 @@ function renderWorkout(dia) {
                   📝 ${notesCount}
                 </button>
               ` : ''}
-              <button onclick="showOneRMModal('${key}', '${ex.nome}', ${ex.series}, ${ex.reps})" 
-                class="px-2 py-1 bg-[#2a2a4a] hover:bg-[#3a3a5a] text-purple-300 text-xs font-bold rounded-md border border-purple-800/30 transition-all flex items-center gap-1">
-                💪 1RM
-              </button>
+              <button 
+  data-exercise-key="${key}"
+  data-exercise-name="${ex.nome}"
+  data-series="${ex.series}"
+  data-reps="${ex.reps}"
+  onclick="showOneRMModalFromButton(this)"
+  class="px-2 py-1 bg-[#2a2a4a] hover:bg-[#3a3a5a] text-purple-300 text-xs font-bold rounded-md border border-purple-800/30 transition-all flex items-center gap-1">
+  💪 1RM
+</button>
             </div>
           </div>
           
@@ -311,7 +316,14 @@ function showOneRMModal(exerciseKey, exerciseName, series, reps) {
   modal.classList.remove('hidden');
   console.log('Classes do modal após remoção:', modal.className);
 }
-
+function showOneRMModalFromButton(button) {
+  const key = button.getAttribute('data-exercise-key');
+  const name = button.getAttribute('data-exercise-name');
+  const series = parseInt(button.getAttribute('data-series'));
+  const reps = parseInt(button.getAttribute('data-reps'));
+  
+  showOneRMModal(key, name, series, reps);
+}
 function closeOneRMModal() {
   const modal = document.getElementById('oneRMModal');
   if (modal) {
