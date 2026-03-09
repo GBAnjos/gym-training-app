@@ -183,7 +183,6 @@ function ExerciseCard({ exercise, dayKey, onSync }) {
         <ExerciseMedia
           exerciseName={exercise.nome}
           size="small"
-          showPlayButton={true}
         />
         <div className="exercise-info">
           <h4 className="exercise-name">{exercise.nome}</h4>
