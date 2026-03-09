@@ -1,4 +1,5 @@
-{
+// Workout Training Data (existing gym training app data)
+export const TREINOS = {
   "segunda": {
     "nome": "Push A",
     "grupos": ["Peito", "Ombros", "Tríceps"],
@@ -76,4 +77,16 @@
       { "id": "panturrilha_sentado", "nome": "Panturrilha sentado", "series": "3", "reps": "15–20", "obs": "", "musculos": ["Panturrilhas"] }
     ]
   }
-}
+};
+
+export const DAY_MAP = {
+  "domingo": "domingo",
+  "segunda-feira": "segunda",
+  "terça-feira": "terca",
+  "quarta-feira": "quarta",
+  "quinta-feira": "quinta",
+  "sexta-feira": "sexta",
+  "sábado": "sabado"
+};
+
+export const TRAINING_DAYS = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
