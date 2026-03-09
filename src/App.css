@@ -1,12 +1,25 @@
 .app {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .main-content {
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Account for bottom nav on mobile */
+  padding-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    /* Space for fixed bottom nav */
+    min-height: calc(100vh - 56px);
+    min-height: calc(100dvh - 56px);
+  }
 }
 
 /* Page transitions */
@@ -20,5 +33,15 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Prevent content from being hidden behind bottom nav on mobile */
+@media (max-width: 767px) {
+  .main-content::after {
+    content: '';
+    display: block;
+    height: calc(60px + env(safe-area-inset-bottom, 0px));
+    flex-shrink: 0;
   }
 }
