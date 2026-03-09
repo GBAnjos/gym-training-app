@@ -403,6 +403,55 @@
   color: var(--color-text-dim);
 }
 
+/* Language Options */
+.language-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.language-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.language-btn:hover {
+  border-color: var(--color-muted);
+  background: var(--color-card-alt);
+}
+
+.language-btn.selected {
+  border-color: var(--color-accent);
+  background: rgba(200, 245, 90, 0.1);
+}
+
+.language-flag {
+  font-size: 2rem;
+}
+
+.language-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Triple option row */
+.option-row.triple {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.option-btn.small {
+  padding: var(--space-md);
+  font-size: 0.9rem;
+}
+
 /* Restriction Options */
 .restriction-options {
   display: flex;
