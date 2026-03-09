@@ -137,6 +137,37 @@ const translations = {
     generating_step_3: 'Montando horários',
     generating_step_4: 'Ajustando alimentação',
 
+    // Exercise type step
+    exercise_type_title: 'Tipo de exercício',
+    exercise_type_desc: 'Que tipo de atividade física você pratica?',
+    exercise_type_gym: 'Academia',
+    exercise_type_gym_desc: 'Musculação, cardio, funcional...',
+    exercise_type_sports: 'Esportes',
+    exercise_type_sports_desc: 'Futebol, natação, corrida...',
+    exercise_type_both: 'Ambos',
+    exercise_type_both_desc: 'Academia + esportes',
+    exercise_type_none: 'Nenhum',
+    exercise_type_none_desc: 'Vou começar agora',
+
+    // Gym details step
+    gym_details_title: 'Detalhes da academia',
+    gym_details_desc: 'Personalize seu plano de treino',
+    gym_type_question: 'Que tipo de treino você faz?',
+    gym_type_hint: 'Selecione um ou mais tipos',
+
+    // Sports details step
+    sports_details_title: 'Seus esportes',
+    sports_details_desc: 'Quais esportes você pratica?',
+    sports_select: 'Selecione seus esportes',
+    sports_schedule: 'Horários de cada esporte',
+    sports_which_days: 'Quais dias?',
+    sports_what_time: 'Que horário?',
+
+    // Summary additions
+    summary_sports: 'Esportes',
+    summary_sport: 'esporte',
+    summary_sports_plural: 'esportes',
+
     // Errors
     error_required_sex: 'Selecione seu sexo',
     error_required_age: 'Informe sua idade',
@@ -148,6 +179,10 @@ const translations = {
     error_required_time: 'Selecione o horário preferido',
     error_required_meal_prep: 'Selecione uma opção',
     error_required_weekend: 'Selecione como é seu fim de semana',
+    error_required_exercise_type: 'Selecione o tipo de exercício',
+    error_required_gym_type: 'Selecione pelo menos um tipo de treino',
+    error_required_sports: 'Selecione pelo menos um esporte',
+    error_required_sports_schedule: 'Defina os dias para cada esporte',
 
     // Settings
     settings_title: 'Configurações',
@@ -289,6 +324,37 @@ const translations = {
     generating_step_3: 'Setting up schedule',
     generating_step_4: 'Adjusting nutrition',
 
+    // Exercise type step
+    exercise_type_title: 'Exercise type',
+    exercise_type_desc: 'What type of physical activity do you do?',
+    exercise_type_gym: 'Gym',
+    exercise_type_gym_desc: 'Weight training, cardio, functional...',
+    exercise_type_sports: 'Sports',
+    exercise_type_sports_desc: 'Soccer, swimming, running...',
+    exercise_type_both: 'Both',
+    exercise_type_both_desc: 'Gym + sports',
+    exercise_type_none: 'None',
+    exercise_type_none_desc: "I'm starting now",
+
+    // Gym details step
+    gym_details_title: 'Gym details',
+    gym_details_desc: 'Customize your training plan',
+    gym_type_question: 'What type of training do you do?',
+    gym_type_hint: 'Select one or more types',
+
+    // Sports details step
+    sports_details_title: 'Your sports',
+    sports_details_desc: 'Which sports do you practice?',
+    sports_select: 'Select your sports',
+    sports_schedule: 'Schedule for each sport',
+    sports_which_days: 'Which days?',
+    sports_what_time: 'What time?',
+
+    // Summary additions
+    summary_sports: 'Sports',
+    summary_sport: 'sport',
+    summary_sports_plural: 'sports',
+
     // Errors
     error_required_sex: 'Select your sex',
     error_required_age: 'Enter your age',
@@ -300,6 +366,10 @@ const translations = {
     error_required_time: 'Select your preferred time',
     error_required_meal_prep: 'Select an option',
     error_required_weekend: 'Select your weekend style',
+    error_required_exercise_type: 'Select the exercise type',
+    error_required_gym_type: 'Select at least one training type',
+    error_required_sports: 'Select at least one sport',
+    error_required_sports_schedule: 'Set the days for each sport',
 
     // Settings
     settings_title: 'Settings',

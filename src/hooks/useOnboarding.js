@@ -120,11 +120,15 @@ export function useOnboarding() {
         training_time: profileData.trainingTime || null,
         dietary_restrictions: profileData.dietaryRestrictions || [],
         meal_prep: profileData.mealPrep,
-        // New fields for lifestyle
+        // Lifestyle fields
         hobbies: profileData.hobbies || [],
         chores_frequency: profileData.choresFrequency || null,
         grocery_frequency: profileData.groceryFrequency || null,
         weekend_routine: profileData.weekendRoutine || null,
+        // Exercise type fields
+        exercise_type: profileData.exerciseType || null,
+        gym_type: profileData.gymType || [],
+        sports: profileData.sports || [],
         preferred_language: profileData.preferredLanguage || 'pt-BR',
         onboarding_complete: true,
         updated_at: new Date().toISOString()
@@ -211,13 +215,45 @@ export function useOnboarding() {
   };
 }
 
+// Sports label map
+const SPORTS_LABELS = {
+  futebol: { pt: 'Futebol', en: 'Soccer', icon: '⚽' },
+  basquete: { pt: 'Basquete', en: 'Basketball', icon: '🏀' },
+  volei: { pt: 'Vôlei', en: 'Volleyball', icon: '🏐' },
+  natacao: { pt: 'Natação', en: 'Swimming', icon: '🏊' },
+  corrida: { pt: 'Corrida', en: 'Running', icon: '🏃' },
+  ciclismo: { pt: 'Ciclismo', en: 'Cycling', icon: '🚴' },
+  tenis: { pt: 'Tênis', en: 'Tennis', icon: '🎾' },
+  artes_marciais: { pt: 'Artes Marciais', en: 'Martial Arts', icon: '🥋' },
+  danca: { pt: 'Dança', en: 'Dance', icon: '💃' },
+  yoga: { pt: 'Yoga', en: 'Yoga', icon: '🧘' },
+  escalada: { pt: 'Escalada', en: 'Climbing', icon: '🧗' },
+  outro: { pt: 'Esporte', en: 'Sport', icon: '🏅' },
+};
+
 // Helper to generate personalized schedule based on user preferences
 export function generatePersonalizedSchedule(profile) {
-  const { wakeUpTime, officeDays, trainingDays, trainingTime, dinnerTime, weekendRoutine, choresFrequency } = profile;
+  const { wakeUpTime, officeDays, trainingDays, trainingTime, dinnerTime, weekendRoutine, choresFrequency, exerciseType, sports } = profile;
 
   // Parse times
   const wakeHour = parseInt((wakeUpTime || '06:30').split(':')[0]);
   const dinnerHour = parseInt((dinnerTime || '19:30').split(':')[0]);
+
+  // Build sports schedule lookup by day
+  const sportsScheduleByDay = {};
+  if (sports && sports.length > 0) {
+    sports.forEach(sport => {
+      (sport.days || []).forEach(day => {
+        if (!sportsScheduleByDay[day]) {
+          sportsScheduleByDay[day] = [];
+        }
+        sportsScheduleByDay[day].push({
+          sportId: sport.sportId,
+          time: sport.time || 'evening'
+        });
+      });
+    });
+  }
 
   // Generate schedule based on preferences
   const schedule = {};
@@ -227,6 +263,7 @@ export function generatePersonalizedSchedule(profile) {
     const isWeekend = index >= 5;
     const isOfficeDay = (officeDays || []).includes(day);
     const isTrainingDay = (trainingDays || []).includes(day);
+    const daySports = sportsScheduleByDay[day] || [];
 
     schedule[day] = {
       type: isWeekend ? 'weekend' : (isOfficeDay ? 'office' : 'home'),
@@ -239,7 +276,9 @@ export function generatePersonalizedSchedule(profile) {
         dinnerHour,
         trainingTime: trainingTime || 'morning',
         weekendRoutine: weekendRoutine || 'relaxed',
-        choresFrequency: choresFrequency || 'weekly'
+        choresFrequency: choresFrequency || 'weekly',
+        exerciseType: exerciseType || 'none',
+        sports: daySports
       })
     };
   });
@@ -247,10 +286,16 @@ export function generatePersonalizedSchedule(profile) {
   return schedule;
 }
 
-function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHour, dinnerHour, trainingTime, weekendRoutine, choresFrequency }) {
+function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHour, dinnerHour, trainingTime, weekendRoutine, choresFrequency, exerciseType, sports }) {
   const blocks = [];
   const isRelaxedWeekend = isWeekend && weekendRoutine === 'relaxed';
   const timePrefix = isRelaxedWeekend ? '~' : '';
+
+  // Check if this day has gym or sports
+  const hasGymToday = isTrainingDay && (exerciseType === 'gym' || exerciseType === 'both');
+  const morningSports = sports.filter(s => s.time === 'morning');
+  const afternoonSports = sports.filter(s => s.time === 'afternoon');
+  const eveningSports = sports.filter(s => s.time === 'evening');
 
   // Adjust wake time for relaxed weekends
   const adjustedWakeHour = isRelaxedWeekend ? wakeHour + 1 : wakeHour;
@@ -273,8 +318,8 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
     type: 'morning'
   });
 
-  // Training (if training day and morning preference)
-  if (isTrainingDay && trainingTime === 'morning') {
+  // Morning gym (if training day and morning preference)
+  if (hasGymToday && trainingTime === 'morning') {
     blocks.push({
       time: `${timePrefix}${adjustedWakeHour}:30`,
       icon: '🏋️',
@@ -285,8 +330,23 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
     });
   }
 
+  // Morning sports
+  morningSports.forEach(sport => {
+    const sportInfo = SPORTS_LABELS[sport.sportId] || SPORTS_LABELS.outro;
+    blocks.push({
+      time: `${timePrefix}${adjustedWakeHour + 1}:00`,
+      icon: sportInfo.icon,
+      label: sportInfo.pt,
+      sub: 'Treino de esporte',
+      type: 'sport',
+      tag: 'sport'
+    });
+  });
+
   // Breakfast
-  const breakfastTime = isTrainingDay && trainingTime === 'morning' ? adjustedWakeHour + 2 : adjustedWakeHour + 1;
+  const breakfastTime = (hasGymToday && trainingTime === 'morning') || morningSports.length > 0
+    ? adjustedWakeHour + 2
+    : adjustedWakeHour + 1;
   blocks.push({
     time: `${timePrefix}${breakfastTime}:00`,
     icon: '🍳',
@@ -361,8 +421,8 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
     });
   }
 
-  // Afternoon training (if applicable)
-  if (isTrainingDay && trainingTime === 'afternoon') {
+  // Afternoon gym (if applicable)
+  if (hasGymToday && trainingTime === 'afternoon') {
     blocks.push({
       time: isWeekend ? '~15:00' : '17:30',
       icon: '🏋️',
@@ -373,8 +433,21 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
     });
   }
 
-  // Evening training (if applicable)
-  if (isTrainingDay && trainingTime === 'evening') {
+  // Afternoon sports
+  afternoonSports.forEach(sport => {
+    const sportInfo = SPORTS_LABELS[sport.sportId] || SPORTS_LABELS.outro;
+    blocks.push({
+      time: isWeekend ? '~15:30' : '16:00',
+      icon: sportInfo.icon,
+      label: sportInfo.pt,
+      sub: 'Treino de esporte',
+      type: 'sport',
+      tag: 'sport'
+    });
+  });
+
+  // Evening gym (if applicable)
+  if (hasGymToday && trainingTime === 'evening') {
     blocks.push({
       time: isWeekend ? '~18:00' : '18:00',
       icon: '🏋️',
@@ -385,14 +458,29 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
     });
   }
 
-  // Free time
-  blocks.push({
-    time: isWeekend ? '~17:00' : '18:30',
-    icon: '📚',
-    label: 'Tempo livre',
-    sub: 'Hobbies, descanso, o que te faz bem',
-    type: 'free'
+  // Evening sports
+  eveningSports.forEach(sport => {
+    const sportInfo = SPORTS_LABELS[sport.sportId] || SPORTS_LABELS.outro;
+    blocks.push({
+      time: isWeekend ? '~18:30' : '18:30',
+      icon: sportInfo.icon,
+      label: sportInfo.pt,
+      sub: 'Treino de esporte',
+      type: 'sport',
+      tag: 'sport'
+    });
   });
+
+  // Free time (only if no evening activities)
+  if (!((hasGymToday && trainingTime === 'evening') || eveningSports.length > 0)) {
+    blocks.push({
+      time: isWeekend ? '~17:00' : '18:30',
+      icon: '📚',
+      label: 'Tempo livre',
+      sub: 'Hobbies, descanso, o que te faz bem',
+      type: 'free'
+    });
+  }
 
   // Dinner
   blocks.push({
