@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { useOnboarding } from './hooks/useOnboarding';
 import { LoginScreen } from './components/LoginScreen';
+import { LoadingScreen } from './components/LoadingScreen';
 import { OnboardingFlow } from './components/OnboardingFlow';
 import { Header } from './components/Header';
 import { BottomNav } from './components/BottomNav';
@@ -13,25 +14,26 @@ import './App.css';
 
 function AppContent() {
   const { user, loading } = useAuth();
-  const { isOnboardingComplete, isCheckingOnboarding } = useOnboarding();
+  const { isOnboardingComplete, isCheckingOnboarding, refreshOnboardingStatus } = useOnboarding();
   const [activeTab, setActiveTab] = useState('schedule');
-  const [onboardingJustCompleted, setOnboardingJustCompleted] = useState(false);
 
+  // Show loading screen while checking auth or onboarding status
   if (loading || isCheckingOnboarding) {
-    return <LoginScreen />;
+    return <LoadingScreen />;
   }
 
+  // Show login screen if not authenticated
   if (!user) {
     return <LoginScreen />;
   }
 
-  // Show onboarding for new users
-  if (!isOnboardingComplete && !onboardingJustCompleted) {
+  // Show onboarding for new users (isOnboardingComplete is false, not null)
+  if (isOnboardingComplete === false) {
     return (
       <OnboardingFlow
         onComplete={() => {
-          setOnboardingJustCompleted(true);
-          window.location.reload(); // Reload to apply new data
+          // Refresh the onboarding status to trigger re-render
+          refreshOnboardingStatus();
         }}
       />
     );

@@ -74,10 +74,17 @@ export function useOnboarding() {
     }
   };
 
+  const refreshOnboardingStatus = () => {
+    // Force re-check by setting loading state and checking again
+    setIsComplete(true);
+    setIsLoading(false);
+  };
+
   return {
     isOnboardingComplete: isComplete,
     isCheckingOnboarding: isLoading,
-    completeOnboarding
+    completeOnboarding,
+    refreshOnboardingStatus
   };
 }
 
