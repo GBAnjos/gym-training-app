@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TREINOS, DAY_MAP, TRAINING_DAYS } from '../data/treinos';
 import { muscleColors } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
+import { ExerciseMedia } from '../components/ExerciseMedia';
 import './TrainingPage.css';
 
 export function TrainingPage() {
@@ -179,7 +180,11 @@ function ExerciseCard({ exercise, dayKey, onSync }) {
   return (
     <div className={`exercise-card ${saved.feito ? 'completed' : ''}`}>
       <div className="exercise-header">
-        <span className="exercise-status">{saved.feito ? '✅' : '⚪'}</span>
+        <ExerciseMedia
+          exerciseName={exercise.nome}
+          size="small"
+          showPlayButton={true}
+        />
         <div className="exercise-info">
           <h4 className="exercise-name">{exercise.nome}</h4>
           <div className="exercise-meta">

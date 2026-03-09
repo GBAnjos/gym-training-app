@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#1e1e2e"/>
+  <g transform="translate(30, 20)" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Legs icon (squat silhouette) -->
+    <ellipse cx="30" cy="15" rx="12" ry="10" fill="#ef4444" opacity="0.3"/>
+    <path d="M30 25 L30 40" stroke-width="4"/>
+    <path d="M20 40 L30 40 L40 40" stroke-width="3"/>
+    <path d="M20 40 L15 55 Q12 65, 15 75" stroke-width="4" fill="#ef4444" opacity="0.2"/>
+    <path d="M40 40 L45 55 Q48 65, 45 75" stroke-width="4" fill="#ef4444" opacity="0.2"/>
+    <!-- Feet -->
+    <path d="M10 75 L20 75" stroke-width="3"/>
+    <path d="M40 75 L50 75" stroke-width="3"/>
+  </g>
+</svg>

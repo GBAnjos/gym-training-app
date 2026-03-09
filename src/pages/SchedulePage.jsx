@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { SCHEDULE, DAY_ORDER } from '../data/schedule';
 import { DESIGN } from '../data/design';
 import { useOfficeDays } from '../hooks/useOfficeDays';
@@ -13,7 +13,20 @@ export function SchedulePage() {
   const [selectedDay, setSelectedDay] = useState(todayKey);
   const { isOfficeDay, toggleOfficeDay } = useOfficeDays();
 
-  const dayData = SCHEDULE[selectedDay];
+  // Load personalized schedule from localStorage if available
+  const schedule = useMemo(() => {
+    try {
+      const saved = localStorage.getItem('vida_user_schedule');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error('Error loading schedule:', e);
+    }
+    return SCHEDULE;
+  }, []);
+
+  const dayData = schedule[selectedDay] || SCHEDULE[selectedDay];
 
   const getDayType = (day) => {
     if (day === 'Sáb' || day === 'Dom') return 'weekend';

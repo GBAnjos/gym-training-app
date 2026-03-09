@@ -1,9 +1,37 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { MEAL_PLAN, MACRO_TARGETS } from '../data/meals';
 import './MealsPage.css';
 
 export function MealsPage() {
   const [expandedMeal, setExpandedMeal] = useState(null);
+
+  // Load personalized macros from localStorage if available
+  const { macros, profile } = useMemo(() => {
+    try {
+      const savedMeals = localStorage.getItem('vida_user_meals');
+      const savedProfile = localStorage.getItem('vida_user_profile');
+      if (savedMeals) {
+        const meals = JSON.parse(savedMeals);
+        return {
+          macros: meals.macros || MACRO_TARGETS,
+          profile: savedProfile ? JSON.parse(savedProfile) : null
+        };
+      }
+    } catch (e) {
+      console.error('Error loading meals:', e);
+    }
+    return { macros: MACRO_TARGETS, profile: null };
+  }, []);
+
+  const getGoalLabel = (goal) => {
+    const labels = {
+      muscle_gain: 'Foco em ganho de massa',
+      weight_loss: 'Foco em perda de gordura',
+      maintain: 'Manutenção de peso',
+      general: 'Saúde e bem-estar'
+    };
+    return labels[goal] || labels.general;
+  };
 
   const toggleMeal = (index) => {
     setExpandedMeal(expandedMeal === index ? null : index);
@@ -13,7 +41,7 @@ export function MealsPage() {
     <div className="meals-page">
       <h2 className="meals-title">Plano Alimentar</h2>
       <p className="meals-subtitle">
-        Ectomorfo · 3000-3200 kcal/dia · Foco em ganho de massa
+        {macros.calorias} · {profile ? getGoalLabel(profile.goal) : 'Foco em ganho de massa'}
       </p>
 
       <div className="meals-list">
@@ -30,10 +58,10 @@ export function MealsPage() {
       <div className="macros-panel">
         <h3 className="macros-title">Metas Diárias</h3>
         <div className="macros-grid">
-          <MacroItem label="Calorias" value={MACRO_TARGETS.calorias} color="var(--color-accent)" />
-          <MacroItem label="Proteína" value={MACRO_TARGETS.proteina} color="var(--color-red)" />
-          <MacroItem label="Carboidrato" value={MACRO_TARGETS.carboidrato} color="var(--color-blue)" />
-          <MacroItem label="Gordura" value={MACRO_TARGETS.gordura} color="var(--color-orange)" />
+          <MacroItem label="Calorias" value={macros.calorias} color="var(--color-accent)" />
+          <MacroItem label="Proteína" value={macros.proteina} color="var(--color-red)" />
+          <MacroItem label="Carboidrato" value={macros.carboidrato} color="var(--color-blue)" />
+          <MacroItem label="Gordura" value={macros.gordura} color="var(--color-orange)" />
         </div>
       </div>
     </div>
