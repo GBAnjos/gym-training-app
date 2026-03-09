@@ -1994,3 +1994,4 @@ window.addEventListener('appinstalled', () => {
   console.log('✓ PWA instalado com sucesso!');
   deferredPrompt = null;
 });
+// Cache bust: 1773063234
