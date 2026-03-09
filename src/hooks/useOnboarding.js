@@ -260,21 +260,32 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
 
 // Generate personalized meal plan
 export function generatePersonalizedMeals(profile) {
-  const { goal, dietaryRestrictions, mealPrepDays } = profile;
+  const { goal, sex, dietaryRestrictions, mealPrep } = profile;
 
-  // Adjust macros based on goal
+  // Adjust macros based on goal and sex
+  // Women typically need 15-20% fewer calories than men
   let macros;
+  const isFemale = sex === 'female';
+
   if (goal === 'muscle_gain') {
-    macros = { calorias: '2800-3200 kcal', proteina: '150-180g', carboidrato: '350-400g', gordura: '80-100g' };
+    macros = isFemale
+      ? { calorias: '2200-2500 kcal', proteina: '120-140g', carboidrato: '280-320g', gordura: '65-80g' }
+      : { calorias: '2800-3200 kcal', proteina: '150-180g', carboidrato: '350-400g', gordura: '80-100g' };
   } else if (goal === 'weight_loss') {
-    macros = { calorias: '1800-2200 kcal', proteina: '140-160g', carboidrato: '150-200g', gordura: '60-80g' };
+    macros = isFemale
+      ? { calorias: '1400-1700 kcal', proteina: '110-130g', carboidrato: '120-160g', gordura: '45-60g' }
+      : { calorias: '1800-2200 kcal', proteina: '140-160g', carboidrato: '150-200g', gordura: '60-80g' };
   } else if (goal === 'maintain') {
-    macros = { calorias: '2200-2600 kcal', proteina: '120-150g', carboidrato: '250-300g', gordura: '70-90g' };
+    macros = isFemale
+      ? { calorias: '1800-2100 kcal', proteina: '100-120g', carboidrato: '200-240g', gordura: '55-70g' }
+      : { calorias: '2200-2600 kcal', proteina: '120-150g', carboidrato: '250-300g', gordura: '70-90g' };
   } else {
-    macros = { calorias: '2200-2600 kcal', proteina: '100-130g', carboidrato: '250-300g', gordura: '70-90g' };
+    macros = isFemale
+      ? { calorias: '1800-2100 kcal', proteina: '80-100g', carboidrato: '200-240g', gordura: '55-70g' }
+      : { calorias: '2200-2600 kcal', proteina: '100-130g', carboidrato: '250-300g', gordura: '70-90g' };
   }
 
-  return { macros, mealPrepDays };
+  return { macros, mealPrep, dietaryRestrictions };
 }
 
 // Generate personalized workout split
