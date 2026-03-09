@@ -83,17 +83,25 @@ async function signOut() {
 }
 
 function updateAuthUI(user) {
+  const loginScreen = document.getElementById('loginScreen');
+  const mainApp = document.getElementById('mainApp');
   const loginBtn = document.getElementById('loginBtn');
   const userInfo = document.getElementById('userInfo');
   const userAvatar = document.getElementById('userAvatar');
 
   if (user) {
+    // User is logged in - show app, hide login screen
+    if (loginScreen) loginScreen.classList.add('hidden');
+    if (mainApp) mainApp.classList.remove('hidden');
     if (loginBtn) loginBtn.classList.add('hidden');
     if (userInfo) userInfo.classList.remove('hidden');
     if (userAvatar && user.user_metadata?.avatar_url) {
       userAvatar.src = user.user_metadata.avatar_url;
     }
   } else {
+    // User is logged out - show login screen, hide app
+    if (loginScreen) loginScreen.classList.remove('hidden');
+    if (mainApp) mainApp.classList.add('hidden');
     if (loginBtn) loginBtn.classList.remove('hidden');
     if (userInfo) userInfo.classList.add('hidden');
   }
