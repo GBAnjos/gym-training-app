@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useDataSync } from './useDataSync';
 
 const STORAGE_KEY = 'lifeplanner_weightLog';
@@ -15,6 +15,16 @@ export function useProgress() {
 
   const { debouncedSync } = useDataSync();
 
+  // Get user profile data from localStorage
+  const userProfile = useMemo(() => {
+    try {
+      const stored = localStorage.getItem('vida_user_profile');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(weightLog));
     debouncedSync();
@@ -30,12 +40,14 @@ export function useProgress() {
     });
   };
 
+  // Use profile data or fallback to defaults
+  const startWeight = userProfile?.currentWeight ? parseFloat(userProfile.currentWeight) : 72;
+  const targetWeight = userProfile?.targetWeight ? parseFloat(userProfile.targetWeight) : 80;
+
   const currentWeight = weightLog.length > 0
     ? weightLog[weightLog.length - 1].weight
-    : 72;
+    : startWeight;
 
-  const startWeight = 72;
-  const targetWeight = 80;
   const progress = ((currentWeight - startWeight) / (targetWeight - startWeight)) * 100;
 
   return {
@@ -44,6 +56,7 @@ export function useProgress() {
     currentWeight,
     startWeight,
     targetWeight,
-    progress: Math.min(100, Math.max(0, progress))
+    progress: Math.min(100, Math.max(0, progress)),
+    userProfile
   };
 }

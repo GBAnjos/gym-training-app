@@ -99,6 +99,10 @@ export function ProgressPage() {
     ],
   };
 
+  // Dynamic chart range based on user's weights
+  const minWeight = Math.min(startWeight, targetWeight, ...weightLog.map(e => e.weight)) - 2;
+  const maxWeight = Math.max(startWeight, targetWeight, ...weightLog.map(e => e.weight)) + 2;
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -107,8 +111,8 @@ export function ProgressPage() {
     },
     scales: {
       y: {
-        min: 70,
-        max: 82,
+        min: Math.floor(minWeight),
+        max: Math.ceil(maxWeight),
         ticks: { color: '#999' },
         grid: { color: '#222' },
       },
