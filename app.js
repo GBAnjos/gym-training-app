@@ -6,12 +6,184 @@ let currentView = 'workout';
 let allExercises = [];
 let importedData = null;
 
+// Supabase Configuration
+const SUPABASE_URL = 'https://mkwwvlauzlficncjfzmq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1rd3d2bGF1emxmaWNuY2pmem1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTc5OTIsImV4cCI6MjA4ODYzMzk5Mn0.Y-rpFA2MeaOD3LWzLOU66WUfcRnm-7HtLI9XbaY9-uw';
+let supabase = null;
+let currentUser = null;
+
 // Google Drive OAuth
 let googleAccessToken = null;
 let googleTokenClient = null;
 const GOOGLE_CLIENT_ID = '109415433089-ofclj565qlh8e7snf8373d27mhiopvut.apps.googleusercontent.com';
 const GOOGLE_SCOPES = 'https://www.googleapis.com/auth/drive.file';
 const BACKUP_FOLDER_NAME = 'GymTrainingBackups';
+
+// ========== SUPABASE AUTH ==========
+
+function initSupabase() {
+  if (typeof window.supabase !== 'undefined') {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        currentUser = session.user;
+        updateAuthUI(session.user);
+        syncFromSupabase();
+      }
+    });
+
+    // Listen for auth changes
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        currentUser = session.user;
+        updateAuthUI(session.user);
+        syncFromSupabase();
+      } else if (event === 'SIGNED_OUT') {
+        currentUser = null;
+        updateAuthUI(null);
+      }
+    });
+  } else {
+    console.error('Supabase not loaded');
+  }
+}
+
+async function signInWithGoogle() {
+  if (!supabase) {
+    alert('Erro: Supabase não inicializado');
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + window.location.pathname
+    }
+  });
+
+  if (error) {
+    console.error('Login error:', error);
+    alert('Erro ao fazer login: ' + error.message);
+  }
+}
+
+async function signOut() {
+  if (!supabase) return;
+
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error('Logout error:', error);
+    alert('Erro ao fazer logout: ' + error.message);
+  } else {
+    currentUser = null;
+    updateAuthUI(null);
+  }
+}
+
+function updateAuthUI(user) {
+  const loginBtn = document.getElementById('loginBtn');
+  const userInfo = document.getElementById('userInfo');
+  const userAvatar = document.getElementById('userAvatar');
+
+  if (user) {
+    if (loginBtn) loginBtn.classList.add('hidden');
+    if (userInfo) userInfo.classList.remove('hidden');
+    if (userAvatar && user.user_metadata?.avatar_url) {
+      userAvatar.src = user.user_metadata.avatar_url;
+    }
+  } else {
+    if (loginBtn) loginBtn.classList.remove('hidden');
+    if (userInfo) userInfo.classList.add('hidden');
+  }
+}
+
+// ========== SUPABASE DATA SYNC ==========
+
+async function syncToSupabase() {
+  if (!supabase || !currentUser) return;
+
+  try {
+    // Collect all workout data from localStorage
+    const workoutData = {};
+    Object.keys(localStorage).forEach(key => {
+      if (key.includes("_") || key === "training_days" || key === "current_streak" || key === "best_streak") {
+        workoutData[key] = JSON.parse(localStorage.getItem(key));
+      }
+    });
+
+    // Upsert to Supabase
+    const { error } = await supabase
+      .from('user_data')
+      .upsert({
+        user_id: currentUser.id,
+        workout_data: workoutData,
+        updated_at: new Date().toISOString()
+      }, {
+        onConflict: 'user_id'
+      });
+
+    if (error) {
+      console.error('Sync to Supabase error:', error);
+    } else {
+      console.log('Data synced to Supabase');
+    }
+  } catch (err) {
+    console.error('Sync error:', err);
+  }
+}
+
+async function syncFromSupabase() {
+  if (!supabase || !currentUser) return;
+
+  try {
+    const { data, error } = await supabase
+      .from('user_data')
+      .select('workout_data, updated_at')
+      .eq('user_id', currentUser.id)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      console.error('Fetch from Supabase error:', error);
+      return;
+    }
+
+    if (data && data.workout_data) {
+      // Check if cloud data is newer
+      const cloudUpdated = new Date(data.updated_at);
+      const localUpdated = new Date(localStorage.getItem('last_sync') || 0);
+
+      if (cloudUpdated > localUpdated) {
+        // Import cloud data to localStorage
+        Object.keys(data.workout_data).forEach(key => {
+          localStorage.setItem(key, JSON.stringify(data.workout_data[key]));
+        });
+        localStorage.setItem('last_sync', new Date().toISOString());
+
+        // Refresh UI
+        const selector = document.getElementById("daySelector");
+        if (selector) renderWorkout(selector.value);
+        updateStreakBadge();
+
+        console.log('Data synced from Supabase');
+      }
+    }
+  } catch (err) {
+    console.error('Sync from Supabase error:', err);
+  }
+}
+
+// Debounced sync to Supabase
+let syncTimeout = null;
+function debouncedSyncToSupabase() {
+  if (!currentUser) return;
+
+  clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(() => {
+    syncToSupabase();
+  }, 2000);
+}
 
 // Calculadora 1RM
 let oneRMChart = null;
@@ -53,9 +225,12 @@ fetch("data/treinos.json")
   });
 
 function init() {
+  // Initialize Supabase first
+  initSupabase();
+
   const selector = document.getElementById("daySelector");
   if (!selector) return;
-  
+
   selector.innerHTML = "";
 
   Object.keys(treinos).forEach(dia => {
@@ -74,7 +249,7 @@ function init() {
 
   selector.onchange = () => renderWorkout(selector.value);
   renderWorkout(selector.value);
-  
+
   populateFilters();
   initGoogleDrive();
   updateStreakBadge();
@@ -251,19 +426,21 @@ function savePeso(key, peso, dia) {
   localStorage.setItem(key, JSON.stringify(data));
   saveTrainingDay();
   autoBackupToDrive();
+  debouncedSyncToSupabase();
 }
 
 function toggleDone(key, done, dia) {
   const data = JSON.parse(localStorage.getItem(key)) || {};
   data.feito = done;
   localStorage.setItem(key, JSON.stringify(data));
-  
+
   if (done) {
     saveTrainingDay();
   }
-  
+
   renderWorkout(dia);
   autoBackupToDrive();
+  debouncedSyncToSupabase();
 }
 
 function saveTrainingDay() {
@@ -423,6 +600,7 @@ function saveOneRMToHistory(exerciseKey, oneRM, weight, reps) {
   
   localStorage.setItem(exerciseKey, JSON.stringify(data));
   autoBackupToDrive();
+  debouncedSyncToSupabase();
 }
 
 function renderOneRMHistory(exerciseKey) {
@@ -663,8 +841,9 @@ function saveNote(key, exerciseName) {
       renderWorkout(selector.value);
     }
   }, 1000);
-  
+
   autoBackupToDrive();
+  debouncedSyncToSupabase();
 }
 
 function showNotesModal(key, exerciseName) {
