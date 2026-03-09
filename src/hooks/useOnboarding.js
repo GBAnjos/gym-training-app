@@ -1,100 +1,223 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './useAuth';
 import { supabase } from '../data/supabase';
 
-const STORAGE_KEY = 'vida_onboarding_complete';
+const STORAGE_KEY_PREFIX = 'vida_onboarding_';
+const PROFILE_KEY = 'vida_user_profile';
 
 export function useOnboarding() {
   const { user } = useAuth();
   const [isComplete, setIsComplete] = useState(null); // null = loading
   const [isLoading, setIsLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState(null);
 
-  useEffect(() => {
-    if (user) {
-      checkOnboardingStatus();
-    }
+  // Get user-specific storage key
+  const getStorageKey = useCallback(() => {
+    return user ? `${STORAGE_KEY_PREFIX}${user.id}` : null;
   }, [user]);
 
-  const checkOnboardingStatus = async () => {
+  // Check onboarding status
+  const checkOnboardingStatus = useCallback(async () => {
+    if (!user) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
+    const storageKey = getStorageKey();
+
     try {
-      // Check localStorage first for quick response
-      const localComplete = localStorage.getItem(STORAGE_KEY);
-      if (localComplete === 'true') {
-        setIsComplete(true);
+      // 1. Check localStorage first for instant response
+      const localComplete = localStorage.getItem(storageKey);
+      const localProfile = localStorage.getItem(PROFILE_KEY);
+
+      if (localComplete === 'true' && localProfile) {
+        try {
+          const profile = JSON.parse(localProfile);
+          setUserProfile(profile);
+          setIsComplete(true);
+          setIsLoading(false);
+          return;
+        } catch (e) {
+          // Invalid JSON, continue to Supabase check
+        }
+      }
+
+      // 2. Check Supabase for user profile
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (error) {
+        // No profile found - user needs to complete onboarding
+        console.log('No profile found, showing onboarding');
+        setIsComplete(false);
         setIsLoading(false);
         return;
       }
 
-      // Check Supabase for user profile
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('onboarding_complete')
-        .eq('user_id', user.id)
-        .single();
-
       if (data?.onboarding_complete) {
-        localStorage.setItem(STORAGE_KEY, 'true');
+        // Profile exists and onboarding is complete
+        localStorage.setItem(storageKey, 'true');
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(data));
+        setUserProfile(data);
         setIsComplete(true);
       } else {
         setIsComplete(false);
       }
     } catch (err) {
-      // If no profile exists, onboarding is not complete
-      setIsComplete(false);
+      console.error('Error checking onboarding status:', err);
+      // On error, check if we have local data as fallback
+      const localProfile = localStorage.getItem(PROFILE_KEY);
+      if (localProfile) {
+        try {
+          setUserProfile(JSON.parse(localProfile));
+          setIsComplete(true);
+        } catch (e) {
+          setIsComplete(false);
+        }
+      } else {
+        setIsComplete(false);
+      }
     }
     setIsLoading(false);
-  };
+  }, [user, getStorageKey]);
 
+  useEffect(() => {
+    if (user) {
+      checkOnboardingStatus();
+    } else {
+      setIsLoading(false);
+      setIsComplete(null);
+    }
+  }, [user, checkOnboardingStatus]);
+
+  // Complete onboarding and save profile
   const completeOnboarding = async (profileData) => {
+    if (!user) return false;
+
+    const storageKey = getStorageKey();
+
     try {
-      // Save profile to Supabase
+      // Prepare data for Supabase (convert arrays to proper format)
+      const supabaseData = {
+        user_id: user.id,
+        name: profileData.name || null,
+        sex: profileData.sex || null,
+        age: profileData.age ? parseInt(profileData.age) : null,
+        current_weight: profileData.currentWeight ? parseFloat(profileData.currentWeight) : null,
+        target_weight: profileData.targetWeight ? parseFloat(profileData.targetWeight) : null,
+        height: profileData.height ? parseFloat(profileData.height) : null,
+        wake_up_time: profileData.wakeUpTime || null,
+        sleep_time: profileData.sleepTime || null,
+        dinner_time: profileData.dinnerTime || null,
+        office_days: profileData.officeDays || [],
+        goal: profileData.goal || null,
+        fitness_level: profileData.fitnessLevel || null,
+        training_days: profileData.trainingDays || [],
+        training_time: profileData.trainingTime || null,
+        dietary_restrictions: profileData.dietaryRestrictions || [],
+        meal_prep: profileData.mealPrep,
+        // New fields for lifestyle
+        hobbies: profileData.hobbies || [],
+        chores_frequency: profileData.choresFrequency || null,
+        grocery_frequency: profileData.groceryFrequency || null,
+        weekend_routine: profileData.weekendRoutine || null,
+        preferred_language: profileData.preferredLanguage || 'pt-BR',
+        onboarding_complete: true,
+        updated_at: new Date().toISOString()
+      };
+
+      // Save to Supabase
       const { error } = await supabase
         .from('user_profiles')
-        .upsert({
-          user_id: user.id,
-          ...profileData,
-          onboarding_complete: true,
-          created_at: new Date().toISOString()
-        }, {
+        .upsert(supabaseData, {
           onConflict: 'user_id'
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        // Still save locally even if Supabase fails
+      }
 
-      // Save to localStorage
-      localStorage.setItem(STORAGE_KEY, 'true');
-      localStorage.setItem('vida_user_profile', JSON.stringify(profileData));
+      // Save to localStorage (always, as backup)
+      localStorage.setItem(storageKey, 'true');
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(profileData));
 
+      setUserProfile(profileData);
       setIsComplete(true);
       return true;
     } catch (err) {
       console.error('Error completing onboarding:', err);
-      return false;
+      // Try to save locally at least
+      try {
+        localStorage.setItem(storageKey, 'true');
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(profileData));
+        setUserProfile(profileData);
+        setIsComplete(true);
+        return true;
+      } catch (localErr) {
+        return false;
+      }
     }
   };
 
-  const refreshOnboardingStatus = () => {
-    // Force re-check by setting loading state and checking again
-    setIsComplete(true);
-    setIsLoading(false);
+  // Reset onboarding (for settings menu)
+  const resetOnboarding = useCallback(() => {
+    const storageKey = getStorageKey();
+    if (storageKey) {
+      localStorage.removeItem(storageKey);
+    }
+    setIsComplete(false);
+    setUserProfile(null);
+  }, [getStorageKey]);
+
+  // Update profile without full onboarding
+  const updateProfile = async (profileData) => {
+    if (!user) return false;
+
+    try {
+      const merged = { ...userProfile, ...profileData };
+
+      const { error } = await supabase
+        .from('user_profiles')
+        .update({
+          ...profileData,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id);
+
+      if (error) console.error('Update error:', error);
+
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(merged));
+      setUserProfile(merged);
+      return true;
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      return false;
+    }
   };
 
   return {
     isOnboardingComplete: isComplete,
     isCheckingOnboarding: isLoading,
+    userProfile,
     completeOnboarding,
-    refreshOnboardingStatus
+    resetOnboarding,
+    updateProfile,
+    refreshOnboardingStatus: checkOnboardingStatus
   };
 }
 
 // Helper to generate personalized schedule based on user preferences
 export function generatePersonalizedSchedule(profile) {
-  const { wakeUpTime, workDays, officeDays, trainingDays, trainingTime, dinnerTime } = profile;
+  const { wakeUpTime, officeDays, trainingDays, trainingTime, dinnerTime, weekendRoutine, choresFrequency } = profile;
 
   // Parse times
-  const wakeHour = parseInt(wakeUpTime.split(':')[0]);
-  const dinnerHour = parseInt(dinnerTime.split(':')[0]);
+  const wakeHour = parseInt((wakeUpTime || '06:30').split(':')[0]);
+  const dinnerHour = parseInt((dinnerTime || '19:30').split(':')[0]);
 
   // Generate schedule based on preferences
   const schedule = {};
@@ -102,8 +225,8 @@ export function generatePersonalizedSchedule(profile) {
 
   days.forEach((day, index) => {
     const isWeekend = index >= 5;
-    const isOfficeDay = officeDays.includes(day);
-    const isTrainingDay = trainingDays.includes(day);
+    const isOfficeDay = (officeDays || []).includes(day);
+    const isTrainingDay = (trainingDays || []).includes(day);
 
     schedule[day] = {
       type: isWeekend ? 'weekend' : (isOfficeDay ? 'office' : 'home'),
@@ -114,7 +237,9 @@ export function generatePersonalizedSchedule(profile) {
         isTrainingDay,
         wakeHour,
         dinnerHour,
-        trainingTime
+        trainingTime: trainingTime || 'morning',
+        weekendRoutine: weekendRoutine || 'relaxed',
+        choresFrequency: choresFrequency || 'weekly'
       })
     };
   });
@@ -122,32 +247,36 @@ export function generatePersonalizedSchedule(profile) {
   return schedule;
 }
 
-function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHour, dinnerHour, trainingTime }) {
+function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHour, dinnerHour, trainingTime, weekendRoutine, choresFrequency }) {
   const blocks = [];
-  const timePrefix = isWeekend ? '~' : '';
+  const isRelaxedWeekend = isWeekend && weekendRoutine === 'relaxed';
+  const timePrefix = isRelaxedWeekend ? '~' : '';
+
+  // Adjust wake time for relaxed weekends
+  const adjustedWakeHour = isRelaxedWeekend ? wakeHour + 1 : wakeHour;
 
   // Wake up
   blocks.push({
-    time: `${timePrefix}${wakeHour}:00`,
+    time: `${timePrefix}${adjustedWakeHour}:00`,
     icon: '🌅',
-    label: 'Acorda',
-    sub: isWeekend ? 'Sem pressa hoje' : 'Novo dia, novas conquistas',
+    label: 'Acordar',
+    sub: isRelaxedWeekend ? 'Sem pressa hoje' : 'Novo dia, novas conquistas',
     type: 'morning'
   });
 
   // Morning routine
   blocks.push({
-    time: `${timePrefix}${wakeHour}:15`,
+    time: `${timePrefix}${adjustedWakeHour}:15`,
     icon: '☕',
-    label: 'Ritual matinal',
-    sub: 'Café, alongamento, prepara o dia',
+    label: 'Rotina matinal',
+    sub: 'Café, alongamento, preparar o dia',
     type: 'morning'
   });
 
   // Training (if training day and morning preference)
   if (isTrainingDay && trainingTime === 'morning') {
     blocks.push({
-      time: `${timePrefix}${wakeHour}:30`,
+      time: `${timePrefix}${adjustedWakeHour}:30`,
       icon: '🏋️',
       label: 'Academia',
       sub: '60-75 min de treino focado',
@@ -157,12 +286,12 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
   }
 
   // Breakfast
-  const breakfastTime = isTrainingDay && trainingTime === 'morning' ? wakeHour + 2 : wakeHour + 1;
+  const breakfastTime = isTrainingDay && trainingTime === 'morning' ? adjustedWakeHour + 2 : adjustedWakeHour + 1;
   blocks.push({
     time: `${timePrefix}${breakfastTime}:00`,
     icon: '🍳',
     label: 'Café da manhã',
-    sub: 'Refeição completa para começar bem',
+    sub: 'Refeição completa pra começar bem',
     type: 'food'
   });
 
@@ -181,7 +310,7 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
       time: '13:00',
       icon: '🥗',
       label: 'Almoço',
-      sub: 'Pausa real para comer bem',
+      sub: 'Pausa real pra comer bem',
       type: 'food'
     });
 
@@ -189,16 +318,46 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
       time: '14:00',
       icon: '💻',
       label: 'Trabalho — tarde',
-      sub: 'Finaliza as tarefas do dia',
+      sub: 'Finalizar as tarefas do dia',
       type: 'work'
     });
 
     blocks.push({
       time: '17:00',
       icon: '🔒',
-      label: 'Fecha o trabalho',
+      label: 'Fechar o trabalho',
       sub: 'Acabou. Não volta mais hoje.',
       type: 'work'
+    });
+  } else {
+    // Weekend activities
+    if (weekendRoutine === 'active') {
+      blocks.push({
+        time: '~10:00',
+        icon: '🎯',
+        label: 'Atividade livre',
+        sub: 'Hobbies, projetos pessoais',
+        type: 'free'
+      });
+    }
+
+    blocks.push({
+      time: '~12:30',
+      icon: '🥗',
+      label: 'Almoço',
+      sub: 'Refeição sem pressa',
+      type: 'food'
+    });
+  }
+
+  // Chores (based on frequency)
+  if (choresFrequency === 'daily' || (choresFrequency === 'weekly' && day === 'Sáb')) {
+    blocks.push({
+      time: isWeekend ? '~14:00' : '17:30',
+      icon: '🧹',
+      label: 'Tarefas de casa',
+      sub: choresFrequency === 'daily' ? 'Organização diária' : 'Limpeza semanal',
+      type: 'chore'
     });
   }
 
@@ -228,7 +387,7 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
 
   // Free time
   blocks.push({
-    time: isWeekend ? '~17:00' : '18:00',
+    time: isWeekend ? '~17:00' : '18:30',
     icon: '📚',
     label: 'Tempo livre',
     sub: 'Hobbies, descanso, o que te faz bem',
@@ -248,8 +407,8 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
   blocks.push({
     time: isWeekend ? '~22:00' : '21:30',
     icon: '🌙',
-    label: 'Wind down',
-    sub: 'Prepara para dormir, sem telas',
+    label: 'Relaxar',
+    sub: 'Preparar pra dormir, sem telas',
     type: 'sleep'
   });
 
@@ -257,7 +416,7 @@ function generateDayBlocks({ day, isWeekend, isOfficeDay, isTrainingDay, wakeHou
   blocks.push({
     time: isWeekend ? '~23:00' : '22:30',
     icon: '💤',
-    label: 'Dorme',
+    label: 'Dormir',
     sub: '7-8h de sono reparador',
     type: 'sleep'
   });
@@ -270,7 +429,6 @@ export function generatePersonalizedMeals(profile) {
   const { goal, sex, dietaryRestrictions, mealPrep } = profile;
 
   // Adjust macros based on goal and sex
-  // Women typically need 15-20% fewer calories than men
   let macros;
   const isFemale = sex === 'female';
 
@@ -297,16 +455,16 @@ export function generatePersonalizedMeals(profile) {
 
 // Generate personalized workout split
 export function generatePersonalizedWorkout(profile) {
-  const { trainingDays, fitnessLevel, goal } = profile;
-  const numDays = trainingDays.length;
+  const { trainingDays, fitnessLevel } = profile;
+  const numDays = (trainingDays || []).length;
 
   // Different splits based on number of training days
   if (numDays <= 3) {
-    return generateFullBodySplit(trainingDays, fitnessLevel);
+    return generateFullBodySplit(trainingDays || [], fitnessLevel || 'intermediate');
   } else if (numDays === 4) {
-    return generateUpperLowerSplit(trainingDays, fitnessLevel);
+    return generateUpperLowerSplit(trainingDays || [], fitnessLevel || 'intermediate');
   } else {
-    return generatePPLSplit(trainingDays, fitnessLevel);
+    return generatePPLSplit(trainingDays || [], fitnessLevel || 'intermediate');
   }
 }
 
