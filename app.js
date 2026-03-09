@@ -9,7 +9,7 @@ let importedData = null;
 // Supabase Configuration
 const SUPABASE_URL = 'https://mkwwvlauzlficncjfzmq.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1rd3d2bGF1emxmaWNuY2pmem1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTc5OTIsImV4cCI6MjA4ODYzMzk5Mn0.Y-rpFA2MeaOD3LWzLOU66WUfcRnm-7HtLI9XbaY9-uw';
-let supabase = null;
+let supabaseClient = null;
 let currentUser = null;
 
 // Google Drive OAuth
@@ -23,10 +23,10 @@ const BACKUP_FOLDER_NAME = 'GymTrainingBackups';
 
 function initSupabase() {
   if (typeof window.supabase !== 'undefined') {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabaseClient.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         currentUser = session.user;
         updateAuthUI(session.user);
@@ -35,7 +35,7 @@ function initSupabase() {
     });
 
     // Listen for auth changes
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
         currentUser = session.user;
         updateAuthUI(session.user);
@@ -52,9 +52,9 @@ function initSupabase() {
 
 async function signInWithGoogle() {
   console.log('signInWithGoogle called');
-  console.log('supabase object:', supabase);
+  console.log('supabaseClient object:', supabaseClient);
 
-  if (!supabase) {
+  if (!supabaseClient) {
     alert('Erro: Supabase não inicializado. Recarregue a página.');
     // Try to initialize again
     initSupabase();
@@ -65,7 +65,7 @@ async function signInWithGoogle() {
     const redirectUrl = window.location.origin + window.location.pathname;
     console.log('Redirect URL:', redirectUrl);
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: redirectUrl
@@ -85,9 +85,9 @@ async function signInWithGoogle() {
 }
 
 async function signOut() {
-  if (!supabase) return;
+  if (!supabaseClient) return;
 
-  const { error } = await supabase.auth.signOut();
+  const { error } = await supabaseClient.auth.signOut();
   if (error) {
     console.error('Logout error:', error);
     alert('Erro ao fazer logout: ' + error.message);
@@ -125,7 +125,7 @@ function updateAuthUI(user) {
 // ========== SUPABASE DATA SYNC ==========
 
 async function syncToSupabase() {
-  if (!supabase || !currentUser) return;
+  if (!supabaseClient || !currentUser) return;
 
   try {
     // Collect all workout data from localStorage
@@ -137,7 +137,7 @@ async function syncToSupabase() {
     });
 
     // Upsert to Supabase
-    const { error } = await supabase
+    const { error } = await supabaseClient
       .from('user_data')
       .upsert({
         user_id: currentUser.id,
@@ -158,10 +158,10 @@ async function syncToSupabase() {
 }
 
 async function syncFromSupabase() {
-  if (!supabase || !currentUser) return;
+  if (!supabaseClient || !currentUser) return;
 
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('user_data')
       .select('workout_data, updated_at')
       .eq('user_id', currentUser.id)
