@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <rect width="120" height="120" fill="#1e1e2e"/>
+  <g transform="translate(35, 25)" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Back/Pull icon (lat spread) -->
+    <path d="M25 10 L25 60" stroke-width="4"/>
+    <path d="M25 20 Q10 25, 5 45 Q3 55, 8 65" fill="#10b981" opacity="0.2"/>
+    <path d="M25 20 Q40 25, 45 45 Q47 55, 42 65" fill="#10b981" opacity="0.2"/>
+    <path d="M25 20 L10 30 L5 50" stroke-width="2"/>
+    <path d="M25 20 L40 30 L45 50" stroke-width="2"/>
+    <circle cx="25" cy="10" r="8" fill="#10b981" opacity="0.4"/>
+  </g>
+</svg>

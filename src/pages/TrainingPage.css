@@ -126,13 +126,40 @@
 
 .exercise-header {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   margin-bottom: var(--space-md);
+  align-items: flex-start;
+}
+
+.exercise-header .exercise-media {
+  flex-shrink: 0;
 }
 
 .exercise-status {
   font-size: 1.5rem;
   flex-shrink: 0;
+}
+
+/* Completion indicator on exercise card */
+.exercise-card.completed .exercise-header::after {
+  content: '✓';
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 24px;
+  height: 24px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.exercise-card {
+  position: relative;
 }
 
 .exercise-info {
