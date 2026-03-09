@@ -1,0 +1,97 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: linear-gradient(to right, var(--color-card), var(--color-card-alt));
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.header-icon {
+  font-size: 1.75rem;
+}
+
+.header-name {
+  font-family: var(--font-heading);
+}
+
+.header-tagline {
+  display: none;
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .header-tagline {
+    display: block;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.goal-badge {
+  padding: var(--space-xs) var(--space-sm);
+  background-color: rgba(200, 245, 90, 0.15);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(200, 245, 90, 0.3);
+  white-space: nowrap;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+}
+
+.logout-button {
+  padding: var(--space-xs) var(--space-sm);
+  background-color: rgba(255, 107, 107, 0.2);
+  color: var(--color-red);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 107, 107, 0.3);
+}

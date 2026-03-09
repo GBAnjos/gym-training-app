@@ -1,0 +1,200 @@
+.progress-page {
+  padding: var(--space-md);
+  padding-bottom: 100px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.progress-title {
+  font-size: 1.75rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+}
+
+/* Goal Section */
+.goal-section {
+  background: linear-gradient(135deg, rgba(200, 245, 90, 0.1), rgba(200, 245, 90, 0.05));
+  border: 1px solid rgba(200, 245, 90, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.goal-icon {
+  font-size: 2rem;
+}
+
+.goal-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.goal-label {
+  font-size: 0.875rem;
+  color: var(--color-text-dim);
+}
+
+.goal-range {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+
+.goal-progress-bar {
+  height: 32px;
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.goal-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dim));
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--space-sm);
+  min-width: 60px;
+  transition: width var(--transition-normal);
+}
+
+.goal-current {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-bg);
+}
+
+.goal-markers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-xs);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+}
+
+/* Weight Input Section */
+.weight-section {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.weight-section h3 {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.weight-input-row {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.weight-input-row input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.add-weight-btn {
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.add-weight-btn:hover {
+  background-color: var(--color-accent-dim);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.stat-card.accent {
+  background: linear-gradient(135deg, rgba(255, 184, 108, 0.1), rgba(255, 107, 107, 0.1));
+  border-color: rgba(255, 184, 108, 0.3);
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.stat-card.accent .stat-value {
+  color: var(--color-orange);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+/* Chart Section */
+.chart-section {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.chart-section h3 {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.chart-container {
+  height: 300px;
+  position: relative;
+}
+
+.no-data {
+  background-color: var(--color-card);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.no-data p {
+  color: var(--color-text-dim);
+  font-size: 0.875rem;
+}

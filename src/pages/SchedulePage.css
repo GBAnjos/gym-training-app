@@ -1,0 +1,224 @@
+.schedule-page {
+  padding: var(--space-md);
+  padding-bottom: 100px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Day Tabs */
+.day-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  overflow-x: auto;
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
+  scrollbar-width: none;
+}
+
+.day-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.day-tab {
+  flex: 1;
+  min-width: 44px;
+  padding: var(--space-sm) var(--space-xs);
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--transition-fast);
+}
+
+.day-tab:hover {
+  border-color: var(--color-muted);
+}
+
+.day-tab.active {
+  border-color: var(--color-accent);
+  background-color: rgba(200, 245, 90, 0.1);
+}
+
+.day-tab.today .day-name {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.day-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.day-indicators {
+  display: flex;
+  gap: 4px;
+  height: 8px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.indicator.office {
+  background-color: var(--color-blue);
+}
+
+.indicator.flex {
+  background-color: var(--color-red);
+}
+
+/* Day Note */
+.day-note {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.day-note.office {
+  background: linear-gradient(135deg, rgba(107, 207, 255, 0.1), rgba(107, 207, 255, 0.05));
+  border: 1px solid rgba(107, 207, 255, 0.2);
+}
+
+.day-note.home {
+  background: linear-gradient(135deg, rgba(200, 245, 90, 0.1), rgba(200, 245, 90, 0.05));
+  border: 1px solid rgba(200, 245, 90, 0.2);
+}
+
+.day-note.weekend {
+  background: linear-gradient(135deg, rgba(200, 153, 255, 0.1), rgba(200, 153, 255, 0.05));
+  border: 1px solid rgba(200, 153, 255, 0.2);
+}
+
+.note-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.note-text {
+  font-size: 0.875rem;
+  color: var(--color-text-dim);
+  line-height: 1.5;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.time-block {
+  display: grid;
+  grid-template-columns: 50px 24px 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
+  transition: opacity var(--transition-fast);
+}
+
+.time-block.approximate {
+  opacity: 0.75;
+}
+
+.time-block.approximate .block-time {
+  color: var(--color-muted-light);
+}
+
+.block-time {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  text-align: right;
+  padding-top: 2px;
+}
+
+.block-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.block-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.block-connector {
+  flex: 1;
+  width: 2px;
+  background-color: var(--color-border);
+  margin-top: var(--space-xs);
+}
+
+.time-block:last-child .block-connector {
+  display: none;
+}
+
+.block-content {
+  padding-bottom: var(--space-sm);
+}
+
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.block-icon {
+  font-size: 1.125rem;
+}
+
+.block-label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.block-sub {
+  font-size: 0.875rem;
+  color: var(--color-text-dim);
+  line-height: 1.4;
+}
+
+/* Tag Badge */
+.tag-badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* Flex block special styling */
+.time-block.flex .block-content {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(200, 153, 255, 0.1));
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-left: calc(-1 * var(--space-sm));
+}
+
+.time-block.social .block-content {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), transparent);
+  border: 1px solid rgba(255, 107, 107, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-left: calc(-1 * var(--space-sm));
+}
+
+.office-hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-top: var(--space-lg);
+}
