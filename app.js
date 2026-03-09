@@ -51,21 +51,36 @@ function initSupabase() {
 }
 
 async function signInWithGoogle() {
+  console.log('signInWithGoogle called');
+  console.log('supabase object:', supabase);
+
   if (!supabase) {
-    alert('Erro: Supabase não inicializado');
+    alert('Erro: Supabase não inicializado. Recarregue a página.');
+    // Try to initialize again
+    initSupabase();
     return;
   }
 
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: window.location.origin + window.location.pathname
-    }
-  });
+  try {
+    const redirectUrl = window.location.origin + window.location.pathname;
+    console.log('Redirect URL:', redirectUrl);
 
-  if (error) {
-    console.error('Login error:', error);
-    alert('Erro ao fazer login: ' + error.message);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: redirectUrl
+      }
+    });
+
+    console.log('OAuth response:', { data, error });
+
+    if (error) {
+      console.error('Login error:', error);
+      alert('Erro ao fazer login: ' + error.message);
+    }
+  } catch (err) {
+    console.error('SignIn exception:', err);
+    alert('Erro ao fazer login: ' + err.message);
   }
 }
 
@@ -221,6 +236,11 @@ const muscleColors = {
   "Trapézio": { bg: "bg-orange-950/30", text: "text-orange-300", border: "border-orange-800/30" }
 };
 
+// Initialize Supabase immediately when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  initSupabase();
+});
+
 fetch("data/treinos.json")
   .then(res => res.json())
   .then(data => {
@@ -233,9 +253,6 @@ fetch("data/treinos.json")
   });
 
 function init() {
-  // Initialize Supabase first
-  initSupabase();
-
   const selector = document.getElementById("daySelector");
   if (!selector) return;
 
