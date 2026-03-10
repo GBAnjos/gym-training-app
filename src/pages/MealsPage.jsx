@@ -163,7 +163,7 @@ function MealCard({ meal, index, isExpanded, isCompleted, onClick, onToggleCompl
           onClick={onToggleComplete}
           aria-label={isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
         >
-          <Icon name={isCompleted ? 'checkmark-1' : 'circle-1'} />
+          <Icon name="checkmark-1" />
         </button>
         <Icon name={meal.icon} className="meal-icon" />
         <div className="meal-info">
