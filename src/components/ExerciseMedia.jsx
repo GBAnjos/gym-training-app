@@ -98,22 +98,24 @@ export function ExerciseMedia({
 
             <div className="exercise-modal__images">
               {/* Start Position */}
-              <div className="exercise-modal__frame">
+              <div className="exercise-modal__column">
                 <span className="exercise-modal__label">Início</span>
-                {!startLoaded && <div className="exercise-modal__skeleton" />}
-                {startError ? (
-                  <div className="exercise-modal__fallback">
-                    <Icon name={icon} />
-                  </div>
-                ) : (
-                  <img
-                    src={images.startImage}
-                    alt={`${exerciseName} - posição inicial`}
-                    className={`exercise-modal__image ${startLoaded ? 'loaded' : ''}`}
-                    onLoad={() => setStartLoaded(true)}
-                    onError={() => { setStartError(true); setStartLoaded(true); }}
-                  />
-                )}
+                <div className="exercise-modal__frame">
+                  {!startLoaded && <div className="exercise-modal__skeleton" />}
+                  {startError ? (
+                    <div className="exercise-modal__fallback">
+                      <Icon name={icon} />
+                    </div>
+                  ) : (
+                    <img
+                      src={images.startImage}
+                      alt={`${exerciseName} - posição inicial`}
+                      className={`exercise-modal__image ${startLoaded ? 'loaded' : ''}`}
+                      onLoad={() => setStartLoaded(true)}
+                      onError={() => { setStartError(true); setStartLoaded(true); }}
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Arrow */}
@@ -122,22 +124,24 @@ export function ExerciseMedia({
               </div>
 
               {/* End Position */}
-              <div className="exercise-modal__frame">
+              <div className="exercise-modal__column">
                 <span className="exercise-modal__label">Fim</span>
-                {!endLoaded && <div className="exercise-modal__skeleton" />}
-                {endError ? (
-                  <div className="exercise-modal__fallback">
-                    <Icon name={icon} />
-                  </div>
-                ) : (
-                  <img
-                    src={images.endImage}
-                    alt={`${exerciseName} - posição final`}
-                    className={`exercise-modal__image ${endLoaded ? 'loaded' : ''}`}
-                    onLoad={() => setEndLoaded(true)}
-                    onError={() => { setEndError(true); setEndLoaded(true); }}
-                  />
-                )}
+                <div className="exercise-modal__frame">
+                  {!endLoaded && <div className="exercise-modal__skeleton" />}
+                  {endError ? (
+                    <div className="exercise-modal__fallback">
+                      <Icon name={icon} />
+                    </div>
+                  ) : (
+                    <img
+                      src={images.endImage}
+                      alt={`${exerciseName} - posição final`}
+                      className={`exercise-modal__image ${endLoaded ? 'loaded' : ''}`}
+                      onLoad={() => setEndLoaded(true)}
+                      onError={() => { setEndError(true); setEndLoaded(true); }}
+                    />
+                  )}
+                </div>
               </div>
             </div>
 
