@@ -1,13 +1,11 @@
 import { useAuth } from '../hooks/useAuth';
 import { useProgress } from '../hooks/useProgress';
-import { useLanguage } from '../hooks/useLanguage';
 import { Icon } from './Icon';
 import './Header.css';
 
-export function Header() {
-  const { user, signOut } = useAuth();
+export function Header({ onAvatarClick }) {
+  const { user } = useAuth();
   const { currentWeight, targetWeight } = useProgress();
-  const { t } = useLanguage();
 
   return (
     <header className="header">
@@ -17,7 +15,6 @@ export function Header() {
             <Icon name="dumbbell-1" className="header-icon" />
             <span className="header-name">Vida</span>
           </h1>
-          <span className="header-tagline">{t('app_tagline')}</span>
         </div>
 
         <div className="header-right">
@@ -26,7 +23,7 @@ export function Header() {
           </div>
 
           {user && (
-            <div className="user-section">
+            <button className="avatar-button" onClick={onAvatarClick} aria-label="Settings">
               {user.user_metadata?.avatar_url ? (
                 <img
                   src={user.user_metadata.avatar_url}
@@ -38,11 +35,7 @@ export function Header() {
                   <Icon name="user-4" />
                 </div>
               )}
-              <button className="logout-button" onClick={signOut}>
-                <Icon name="exit" className="logout-icon" />
-                <span>{t('logout')}</span>
-              </button>
-            </div>
+            </button>
           )}
         </div>
       </div>

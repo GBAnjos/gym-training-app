@@ -19,12 +19,6 @@
   font-size: 0.9rem;
 }
 
-@media (min-width: 480px) {
-  .no-training {
-    padding: var(--space-2xl);
-  }
-}
-
 /* Day Selector */
 .training-day-selector {
   display: flex;
@@ -75,14 +69,6 @@
   transform: scale(0.95);
 }
 
-@media (min-width: 400px) {
-  .training-day-btn {
-    min-width: 50px;
-    padding: var(--space-sm) var(--space-md);
-    font-size: 0.85rem;
-  }
-}
-
 .training-day-btn:hover {
   border-color: var(--color-muted);
 }
@@ -121,12 +107,6 @@
   font-size: 0.8rem;
 }
 
-@media (min-width: 480px) {
-  .workout-groups {
-    font-size: 0.875rem;
-  }
-}
-
 /* Progress Section */
 .progress-section {
   background-color: var(--color-card);
@@ -152,13 +132,6 @@
   color: var(--color-text-dim);
 }
 
-@media (min-width: 480px) {
-  .progress-info {
-    margin-bottom: var(--space-sm);
-    font-size: 0.875rem;
-  }
-}
-
 .progress-percent {
   color: var(--color-accent);
   font-weight: 600;
@@ -169,13 +142,6 @@
   background-color: var(--color-card-alt);
   border-radius: 3px;
   overflow: hidden;
-}
-
-@media (min-width: 480px) {
-  .progress-bar {
-    height: 8px;
-    border-radius: 4px;
-  }
 }
 
 .progress-fill {
@@ -196,7 +162,6 @@
 @media (min-width: 480px) {
   .exercise-list {
     gap: var(--space-md);
-    margin-bottom: var(--space-xl);
   }
 }
 
@@ -206,7 +171,7 @@
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
-  transition: border-color var(--transition-fast);
+  transition: all var(--transition-fast);
   position: relative;
 }
 
@@ -215,10 +180,6 @@
     border-radius: var(--radius-lg);
     padding: var(--space-md);
   }
-}
-
-.exercise-card:hover {
-  border-color: var(--color-muted);
 }
 
 .exercise-card.completed {
@@ -237,49 +198,6 @@
   .exercise-header {
     gap: var(--space-md);
     margin-bottom: var(--space-md);
-  }
-}
-
-.exercise-header .exercise-media {
-  flex-shrink: 0;
-}
-
-.exercise-status {
-  font-size: 1.25rem;
-  flex-shrink: 0;
-}
-
-@media (min-width: 480px) {
-  .exercise-status {
-    font-size: 1.5rem;
-  }
-}
-
-/* Completion indicator on exercise card */
-.exercise-card.completed .exercise-header::after {
-  content: '✓';
-  position: absolute;
-  top: var(--space-xs);
-  right: var(--space-xs);
-  width: 20px;
-  height: 20px;
-  background: var(--color-accent);
-  color: var(--color-bg);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.65rem;
-  font-weight: 700;
-}
-
-@media (min-width: 480px) {
-  .exercise-card.completed .exercise-header::after {
-    top: var(--space-sm);
-    right: var(--space-sm);
-    width: 24px;
-    height: 24px;
-    font-size: 0.75rem;
   }
 }
 
@@ -309,13 +227,6 @@
   margin-bottom: var(--space-xs);
 }
 
-@media (min-width: 480px) {
-  .exercise-meta {
-    gap: var(--space-sm);
-    margin-bottom: var(--space-sm);
-  }
-}
-
 .exercise-sets {
   padding: 2px 6px;
   background-color: var(--color-card-alt);
@@ -323,13 +234,6 @@
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
-}
-
-@media (min-width: 480px) {
-  .exercise-sets {
-    padding: 2px 8px;
-    font-size: 0.875rem;
-  }
 }
 
 .exercise-obs {
@@ -341,23 +245,10 @@
   border-radius: var(--radius-sm);
 }
 
-@media (min-width: 480px) {
-  .exercise-obs {
-    padding: 2px 8px;
-    font-size: 0.875rem;
-  }
-}
-
 .exercise-muscles {
   display: flex;
   gap: 3px;
   flex-wrap: wrap;
-}
-
-@media (min-width: 480px) {
-  .exercise-muscles {
-    gap: 4px;
-  }
 }
 
 .muscle-tag {
@@ -371,23 +262,14 @@
   .muscle-tag {
     font-size: 0.625rem;
     padding: 2px 6px;
-    border-radius: 4px;
   }
 }
 
 /* Exercise Controls */
 .exercise-controls {
   display: flex;
-  flex-direction: column;
   gap: var(--space-sm);
-}
-
-@media (min-width: 400px) {
-  .exercise-controls {
-    flex-direction: row;
-    gap: var(--space-md);
-    align-items: flex-end;
-  }
+  align-items: flex-end;
 }
 
 .weight-input-group {
@@ -401,12 +283,6 @@
   margin-bottom: var(--space-xs);
 }
 
-@media (min-width: 480px) {
-  .weight-input-group label {
-    font-size: 0.75rem;
-  }
-}
-
 .weight-input-group input {
   width: 100%;
   padding: var(--space-sm);
@@ -416,146 +292,184 @@
   min-height: 44px;
 }
 
-@media (min-width: 480px) {
-  .weight-input-group input {
-    padding: var(--space-sm) var(--space-md);
-  }
+/* Exercise Actions (timer + done) */
+.exercise-actions {
+  display: flex;
+  gap: var(--space-xs);
 }
 
+.timer-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-sm);
+  background-color: var(--color-card-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-blue);
+  min-width: 44px;
+  min-height: 44px;
+  transition: all var(--transition-fast);
+}
+
+.timer-btn:hover {
+  background-color: rgba(107, 207, 255, 0.15);
+  border-color: var(--color-blue);
+}
+
+.timer-btn:active {
+  transform: scale(0.95);
+}
+
+.timer-btn .lni {
+  font-size: 1rem;
+}
+
+.timer-btn span {
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+/* Done Checkbox */
 .done-checkbox {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
+  min-width: 44px;
+  min-height: 44px;
   background-color: var(--color-card-alt);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color var(--transition-fast);
-  min-height: 44px;
-  width: 100%;
-}
-
-@media (min-width: 400px) {
-  .done-checkbox {
-    width: auto;
-    min-width: 100px;
-  }
+  transition: all var(--transition-fast);
 }
 
 .done-checkbox:hover {
-  background-color: var(--color-muted);
+  border-color: var(--color-accent);
 }
 
 .done-checkbox:active {
-  transform: scale(0.98);
-}
-
-.done-checkbox span {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--color-text);
-}
-
-@media (min-width: 480px) {
-  .done-checkbox span {
-    font-size: 0.875rem;
-  }
-}
-
-/* Timer Section */
-.timer-section {
-  background: linear-gradient(135deg, rgba(107, 207, 255, 0.1), rgba(200, 153, 255, 0.1));
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-md);
-}
-
-@media (min-width: 480px) {
-  .timer-section {
-    border-radius: var(--radius-xl);
-    padding: var(--space-lg);
-  }
-}
-
-.timer-title {
-  font-size: 1rem;
-  color: var(--color-text);
-  margin-bottom: var(--space-sm);
-  text-align: center;
-}
-
-@media (min-width: 480px) {
-  .timer-title {
-    font-size: 1.125rem;
-    margin-bottom: var(--space-md);
-  }
-}
-
-.timer-buttons {
-  display: flex;
-  gap: var(--space-xs);
-  justify-content: center;
-  margin-bottom: var(--space-md);
-  flex-wrap: wrap;
-}
-
-@media (min-width: 400px) {
-  .timer-buttons {
-    gap: var(--space-sm);
-  }
-}
-
-.timer-buttons button {
-  padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-card);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: all var(--transition-fast);
-  min-height: 40px;
-  min-width: 50px;
-}
-
-@media (min-width: 480px) {
-  .timer-buttons button {
-    padding: var(--space-sm) var(--space-lg);
-    font-size: 0.9rem;
-    min-width: 60px;
-  }
-}
-
-.timer-buttons button:hover {
-  border-color: var(--color-accent);
-  background-color: rgba(200, 245, 90, 0.1);
-}
-
-.timer-buttons button:active {
   transform: scale(0.95);
 }
 
-.timer-display {
-  font-size: 2rem;
-  font-weight: 700;
-  font-family: var(--font-mono);
-  color: var(--color-blue);
-  text-align: center;
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.done-checkbox input {
+  display: none;
 }
 
-@media (min-width: 480px) {
-  .timer-display {
-    font-size: 2.5rem;
-    min-height: 60px;
+.done-checkbox span {
+  font-size: 1.25rem;
+  color: var(--color-accent);
+}
+
+.exercise-card.completed .done-checkbox {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.exercise-card.completed .done-checkbox span {
+  color: var(--color-bg);
+}
+
+/* ===== Floating Timer ===== */
+.floating-timer {
+  position: fixed;
+  bottom: calc(70px + env(safe-area-inset-bottom, 16px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: var(--color-card);
+  border: 2px solid var(--color-blue);
+  border-radius: var(--radius-xl);
+  padding: var(--space-sm) var(--space-md);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  min-width: 200px;
+  animation: float-up 0.3s ease;
+}
+
+@keyframes float-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 }
 
-.timer-display.done {
+.floating-timer.done {
+  border-color: var(--color-accent);
+  background: linear-gradient(135deg, rgba(200, 245, 90, 0.15), var(--color-card));
+}
+
+.floating-timer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.floating-timer-label {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  font-weight: 500;
+}
+
+.floating-timer-time {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--color-blue);
+}
+
+.floating-timer-done {
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--color-accent);
-  animation: pulse 2s infinite;
+}
+
+.floating-timer-check {
+  font-size: 1.25rem;
+  color: var(--color-accent);
+}
+
+.floating-timer-stop {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-card-alt);
+  color: var(--color-text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  margin-left: var(--space-sm);
+  transition: all var(--transition-fast);
+}
+
+.floating-timer-stop:hover {
+  background: var(--color-muted);
+  color: var(--color-text);
+}
+
+.floating-timer-progress {
+  margin-top: var(--space-xs);
+  height: 3px;
+  background: var(--color-card-alt);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.floating-timer-bar {
+  height: 100%;
+  background: var(--color-blue);
+  transition: width 1s linear;
+}
+
+@media (min-width: 768px) {
+  .floating-timer {
+    bottom: var(--space-lg);
+  }
 }

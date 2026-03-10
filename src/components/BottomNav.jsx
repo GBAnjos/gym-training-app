@@ -10,7 +10,6 @@ export function BottomNav({ activeTab, onTabChange }) {
     { id: 'meals', icon: 'knife-fork-1', labelKey: 'nav_meals' },
     { id: 'training', icon: 'dumbbell-1', labelKey: 'nav_training' },
     { id: 'progress', icon: 'bar-chart-4', labelKey: 'nav_progress' },
-    { id: 'settings', icon: 'gear-1', labelKey: 'settings_title' },
   ];
 
   return (
