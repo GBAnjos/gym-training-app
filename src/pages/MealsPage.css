@@ -27,14 +27,64 @@
 .meals-subtitle {
   color: var(--color-text-dim);
   font-size: 0.8rem;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 @media (min-width: 480px) {
   .meals-subtitle {
     font-size: 0.875rem;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-lg);
   }
+}
+
+/* Daily Progress */
+.meals-progress {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .meals-progress {
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+}
+
+.meals-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.meals-progress-label {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+}
+
+.meals-progress-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+
+.meals-progress-bar {
+  height: 6px;
+  background: var(--color-card-alt);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.meals-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dim));
+  border-radius: 3px;
+  transition: width var(--transition-normal);
 }
 
 .meals-list {
@@ -77,6 +127,46 @@
 
 .meal-card.expanded {
   border-color: var(--color-accent);
+}
+
+.meal-card.completed {
+  background: rgba(200, 245, 90, 0.05);
+  border-color: rgba(200, 245, 90, 0.3);
+}
+
+.meal-card.completed .meal-name {
+  text-decoration: line-through;
+  color: var(--color-text-dim);
+}
+
+.meal-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: transparent;
+  font-size: 0.75rem;
+}
+
+.meal-check:hover {
+  border-color: var(--color-accent);
+}
+
+.meal-check:active {
+  transform: scale(0.9);
+}
+
+.meal-check.checked {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
 }
 
 .meal-header {

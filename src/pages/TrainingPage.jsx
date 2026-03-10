@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import { TREINOS, DAY_MAP, TRAINING_DAYS } from '../data/treinos';
 import { muscleColors } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
+import { useLanguage } from '../hooks/useLanguage';
+import { useToast } from '../components/Toast';
 import { ExerciseMedia } from '../components/ExerciseMedia';
 import { Icon } from '../components/Icon';
 import './TrainingPage.css';
 
 export function TrainingPage() {
+  const { t, language } = useLanguage();
+  const toast = useToast();
   const [selectedDay, setSelectedDay] = useState(() => {
     const today = new Date().toLocaleDateString("pt-BR", { weekday: "long" });
     return DAY_MAP[today] || 'segunda';
@@ -26,8 +30,9 @@ export function TrainingPage() {
           if (prev <= 1) {
             setTimerActive(false);
             if (navigator.vibrate) {
-              navigator.vibrate([200, 100, 200]);
+              navigator.vibrate([200, 100, 200, 100, 200]);
             }
+            toast.success(language === 'pt-BR' ? 'Descanso finalizado!' : 'Rest complete!');
             return 0;
           }
           return prev - 1;
@@ -35,11 +40,19 @@ export function TrainingPage() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [timerActive, timerSeconds]);
+  }, [timerActive, timerSeconds, toast, language]);
 
   const startTimer = (seconds) => {
     setTimerSeconds(seconds);
     setTimerActive(true);
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
+    }
+  };
+
+  const stopTimer = () => {
+    setTimerActive(false);
+    setTimerSeconds(null);
   };
 
   const formatTime = (seconds) => {
@@ -63,10 +76,27 @@ export function TrainingPage() {
   const { completed, total } = getCompletedCount();
   const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
+  // Check if workout is complete
+  useEffect(() => {
+    if (completed === total && total > 0) {
+      const today = new Date().toISOString().split('T')[0];
+      const shownKey = `workout_complete_toast_${today}_${selectedDay}`;
+      if (!localStorage.getItem(shownKey)) {
+        localStorage.setItem(shownKey, 'true');
+        toast.success(language === 'pt-BR' ? 'Treino completo! Parabéns!' : 'Workout complete! Great job!');
+        if (navigator.vibrate) {
+          navigator.vibrate([100, 50, 100, 50, 200]);
+        }
+      }
+    }
+  }, [completed, total, selectedDay, toast, language]);
+
   if (!treino) {
     return (
       <div className="training-page">
-        <p className="no-training">Sem treino para este dia</p>
+        <p className="no-training">
+          {language === 'pt-BR' ? 'Sem treino para este dia' : 'No workout for this day'}
+        </p>
       </div>
     );
   }
@@ -95,7 +125,7 @@ export function TrainingPage() {
       {/* Progress Bar */}
       <div className="progress-section">
         <div className="progress-info">
-          <span>{completed} de {total} exercícios</span>
+          <span>{completed} {language === 'pt-BR' ? 'de' : 'of'} {total} {language === 'pt-BR' ? 'exercícios' : 'exercises'}</span>
           <span className="progress-percent">{progress}%</span>
         </div>
         <div className="progress-bar">
@@ -111,29 +141,56 @@ export function TrainingPage() {
             exercise={ex}
             dayKey={selectedDay}
             onSync={debouncedSync}
+            onStartTimer={startTimer}
+            toast={toast}
+            language={language}
           />
         ))}
       </div>
 
-      {/* Rest Timer */}
-      <div className="timer-section">
-        <h3 className="timer-title"><Icon name="timer-1" /> Timer de Descanso</h3>
-        <div className="timer-buttons">
-          <button onClick={() => startTimer(60)}>60s</button>
-          <button onClick={() => startTimer(90)}>90s</button>
-          <button onClick={() => startTimer(120)}>120s</button>
-        </div>
-        {timerSeconds !== null && (
-          <div className={`timer-display ${timerSeconds === 0 ? 'done' : ''}`}>
-            {timerSeconds === 0 ? <><Icon name="checkmark-1" /> Descanso finalizado!</> : formatTime(timerSeconds)}
+      {/* Floating Timer */}
+      {timerSeconds !== null && (
+        <div className={`floating-timer ${timerSeconds === 0 ? 'done' : ''}`}>
+          <div className="floating-timer-content">
+            {timerActive && timerSeconds > 0 ? (
+              <>
+                <span className="floating-timer-label">
+                  {language === 'pt-BR' ? 'Descansando' : 'Resting'}
+                </span>
+                <span className="floating-timer-time">{formatTime(timerSeconds)}</span>
+                <button className="floating-timer-stop" onClick={stopTimer}>
+                  <Icon name="xmark" />
+                </button>
+              </>
+            ) : (
+              <>
+                <Icon name="checkmark-circle-1" className="floating-timer-check" />
+                <span className="floating-timer-done">
+                  {language === 'pt-BR' ? 'Pronto!' : 'Ready!'}
+                </span>
+                <button className="floating-timer-stop" onClick={stopTimer}>
+                  <Icon name="xmark" />
+                </button>
+              </>
+            )}
           </div>
-        )}
-      </div>
+          {timerActive && (
+            <div className="floating-timer-progress">
+              <div
+                className="floating-timer-bar"
+                style={{
+                  width: `${((timerSeconds) / (timerSeconds > 90 ? 120 : timerSeconds > 60 ? 90 : 60)) * 100}%`
+                }}
+              />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-function ExerciseCard({ exercise, dayKey, onSync }) {
+function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language }) {
   const storageKey = `${dayKey}_${exercise.id}`;
   const [saved, setSaved] = useState(() => {
     return JSON.parse(localStorage.getItem(storageKey) || '{}');
@@ -165,9 +222,14 @@ function ExerciseCard({ exercise, dayKey, onSync }) {
   };
 
   const handleDoneToggle = () => {
-    updateSaved({ feito: !saved.feito });
+    const nowDone = !saved.feito;
+    updateSaved({ feito: nowDone });
 
-    if (!saved.feito) {
+    if (nowDone) {
+      // Haptic feedback
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
       // Save training day
       const today = new Date().toISOString().split('T')[0];
       let history = JSON.parse(localStorage.getItem('training_days') || '[]');
@@ -210,7 +272,7 @@ function ExerciseCard({ exercise, dayKey, onSync }) {
 
       <div className="exercise-controls">
         <div className="weight-input-group">
-          <label>Peso (kg)</label>
+          <label>{language === 'pt-BR' ? 'Peso (kg)' : 'Weight (kg)'}</label>
           <input
             type="number"
             step="0.5"
@@ -219,14 +281,26 @@ function ExerciseCard({ exercise, dayKey, onSync }) {
             placeholder="0.0"
           />
         </div>
-        <label className="done-checkbox">
-          <input
-            type="checkbox"
-            checked={saved.feito || false}
-            onChange={handleDoneToggle}
-          />
-          <span>Concluído</span>
-        </label>
+
+        <div className="exercise-actions">
+          <button
+            className="timer-btn"
+            onClick={() => onStartTimer(60)}
+            title={language === 'pt-BR' ? 'Timer 60s' : '60s Timer'}
+          >
+            <Icon name="timer-1" />
+            <span>60s</span>
+          </button>
+
+          <label className="done-checkbox">
+            <input
+              type="checkbox"
+              checked={saved.feito || false}
+              onChange={handleDoneToggle}
+            />
+            <span>{saved.feito ? <Icon name="checkmark-1" /> : ''}</span>
+          </label>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { LanguageProvider } from './hooks/useLanguage.jsx';
+import { ToastProvider } from './components/Toast';
 import { useOnboarding } from './hooks/useOnboarding';
 import { LoginScreen } from './components/LoginScreen';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -60,7 +61,7 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Header />
+      <Header onAvatarClick={() => setActiveTab('settings')} />
       <main className="main-content">
         {renderPage()}
       </main>
@@ -73,7 +74,9 @@ function App() {
   return (
     <LanguageProvider>
       <AuthProvider>
-        <AppContent />
+        <ToastProvider>
+          <AppContent />
+        </ToastProvider>
       </AuthProvider>
     </LanguageProvider>
   );

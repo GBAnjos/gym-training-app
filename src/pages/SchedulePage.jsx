@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useCallback } from 'react';
 import { SCHEDULE, DAY_ORDER } from '../data/schedule';
 import { DESIGN } from '../data/design';
 import { useOfficeDays } from '../hooks/useOfficeDays';
 import { useLanguage } from '../hooks/useLanguage';
+import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
 import './SchedulePage.css';
 
@@ -20,8 +21,41 @@ const BLOCK_ICONS = {
   sport: 'busket-ball',
 };
 
+// Custom hook for long press detection
+function useLongPress(onLongPress, onClick, { delay = 500 } = {}) {
+  const timeoutRef = useRef(null);
+  const isLongPress = useRef(false);
+
+  const start = useCallback((e) => {
+    isLongPress.current = false;
+    timeoutRef.current = setTimeout(() => {
+      isLongPress.current = true;
+      if (navigator.vibrate) navigator.vibrate(50);
+      onLongPress(e);
+    }, delay);
+  }, [onLongPress, delay]);
+
+  const clear = useCallback((e, shouldClick = true) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    if (shouldClick && !isLongPress.current) {
+      onClick?.(e);
+    }
+  }, [onClick]);
+
+  return {
+    onMouseDown: start,
+    onMouseUp: clear,
+    onMouseLeave: () => clear(null, false),
+    onTouchStart: start,
+    onTouchEnd: clear,
+  };
+}
+
 export function SchedulePage() {
   const { language } = useLanguage();
+  const toast = useToast();
   const today = new Date();
   const dayIndex = today.getDay();
   const dayMap = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
@@ -59,34 +93,34 @@ export function SchedulePage() {
     }
   };
 
+  const handleToggleOffice = (day) => {
+    if (!['Sáb', 'Dom'].includes(day)) {
+      toggleOfficeDay(day);
+      const newType = isOfficeDay(day) ? 'home' : 'office';
+      toast.info(
+        language === 'pt-BR'
+          ? `${day}: ${newType === 'office' ? 'Escritório' : 'Home office'}`
+          : `${day}: ${newType === 'office' ? 'Office' : 'Work from home'}`
+      );
+    }
+  };
+
   return (
     <div className="schedule-page">
       {/* Day Tabs */}
       <div className="day-tabs">
-        {DAY_ORDER.map(day => {
-          const type = getDayType(day);
-          const isFlex = day === 'Sex';
-          const isToday = day === todayKey;
-
-          return (
-            <button
-              key={day}
-              className={`day-tab ${selectedDay === day ? 'active' : ''} ${isToday ? 'today' : ''}`}
-              onClick={() => setSelectedDay(day)}
-              onDoubleClick={() => {
-                if (!['Sáb', 'Dom'].includes(day)) {
-                  toggleOfficeDay(day);
-                }
-              }}
-            >
-              <span className="day-name">{day}</span>
-              <div className="day-indicators">
-                {type === 'office' && <span className="indicator office" />}
-                {isFlex && <span className="indicator flex" />}
-              </div>
-            </button>
-          );
-        })}
+        {DAY_ORDER.map(day => (
+          <DayTab
+            key={day}
+            day={day}
+            isSelected={selectedDay === day}
+            isToday={day === todayKey}
+            type={getDayType(day)}
+            isFlex={day === 'Sex'}
+            onSelect={() => setSelectedDay(day)}
+            onToggleOffice={() => handleToggleOffice(day)}
+          />
+        ))}
       </div>
 
       {/* Day Note */}
@@ -103,11 +137,29 @@ export function SchedulePage() {
       </div>
 
       <p className="office-hint">
+        <Icon name="hand-1" className="hint-icon" />
         {language === 'pt-BR'
-          ? 'Dica: clique duplo num dia para alternar entre escritório/home'
-          : 'Tip: double-click a day to toggle office/home'}
+          ? 'Segure num dia da semana para alternar escritório/home'
+          : 'Long-press a weekday to toggle office/home'}
       </p>
     </div>
+  );
+}
+
+function DayTab({ day, isSelected, isToday, type, isFlex, onSelect, onToggleOffice }) {
+  const longPressProps = useLongPress(onToggleOffice, onSelect);
+
+  return (
+    <button
+      className={`day-tab ${isSelected ? 'active' : ''} ${isToday ? 'today' : ''}`}
+      {...longPressProps}
+    >
+      <span className="day-name">{day}</span>
+      <div className="day-indicators">
+        {type === 'office' && <span className="indicator office" />}
+        {isFlex && <span className="indicator flex" />}
+      </div>
+    </button>
   );
 }
 
