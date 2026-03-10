@@ -34,8 +34,15 @@
 }
 
 .header-icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+@media (min-width: 480px) {
+  .header-icon {
+    font-size: 1.5rem;
+  }
 }
 
 .header-name {
@@ -117,6 +124,18 @@
   }
 }
 
+.user-avatar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-card-alt);
+}
+
+.user-avatar-icon .lni {
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+
 .logout-button {
   padding: var(--space-xs) var(--space-sm);
   background-color: rgba(255, 107, 107, 0.2);
@@ -128,12 +147,25 @@
   min-height: 32px;
   display: flex;
   align-items: center;
+  gap: var(--space-xs);
+}
+
+.logout-button .logout-icon {
+  font-size: 0.9rem;
+}
+
+.logout-button span {
+  display: none;
 }
 
 @media (min-width: 480px) {
   .logout-button {
     font-size: 0.75rem;
     min-height: 36px;
+  }
+
+  .logout-button span {
+    display: inline;
   }
 }
 

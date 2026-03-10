@@ -16,6 +16,7 @@
 
 .loading-icon {
   font-size: 4rem;
+  color: var(--color-accent);
   display: inline-block;
   animation: pulse 2s ease-in-out infinite;
 }

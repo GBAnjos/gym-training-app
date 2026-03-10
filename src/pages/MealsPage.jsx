@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { MEAL_PLAN, MACRO_TARGETS } from '../data/meals';
+import { Icon } from '../components/Icon';
 import './MealsPage.css';
 
 export function MealsPage() {
@@ -72,12 +73,12 @@ function MealCard({ meal, isExpanded, onClick }) {
   return (
     <div className={`meal-card ${isExpanded ? 'expanded' : ''}`} onClick={onClick}>
       <div className="meal-header">
-        <span className="meal-icon">{meal.icon}</span>
+        <Icon name={meal.icon} className="meal-icon" />
         <div className="meal-info">
           <span className="meal-name">{meal.name}</span>
           <span className="meal-time">{meal.time}</span>
         </div>
-        <span className={`meal-arrow ${isExpanded ? 'open' : ''}`}>▼</span>
+        <Icon name={isExpanded ? 'chevron-up-1' : 'chevron-down-1'} className={`meal-arrow ${isExpanded ? 'open' : ''}`} />
       </div>
 
       {isExpanded && (

@@ -26,15 +26,22 @@
 }
 
 .login-icon {
-  font-size: 3.5rem;
   margin-bottom: var(--space-md);
   animation: pulse 2s infinite;
 }
 
+.login-icon .lni {
+  font-size: 3.5rem;
+  color: var(--color-accent);
+}
+
 @media (min-width: 480px) {
   .login-icon {
-    font-size: 5rem;
     margin-bottom: var(--space-lg);
+  }
+
+  .login-icon .lni {
+    font-size: 5rem;
   }
 }
 
