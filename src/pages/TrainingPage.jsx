@@ -301,7 +301,9 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
               checked={saved.feito || false}
               onChange={handleDoneToggle}
             />
-            <span>{saved.feito ? <Icon name="checkmark-1" /> : ''}</span>
+            <span className="checkbox-icon">
+              <Icon name={saved.feito ? 'checkmark-1' : 'circle-1'} />
+            </span>
           </label>
         </div>
       </div>

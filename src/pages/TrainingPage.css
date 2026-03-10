@@ -337,10 +337,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  background-color: var(--color-card-alt);
-  border: 2px solid var(--color-border);
+  min-width: 48px;
+  min-height: 48px;
+  background: rgba(200, 245, 90, 0.05);
+  border: 2px dashed var(--color-muted);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -348,6 +348,8 @@
 
 .done-checkbox:hover {
   border-color: var(--color-accent);
+  border-style: solid;
+  background: rgba(200, 245, 90, 0.1);
 }
 
 .done-checkbox:active {
@@ -358,17 +360,25 @@
   display: none;
 }
 
-.done-checkbox span {
-  font-size: 1.25rem;
+.done-checkbox .checkbox-icon {
+  font-size: 1.5rem;
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.done-checkbox:hover .checkbox-icon {
   color: var(--color-accent);
 }
 
 .exercise-card.completed .done-checkbox {
   background-color: var(--color-accent);
   border-color: var(--color-accent);
+  border-style: solid;
 }
 
-.exercise-card.completed .done-checkbox span {
+.exercise-card.completed .done-checkbox .checkbox-icon {
   color: var(--color-bg);
 }
 
