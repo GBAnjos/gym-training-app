@@ -16,21 +16,26 @@ import { SettingsPage } from './pages/SettingsPage';
 import './App.css';
 
 function AppContent() {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { isOnboardingComplete, isCheckingOnboarding, refreshOnboardingStatus } = useOnboarding();
   const [activeTab, setActiveTab] = useState('schedule');
 
-  // Show loading screen while checking auth or onboarding status
-  if (loading || isCheckingOnboarding) {
+  // 1. First: Wait for auth check to complete
+  if (authLoading) {
     return <LoadingScreen />;
   }
 
-  // Show login screen if not authenticated
+  // 2. Second: Must be logged in before anything else
   if (!user) {
     return <LoginScreen />;
   }
 
-  // Show onboarding for new users (isOnboardingComplete is false, not null)
+  // 3. Third: User is logged in, now check onboarding status
+  if (isCheckingOnboarding) {
+    return <LoadingScreen />;
+  }
+
+  // 4. Fourth: Show onboarding if not complete
   if (isOnboardingComplete === false) {
     return (
       <OnboardingFlow

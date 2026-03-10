@@ -89,8 +89,10 @@ export function useOnboarding() {
     if (user) {
       checkOnboardingStatus();
     } else {
+      // No user - reset all state immediately
       setIsLoading(false);
       setIsComplete(null);
+      setUserProfile(null);
     }
   }, [user, checkOnboardingStatus]);
 
