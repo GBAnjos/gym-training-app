@@ -159,6 +159,7 @@
   z-index: 2;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  opacity: 0.4;
 }
 
 @media (min-width: 480px) {
@@ -175,7 +176,8 @@
   border-color: var(--color-accent);
   border-style: solid;
   color: var(--color-accent);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(200, 245, 90, 0.15);
+  opacity: 0.7;
 }
 
 .meal-check:active {
@@ -187,6 +189,7 @@
   border-color: var(--color-accent);
   border-style: solid;
   color: var(--color-bg);
+  opacity: 1;
 }
 
 .meal-header {
