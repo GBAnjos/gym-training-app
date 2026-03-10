@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useCallback } from 'react';
-import { SCHEDULE, DAY_ORDER } from '../data/schedule';
+import { SCHEDULE, DAY_ORDER, getDayNote, getBlockLabel, getBlockSub, getDayName } from '../data/schedule';
 import { DESIGN } from '../data/design';
 import { useOfficeDays } from '../hooks/useOfficeDays';
 import { useLanguage } from '../hooks/useLanguage';
@@ -113,6 +113,7 @@ export function SchedulePage() {
           <DayTab
             key={day}
             day={day}
+            displayName={getDayName(day, language)}
             isSelected={selectedDay === day}
             isToday={day === todayKey}
             type={getDayType(day)}
@@ -126,13 +127,13 @@ export function SchedulePage() {
       {/* Day Note */}
       <div className={`day-note ${getDayType(selectedDay)}`}>
         <Icon name={getDayNoteIcon(getDayType(selectedDay))} className="note-icon" />
-        <span className="note-text">{dayData.note}</span>
+        <span className="note-text">{getDayNote(selectedDay, language)}</span>
       </div>
 
       {/* Timeline */}
       <div className="timeline">
         {dayData.blocks.map((block, index) => (
-          <TimeBlock key={index} block={block} />
+          <TimeBlock key={index} block={block} language={language} />
         ))}
       </div>
 
@@ -146,7 +147,7 @@ export function SchedulePage() {
   );
 }
 
-function DayTab({ day, isSelected, isToday, type, isFlex, onSelect, onToggleOffice }) {
+function DayTab({ day, displayName, isSelected, isToday, type, isFlex, onSelect, onToggleOffice }) {
   const longPressProps = useLongPress(onToggleOffice, onSelect);
 
   return (
@@ -154,7 +155,7 @@ function DayTab({ day, isSelected, isToday, type, isFlex, onSelect, onToggleOffi
       className={`day-tab ${isSelected ? 'active' : ''} ${isToday ? 'today' : ''}`}
       {...longPressProps}
     >
-      <span className="day-name">{day}</span>
+      <span className="day-name">{displayName}</span>
       <div className="day-indicators">
         {type === 'office' && <span className="indicator office" />}
         {isFlex && <span className="indicator flex" />}
@@ -163,10 +164,12 @@ function DayTab({ day, isSelected, isToday, type, isFlex, onSelect, onToggleOffi
   );
 }
 
-function TimeBlock({ block }) {
+function TimeBlock({ block, language }) {
   const isApproximate = block.time.startsWith('~');
   const color = DESIGN.blockTypeColors[block.type] || '#666';
   const iconName = BLOCK_ICONS[block.type] || 'star-fat';
+  const label = getBlockLabel(block, language);
+  const sub = getBlockSub(block, language);
 
   return (
     <div className={`time-block ${isApproximate ? 'approximate' : ''} ${block.type}`}>
@@ -180,10 +183,10 @@ function TimeBlock({ block }) {
       <div className="block-content">
         <div className="block-header">
           <Icon name={iconName} className="block-icon" style={{ color }} />
-          <span className="block-label">{block.label}</span>
+          <span className="block-label">{label}</span>
           {block.tag && <TagBadge tag={block.tag} />}
         </div>
-        <p className="block-sub">{block.sub}</p>
+        <p className="block-sub">{sub}</p>
       </div>
     </div>
   );

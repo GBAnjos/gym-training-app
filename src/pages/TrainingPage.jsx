@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TREINOS, DAY_MAP, TRAINING_DAYS } from '../data/treinos';
+import { TREINOS, DAY_MAP, TRAINING_DAYS, getExerciseName, getMuscle, getObs, getWorkoutName } from '../data/treinos';
 import { muscleColors } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
 import { useLanguage } from '../hooks/useLanguage';
@@ -118,8 +118,8 @@ export function TrainingPage() {
 
       {/* Workout Header */}
       <div className="workout-header">
-        <h2 className="workout-name">{treino.nome}</h2>
-        <p className="workout-groups">{treino.grupos.join(' • ')}</p>
+        <h2 className="workout-name">{getWorkoutName(treino, language)}</h2>
+        <p className="workout-groups">{treino.grupos.map(g => getMuscle(g, language)).join(' • ')}</p>
       </div>
 
       {/* Progress Bar */}
@@ -240,6 +240,9 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
     }
   };
 
+  const exerciseName = getExerciseName(exercise.id, language);
+  const obsText = getObs(exercise.obs, language);
+
   return (
     <div className={`exercise-card ${saved.feito ? 'completed' : ''}`}>
       <div className="exercise-header">
@@ -248,10 +251,10 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
           size="small"
         />
         <div className="exercise-info">
-          <h4 className="exercise-name">{exercise.nome}</h4>
+          <h4 className="exercise-name">{exerciseName}</h4>
           <div className="exercise-meta">
             <span className="exercise-sets">{exercise.series}x{exercise.reps}</span>
-            {exercise.obs && <span className="exercise-obs">{exercise.obs}</span>}
+            {obsText && <span className="exercise-obs">{obsText}</span>}
           </div>
           <div className="exercise-muscles">
             {exercise.musculos.map(m => {
@@ -262,7 +265,7 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
                   className="muscle-tag"
                   style={{ backgroundColor: color.bg, color: color.text }}
                 >
-                  {m}
+                  {getMuscle(m, language)}
                 </span>
               );
             })}

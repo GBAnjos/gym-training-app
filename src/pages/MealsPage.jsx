@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { MEAL_PLAN, MACRO_TARGETS } from '../data/meals';
+import { MEAL_PLAN, MACRO_TARGETS, getMealName, getMealTime, getMealNote, getMealOptions } from '../data/meals';
 import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
@@ -149,10 +149,16 @@ export function MealsPage() {
 }
 
 function MealCard({ meal, index, isExpanded, isCompleted, onClick, onToggleComplete, language }) {
+  const mealName = getMealName(meal, language);
+  const mealTime = getMealTime(meal, language);
+  const mealNote = getMealNote(meal, language);
+  const mealOptions = getMealOptions(meal, language);
+
   return (
     <div className={`meal-card ${isExpanded ? 'expanded' : ''} ${isCompleted ? 'completed' : ''}`}>
       <div className="meal-header" onClick={onClick}>
         <button
+          type="button"
           className={`meal-check ${isCompleted ? 'checked' : ''}`}
           onClick={onToggleComplete}
           aria-label={isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
@@ -161,8 +167,8 @@ function MealCard({ meal, index, isExpanded, isCompleted, onClick, onToggleCompl
         </button>
         <Icon name={meal.icon} className="meal-icon" />
         <div className="meal-info">
-          <span className="meal-name">{meal.name}</span>
-          <span className="meal-time">{meal.time}</span>
+          <span className="meal-name">{mealName}</span>
+          <span className="meal-time">{mealTime}</span>
         </div>
         <Icon
           name={isExpanded ? 'chevron-up-1' : 'chevron-down-1'}
@@ -172,9 +178,9 @@ function MealCard({ meal, index, isExpanded, isCompleted, onClick, onToggleCompl
 
       {isExpanded && (
         <div className="meal-content">
-          <p className="meal-note">{meal.note}</p>
+          <p className="meal-note">{mealNote}</p>
           <div className="meal-options">
-            {meal.options.map((option, i) => (
+            {mealOptions.map((option, i) => (
               <div key={i} className="meal-option">
                 <span className="option-number">{i + 1}</span>
                 <span className="option-text">{option}</span>
