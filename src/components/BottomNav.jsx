@@ -1,13 +1,18 @@
+import { Icon } from './Icon';
+import { useLanguage } from '../hooks/useLanguage';
 import './BottomNav.css';
 
-const NAV_ITEMS = [
-  { id: 'schedule', icon: '📅', label: 'Semana' },
-  { id: 'meals', icon: '🥗', label: 'Refeições' },
-  { id: 'training', icon: '🏋️', label: 'Treino' },
-  { id: 'progress', icon: '📈', label: 'Progresso' },
-];
-
 export function BottomNav({ activeTab, onTabChange }) {
+  const { t } = useLanguage();
+
+  const NAV_ITEMS = [
+    { id: 'schedule', icon: 'calendar-days', labelKey: 'nav_schedule' },
+    { id: 'meals', icon: 'knife-fork-1', labelKey: 'nav_meals' },
+    { id: 'training', icon: 'dumbbell-1', labelKey: 'nav_training' },
+    { id: 'progress', icon: 'bar-chart-4', labelKey: 'nav_progress' },
+    { id: 'settings', icon: 'gear-1', labelKey: 'settings_title' },
+  ];
+
   return (
     <nav className="bottom-nav safe-bottom">
       {NAV_ITEMS.map(item => (
@@ -16,8 +21,8 @@ export function BottomNav({ activeTab, onTabChange }) {
           className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
           onClick={() => onTabChange(item.id)}
         >
-          <span className="nav-icon">{item.icon}</span>
-          <span className="nav-label">{item.label}</span>
+          <Icon name={item.icon} className="nav-icon" />
+          <span className="nav-label">{t(item.labelKey)}</span>
         </button>
       ))}
     </nav>

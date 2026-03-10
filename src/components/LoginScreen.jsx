@@ -1,16 +1,21 @@
 import { useAuth } from '../hooks/useAuth';
+import { useLanguage } from '../hooks/useLanguage';
+import { Icon } from './Icon';
 import './LoginScreen.css';
 
 export function LoginScreen() {
   const { signInWithGoogle, loading } = useAuth();
+  const { t } = useLanguage();
 
   if (loading) {
     return (
       <div className="login-screen">
         <div className="login-content">
-          <div className="login-icon">🏋️</div>
+          <div className="login-icon">
+            <Icon name="dumbbell-1" />
+          </div>
           <h1 className="login-title">Vida</h1>
-          <p className="login-subtitle">Carregando...</p>
+          <p className="login-subtitle">{t('loading')}</p>
         </div>
       </div>
     );
@@ -19,7 +24,9 @@ export function LoginScreen() {
   return (
     <div className="login-screen">
       <div className="login-content">
-        <div className="login-icon">🏋️</div>
+        <div className="login-icon">
+          <Icon name="dumbbell-1" />
+        </div>
         <h1 className="login-title">Vida</h1>
         <p className="login-subtitle">Gym & Life Planner</p>
 
@@ -30,14 +37,17 @@ export function LoginScreen() {
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
-          Entrar com Google
+          {t('language') === 'pt-BR' ? 'Entrar com Google' : 'Sign in with Google'}
         </button>
 
-        <p className="login-note">Seus dados ficam sincronizados na nuvem</p>
+        <p className="login-note">
+          {t('language') === 'pt-BR'
+            ? 'Seus dados ficam sincronizados na nuvem'
+            : 'Your data stays synced in the cloud'}
+        </p>
 
         <div className="login-tagline">
-          <span className="tagline-text">Estrutura real. Vida real.</span>
-          <span className="goal-badge">72 → 80kg · 2026</span>
+          <span className="tagline-text">{t('app_tagline')}</span>
         </div>
       </div>
     </div>

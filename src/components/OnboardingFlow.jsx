@@ -1,32 +1,33 @@
 import { useState } from 'react';
 import { useOnboarding, generatePersonalizedSchedule, generatePersonalizedMeals, generatePersonalizedWorkout } from '../hooks/useOnboarding';
 import { useLanguage } from '../hooks/useLanguage.jsx';
+import { Icon } from './Icon';
 import './OnboardingFlow.css';
 
 const DAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 const DAYS_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const SPORTS_LIST = [
-  { id: 'futebol', label: 'Futebol', labelEn: 'Soccer', icon: '⚽' },
-  { id: 'basquete', label: 'Basquete', labelEn: 'Basketball', icon: '🏀' },
-  { id: 'volei', label: 'Vôlei', labelEn: 'Volleyball', icon: '🏐' },
-  { id: 'natacao', label: 'Natação', labelEn: 'Swimming', icon: '🏊' },
-  { id: 'corrida', label: 'Corrida', labelEn: 'Running', icon: '🏃' },
-  { id: 'ciclismo', label: 'Ciclismo', labelEn: 'Cycling', icon: '🚴' },
-  { id: 'tenis', label: 'Tênis', labelEn: 'Tennis', icon: '🎾' },
-  { id: 'artes_marciais', label: 'Artes Marciais', labelEn: 'Martial Arts', icon: '🥋' },
-  { id: 'danca', label: 'Dança', labelEn: 'Dance', icon: '💃' },
-  { id: 'yoga', label: 'Yoga', labelEn: 'Yoga', icon: '🧘' },
-  { id: 'escalada', label: 'Escalada', labelEn: 'Climbing', icon: '🧗' },
-  { id: 'outro', label: 'Outro', labelEn: 'Other', icon: '🏅' },
+  { id: 'futebol', label: 'Futebol', labelEn: 'Soccer', icon: 'busket-ball' },
+  { id: 'basquete', label: 'Basquete', labelEn: 'Basketball', icon: 'busket-ball' },
+  { id: 'volei', label: 'Vôlei', labelEn: 'Volleyball', icon: 'busket-ball' },
+  { id: 'natacao', label: 'Natação', labelEn: 'Swimming', icon: 'water-drop' },
+  { id: 'corrida', label: 'Corrida', labelEn: 'Running', icon: 'bolt-alt' },
+  { id: 'ciclismo', label: 'Ciclismo', labelEn: 'Cycling', icon: 'bolt-alt' },
+  { id: 'tenis', label: 'Tênis', labelEn: 'Tennis', icon: 'target-4' },
+  { id: 'artes_marciais', label: 'Artes Marciais', labelEn: 'Martial Arts', icon: 'shield-1' },
+  { id: 'danca', label: 'Dança', labelEn: 'Dance', icon: 'music-1' },
+  { id: 'yoga', label: 'Yoga', labelEn: 'Yoga', icon: 'leaf-1' },
+  { id: 'escalada', label: 'Escalada', labelEn: 'Climbing', icon: 'mountains' },
+  { id: 'outro', label: 'Outro', labelEn: 'Other', icon: 'trophy' },
 ];
 
 const GYM_TYPES = [
-  { id: 'musculacao', label: 'Musculação', labelEn: 'Weight Training', icon: '🏋️', desc: 'Levantamento de peso', descEn: 'Weight lifting' },
-  { id: 'crossfit', label: 'CrossFit', labelEn: 'CrossFit', icon: '🔥', desc: 'Treino funcional intenso', descEn: 'Intense functional training' },
-  { id: 'calistenia', label: 'Calistenia', labelEn: 'Calisthenics', icon: '💪', desc: 'Peso corporal', descEn: 'Bodyweight' },
-  { id: 'funcional', label: 'Funcional', labelEn: 'Functional', icon: '⚡', desc: 'Treino funcional', descEn: 'Functional training' },
-  { id: 'cardio', label: 'Cardio', labelEn: 'Cardio', icon: '❤️', desc: 'Esteira, bike, etc', descEn: 'Treadmill, bike, etc' },
+  { id: 'musculacao', label: 'Musculação', labelEn: 'Weight Training', icon: 'dumbbell-1', desc: 'Levantamento de peso', descEn: 'Weight lifting' },
+  { id: 'crossfit', label: 'CrossFit', labelEn: 'CrossFit', icon: 'fire-1', desc: 'Treino funcional intenso', descEn: 'Intense functional training' },
+  { id: 'calistenia', label: 'Calistenia', labelEn: 'Calisthenics', icon: 'star-fat', desc: 'Peso corporal', descEn: 'Bodyweight' },
+  { id: 'funcional', label: 'Funcional', labelEn: 'Functional', icon: 'bolt-alt', desc: 'Treino funcional', descEn: 'Functional training' },
+  { id: 'cardio', label: 'Cardio', labelEn: 'Cardio', icon: 'heart', desc: 'Esteira, bike, etc', descEn: 'Treadmill, bike, etc' },
 ];
 
 export function OnboardingFlow({ onComplete }) {
@@ -293,14 +294,14 @@ function WelcomeStep({ t, onNext }) {
   return (
     <div className="step welcome-step">
       <div className="welcome-logo">
-        <span className="welcome-icon">💪</span>
+        <Icon name="dumbbell-1" className="welcome-icon" />
       </div>
       <h1 className="welcome-title">{t('onboarding_welcome_title')}</h1>
       <p className="welcome-tagline">{t('app_tagline')}</p>
       <p className="welcome-description">{t('onboarding_welcome_desc')}</p>
       <button className="btn-primary btn-large" onClick={onNext}>
         {t('onboarding_start')}
-        <span className="btn-icon">→</span>
+        <Icon name="arrow-right-1" className="btn-icon" />
       </button>
     </div>
   );
@@ -323,7 +324,7 @@ function LanguageStep({ t, language, setLanguage, languages, onNext, onBack }) {
               className={`language-btn ${language === lang.code ? 'selected' : ''}`}
               onClick={() => setLanguage(lang.code)}
             >
-              <span className="language-flag">{lang.code === 'pt-BR' ? '🇧🇷' : '🇺🇸'}</span>
+              <Icon name="world-1" className="language-flag" />
               <span className="language-name">{lang.name}</span>
             </button>
           ))}
@@ -331,8 +332,8 @@ function LanguageStep({ t, language, setLanguage, languages, onNext, onBack }) {
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -362,11 +363,11 @@ function ProfileStep({ t, profile, updateProfile, errors, onNext, onBack }) {
           <label>{t('profile_sex')} <span className="label-required">{t('required')}</span></label>
           <div className="option-row">
             <button type="button" className={`option-btn ${profile.sex === 'male' ? 'selected' : ''}`} onClick={() => updateProfile('sex', 'male')}>
-              <span className="option-icon">♂</span>
+              <Icon name="user-1" className="option-icon" />
               <span>{t('profile_sex_male')}</span>
             </button>
             <button type="button" className={`option-btn ${profile.sex === 'female' ? 'selected' : ''}`} onClick={() => updateProfile('sex', 'female')}>
-              <span className="option-icon">♀</span>
+              <Icon name="user-2" className="option-icon" />
               <span>{t('profile_sex_female')}</span>
             </button>
           </div>
@@ -399,8 +400,8 @@ function ProfileStep({ t, profile, updateProfile, errors, onNext, onBack }) {
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -445,8 +446,8 @@ function RoutineStep({ t, days, profile, updateProfile, toggleArrayItem, onNext,
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -492,14 +493,14 @@ function LifestyleStep({ t, profile, updateProfile, errors, onNext, onBack }) {
           <label>{t('lifestyle_weekend')} <span className="label-required">{t('required')}</span></label>
           <div className="option-row">
             <button type="button" className={`option-btn large ${profile.weekendRoutine === 'relaxed' ? 'selected' : ''}`} onClick={() => updateProfile('weekendRoutine', 'relaxed')}>
-              <span className="option-icon">😴</span>
+              <Icon name="moon-half-right-5" className="option-icon" />
               <div className="option-content">
                 <span className="option-title">{t('lifestyle_weekend_relaxed')}</span>
                 <span className="option-desc">{t('lifestyle_weekend_relaxed_desc')}</span>
               </div>
             </button>
             <button type="button" className={`option-btn large ${profile.weekendRoutine === 'active' ? 'selected' : ''}`} onClick={() => updateProfile('weekendRoutine', 'active')}>
-              <span className="option-icon">🏃</span>
+              <Icon name="bolt-alt" className="option-icon" />
               <div className="option-content">
                 <span className="option-title">{t('lifestyle_weekend_active')}</span>
                 <span className="option-desc">{t('lifestyle_weekend_active_desc')}</span>
@@ -511,8 +512,8 @@ function LifestyleStep({ t, profile, updateProfile, errors, onNext, onBack }) {
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -520,10 +521,10 @@ function LifestyleStep({ t, profile, updateProfile, errors, onNext, onBack }) {
 
 function ExerciseTypeStep({ t, profile, updateProfile, errors, onNext, onBack }) {
   const options = [
-    { id: 'gym', icon: '🏋️', label: t('exercise_type_gym'), desc: t('exercise_type_gym_desc') },
-    { id: 'sports', icon: '⚽', label: t('exercise_type_sports'), desc: t('exercise_type_sports_desc') },
-    { id: 'both', icon: '💪', label: t('exercise_type_both'), desc: t('exercise_type_both_desc') },
-    { id: 'none', icon: '🧘', label: t('exercise_type_none'), desc: t('exercise_type_none_desc') },
+    { id: 'gym', icon: 'dumbbell-1', label: t('exercise_type_gym'), desc: t('exercise_type_gym_desc') },
+    { id: 'sports', icon: 'busket-ball', label: t('exercise_type_sports'), desc: t('exercise_type_sports_desc') },
+    { id: 'both', icon: 'star-fat', label: t('exercise_type_both'), desc: t('exercise_type_both_desc') },
+    { id: 'none', icon: 'leaf-1', label: t('exercise_type_none'), desc: t('exercise_type_none_desc') },
   ];
 
   return (
@@ -542,7 +543,7 @@ function ExerciseTypeStep({ t, profile, updateProfile, errors, onNext, onBack })
               className={`exercise-type-card ${profile.exerciseType === opt.id ? 'selected' : ''}`}
               onClick={() => updateProfile('exerciseType', opt.id)}
             >
-              <span className="exercise-type-icon">{opt.icon}</span>
+              <Icon name={opt.icon} className="exercise-type-icon" />
               <span className="exercise-type-label">{opt.label}</span>
               <span className="exercise-type-desc">{opt.desc}</span>
             </button>
@@ -552,8 +553,8 @@ function ExerciseTypeStep({ t, profile, updateProfile, errors, onNext, onBack })
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -561,10 +562,10 @@ function ExerciseTypeStep({ t, profile, updateProfile, errors, onNext, onBack })
 
 function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArrayItem, errors, onNext, onBack }) {
   const goals = [
-    { id: 'muscle_gain', icon: '💪', label: t('training_goal_muscle'), desc: t('training_goal_muscle_desc') },
-    { id: 'weight_loss', icon: '🔥', label: t('training_goal_loss'), desc: t('training_goal_loss_desc') },
-    { id: 'maintain', icon: '⚖️', label: t('training_goal_maintain'), desc: t('training_goal_maintain_desc') },
-    { id: 'general', icon: '🎯', label: t('training_goal_general'), desc: t('training_goal_general_desc') },
+    { id: 'muscle_gain', icon: 'star-fat', label: t('training_goal_muscle'), desc: t('training_goal_muscle_desc') },
+    { id: 'weight_loss', icon: 'fire-1', label: t('training_goal_loss'), desc: t('training_goal_loss_desc') },
+    { id: 'maintain', icon: 'bar-chart-4', label: t('training_goal_maintain'), desc: t('training_goal_maintain_desc') },
+    { id: 'general', icon: 'target-4', label: t('training_goal_general'), desc: t('training_goal_general_desc') },
   ];
 
   const levels = [
@@ -574,9 +575,9 @@ function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArra
   ];
 
   const times = [
-    { id: 'morning', icon: '🌅', label: t('training_time_morning'), desc: '6h - 12h' },
-    { id: 'afternoon', icon: '☀️', label: t('training_time_afternoon'), desc: '12h - 18h' },
-    { id: 'evening', icon: '🌙', label: t('training_time_evening'), desc: '18h - 22h' },
+    { id: 'morning', icon: 'sun-1', label: t('training_time_morning'), desc: '6h - 12h' },
+    { id: 'afternoon', icon: 'sun-2', label: t('training_time_afternoon'), desc: '12h - 18h' },
+    { id: 'evening', icon: 'moon-half-right-5', label: t('training_time_evening'), desc: '18h - 22h' },
   ];
 
   return (
@@ -597,7 +598,7 @@ function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArra
                 className={`gym-type-btn ${profile.gymType.includes(type.id) ? 'selected' : ''}`}
                 onClick={() => toggleArrayItem('gymType', type.id)}
               >
-                <span className="gym-type-icon">{type.icon}</span>
+                <Icon name={type.icon} className="gym-type-icon" />
                 <span className="gym-type-label">{isEnglish ? type.labelEn : type.label}</span>
                 <span className="gym-type-desc">{isEnglish ? type.descEn : type.desc}</span>
               </button>
@@ -612,7 +613,7 @@ function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArra
           <div className="goal-grid">
             {goals.map(goal => (
               <button key={goal.id} type="button" className={`goal-card ${profile.goal === goal.id ? 'selected' : ''}`} onClick={() => updateProfile('goal', goal.id)}>
-                <span className="goal-icon">{goal.icon}</span>
+                <Icon name={goal.icon} className="goal-icon" />
                 <span className="goal-label">{goal.label}</span>
                 <span className="goal-desc">{goal.desc}</span>
               </button>
@@ -652,7 +653,7 @@ function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArra
           <div className="time-options">
             {times.map(time => (
               <button key={time.id} type="button" className={`time-btn ${profile.trainingTime === time.id ? 'selected' : ''}`} onClick={() => updateProfile('trainingTime', time.id)}>
-                <span className="time-icon">{time.icon}</span>
+                <Icon name={time.icon} className="time-icon" />
                 <span className="time-label">{time.label}</span>
                 <span className="time-desc">{time.desc}</span>
               </button>
@@ -663,8 +664,8 @@ function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArra
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -691,7 +692,7 @@ function SportsDetailsStep({ t, isEnglish, days, profile, addSport, toggleSportD
                 className={`sport-btn ${selectedSports.find(s => s.sportId === sport.id) ? 'selected' : ''}`}
                 onClick={() => addSport(sport.id)}
               >
-                <span className="sport-icon">{sport.icon}</span>
+                <Icon name={sport.icon} className="sport-icon" />
                 <span className="sport-label">{isEnglish ? sport.labelEn : sport.label}</span>
               </button>
             ))}
@@ -707,7 +708,7 @@ function SportsDetailsStep({ t, isEnglish, days, profile, addSport, toggleSportD
               return (
                 <div key={sport.sportId} className="sport-schedule-card">
                   <div className="sport-schedule-header">
-                    <span className="sport-schedule-icon">{sportInfo?.icon}</span>
+                    <Icon name={sportInfo?.icon || 'star-fat'} className="sport-schedule-icon" />
                     <span className="sport-schedule-name">{isEnglish ? sportInfo?.labelEn : sportInfo?.label}</span>
                   </div>
                   <div className="sport-schedule-days">
@@ -735,7 +736,7 @@ function SportsDetailsStep({ t, isEnglish, days, profile, addSport, toggleSportD
                           className={`time-btn small ${sport.time === time ? 'selected' : ''}`}
                           onClick={() => updateSportSchedule(sport.sportId, 'time', time)}
                         >
-                          {time === 'morning' ? '🌅' : time === 'afternoon' ? '☀️' : '🌙'}
+                          <Icon name={time === 'morning' ? 'sun-1' : time === 'afternoon' ? 'sun-2' : 'moon-half-right-5'} />
                         </button>
                       ))}
                     </div>
@@ -749,8 +750,8 @@ function SportsDetailsStep({ t, isEnglish, days, profile, addSport, toggleSportD
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} →</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
       </div>
     </div>
   );
@@ -797,14 +798,14 @@ function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onN
           <label>{t('nutrition_meal_prep')} <span className="label-required">{t('required')}</span></label>
           <div className="option-row">
             <button type="button" className={`option-btn large ${profile.mealPrep === true ? 'selected' : ''}`} onClick={() => updateProfile('mealPrep', true)}>
-              <span className="option-icon">📦</span>
+              <Icon name="package" className="option-icon" />
               <div className="option-content">
                 <span className="option-title">{t('nutrition_meal_prep_yes')}</span>
                 <span className="option-desc">{t('nutrition_meal_prep_yes_desc')}</span>
               </div>
             </button>
             <button type="button" className={`option-btn large ${profile.mealPrep === false ? 'selected' : ''}`} onClick={() => updateProfile('mealPrep', false)}>
-              <span className="option-icon">🍳</span>
+              <Icon name="knife-fork-1" className="option-icon" />
               <div className="option-content">
                 <span className="option-title">{t('nutrition_meal_prep_no')}</span>
                 <span className="option-desc">{t('nutrition_meal_prep_no_desc')}</span>
@@ -819,7 +820,7 @@ function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onN
           <div className="summary-grid">
             {profile.goal && (
               <div className="summary-item">
-                <span className="summary-icon">🎯</span>
+                <Icon name="target-4" className="summary-icon" />
                 <div className="summary-content">
                   <span className="summary-label">{t('summary_goal')}</span>
                   <span className="summary-value">{getGoalLabel(profile.goal)}</span>
@@ -828,7 +829,7 @@ function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onN
             )}
             {profile.trainingDays.length > 0 && (
               <div className="summary-item">
-                <span className="summary-icon">🏋️</span>
+                <Icon name="dumbbell-1" className="summary-icon" />
                 <div className="summary-content">
                   <span className="summary-label">{t('summary_training')}</span>
                   <span className="summary-value">{profile.trainingDays.length}{t('summary_per_week')}</span>
@@ -837,7 +838,7 @@ function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onN
             )}
             {profile.sports.length > 0 && (
               <div className="summary-item">
-                <span className="summary-icon">⚽</span>
+                <Icon name="busket-ball" className="summary-icon" />
                 <div className="summary-content">
                   <span className="summary-label">{t('summary_sports')}</span>
                   <span className="summary-value">{profile.sports.length} {profile.sports.length === 1 ? t('summary_sport') : t('summary_sports_plural')}</span>
@@ -845,7 +846,7 @@ function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onN
               </div>
             )}
             <div className="summary-item">
-              <span className="summary-icon">⚖️</span>
+              <Icon name="bar-chart-4" className="summary-icon" />
               <div className="summary-content">
                 <span className="summary-label">{t('summary_weight')}</span>
                 <span className="summary-value">{profile.currentWeight}kg → {profile.targetWeight}kg</span>
@@ -856,8 +857,8 @@ function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onN
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}>← {t('back')}</button>
-        <button type="button" className="btn-primary btn-finish" onClick={onNext}>{t('create_routine')} ✨</button>
+        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
+        <button type="button" className="btn-primary btn-finish" onClick={onNext}>{t('create_routine')} <Icon name="star-fat" /></button>
       </div>
     </div>
   );
@@ -869,15 +870,15 @@ function GeneratingStep({ t }) {
       <div className="generating-animation">
         <div className="spinner-ring"></div>
         <div className="generating-icons">
-          <span className="gen-icon">📅</span>
-          <span className="gen-icon">🏋️</span>
-          <span className="gen-icon">🥗</span>
+          <Icon name="calendar-days" className="gen-icon" />
+          <Icon name="dumbbell-1" className="gen-icon" />
+          <Icon name="knife-fork-1" className="gen-icon" />
         </div>
       </div>
       <h2>{t('generating_title')}</h2>
       <p className="generating-text">{t('generating_desc')}</p>
       <div className="generating-steps">
-        <div className="gen-step done"><span className="gen-check">✓</span><span>{t('generating_step_1')}</span></div>
+        <div className="gen-step done"><Icon name="checkmark-1" className="gen-check" /><span>{t('generating_step_1')}</span></div>
         <div className="gen-step active"><span className="gen-spinner"></span><span>{t('generating_step_2')}</span></div>
         <div className="gen-step"><span className="gen-dot"></span><span>{t('generating_step_3')}</span></div>
         <div className="gen-step"><span className="gen-dot"></span><span>{t('generating_step_4')}</span></div>

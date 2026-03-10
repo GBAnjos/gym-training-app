@@ -3,6 +3,7 @@ import { TREINOS, DAY_MAP, TRAINING_DAYS } from '../data/treinos';
 import { muscleColors } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
 import { ExerciseMedia } from '../components/ExerciseMedia';
+import { Icon } from '../components/Icon';
 import './TrainingPage.css';
 
 export function TrainingPage() {
@@ -116,7 +117,7 @@ export function TrainingPage() {
 
       {/* Rest Timer */}
       <div className="timer-section">
-        <h3 className="timer-title">⏱ Timer de Descanso</h3>
+        <h3 className="timer-title"><Icon name="timer-1" /> Timer de Descanso</h3>
         <div className="timer-buttons">
           <button onClick={() => startTimer(60)}>60s</button>
           <button onClick={() => startTimer(90)}>90s</button>
@@ -124,7 +125,7 @@ export function TrainingPage() {
         </div>
         {timerSeconds !== null && (
           <div className={`timer-display ${timerSeconds === 0 ? 'done' : ''}`}>
-            {timerSeconds === 0 ? '✓ Descanso finalizado!' : formatTime(timerSeconds)}
+            {timerSeconds === 0 ? <><Icon name="checkmark-1" /> Descanso finalizado!</> : formatTime(timerSeconds)}
           </div>
         )}
       </div>

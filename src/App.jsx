@@ -11,6 +11,7 @@ import { SchedulePage } from './pages/SchedulePage';
 import { MealsPage } from './pages/MealsPage';
 import { TrainingPage } from './pages/TrainingPage';
 import { ProgressPage } from './pages/ProgressPage';
+import { SettingsPage } from './pages/SettingsPage';
 import './App.css';
 
 function AppContent() {
@@ -50,6 +51,8 @@ function AppContent() {
         return <TrainingPage />;
       case 'progress':
         return <ProgressPage />;
+      case 'settings':
+        return <SettingsPage />;
       default:
         return <SchedulePage />;
     }

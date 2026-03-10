@@ -1,3 +1,4 @@
+import { Icon } from './Icon';
 import './LoadingScreen.css';
 
 export function LoadingScreen() {
@@ -5,7 +6,7 @@ export function LoadingScreen() {
     <div className="loading-screen">
       <div className="loading-content">
         <div className="loading-logo">
-          <span className="loading-icon">💪</span>
+          <Icon name="dumbbell-1" className="loading-icon" />
         </div>
         <h1 className="loading-title">Vida</h1>
         <div className="loading-spinner"></div>

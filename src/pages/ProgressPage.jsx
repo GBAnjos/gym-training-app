@@ -12,6 +12,7 @@ import {
   Filler
 } from 'chart.js';
 import { useProgress } from '../hooks/useProgress';
+import { Icon } from '../components/Icon';
 import './ProgressPage.css';
 
 ChartJS.register(
@@ -130,7 +131,7 @@ export function ProgressPage() {
       {/* Weight Goal Progress */}
       <div className="goal-section">
         <div className="goal-header">
-          <span className="goal-icon">🎯</span>
+          <Icon name="target-4" className="goal-icon" />
           <div className="goal-info">
             <span className="goal-label">Meta de Peso</span>
             <span className="goal-range">{startWeight}kg → {targetWeight}kg</span>
@@ -173,7 +174,7 @@ export function ProgressPage() {
         </div>
         <div className="stat-card accent">
           <span className="stat-value">{streak}</span>
-          <span className="stat-label">🔥 Streak</span>
+          <span className="stat-label"><Icon name="fire-1" /> Streak</span>
         </div>
         <div className="stat-card">
           <span className="stat-value">{thisWeekCount}</span>
@@ -197,7 +198,7 @@ export function ProgressPage() {
 
       {weightLog.length === 0 && (
         <div className="no-data">
-          <p>📊 Registre seu peso para ver o gráfico de evolução</p>
+          <p><Icon name="bar-chart-4" /> Registre seu peso para ver o gráfico de evolução</p>
         </div>
       )}
     </div>

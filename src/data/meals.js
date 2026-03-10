@@ -3,7 +3,7 @@ export const MEAL_PLAN = [
   {
     name: "Café da manhã",
     time: "Pós-academia",
-    icon: "🍳",
+    icon: "coffee-cup-2",
     note: "Dias de escritório: shake rápido. Dias home: refeição completa.",
     options: [
       "3 ovos mexidos + aveia com banana e pasta de amendoim",
@@ -14,7 +14,7 @@ export const MEAL_PLAN = [
   {
     name: "Almoço",
     time: "13:00",
-    icon: "🥗",
+    icon: "knife-fork-1",
     note: "Varia a proteína diariamente — frango, peixe, carne, ovo, leguminosa.",
     options: [
       "Frango grelhado + arroz + legumes assados + azeite",
@@ -25,7 +25,7 @@ export const MEAL_PLAN = [
   {
     name: "Jantar",
     time: "19:30 (nunca antes)",
-    icon: "🍽️",
+    icon: "plate-1",
     note: "Mais cedo do que isso o utilizador não tem apetite — 19:30 é o âncora fixo.",
     options: [
       "Salmão + quinoa + legumes no vapor + limão",
@@ -36,7 +36,7 @@ export const MEAL_PLAN = [
   {
     name: "Snacks",
     time: "Entre refeições",
-    icon: "🥜",
+    icon: "apple",
     note: "Ectomorfo precisa das calorias — não pula snacks.",
     options: [
       "Mix de castanhas + fruta",
