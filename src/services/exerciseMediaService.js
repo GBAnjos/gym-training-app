@@ -208,17 +208,17 @@ export function categorizeExercise(exerciseName) {
 }
 
 /**
- * Get category icon
+ * Get category icon (LineIcons name)
  * @param {string} category - Exercise category
- * @returns {string} Emoji icon
+ * @returns {string} LineIcons icon name
  */
 export function getCategoryIcon(category) {
   const icons = {
-    push: '💪',
-    pull: '🔙',
-    legs: '🦵',
-    core: '🎯',
-    default: '🏋️'
+    push: 'dumbbell-1',
+    pull: 'dumbbell-1',
+    legs: 'bolt-alt',
+    core: 'target-4',
+    default: 'dumbbell-1'
   };
   return icons[category] || icons.default;
 }
