@@ -5,124 +5,147 @@ import {
   categorizeExercise,
   getCategoryIcon
 } from '../services/exerciseMediaService';
+import { Icon } from './Icon';
 import './ExerciseMedia.css';
 
 /**
  * ExerciseMedia Component
- * Displays exercise start/end position images for clear visual guidance
- *
- * @param {Object} props
- * @param {string} props.exerciseName - Name of the exercise
- * @param {string} props.size - Size variant: 'small' | 'medium' | 'large'
- * @param {boolean} props.expanded - Show both images expanded
- * @param {string} props.className - Additional CSS classes
+ * Shows a thumbnail that opens a modal with start/end position images
  */
 export function ExerciseMedia({
   exerciseName,
   size = 'medium',
-  expanded = false,
   className = ''
 }) {
+  const [showModal, setShowModal] = useState(false);
   const [startLoaded, setStartLoaded] = useState(false);
   const [endLoaded, setEndLoaded] = useState(false);
   const [startError, setStartError] = useState(false);
   const [endError, setEndError] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(expanded);
+  const [thumbLoaded, setThumbLoaded] = useState(false);
+  const [thumbError, setThumbError] = useState(false);
 
   const images = getExerciseImages(exerciseName);
   const hasImages = hasExerciseImages(exerciseName);
   const category = categorizeExercise(exerciseName);
   const icon = getCategoryIcon(category);
 
-  const handleStartLoad = useCallback(() => setStartLoaded(true), []);
-  const handleEndLoad = useCallback(() => setEndLoaded(true), []);
-  const handleStartError = useCallback(() => { setStartError(true); setStartLoaded(true); }, []);
-  const handleEndError = useCallback(() => { setEndError(true); setEndLoaded(true); }, []);
-
-  const toggleExpand = useCallback(() => {
+  const openModal = useCallback((e) => {
+    e.stopPropagation();
     if (hasImages) {
-      setIsExpanded(prev => !prev);
+      setShowModal(true);
+      document.body.style.overflow = 'hidden';
     }
   }, [hasImages]);
+
+  const closeModal = useCallback(() => {
+    setShowModal(false);
+    document.body.style.overflow = '';
+  }, []);
 
   // No images available - show placeholder
   if (!hasImages || !images) {
     return (
-      <div className={`exercise-media exercise-media--${size} exercise-media--placeholder ${className}`}>
-        <div className="exercise-media__placeholder">
-          <span className="exercise-media__icon">{icon}</span>
-        </div>
+      <div className={`exercise-thumb exercise-thumb--${size} exercise-thumb--placeholder ${className}`}>
+        <Icon name={icon} className="exercise-thumb__icon" />
       </div>
     );
   }
 
   return (
-    <div
-      className={`exercise-media exercise-media--${size} ${isExpanded ? 'exercise-media--expanded' : ''} ${className}`}
-      onClick={toggleExpand}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleExpand();
-        }
-      }}
-    >
-      {/* Start Position */}
-      <div className="exercise-media__frame">
-        {!startLoaded && <div className="exercise-media__skeleton" />}
-        {startError ? (
-          <div className="exercise-media__fallback">
-            <span>{icon}</span>
-          </div>
+    <>
+      {/* Thumbnail */}
+      <div
+        className={`exercise-thumb exercise-thumb--${size} ${className}`}
+        onClick={openModal}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(e);
+          }
+        }}
+      >
+        {!thumbLoaded && <div className="exercise-thumb__skeleton" />}
+        {thumbError ? (
+          <Icon name={icon} className="exercise-thumb__icon" />
         ) : (
           <img
             src={images.startImage}
-            alt={`${exerciseName} - posição inicial`}
-            className={`exercise-media__image ${startLoaded ? 'loaded' : ''}`}
-            onLoad={handleStartLoad}
-            onError={handleStartError}
+            alt={exerciseName}
+            className={`exercise-thumb__image ${thumbLoaded ? 'loaded' : ''}`}
+            onLoad={() => setThumbLoaded(true)}
+            onError={() => { setThumbError(true); setThumbLoaded(true); }}
             loading="lazy"
           />
         )}
-        {isExpanded && <span className="exercise-media__label">Início</span>}
+        <div className="exercise-thumb__overlay">
+          <Icon name="eye-1" />
+        </div>
       </div>
 
-      {/* Arrow indicator */}
-      <div className="exercise-media__arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </div>
+      {/* Modal */}
+      {showModal && (
+        <div className="exercise-modal" onClick={closeModal}>
+          <div className="exercise-modal__backdrop" />
+          <div className="exercise-modal__content" onClick={(e) => e.stopPropagation()}>
+            <button className="exercise-modal__close" onClick={closeModal}>
+              <Icon name="xmark" />
+            </button>
 
-      {/* End Position */}
-      <div className="exercise-media__frame">
-        {!endLoaded && <div className="exercise-media__skeleton" />}
-        {endError ? (
-          <div className="exercise-media__fallback">
-            <span>{icon}</span>
+            <h3 className="exercise-modal__title">{exerciseName}</h3>
+
+            <div className="exercise-modal__images">
+              {/* Start Position */}
+              <div className="exercise-modal__frame">
+                <span className="exercise-modal__label">Início</span>
+                {!startLoaded && <div className="exercise-modal__skeleton" />}
+                {startError ? (
+                  <div className="exercise-modal__fallback">
+                    <Icon name={icon} />
+                  </div>
+                ) : (
+                  <img
+                    src={images.startImage}
+                    alt={`${exerciseName} - posição inicial`}
+                    className={`exercise-modal__image ${startLoaded ? 'loaded' : ''}`}
+                    onLoad={() => setStartLoaded(true)}
+                    onError={() => { setStartError(true); setStartLoaded(true); }}
+                  />
+                )}
+              </div>
+
+              {/* Arrow */}
+              <div className="exercise-modal__arrow">
+                <Icon name="arrow-right-1" />
+              </div>
+
+              {/* End Position */}
+              <div className="exercise-modal__frame">
+                <span className="exercise-modal__label">Fim</span>
+                {!endLoaded && <div className="exercise-modal__skeleton" />}
+                {endError ? (
+                  <div className="exercise-modal__fallback">
+                    <Icon name={icon} />
+                  </div>
+                ) : (
+                  <img
+                    src={images.endImage}
+                    alt={`${exerciseName} - posição final`}
+                    className={`exercise-modal__image ${endLoaded ? 'loaded' : ''}`}
+                    onLoad={() => setEndLoaded(true)}
+                    onError={() => { setEndError(true); setEndLoaded(true); }}
+                  />
+                )}
+              </div>
+            </div>
+
+            <p className="exercise-modal__hint">Toque fora para fechar</p>
           </div>
-        ) : (
-          <img
-            src={images.endImage}
-            alt={`${exerciseName} - posição final`}
-            className={`exercise-media__image ${endLoaded ? 'loaded' : ''}`}
-            onLoad={handleEndLoad}
-            onError={handleEndError}
-            loading="lazy"
-          />
-        )}
-        {isExpanded && <span className="exercise-media__label">Fim</span>}
-      </div>
-
-      {/* Expand hint for small size */}
-      {size === 'small' && !isExpanded && (
-        <div className="exercise-media__expand-hint">
-          <span>+</span>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -142,7 +165,7 @@ export function ExerciseMediaCompact({ exerciseName, className = '' }) {
   if (!hasImages || !images) {
     return (
       <div className={`exercise-media-compact exercise-media-compact--placeholder ${className}`}>
-        <span>{icon}</span>
+        <Icon name={icon} />
       </div>
     );
   }
@@ -151,7 +174,7 @@ export function ExerciseMediaCompact({ exerciseName, className = '' }) {
     <div className={`exercise-media-compact ${className}`}>
       {!loaded && <div className="exercise-media-compact__skeleton" />}
       {error ? (
-        <span className="exercise-media-compact__icon">{icon}</span>
+        <Icon name={icon} className="exercise-media-compact__icon" />
       ) : (
         <img
           src={images.startImage}
