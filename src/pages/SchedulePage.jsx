@@ -1,11 +1,30 @@
 import { useState, useMemo, useRef, useCallback } from 'react';
-import { SCHEDULE, DAY_ORDER, getDayNote, getBlockLabel, getBlockSub, getDayName } from '../data/schedule';
+import { SCHEDULE, DAY_ORDER, getBlockLabel, getBlockSub, getDayName } from '../data/schedule';
 import { DESIGN } from '../data/design';
 import { useOfficeDays } from '../hooks/useOfficeDays';
 import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
 import './SchedulePage.css';
+
+// Get day type note based on dynamically determined type
+const getDayTypeNote = (type, language = 'pt-BR') => {
+  const notes = {
+    office: {
+      'pt-BR': 'Dia de escritório',
+      'en': 'Office day'
+    },
+    home: {
+      'pt-BR': 'Home office',
+      'en': 'Work from home'
+    },
+    weekend: {
+      'pt-BR': 'Fim de semana',
+      'en': 'Weekend'
+    }
+  };
+  return notes[type]?.[language] || notes[type]?.['pt-BR'] || '';
+};
 
 // Map block types to LineIcon names
 const BLOCK_ICONS = {
@@ -65,8 +84,15 @@ export function SchedulePage() {
   const { isOfficeDay, toggleOfficeDay } = useOfficeDays();
 
   // Load personalized schedule from localStorage if available
+  // Check new key first (vida_generated_schedule), then legacy (vida_user_schedule)
   const schedule = useMemo(() => {
     try {
+      // Try new generated schedule first
+      const generated = localStorage.getItem('vida_generated_schedule');
+      if (generated) {
+        return JSON.parse(generated);
+      }
+      // Fallback to legacy schedule
       const saved = localStorage.getItem('vida_user_schedule');
       if (saved) {
         return JSON.parse(saved);
@@ -127,7 +153,9 @@ export function SchedulePage() {
       {/* Day Note */}
       <div className={`day-note ${getDayType(selectedDay)}`}>
         <Icon name={getDayNoteIcon(getDayType(selectedDay))} className="note-icon" />
-        <span className="note-text">{getDayNote(selectedDay, language)}</span>
+        <span className="note-text">
+          {getDayTypeNote(getDayType(selectedDay), language)}
+        </span>
       </div>
 
       {/* Timeline */}

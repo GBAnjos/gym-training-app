@@ -1,33 +1,22 @@
-import { useState } from 'react';
-import { useOnboarding, generatePersonalizedSchedule, generatePersonalizedMeals, generatePersonalizedWorkout } from '../hooks/useOnboarding';
+import { useState, useMemo } from 'react';
+import { useOnboarding } from '../hooks/useOnboarding';
 import { useLanguage } from '../hooks/useLanguage.jsx';
 import { Icon } from './Icon';
 import './OnboardingFlow.css';
 
-const DAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
-const DAYS_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-const SPORTS_LIST = [
-  { id: 'futebol', label: 'Futebol', labelEn: 'Soccer', icon: 'busket-ball' },
-  { id: 'basquete', label: 'Basquete', labelEn: 'Basketball', icon: 'busket-ball' },
-  { id: 'volei', label: 'Vôlei', labelEn: 'Volleyball', icon: 'busket-ball' },
-  { id: 'natacao', label: 'Natação', labelEn: 'Swimming', icon: 'water-drop' },
-  { id: 'corrida', label: 'Corrida', labelEn: 'Running', icon: 'bolt-alt' },
-  { id: 'ciclismo', label: 'Ciclismo', labelEn: 'Cycling', icon: 'bolt-alt' },
-  { id: 'tenis', label: 'Tênis', labelEn: 'Tennis', icon: 'target-4' },
-  { id: 'artes_marciais', label: 'Artes Marciais', labelEn: 'Martial Arts', icon: 'shield-1' },
-  { id: 'danca', label: 'Dança', labelEn: 'Dance', icon: 'music-1' },
-  { id: 'yoga', label: 'Yoga', labelEn: 'Yoga', icon: 'leaf-1' },
-  { id: 'escalada', label: 'Escalada', labelEn: 'Climbing', icon: 'mountains' },
-  { id: 'outro', label: 'Outro', labelEn: 'Other', icon: 'trophy' },
-];
-
-const GYM_TYPES = [
-  { id: 'musculacao', label: 'Musculação', labelEn: 'Weight Training', icon: 'dumbbell-1', desc: 'Levantamento de peso', descEn: 'Weight lifting' },
-  { id: 'crossfit', label: 'CrossFit', labelEn: 'CrossFit', icon: 'fire-1', desc: 'Treino funcional intenso', descEn: 'Intense functional training' },
-  { id: 'calistenia', label: 'Calistenia', labelEn: 'Calisthenics', icon: 'star-fat', desc: 'Peso corporal', descEn: 'Bodyweight' },
-  { id: 'funcional', label: 'Funcional', labelEn: 'Functional', icon: 'bolt-alt', desc: 'Treino funcional', descEn: 'Functional training' },
-  { id: 'cardio', label: 'Cardio', labelEn: 'Cardio', icon: 'heart', desc: 'Esteira, bike, etc', descEn: 'Treadmill, bike, etc' },
+// New 8-step onboarding flow per Patch 01 spec
+const STEPS = [
+  'welcome',
+  'language',
+  'wakeTime',      // Step 1: What time do you wake up?
+  'sleepHours',    // Step 2: How many hours do you sleep?
+  'lunchTime',     // Step 3: What time do you have lunch?
+  'dinnerTime',    // Step 4: What time do you have dinner?
+  'gymPreference', // Step 5: When do you prefer to workout?
+  'officeDays',    // Step 6: Office days + hours
+  'goals',         // Step 7: What are your goals?
+  'physicalData',  // Step 8: Physical data (optional)
+  'generating'
 ];
 
 export function OnboardingFlow({ onComplete }) {
@@ -35,62 +24,34 @@ export function OnboardingFlow({ onComplete }) {
   const { t, language, setLanguage, languages } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [errors, setErrors] = useState({});
+  const [showLateWarning, setShowLateWarning] = useState(false);
+
   const [profile, setProfile] = useState({
-    // Basic info
-    name: '',
-    sex: '',
-    age: '',
-    currentWeight: '',
-    targetWeight: '',
-    height: '',
-    // Daily routine
-    wakeUpTime: '06:30',
-    sleepTime: '22:30',
+    // Step 1-4: Times
+    wakeTime: '07:00',
+    sleepHours: 7,
+    lunchTime: '12:30',
     dinnerTime: '19:30',
-    officeDays: [],
-    // Lifestyle
-    hobbies: '',
-    choresFrequency: '',
-    groceryFrequency: '',
-    weekendRoutine: '',
-    // Exercise
-    exerciseType: '', // 'gym', 'sports', 'both', 'none'
-    gymType: [],
-    sports: [], // Array of { sportId, days: [], time: 'morning'|'afternoon'|'evening' }
-    // Gym specific
-    goal: '',
-    fitnessLevel: '',
-    trainingDays: [],
-    trainingTime: '',
-    // Nutrition
-    dietaryRestrictions: [],
-    mealPrep: null,
+
+    // Step 5: Gym preference
+    gymPreference: '', // 'morning' | 'evening' | 'flexible'
+
+    // Step 6: Office
+    officeDaysCount: 0,
+    officeStart: '09:00',
+    officeEnd: '18:00',
+
+    // Step 7: Goals
+    goals: [],
+
+    // Step 8: Physical data (optional)
+    weight: '',
+    height: '',
+    bodyFatPercent: '',
+
     // Settings
     preferredLanguage: language
   });
-
-  const isEnglish = language === 'en';
-  const days = isEnglish ? DAYS_EN : DAYS;
-
-  // Dynamic steps based on exercise type
-  const getSteps = () => {
-    const baseSteps = ['welcome', 'language', 'profile', 'routine', 'lifestyle', 'exerciseType'];
-
-    if (profile.exerciseType === 'gym' || profile.exerciseType === 'both') {
-      baseSteps.push('gymDetails');
-    }
-    if (profile.exerciseType === 'sports' || profile.exerciseType === 'both') {
-      baseSteps.push('sportsDetails');
-    }
-    if (profile.exerciseType !== 'none' && profile.exerciseType !== '') {
-      baseSteps.push('nutrition');
-    }
-    baseSteps.push('generating');
-
-    return baseSteps;
-  };
-
-  const STEPS = getSteps();
 
   const updateProfile = (key, value) => {
     setProfile(prev => ({ ...prev, [key]: value }));
@@ -99,90 +60,68 @@ export function OnboardingFlow({ onComplete }) {
     }
   };
 
-  const toggleArrayItem = (key, item) => {
+  const toggleGoal = (goalId) => {
     setProfile(prev => {
-      const current = prev[key];
-      if (current.includes(item)) {
-        return { ...prev, [key]: current.filter(i => i !== item) };
+      const current = prev.goals;
+      if (current.includes(goalId)) {
+        return { ...prev, goals: current.filter(g => g !== goalId) };
       } else {
-        return { ...prev, [key]: [...current, item] };
+        return { ...prev, goals: [...current, goalId] };
       }
     });
-    if (errors[key]) {
-      setErrors(prev => ({ ...prev, [key]: null }));
+    if (errors.goals) {
+      setErrors(prev => ({ ...prev, goals: null }));
     }
   };
 
-  const addSport = (sportId) => {
-    setProfile(prev => {
-      const exists = prev.sports.find(s => s.sportId === sportId);
-      if (exists) {
-        return { ...prev, sports: prev.sports.filter(s => s.sportId !== sportId) };
-      } else {
-        return { ...prev, sports: [...prev.sports, { sportId, days: [], time: 'evening' }] };
-      }
-    });
-  };
+  // Calculate sleep time dynamically
+  const calculatedSleepTime = useMemo(() => {
+    const [wakeHour, wakeMin] = profile.wakeTime.split(':').map(Number);
+    let sleepHour = wakeHour - profile.sleepHours;
+    if (sleepHour < 0) sleepHour += 24;
+    return `${sleepHour.toString().padStart(2, '0')}:${wakeMin.toString().padStart(2, '0')}`;
+  }, [profile.wakeTime, profile.sleepHours]);
 
-  const updateSportSchedule = (sportId, field, value) => {
-    setProfile(prev => ({
-      ...prev,
-      sports: prev.sports.map(s =>
-        s.sportId === sportId ? { ...s, [field]: value } : s
-      )
-    }));
-  };
+  // Check if dinner is at least 3h after lunch
+  const dinnerGapWarning = useMemo(() => {
+    const [lunchH, lunchM] = profile.lunchTime.split(':').map(Number);
+    const [dinnerH, dinnerM] = profile.dinnerTime.split(':').map(Number);
+    const lunchMinutes = lunchH * 60 + lunchM;
+    const dinnerMinutes = dinnerH * 60 + dinnerM;
+    const gap = dinnerMinutes - lunchMinutes;
+    return gap < 180; // Less than 3 hours
+  }, [profile.lunchTime, profile.dinnerTime]);
 
-  const toggleSportDay = (sportId, day) => {
-    setProfile(prev => ({
-      ...prev,
-      sports: prev.sports.map(s => {
-        if (s.sportId !== sportId) return s;
-        const days = s.days.includes(day)
-          ? s.days.filter(d => d !== day)
-          : [...s.days, day];
-        return { ...s, days };
-      })
-    }));
-  };
+  // Get sleep feedback message
+  const sleepFeedback = useMemo(() => {
+    if (profile.sleepHours < 6) return { type: 'warning', key: 'step_sleep_feedback_low' };
+    if (profile.sleepHours >= 7 && profile.sleepHours <= 8) return { type: 'good', key: 'step_sleep_feedback_good' };
+    return { type: 'great', key: 'step_sleep_feedback_high' };
+  }, [profile.sleepHours]);
 
-  const validateStep = (step) => {
+  const validateStep = (stepName) => {
     const newErrors = {};
 
-    switch (step) {
-      case 'profile':
-        if (!profile.sex) newErrors.sex = t('error_required_sex');
-        if (!profile.age) newErrors.age = t('error_required_age');
-        if (!profile.currentWeight) newErrors.currentWeight = t('error_required_weight');
-        if (!profile.targetWeight) newErrors.targetWeight = t('error_required_target');
-        break;
-
-      case 'lifestyle':
-        if (!profile.weekendRoutine) newErrors.weekendRoutine = t('error_required_weekend');
-        break;
-
-      case 'exerciseType':
-        if (!profile.exerciseType) newErrors.exerciseType = t('error_required_exercise_type');
-        break;
-
-      case 'gymDetails':
-        if (profile.gymType.length === 0) newErrors.gymType = t('error_required_gym_type');
-        if (!profile.goal) newErrors.goal = t('error_required_goal');
-        if (!profile.fitnessLevel) newErrors.fitnessLevel = t('error_required_level');
-        if (profile.trainingDays.length === 0) newErrors.trainingDays = t('error_required_days');
-        if (!profile.trainingTime) newErrors.trainingTime = t('error_required_time');
-        break;
-
-      case 'sportsDetails':
-        if (profile.sports.length === 0) newErrors.sports = t('error_required_sports');
-        else {
-          const hasSchedule = profile.sports.every(s => s.days.length > 0);
-          if (!hasSchedule) newErrors.sportsSchedule = t('error_required_sports_schedule');
+    switch (stepName) {
+      case 'wakeTime':
+        // Check if wake time is after 10:00
+        const [hour] = profile.wakeTime.split(':').map(Number);
+        if (hour >= 10) {
+          setShowLateWarning(true);
+          return false; // Show warning modal first
         }
         break;
 
-      case 'nutrition':
-        if (profile.mealPrep === null) newErrors.mealPrep = t('error_required_meal_prep');
+      case 'gymPreference':
+        if (!profile.gymPreference) {
+          newErrors.gymPreference = t('error_required_gym_pref');
+        }
+        break;
+
+      case 'goals':
+        if (profile.goals.length === 0) {
+          newErrors.goals = t('error_required_goals');
+        }
         break;
     }
 
@@ -192,7 +131,11 @@ export function OnboardingFlow({ onComplete }) {
 
   const nextStep = () => {
     const currentStepName = STEPS[currentStep];
-    if (['welcome', 'language'].includes(currentStepName) || validateStep(currentStepName)) {
+
+    // Skip validation for welcome, language, physicalData (optional), generating
+    const skipValidation = ['welcome', 'language', 'sleepHours', 'lunchTime', 'dinnerTime', 'officeDays', 'physicalData', 'generating'];
+
+    if (skipValidation.includes(currentStepName) || validateStep(currentStepName)) {
       if (currentStep < STEPS.length - 1) {
         setCurrentStep(prev => prev + 1);
       }
@@ -205,25 +148,27 @@ export function OnboardingFlow({ onComplete }) {
     }
   };
 
-  const handleFinish = async () => {
-    const currentStepName = STEPS[currentStep];
-    if (currentStepName === 'nutrition' && !validateStep('nutrition')) return;
+  const handleLateWarningContinue = () => {
+    setShowLateWarning(false);
+    setCurrentStep(prev => prev + 1);
+  };
 
+  const handleFinish = async () => {
     // Move to generating step
     const generatingIndex = STEPS.indexOf('generating');
     setCurrentStep(generatingIndex);
 
-    const finalProfile = { ...profile, preferredLanguage: language };
+    const finalProfile = {
+      ...profile,
+      sleepTime: calculatedSleepTime,
+      preferredLanguage: language
+    };
 
-    // Generate personalized data
-    const schedule = generatePersonalizedSchedule(finalProfile);
-    const meals = generatePersonalizedMeals(finalProfile);
-    const workout = generatePersonalizedWorkout(finalProfile);
+    // Generate schedule dynamically based on profile
+    const schedule = generateScheduleFromProfile(finalProfile);
 
-    // Save to localStorage
-    localStorage.setItem('vida_user_schedule', JSON.stringify(schedule));
-    localStorage.setItem('vida_user_meals', JSON.stringify(meals));
-    localStorage.setItem('vida_user_workout', JSON.stringify(workout));
+    // Save generated schedule
+    localStorage.setItem('vida_generated_schedule', JSON.stringify(schedule));
     localStorage.setItem('vida_user_profile', JSON.stringify(finalProfile));
 
     await new Promise(resolve => setTimeout(resolve, 2500));
@@ -233,27 +178,44 @@ export function OnboardingFlow({ onComplete }) {
 
   const renderStep = () => {
     const stepName = STEPS[currentStep];
-    const props = { t, isEnglish, days, profile, updateProfile, toggleArrayItem, errors, onNext: nextStep, onBack: prevStep };
+    const props = {
+      t,
+      profile,
+      updateProfile,
+      toggleGoal,
+      errors,
+      onNext: nextStep,
+      onBack: prevStep,
+      language,
+      setLanguage,
+      languages,
+      sleepFeedback,
+      calculatedSleepTime,
+      dinnerGapWarning,
+      onFinish: handleFinish
+    };
 
     switch (stepName) {
       case 'welcome':
         return <WelcomeStep {...props} />;
       case 'language':
-        return <LanguageStep {...props} language={language} setLanguage={setLanguage} languages={languages} />;
-      case 'profile':
-        return <ProfileStep {...props} />;
-      case 'routine':
-        return <RoutineStep {...props} />;
-      case 'lifestyle':
-        return <LifestyleStep {...props} />;
-      case 'exerciseType':
-        return <ExerciseTypeStep {...props} />;
-      case 'gymDetails':
-        return <GymDetailsStep {...props} />;
-      case 'sportsDetails':
-        return <SportsDetailsStep {...props} addSport={addSport} updateSportSchedule={updateSportSchedule} toggleSportDay={toggleSportDay} />;
-      case 'nutrition':
-        return <NutritionStep {...props} onNext={handleFinish} />;
+        return <LanguageStep {...props} />;
+      case 'wakeTime':
+        return <WakeTimeStep {...props} />;
+      case 'sleepHours':
+        return <SleepHoursStep {...props} />;
+      case 'lunchTime':
+        return <LunchTimeStep {...props} />;
+      case 'dinnerTime':
+        return <DinnerTimeStep {...props} />;
+      case 'gymPreference':
+        return <GymPreferenceStep {...props} />;
+      case 'officeDays':
+        return <OfficeDaysStep {...props} />;
+      case 'goals':
+        return <GoalsStep {...props} />;
+      case 'physicalData':
+        return <PhysicalDataStep {...props} />;
       case 'generating':
         return <GeneratingStep {...props} />;
       default:
@@ -284,6 +246,22 @@ export function OnboardingFlow({ onComplete }) {
       <div className="onboarding-content">
         {renderStep()}
       </div>
+
+      {/* Late Wake Warning Modal */}
+      {showLateWarning && (
+        <div className="onboarding-modal-overlay">
+          <div className="onboarding-modal">
+            <div className="modal-icon warning">
+              <Icon name="information-circle-1" />
+            </div>
+            <h3>{t('step_wake_late_warning_title')}</h3>
+            <p>{t('step_wake_late_warning_desc')}</p>
+            <button className="btn-primary" onClick={handleLateWarningContinue}>
+              {t('continue')}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -332,533 +310,429 @@ function LanguageStep({ t, language, setLanguage, languages, onNext, onBack }) {
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
       </div>
     </div>
   );
 }
 
-function ProfileStep({ t, profile, updateProfile, errors, onNext, onBack }) {
+function WakeTimeStep({ t, profile, updateProfile, onNext, onBack }) {
   return (
     <div className="step">
       <div className="step-header">
-        <h2>{t('profile_title')}</h2>
-        <p>{t('profile_desc')}</p>
+        <div className="step-icon-wrapper">
+          <Icon name="sun-1" className="step-icon" />
+        </div>
+        <h2>{t('step_wake_title')}</h2>
+        <p>{t('step_wake_desc')}</p>
       </div>
 
       <div className="form-section">
-        <div className="input-group">
-          <label>{t('profile_name')} <span className="label-optional">{t('optional')}</span></label>
+        <div className="input-group centered">
+          <label>{t('step_wake_label')}</label>
           <input
-            type="text"
-            value={profile.name}
-            onChange={(e) => updateProfile('name', e.target.value)}
-            placeholder={t('profile_name_placeholder')}
-            className="input-field"
+            type="time"
+            value={profile.wakeTime}
+            onChange={(e) => updateProfile('wakeTime', e.target.value)}
+            className="input-field time-input-large"
+          />
+        </div>
+      </div>
+
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function SleepHoursStep({ t, profile, updateProfile, sleepFeedback, calculatedSleepTime, onNext, onBack }) {
+  const feedbackClass = sleepFeedback.type === 'warning' ? 'feedback-warning' :
+                        sleepFeedback.type === 'good' ? 'feedback-good' : 'feedback-great';
+
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="moon-half-right-5" className="step-icon" />
+        </div>
+        <h2>{t('step_sleep_title')}</h2>
+        <p>{t('step_sleep_desc')}</p>
+      </div>
+
+      <div className="form-section">
+        <div className="input-group centered">
+          <label>{t('step_sleep_label')}</label>
+          <div className="slider-container">
+            <input
+              type="range"
+              min="4"
+              max="10"
+              step="0.5"
+              value={profile.sleepHours}
+              onChange={(e) => updateProfile('sleepHours', parseFloat(e.target.value))}
+              className="sleep-slider"
+            />
+            <div className="slider-value">{profile.sleepHours}h</div>
+          </div>
+          <div className="slider-labels">
+            <span>4h</span>
+            <span>10h</span>
+          </div>
+        </div>
+
+        <div className={`sleep-feedback ${feedbackClass}`}>
+          <Icon name={sleepFeedback.type === 'warning' ? 'information-circle-1' : 'checkmark-circle-1'} />
+          <span>{t(sleepFeedback.key)}</span>
+        </div>
+
+        <div className="calculated-time">
+          <Icon name="moon-half-right-5" />
+          <span>Hora de dormir: <strong>{calculatedSleepTime}</strong></span>
+        </div>
+      </div>
+
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LunchTimeStep({ t, profile, updateProfile, onNext, onBack }) {
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="knife-fork-1" className="step-icon" />
+        </div>
+        <h2>{t('step_lunch_title')}</h2>
+        <p>{t('step_lunch_desc')}</p>
+      </div>
+
+      <div className="form-section">
+        <div className="input-group centered">
+          <label>{t('step_lunch_label')}</label>
+          <input
+            type="time"
+            value={profile.lunchTime}
+            onChange={(e) => updateProfile('lunchTime', e.target.value)}
+            className="input-field time-input-large"
+          />
+        </div>
+      </div>
+
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DinnerTimeStep({ t, profile, updateProfile, dinnerGapWarning, onNext, onBack }) {
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="knife-fork-1" className="step-icon" />
+        </div>
+        <h2>{t('step_dinner_title')}</h2>
+        <p>{t('step_dinner_desc')}</p>
+      </div>
+
+      <div className="form-section">
+        <div className="input-group centered">
+          <label>{t('step_dinner_label')}</label>
+          <input
+            type="time"
+            value={profile.dinnerTime}
+            onChange={(e) => updateProfile('dinnerTime', e.target.value)}
+            className="input-field time-input-large"
           />
         </div>
 
-        <div className="input-group">
-          <label>{t('profile_sex')} <span className="label-required">{t('required')}</span></label>
-          <div className="option-row">
-            <button type="button" className={`option-btn ${profile.sex === 'male' ? 'selected' : ''}`} onClick={() => updateProfile('sex', 'male')}>
-              <Icon name="user-1" className="option-icon" />
-              <span>{t('profile_sex_male')}</span>
-            </button>
-            <button type="button" className={`option-btn ${profile.sex === 'female' ? 'selected' : ''}`} onClick={() => updateProfile('sex', 'female')}>
-              <Icon name="user-2" className="option-icon" />
-              <span>{t('profile_sex_female')}</span>
-            </button>
-          </div>
-          {errors.sex && <span className="error-text">{errors.sex}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>{t('profile_age')} <span className="label-required">{t('required')}</span></label>
-          <input type="number" value={profile.age} onChange={(e) => updateProfile('age', e.target.value)} placeholder={t('profile_age_placeholder')} className={`input-field ${errors.age ? 'input-error' : ''}`} min="14" max="100" />
-          {errors.age && <span className="error-text">{errors.age}</span>}
-        </div>
-
-        <div className="input-row">
-          <div className="input-group">
-            <label>{t('profile_current_weight')} <span className="label-required">{t('required')}</span></label>
-            <input type="number" value={profile.currentWeight} onChange={(e) => updateProfile('currentWeight', e.target.value)} placeholder="Ex: 72" className={`input-field ${errors.currentWeight ? 'input-error' : ''}`} step="0.1" />
-            {errors.currentWeight && <span className="error-text">{errors.currentWeight}</span>}
-          </div>
-          <div className="input-group">
-            <label>{t('profile_target_weight')} <span className="label-required">{t('required')}</span></label>
-            <input type="number" value={profile.targetWeight} onChange={(e) => updateProfile('targetWeight', e.target.value)} placeholder="Ex: 80" className={`input-field ${errors.targetWeight ? 'input-error' : ''}`} step="0.1" />
-            {errors.targetWeight && <span className="error-text">{errors.targetWeight}</span>}
-          </div>
-        </div>
-
-        <div className="input-group">
-          <label>{t('profile_height')} <span className="label-optional">{t('optional')}</span></label>
-          <input type="number" value={profile.height} onChange={(e) => updateProfile('height', e.target.value)} placeholder="Ex: 178" className="input-field" />
-        </div>
-      </div>
-
-      <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
-      </div>
-    </div>
-  );
-}
-
-function RoutineStep({ t, days, profile, updateProfile, toggleArrayItem, onNext, onBack }) {
-  return (
-    <div className="step">
-      <div className="step-header">
-        <h2>{t('routine_title')}</h2>
-        <p>{t('routine_desc')}</p>
-      </div>
-
-      <div className="form-section">
-        <div className="input-row">
-          <div className="input-group">
-            <label>{t('routine_wake_up')}</label>
-            <input type="time" value={profile.wakeUpTime} onChange={(e) => updateProfile('wakeUpTime', e.target.value)} className="input-field" />
-          </div>
-          <div className="input-group">
-            <label>{t('routine_sleep')}</label>
-            <input type="time" value={profile.sleepTime} onChange={(e) => updateProfile('sleepTime', e.target.value)} className="input-field" />
-          </div>
-        </div>
-
-        <div className="input-group">
-          <label>{t('routine_dinner')} <span className="label-optional">{t('optional')}</span></label>
-          <input type="time" value={profile.dinnerTime} onChange={(e) => updateProfile('dinnerTime', e.target.value)} className="input-field" />
-        </div>
-
-        <div className="input-group">
-          <label>{t('routine_office_days')} <span className="label-hint">— {t('routine_office_hint')}</span></label>
-          <div className="day-selector">
-            {days.map((day, i) => (
-              <button key={day} type="button" className={`day-btn ${profile.officeDays.includes(DAYS[i]) ? 'selected' : ''}`} onClick={() => toggleArrayItem('officeDays', DAYS[i])}>
-                {day}
-              </button>
-            ))}
-          </div>
-          <p className="input-hint">{profile.officeDays.length === 0 ? t('routine_work_from_home') : `${profile.officeDays.length} ${t('routine_days_selected')}`}</p>
-        </div>
-      </div>
-
-      <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
-      </div>
-    </div>
-  );
-}
-
-function LifestyleStep({ t, profile, updateProfile, errors, onNext, onBack }) {
-  return (
-    <div className="step">
-      <div className="step-header">
-        <h2>{t('lifestyle_title')}</h2>
-        <p>{t('lifestyle_desc')}</p>
-      </div>
-
-      <div className="form-section">
-        <div className="input-group">
-          <label>{t('lifestyle_hobbies')} <span className="label-optional">{t('optional')}</span></label>
-          <input type="text" value={profile.hobbies} onChange={(e) => updateProfile('hobbies', e.target.value)} placeholder={t('lifestyle_hobbies_hint')} className="input-field" />
-        </div>
-
-        <div className="input-group">
-          <label>{t('lifestyle_chores')} <span className="label-optional">{t('optional')}</span></label>
-          <div className="option-row triple">
-            {['daily', 'weekly', 'rarely'].map(opt => (
-              <button key={opt} type="button" className={`option-btn small ${profile.choresFrequency === opt ? 'selected' : ''}`} onClick={() => updateProfile('choresFrequency', opt)}>
-                {t(`lifestyle_chores_${opt}`)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="input-group">
-          <label>{t('lifestyle_grocery')} <span className="label-optional">{t('optional')}</span></label>
-          <div className="option-row triple">
-            {['weekly', 'biweekly', 'monthly'].map(opt => (
-              <button key={opt} type="button" className={`option-btn small ${profile.groceryFrequency === opt ? 'selected' : ''}`} onClick={() => updateProfile('groceryFrequency', opt)}>
-                {t(`lifestyle_grocery_${opt}`)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="input-group">
-          <label>{t('lifestyle_weekend')} <span className="label-required">{t('required')}</span></label>
-          <div className="option-row">
-            <button type="button" className={`option-btn large ${profile.weekendRoutine === 'relaxed' ? 'selected' : ''}`} onClick={() => updateProfile('weekendRoutine', 'relaxed')}>
-              <Icon name="moon-half-right-5" className="option-icon" />
-              <div className="option-content">
-                <span className="option-title">{t('lifestyle_weekend_relaxed')}</span>
-                <span className="option-desc">{t('lifestyle_weekend_relaxed_desc')}</span>
-              </div>
-            </button>
-            <button type="button" className={`option-btn large ${profile.weekendRoutine === 'active' ? 'selected' : ''}`} onClick={() => updateProfile('weekendRoutine', 'active')}>
-              <Icon name="bolt-alt" className="option-icon" />
-              <div className="option-content">
-                <span className="option-title">{t('lifestyle_weekend_active')}</span>
-                <span className="option-desc">{t('lifestyle_weekend_active_desc')}</span>
-              </div>
-            </button>
-          </div>
-          {errors.weekendRoutine && <span className="error-text">{errors.weekendRoutine}</span>}
-        </div>
-      </div>
-
-      <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
-      </div>
-    </div>
-  );
-}
-
-function ExerciseTypeStep({ t, profile, updateProfile, errors, onNext, onBack }) {
-  const options = [
-    { id: 'gym', icon: 'dumbbell-1', label: t('exercise_type_gym'), desc: t('exercise_type_gym_desc') },
-    { id: 'sports', icon: 'busket-ball', label: t('exercise_type_sports'), desc: t('exercise_type_sports_desc') },
-    { id: 'both', icon: 'star-fat', label: t('exercise_type_both'), desc: t('exercise_type_both_desc') },
-    { id: 'none', icon: 'leaf-1', label: t('exercise_type_none'), desc: t('exercise_type_none_desc') },
-  ];
-
-  return (
-    <div className="step">
-      <div className="step-header">
-        <h2>{t('exercise_type_title')}</h2>
-        <p>{t('exercise_type_desc')}</p>
-      </div>
-
-      <div className="form-section">
-        <div className="exercise-type-grid">
-          {options.map(opt => (
-            <button
-              key={opt.id}
-              type="button"
-              className={`exercise-type-card ${profile.exerciseType === opt.id ? 'selected' : ''}`}
-              onClick={() => updateProfile('exerciseType', opt.id)}
-            >
-              <Icon name={opt.icon} className="exercise-type-icon" />
-              <span className="exercise-type-label">{opt.label}</span>
-              <span className="exercise-type-desc">{opt.desc}</span>
-            </button>
-          ))}
-        </div>
-        {errors.exerciseType && <span className="error-text">{errors.exerciseType}</span>}
-      </div>
-
-      <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
-      </div>
-    </div>
-  );
-}
-
-function GymDetailsStep({ t, isEnglish, days, profile, updateProfile, toggleArrayItem, errors, onNext, onBack }) {
-  const goals = [
-    { id: 'muscle_gain', icon: 'star-fat', label: t('training_goal_muscle'), desc: t('training_goal_muscle_desc') },
-    { id: 'weight_loss', icon: 'fire-1', label: t('training_goal_loss'), desc: t('training_goal_loss_desc') },
-    { id: 'maintain', icon: 'bar-chart-4', label: t('training_goal_maintain'), desc: t('training_goal_maintain_desc') },
-    { id: 'general', icon: 'target-4', label: t('training_goal_general'), desc: t('training_goal_general_desc') },
-  ];
-
-  const levels = [
-    { id: 'beginner', label: t('training_level_beginner'), desc: t('training_level_beginner_desc') },
-    { id: 'intermediate', label: t('training_level_intermediate'), desc: t('training_level_intermediate_desc') },
-    { id: 'advanced', label: t('training_level_advanced'), desc: t('training_level_advanced_desc') },
-  ];
-
-  const times = [
-    { id: 'morning', icon: 'sun-1', label: t('training_time_morning'), desc: '6h - 12h' },
-    { id: 'afternoon', icon: 'sun-2', label: t('training_time_afternoon'), desc: '12h - 18h' },
-    { id: 'evening', icon: 'moon-half-right-5', label: t('training_time_evening'), desc: '18h - 22h' },
-  ];
-
-  return (
-    <div className="step">
-      <div className="step-header">
-        <h2>{t('gym_details_title')}</h2>
-        <p>{t('gym_details_desc')}</p>
-      </div>
-
-      <div className="form-section">
-        <div className="input-group">
-          <label>{t('gym_type_question')} <span className="label-required">{t('required')}</span></label>
-          <div className="gym-type-grid">
-            {GYM_TYPES.map(type => (
-              <button
-                key={type.id}
-                type="button"
-                className={`gym-type-btn ${profile.gymType.includes(type.id) ? 'selected' : ''}`}
-                onClick={() => toggleArrayItem('gymType', type.id)}
-              >
-                <Icon name={type.icon} className="gym-type-icon" />
-                <span className="gym-type-label">{isEnglish ? type.labelEn : type.label}</span>
-                <span className="gym-type-desc">{isEnglish ? type.descEn : type.desc}</span>
-              </button>
-            ))}
-          </div>
-          <p className="input-hint">{t('gym_type_hint')}</p>
-          {errors.gymType && <span className="error-text">{errors.gymType}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>{t('training_goal')} <span className="label-required">{t('required')}</span></label>
-          <div className="goal-grid">
-            {goals.map(goal => (
-              <button key={goal.id} type="button" className={`goal-card ${profile.goal === goal.id ? 'selected' : ''}`} onClick={() => updateProfile('goal', goal.id)}>
-                <Icon name={goal.icon} className="goal-icon" />
-                <span className="goal-label">{goal.label}</span>
-                <span className="goal-desc">{goal.desc}</span>
-              </button>
-            ))}
-          </div>
-          {errors.goal && <span className="error-text">{errors.goal}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>{t('training_level')} <span className="label-required">{t('required')}</span></label>
-          <div className="level-options">
-            {levels.map(level => (
-              <button key={level.id} type="button" className={`level-btn ${profile.fitnessLevel === level.id ? 'selected' : ''}`} onClick={() => updateProfile('fitnessLevel', level.id)}>
-                <span className="level-label">{level.label}</span>
-                <span className="level-desc">{level.desc}</span>
-              </button>
-            ))}
-          </div>
-          {errors.fitnessLevel && <span className="error-text">{errors.fitnessLevel}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>{t('training_days')} <span className="label-required">{t('required')}</span></label>
-          <div className="day-selector">
-            {days.map((day, i) => (
-              <button key={day} type="button" className={`day-btn ${profile.trainingDays.includes(DAYS[i]) ? 'selected' : ''}`} onClick={() => toggleArrayItem('trainingDays', DAYS[i])}>
-                {day}
-              </button>
-            ))}
-          </div>
-          <p className="input-hint">{profile.trainingDays.length === 0 ? t('training_days_hint') : `${profile.trainingDays.length} ${t('routine_days_selected')}`}</p>
-          {errors.trainingDays && <span className="error-text">{errors.trainingDays}</span>}
-        </div>
-
-        <div className="input-group">
-          <label>{t('training_time')} <span className="label-required">{t('required')}</span></label>
-          <div className="time-options">
-            {times.map(time => (
-              <button key={time.id} type="button" className={`time-btn ${profile.trainingTime === time.id ? 'selected' : ''}`} onClick={() => updateProfile('trainingTime', time.id)}>
-                <Icon name={time.icon} className="time-icon" />
-                <span className="time-label">{time.label}</span>
-                <span className="time-desc">{time.desc}</span>
-              </button>
-            ))}
-          </div>
-          {errors.trainingTime && <span className="error-text">{errors.trainingTime}</span>}
-        </div>
-      </div>
-
-      <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
-      </div>
-    </div>
-  );
-}
-
-function SportsDetailsStep({ t, isEnglish, days, profile, addSport, toggleSportDay, updateSportSchedule, errors, onNext, onBack }) {
-  const selectedSports = profile.sports;
-
-  return (
-    <div className="step">
-      <div className="step-header">
-        <h2>{t('sports_details_title')}</h2>
-        <p>{t('sports_details_desc')}</p>
-      </div>
-
-      <div className="form-section">
-        <div className="input-group">
-          <label>{t('sports_select')} <span className="label-required">{t('required')}</span></label>
-          <div className="sports-grid">
-            {SPORTS_LIST.map(sport => (
-              <button
-                key={sport.id}
-                type="button"
-                className={`sport-btn ${selectedSports.find(s => s.sportId === sport.id) ? 'selected' : ''}`}
-                onClick={() => addSport(sport.id)}
-              >
-                <Icon name={sport.icon} className="sport-icon" />
-                <span className="sport-label">{isEnglish ? sport.labelEn : sport.label}</span>
-              </button>
-            ))}
-          </div>
-          {errors.sports && <span className="error-text">{errors.sports}</span>}
-        </div>
-
-        {selectedSports.length > 0 && (
-          <div className="sports-schedule">
-            <label>{t('sports_schedule')} <span className="label-required">{t('required')}</span></label>
-            {selectedSports.map(sport => {
-              const sportInfo = SPORTS_LIST.find(s => s.id === sport.sportId);
-              return (
-                <div key={sport.sportId} className="sport-schedule-card">
-                  <div className="sport-schedule-header">
-                    <Icon name={sportInfo?.icon || 'star-fat'} className="sport-schedule-icon" />
-                    <span className="sport-schedule-name">{isEnglish ? sportInfo?.labelEn : sportInfo?.label}</span>
-                  </div>
-                  <div className="sport-schedule-days">
-                    <span className="schedule-label">{t('sports_which_days')}</span>
-                    <div className="day-selector compact">
-                      {days.map((day, i) => (
-                        <button
-                          key={day}
-                          type="button"
-                          className={`day-btn small ${sport.days.includes(DAYS[i]) ? 'selected' : ''}`}
-                          onClick={() => toggleSportDay(sport.sportId, DAYS[i])}
-                        >
-                          {day}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="sport-schedule-time">
-                    <span className="schedule-label">{t('sports_what_time')}</span>
-                    <div className="time-options compact">
-                      {['morning', 'afternoon', 'evening'].map(time => (
-                        <button
-                          key={time}
-                          type="button"
-                          className={`time-btn small ${sport.time === time ? 'selected' : ''}`}
-                          onClick={() => updateSportSchedule(sport.sportId, 'time', time)}
-                        >
-                          <Icon name={time === 'morning' ? 'sun-1' : time === 'afternoon' ? 'sun-2' : 'moon-half-right-5'} />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            {errors.sportsSchedule && <span className="error-text">{errors.sportsSchedule}</span>}
+        {dinnerGapWarning && (
+          <div className="dinner-gap-warning">
+            <Icon name="information-circle-1" />
+            <span>{t('step_dinner_gap_warning')}</span>
           </div>
         )}
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary" onClick={onNext}>{t('continue')} <Icon name="arrow-right-1" /></button>
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
       </div>
     </div>
   );
 }
 
-function NutritionStep({ t, profile, updateProfile, toggleArrayItem, errors, onNext, onBack }) {
-  const restrictions = [
-    { id: 'vegetarian', label: t('nutrition_vegetarian') },
-    { id: 'vegan', label: t('nutrition_vegan') },
-    { id: 'lactose_free', label: t('nutrition_lactose_free') },
-    { id: 'gluten_free', label: t('nutrition_gluten_free') },
+function GymPreferenceStep({ t, profile, updateProfile, errors, onNext, onBack }) {
+  const options = [
+    { id: 'morning', icon: 'sun-1', label: t('step_gym_morning'), desc: t('step_gym_morning_desc') },
+    { id: 'evening', icon: 'moon-half-right-5', label: t('step_gym_evening'), desc: t('step_gym_evening_desc') },
+    { id: 'flexible', icon: 'refresh-circle-1-clockwise', label: t('step_gym_flexible'), desc: t('step_gym_flexible_desc') },
   ];
-
-  const getGoalLabel = (goal) => {
-    const labels = {
-      muscle_gain: t('training_goal_muscle'),
-      weight_loss: t('training_goal_loss'),
-      maintain: t('training_goal_maintain'),
-      general: t('training_goal_general')
-    };
-    return labels[goal] || '-';
-  };
 
   return (
     <div className="step">
       <div className="step-header">
-        <h2>{t('nutrition_title')}</h2>
-        <p>{t('nutrition_desc')}</p>
+        <div className="step-icon-wrapper">
+          <Icon name="dumbbell-1" className="step-icon" />
+        </div>
+        <h2>{t('step_gym_title')}</h2>
+        <p>{t('step_gym_desc')}</p>
+      </div>
+
+      <div className="form-section">
+        <div className="gym-preference-options">
+          {options.map(opt => (
+            <button
+              key={opt.id}
+              type="button"
+              className={`gym-pref-btn ${profile.gymPreference === opt.id ? 'selected' : ''}`}
+              onClick={() => updateProfile('gymPreference', opt.id)}
+            >
+              <Icon name={opt.icon} className="gym-pref-icon" />
+              <div className="gym-pref-content">
+                <span className="gym-pref-label">{opt.label}</span>
+                <span className="gym-pref-desc">{opt.desc}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+        {errors.gymPreference && <span className="error-text">{errors.gymPreference}</span>}
+      </div>
+
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function OfficeDaysStep({ t, profile, updateProfile, onNext, onBack }) {
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="briefcase-1" className="step-icon" />
+        </div>
+        <h2>{t('step_office_title')}</h2>
+        <p>{t('step_office_desc')}</p>
       </div>
 
       <div className="form-section">
         <div className="input-group">
-          <label>{t('nutrition_restrictions')} <span className="label-optional">{t('optional')}</span></label>
-          <div className="restriction-options">
-            {restrictions.map(r => (
-              <button key={r.id} type="button" className={`restriction-btn ${profile.dietaryRestrictions.includes(r.id) ? 'selected' : ''}`} onClick={() => toggleArrayItem('dietaryRestrictions', r.id)}>
-                {r.label}
-              </button>
-            ))}
+          <label>{t('step_office_count_label')}</label>
+          <div className="counter-input">
+            <button
+              type="button"
+              className="counter-btn"
+              onClick={() => updateProfile('officeDaysCount', Math.max(0, profile.officeDaysCount - 1))}
+              disabled={profile.officeDaysCount === 0}
+            >
+              <Icon name="minus" />
+            </button>
+            <span className="counter-value">{profile.officeDaysCount}</span>
+            <button
+              type="button"
+              className="counter-btn"
+              onClick={() => updateProfile('officeDaysCount', Math.min(5, profile.officeDaysCount + 1))}
+              disabled={profile.officeDaysCount === 5}
+            >
+              <Icon name="plus" />
+            </button>
           </div>
         </div>
 
-        <div className="input-group">
-          <label>{t('nutrition_meal_prep')} <span className="label-required">{t('required')}</span></label>
-          <div className="option-row">
-            <button type="button" className={`option-btn large ${profile.mealPrep === true ? 'selected' : ''}`} onClick={() => updateProfile('mealPrep', true)}>
-              <Icon name="package" className="option-icon" />
-              <div className="option-content">
-                <span className="option-title">{t('nutrition_meal_prep_yes')}</span>
-                <span className="option-desc">{t('nutrition_meal_prep_yes_desc')}</span>
+        {profile.officeDaysCount > 0 && (
+          <div className="office-times">
+            <label>{t('step_office_times_label')}</label>
+            <div className="time-range">
+              <div className="time-input-group">
+                <span className="time-label">{t('step_office_start')}</span>
+                <input
+                  type="time"
+                  value={profile.officeStart}
+                  onChange={(e) => updateProfile('officeStart', e.target.value)}
+                  className="input-field"
+                />
               </div>
-            </button>
-            <button type="button" className={`option-btn large ${profile.mealPrep === false ? 'selected' : ''}`} onClick={() => updateProfile('mealPrep', false)}>
-              <Icon name="knife-fork-1" className="option-icon" />
-              <div className="option-content">
-                <span className="option-title">{t('nutrition_meal_prep_no')}</span>
-                <span className="option-desc">{t('nutrition_meal_prep_no_desc')}</span>
-              </div>
-            </button>
-          </div>
-          {errors.mealPrep && <span className="error-text">{errors.mealPrep}</span>}
-        </div>
-
-        <div className="summary-card">
-          <h4>{t('summary_title')}</h4>
-          <div className="summary-grid">
-            {profile.goal && (
-              <div className="summary-item">
-                <Icon name="target-4" className="summary-icon" />
-                <div className="summary-content">
-                  <span className="summary-label">{t('summary_goal')}</span>
-                  <span className="summary-value">{getGoalLabel(profile.goal)}</span>
-                </div>
-              </div>
-            )}
-            {profile.trainingDays.length > 0 && (
-              <div className="summary-item">
-                <Icon name="dumbbell-1" className="summary-icon" />
-                <div className="summary-content">
-                  <span className="summary-label">{t('summary_training')}</span>
-                  <span className="summary-value">{profile.trainingDays.length}{t('summary_per_week')}</span>
-                </div>
-              </div>
-            )}
-            {profile.sports.length > 0 && (
-              <div className="summary-item">
-                <Icon name="busket-ball" className="summary-icon" />
-                <div className="summary-content">
-                  <span className="summary-label">{t('summary_sports')}</span>
-                  <span className="summary-value">{profile.sports.length} {profile.sports.length === 1 ? t('summary_sport') : t('summary_sports_plural')}</span>
-                </div>
-              </div>
-            )}
-            <div className="summary-item">
-              <Icon name="bar-chart-4" className="summary-icon" />
-              <div className="summary-content">
-                <span className="summary-label">{t('summary_weight')}</span>
-                <span className="summary-value">{profile.currentWeight}kg → {profile.targetWeight}kg</span>
+              <span className="time-separator">-</span>
+              <div className="time-input-group">
+                <span className="time-label">{t('step_office_end')}</span>
+                <input
+                  type="time"
+                  value={profile.officeEnd}
+                  onChange={(e) => updateProfile('officeEnd', e.target.value)}
+                  className="input-field"
+                />
               </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {profile.officeDaysCount === 0 && (
+          <div className="remote-badge">
+            <Icon name="home-2" />
+            <span>{t('step_office_remote')}</span>
+          </div>
+        )}
       </div>
 
       <div className="step-actions">
-        <button type="button" className="btn-secondary" onClick={onBack}><Icon name="arrow-left-1" /> {t('back')}</button>
-        <button type="button" className="btn-primary btn-finish" onClick={onNext}>{t('create_routine')} <Icon name="star-fat" /></button>
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function GoalsStep({ t, profile, toggleGoal, errors, onNext, onBack }) {
+  const goals = [
+    { id: 'muscle_gain', icon: 'dumbbell-1', label: t('step_goals_muscle') },
+    { id: 'fat_loss', icon: 'fire-1', label: t('step_goals_fat_loss') },
+    { id: 'health', icon: 'heart', label: t('step_goals_health') },
+    { id: 'energy', icon: 'bolt-alt', label: t('step_goals_energy') },
+    { id: 'strength', icon: 'shield-1', label: t('step_goals_strength') },
+    { id: 'flexibility', icon: 'leaf-1', label: t('step_goals_flexibility') },
+    { id: 'endurance', icon: 'timer-1', label: t('step_goals_endurance') },
+    { id: 'sleep', icon: 'moon-half-right-5', label: t('step_goals_sleep') },
+  ];
+
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="target-4" className="step-icon" />
+        </div>
+        <h2>{t('step_goals_title')}</h2>
+        <p>{t('step_goals_desc')}</p>
+      </div>
+
+      <div className="form-section">
+        <div className="goals-grid">
+          {goals.map(goal => (
+            <button
+              key={goal.id}
+              type="button"
+              className={`goal-chip ${profile.goals.includes(goal.id) ? 'selected' : ''}`}
+              onClick={() => toggleGoal(goal.id)}
+            >
+              <Icon name={goal.icon} className="goal-chip-icon" />
+              <span>{goal.label}</span>
+            </button>
+          ))}
+        </div>
+        {errors.goals && <span className="error-text">{errors.goals}</span>}
+      </div>
+
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PhysicalDataStep({ t, profile, updateProfile, onBack, onFinish }) {
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="bar-chart-4" className="step-icon" />
+        </div>
+        <h2>{t('step_physical_title')}</h2>
+        <p>{t('step_physical_desc')}</p>
+      </div>
+
+      <div className="form-section">
+        <div className="input-group">
+          <label>{t('step_physical_weight')} <span className="label-optional">{t('optional')}</span></label>
+          <input
+            type="number"
+            value={profile.weight}
+            onChange={(e) => updateProfile('weight', e.target.value)}
+            placeholder="Ex: 72"
+            className="input-field"
+            step="0.1"
+          />
+        </div>
+
+        <div className="input-group">
+          <label>{t('step_physical_height')} <span className="label-optional">{t('optional')}</span></label>
+          <input
+            type="number"
+            value={profile.height}
+            onChange={(e) => updateProfile('height', e.target.value)}
+            placeholder="Ex: 178"
+            className="input-field"
+          />
+        </div>
+
+        <div className="input-group">
+          <label>{t('step_physical_bodyfat')} <span className="label-optional">{t('optional')}</span></label>
+          <input
+            type="number"
+            value={profile.bodyFatPercent}
+            onChange={(e) => updateProfile('bodyFatPercent', e.target.value)}
+            placeholder="Ex: 18"
+            className="input-field"
+            step="0.1"
+          />
+        </div>
+
+        <p className="skip-hint">
+          <Icon name="information-circle-1" />
+          {t('step_physical_skip_hint')}
+        </p>
+      </div>
+
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary btn-finish" onClick={onFinish}>
+          {t('create_routine')} <Icon name="star-fat" />
+        </button>
       </div>
     </div>
   );
@@ -871,8 +745,8 @@ function GeneratingStep({ t }) {
         <div className="spinner-ring"></div>
         <div className="generating-icons">
           <Icon name="calendar-days" className="gen-icon" />
-          <Icon name="dumbbell-1" className="gen-icon" />
-          <Icon name="knife-fork-1" className="gen-icon" />
+          <Icon name="timer-1" className="gen-icon" />
+          <Icon name="checkmark-1" className="gen-icon" />
         </div>
       </div>
       <h2>{t('generating_title')}</h2>
@@ -885,4 +759,213 @@ function GeneratingStep({ t }) {
       </div>
     </div>
   );
+}
+
+// ==================== SCHEDULE GENERATION ====================
+
+function generateScheduleFromProfile(profile) {
+  const { wakeTime, sleepHours, lunchTime, dinnerTime, gymPreference, officeDaysCount, officeStart, officeEnd } = profile;
+
+  // Parse times
+  const [wakeH, wakeM] = wakeTime.split(':').map(Number);
+  const [lunchH, lunchM] = lunchTime.split(':').map(Number);
+  const [dinnerH, dinnerM] = dinnerTime.split(':').map(Number);
+
+  // Calculate sleep time
+  let sleepH = wakeH - sleepHours;
+  if (sleepH < 0) sleepH += 24;
+
+  // Calculate wind-down time (1h before sleep)
+  let windDownH = sleepH - 1;
+  if (windDownH < 0) windDownH += 24;
+
+  // Helper to format time
+  const formatTime = (h, m = 0, approximate = false) => {
+    const prefix = approximate ? '~' : '';
+    return `${prefix}${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+  };
+
+  // Helper to add minutes to time
+  const addMinutes = (h, m, mins) => {
+    const totalMins = h * 60 + m + mins;
+    return [Math.floor(totalMins / 60) % 24, totalMins % 60];
+  };
+
+  // Generate blocks for a day type
+  const generateDayBlocks = (isWeekday, isOfficeDay) => {
+    const blocks = [];
+    const approx = !isWeekday; // Weekend times are approximate
+
+    // 1. Wake up
+    blocks.push({
+      time: formatTime(wakeH, wakeM, approx),
+      icon: 'sun-1',
+      label: { 'pt-BR': 'Acordar', 'en': 'Wake up' },
+      sub: { 'pt-BR': 'Novo dia, novas conquistas', 'en': 'New day, new achievements' },
+      type: 'morning'
+    });
+
+    // 2. Morning ritual
+    const [ritualH, ritualM] = addMinutes(wakeH, wakeM, 15);
+    blocks.push({
+      time: formatTime(ritualH, ritualM, approx),
+      icon: 'coffee-cup-2',
+      label: { 'pt-BR': 'Rotina matinal', 'en': 'Morning routine' },
+      sub: { 'pt-BR': 'Café, alongamento', 'en': 'Coffee, stretching' },
+      type: 'morning'
+    });
+
+    // 3. Gym (if morning preference)
+    if (gymPreference === 'morning') {
+      const [gymH, gymM] = addMinutes(wakeH, wakeM, 45);
+      blocks.push({
+        time: formatTime(gymH, gymM, approx),
+        icon: 'dumbbell-1',
+        label: { 'pt-BR': 'Academia', 'en': 'Gym' },
+        sub: { 'pt-BR': '60-75 min de treino', 'en': '60-75 min workout' },
+        type: 'gym',
+        tag: 'gym'
+      });
+    }
+
+    // 4. Breakfast
+    const breakfastOffset = gymPreference === 'morning' ? 120 : 45;
+    const [breakfastH, breakfastM] = addMinutes(wakeH, wakeM, breakfastOffset);
+    blocks.push({
+      time: formatTime(breakfastH, breakfastM, approx),
+      icon: 'knife-fork-1',
+      label: { 'pt-BR': 'Café da manhã', 'en': 'Breakfast' },
+      sub: { 'pt-BR': 'Refeição completa', 'en': 'Full meal' },
+      type: 'food'
+    });
+
+    // 5. Work (if weekday)
+    if (isWeekday) {
+      if (isOfficeDay && officeDaysCount > 0) {
+        const [startH, startM] = officeStart.split(':').map(Number);
+        blocks.push({
+          time: formatTime(startH, startM),
+          icon: 'briefcase-1',
+          label: { 'pt-BR': 'Escritório', 'en': 'Office' },
+          sub: { 'pt-BR': 'Foco no trabalho', 'en': 'Focus on work' },
+          type: 'work',
+          tag: 'office'
+        });
+      } else {
+        blocks.push({
+          time: '09:00',
+          icon: 'laptop-2',
+          label: { 'pt-BR': 'Trabalho', 'en': 'Work' },
+          sub: { 'pt-BR': 'Bloco de foco', 'en': 'Focus block' },
+          type: 'work'
+        });
+      }
+    }
+
+    // 6. Lunch
+    blocks.push({
+      time: formatTime(lunchH, lunchM, approx),
+      icon: 'knife-fork-1',
+      label: { 'pt-BR': 'Almoço', 'en': 'Lunch' },
+      sub: { 'pt-BR': 'Pausa pra comer bem', 'en': 'Eat well break' },
+      type: 'food'
+    });
+
+    // 7. Afternoon work (if weekday)
+    if (isWeekday) {
+      const [afternoonH] = addMinutes(lunchH, lunchM, 60);
+      blocks.push({
+        time: formatTime(afternoonH, 0),
+        icon: 'laptop-2',
+        label: { 'pt-BR': 'Trabalho — tarde', 'en': 'Work — afternoon' },
+        sub: { 'pt-BR': 'Finalizar tarefas', 'en': 'Finish tasks' },
+        type: 'work'
+      });
+
+      // End of work
+      if (isOfficeDay && officeDaysCount > 0) {
+        const [endH, endM] = officeEnd.split(':').map(Number);
+        blocks.push({
+          time: formatTime(endH, endM),
+          icon: 'locked-1',
+          label: { 'pt-BR': 'Fechar trabalho', 'en': 'End work' },
+          sub: { 'pt-BR': 'Acabou por hoje', 'en': 'Done for today' },
+          type: 'work'
+        });
+      } else {
+        blocks.push({
+          time: '17:00',
+          icon: 'locked-1',
+          label: { 'pt-BR': 'Fechar trabalho', 'en': 'End work' },
+          sub: { 'pt-BR': 'Acabou por hoje', 'en': 'Done for today' },
+          type: 'work'
+        });
+      }
+    }
+
+    // 8. Gym (if evening preference)
+    if (gymPreference === 'evening') {
+      blocks.push({
+        time: formatTime(18, 0, approx),
+        icon: 'dumbbell-1',
+        label: { 'pt-BR': 'Academia', 'en': 'Gym' },
+        sub: { 'pt-BR': '60-75 min de treino', 'en': '60-75 min workout' },
+        type: 'gym',
+        tag: 'gym'
+      });
+    }
+
+    // 9. Free time
+    if (gymPreference !== 'evening' || !isWeekday) {
+      blocks.push({
+        time: formatTime(18, 30, approx),
+        icon: 'book-1',
+        label: { 'pt-BR': 'Tempo livre', 'en': 'Free time' },
+        sub: { 'pt-BR': 'Hobbies, descanso', 'en': 'Hobbies, rest' },
+        type: 'free'
+      });
+    }
+
+    // 10. Dinner
+    blocks.push({
+      time: formatTime(dinnerH, dinnerM, approx),
+      icon: 'knife-fork-1',
+      label: { 'pt-BR': 'Jantar', 'en': 'Dinner' },
+      sub: { 'pt-BR': 'Refeição nutritiva', 'en': 'Nutritious meal' },
+      type: 'food'
+    });
+
+    // 11. Wind down
+    blocks.push({
+      time: formatTime(windDownH, 0, approx),
+      icon: 'moon-half-right-5',
+      label: { 'pt-BR': 'Relaxar', 'en': 'Wind down' },
+      sub: { 'pt-BR': 'Preparar pra dormir', 'en': 'Prepare for sleep' },
+      type: 'sleep'
+    });
+
+    // 12. Sleep
+    blocks.push({
+      time: formatTime(sleepH, wakeM, approx),
+      icon: 'moon-half-right-5',
+      label: { 'pt-BR': 'Dormir', 'en': 'Sleep' },
+      sub: { 'pt-BR': `${sleepHours}h de sono`, 'en': `${sleepHours}h of sleep` },
+      type: 'sleep'
+    });
+
+    return blocks;
+  };
+
+  // Generate schedule for each day
+  const schedule = {
+    'Seg': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 1) },
+    'Ter': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 2) },
+    'Qua': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 3) },
+    'Qui': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 4) },
+    'Sex': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 5) },
+    'Sáb': { type: 'weekend', blocks: generateDayBlocks(false, false) },
+    'Dom': { type: 'weekend', blocks: generateDayBlocks(false, false) },
+  };
+
+  return schedule;
 }
