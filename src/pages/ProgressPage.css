@@ -12,17 +12,67 @@
   }
 }
 
+/* Progress Header */
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .progress-header {
+    margin-bottom: var(--space-lg);
+  }
+}
+
 .progress-title {
   font-size: 1.4rem;
   color: var(--color-text);
-  margin-bottom: var(--space-md);
+  margin: 0;
 }
 
 @media (min-width: 480px) {
   .progress-title {
     font-size: 1.75rem;
-    margin-bottom: var(--space-lg);
   }
+}
+
+/* Mode Toggle */
+.mode-toggle {
+  display: flex;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+
+.mode-btn {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-dim);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+@media (min-width: 480px) {
+  .mode-btn {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.85rem;
+  }
+}
+
+.mode-btn.active {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.mode-btn:not(.active):hover {
+  color: var(--color-text);
 }
 
 /* Goal Section */
@@ -553,4 +603,304 @@
   .no-data p {
     font-size: 0.875rem;
   }
+}
+
+/* Recomposition Educational Card */
+.recomp-card {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: linear-gradient(135deg, rgba(107, 207, 255, 0.1), rgba(200, 153, 255, 0.05));
+  border: 1px solid rgba(107, 207, 255, 0.2);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .recomp-card {
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+}
+
+.recomp-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(107, 207, 255, 0.2);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  color: var(--color-blue);
+}
+
+.recomp-content h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 var(--space-xs);
+}
+
+@media (min-width: 480px) {
+  .recomp-content h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-sm);
+  }
+}
+
+.recomp-content p {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (min-width: 480px) {
+  .recomp-content p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Measurements Section */
+.measurements-section {
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .measurements-section {
+    margin-bottom: var(--space-lg);
+  }
+}
+
+.measurements-section h3 {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+@media (min-width: 480px) {
+  .measurements-section h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+  }
+}
+
+.measurements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+}
+
+@media (min-width: 400px) {
+  .measurements-grid {
+    gap: var(--space-md);
+  }
+}
+
+@media (min-width: 640px) {
+  .measurements-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Measurement Card */
+.measurement-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+}
+
+@media (min-width: 480px) {
+  .measurement-card {
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+  }
+}
+
+.measurement-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.measurement-icon {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.measurement-label {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+}
+
+@media (min-width: 480px) {
+  .measurement-label {
+    font-size: 0.75rem;
+  }
+}
+
+.measurement-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+@media (min-width: 480px) {
+  .measurement-value {
+    font-size: 1.5rem;
+  }
+}
+
+.measurement-delta {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: var(--space-xs);
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+@media (min-width: 480px) {
+  .measurement-delta {
+    font-size: 0.75rem;
+  }
+}
+
+.measurement-delta.positive {
+  color: var(--color-accent);
+}
+
+.measurement-delta.negative {
+  color: var(--color-red);
+}
+
+/* Body Fat Chart */
+.chart-section.bodyfat-chart {
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .chart-section.bodyfat-chart {
+    margin-top: var(--space-lg);
+  }
+}
+
+.bodyfat-no-data {
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .bodyfat-no-data {
+    margin-top: var(--space-lg);
+  }
+}
+
+/* Entry Form (Bottom Sheet) */
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.entry-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.entry-input-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.entry-input-group label .lni {
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+
+.entry-input-group input {
+  padding: var(--space-md);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  min-height: 48px;
+  transition: border-color var(--transition-fast);
+}
+
+.entry-input-group input:focus {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
+.entry-input-group input::placeholder {
+  color: var(--color-muted);
+}
+
+.entry-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-muted-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--space-sm);
+}
+
+.entry-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.entry-input-group.half {
+  width: 100%;
+}
+
+.entry-input-group.half input {
+  font-size: 1rem;
+}
+
+.entry-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-md);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  min-height: 48px;
+  margin-top: var(--space-sm);
+}
+
+.entry-submit:hover:not(:disabled) {
+  background-color: var(--color-accent-dim);
+}
+
+.entry-submit:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.entry-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
