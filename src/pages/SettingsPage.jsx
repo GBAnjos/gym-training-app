@@ -19,8 +19,8 @@ export function SettingsPage() {
     setShowResetConfirm(true);
   };
 
-  const confirmReset = () => {
-    resetOnboarding();
+  const confirmReset = async () => {
+    await resetOnboarding();
     setShowResetConfirm(false);
     window.location.reload();
   };

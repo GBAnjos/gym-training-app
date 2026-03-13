@@ -181,14 +181,30 @@ export function useOnboarding() {
   };
 
   // Reset onboarding (for settings menu)
-  const resetOnboarding = useCallback(() => {
+  const resetOnboarding = useCallback(async () => {
     const storageKey = getStorageKey();
+
+    // Clear localStorage
     if (storageKey) {
       localStorage.removeItem(storageKey);
     }
+    localStorage.removeItem(PROFILE_KEY);
+
+    // Update Supabase to mark onboarding as incomplete
+    if (user) {
+      try {
+        await supabase
+          .from('user_profiles')
+          .update({ onboarding_complete: false })
+          .eq('user_id', user.id);
+      } catch (err) {
+        console.error('Error resetting onboarding in Supabase:', err);
+      }
+    }
+
     setIsComplete(false);
     setUserProfile(null);
-  }, [getStorageKey]);
+  }, [getStorageKey, user]);
 
   // Update profile without full onboarding
   const updateProfile = async (profileData) => {
