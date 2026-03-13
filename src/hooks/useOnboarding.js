@@ -103,31 +103,41 @@ export function useOnboarding() {
     const storageKey = getStorageKey();
 
     try {
-      // Prepare data for Supabase (convert arrays to proper format)
+      // Prepare data for Supabase - support both old and new profile schemas
       const supabaseData = {
         user_id: user.id,
+        // New schema fields (Patch 01)
+        wake_time: profileData.wakeTime || null,
+        sleep_hours: profileData.sleepHours ? parseFloat(profileData.sleepHours) : null,
+        lunch_time: profileData.lunchTime || null,
+        dinner_time: profileData.dinnerTime || null,
+        gym_preference: profileData.gymPreference || null,
+        office_days_count: profileData.officeDaysCount != null ? parseInt(profileData.officeDaysCount) : null,
+        office_start: profileData.officeStart || null,
+        office_end: profileData.officeEnd || null,
+        goals: profileData.goals || [],
+        // Physical data (optional)
+        current_weight: profileData.weight ? parseFloat(profileData.weight) : null,
+        height: profileData.height ? parseFloat(profileData.height) : null,
+        body_fat_percent: profileData.bodyFatPercent ? parseFloat(profileData.bodyFatPercent) : null,
+        // Legacy fields for compatibility
         name: profileData.name || null,
         sex: profileData.sex || null,
         age: profileData.age ? parseInt(profileData.age) : null,
-        current_weight: profileData.currentWeight ? parseFloat(profileData.currentWeight) : null,
         target_weight: profileData.targetWeight ? parseFloat(profileData.targetWeight) : null,
-        height: profileData.height ? parseFloat(profileData.height) : null,
-        wake_up_time: profileData.wakeUpTime || null,
+        wake_up_time: profileData.wakeTime || profileData.wakeUpTime || null,
         sleep_time: profileData.sleepTime || null,
-        dinner_time: profileData.dinnerTime || null,
         office_days: profileData.officeDays || [],
-        goal: profileData.goal || null,
+        goal: profileData.goal || (profileData.goals && profileData.goals[0]) || null,
         fitness_level: profileData.fitnessLevel || null,
         training_days: profileData.trainingDays || [],
-        training_time: profileData.trainingTime || null,
+        training_time: profileData.gymPreference || profileData.trainingTime || null,
         dietary_restrictions: profileData.dietaryRestrictions || [],
         meal_prep: profileData.mealPrep,
-        // Lifestyle fields
         hobbies: profileData.hobbies || [],
         chores_frequency: profileData.choresFrequency || null,
         grocery_frequency: profileData.groceryFrequency || null,
         weekend_routine: profileData.weekendRoutine || null,
-        // Exercise type fields
         exercise_type: profileData.exerciseType || null,
         gym_type: profileData.gymType || [],
         sports: profileData.sports || [],
