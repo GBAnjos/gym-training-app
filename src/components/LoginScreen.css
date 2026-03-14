@@ -1,7 +1,13 @@
 .login-screen {
   position: fixed;
   inset: 0;
-  background-color: var(--color-bg);
+  background-color: var(--color-bg-primary);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(200, 245, 90, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(107, 207, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(200, 245, 90, 0.04) 0%, transparent 50%);
+  background-size: 100% 100%;
+  animation: gradientMesh 8s ease infinite;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,11 +23,25 @@
   text-align: center;
   width: 100%;
   max-width: 360px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+}
+
+@supports not (backdrop-filter: blur(24px)) {
+  .login-content {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-default);
+  }
 }
 
 @media (min-width: 480px) {
   .login-content {
     max-width: 400px;
+    padding: var(--space-2xl);
   }
 }
 
@@ -32,7 +52,7 @@
 
 .login-icon .lni {
   font-size: 3.5rem;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 @media (min-width: 480px) {
@@ -46,9 +66,9 @@
 }
 
 .login-title {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: 2.5rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-xs);
 }
 
@@ -59,7 +79,7 @@
 }
 
 .login-subtitle {
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-size: 1rem;
   margin-bottom: var(--space-xl);
 }
@@ -121,7 +141,7 @@
 }
 
 .login-note {
-  color: var(--color-muted-light);
+  color: var(--color-text-muted);
   font-size: 0.75rem;
   margin-top: var(--space-md);
 }
@@ -147,7 +167,7 @@
 }
 
 .tagline-text {
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
@@ -162,7 +182,7 @@
   display: inline-block;
   padding: var(--space-xs) var(--space-md);
   background-color: rgba(200, 245, 90, 0.15);
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 500;
