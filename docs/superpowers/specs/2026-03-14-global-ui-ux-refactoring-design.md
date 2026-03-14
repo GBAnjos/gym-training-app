@@ -218,6 +218,8 @@ Functional colors used by the schedule system. These are preserved and themed:
 
 **Light theme:** Same hue family but adapted for light backgrounds (darker/more saturated variants where needed for contrast).
 
+**Note:** These values are intentional remappings to the new primitive gray scale, not exact matches of the current hardcoded hex values (e.g., old `--color-work: #666` → new `var(--primitive-gray-500)` which is `#55556a`). The shift aligns block colors with the richer, blue-undertoned gray palette used throughout the new design system.
+
 ---
 
 ## 2. Theme Palettes
@@ -380,7 +382,17 @@ The hook registers a `matchMedia` change listener. If the user has NOT manually 
 
 ### 3.5 Provider Placement
 
-`ThemeProvider` is added to the provider chain in `App.jsx` as the outermost wrapper (before `LanguageProvider`), so theme context is available everywhere. `main.jsx` is NOT modified.
+`ThemeProvider` is added to the provider chain in `App.jsx` as the outermost wrapper. `main.jsx` is NOT modified. The full provider chain order becomes:
+
+```
+ThemeProvider          (NEW — outermost, no dependencies)
+  → LanguageProvider   (existing — no theme dependency)
+    → AuthProvider     (existing)
+      → ToastProvider  (existing)
+        → AppContent
+```
+
+This reorders the existing chain by placing ThemeProvider outside LanguageProvider. LanguageProvider has no dependency on theme context, so this is safe.
 
 ---
 
@@ -557,9 +569,33 @@ Shimmer keyframe definition (in `animations.css`):
 
 ---
 
-## 6. Utility Class Migration
+## 6. Token & Utility Class Migration Map
 
-Current utility classes in `index.css` are updated to reference new tokens:
+### 6.1 Core Token Renames
+
+These are the primary design token renames. During migration, old names are aliased to new values. Aliases are removed in the cleanup step.
+
+| Old Token | New Token | Notes |
+|---|---|---|
+| `--color-bg` | `--color-bg-primary` | Page background |
+| `--color-card` | `--color-bg-surface` | Card/container bg |
+| `--color-card-alt` | `--color-bg-elevated` | Elevated surface bg |
+| `--color-text` | `--color-text-primary` | Main text color |
+| `--color-text-dim` | `--color-text-secondary` | Supporting text |
+| `--color-muted` | `--color-border-default` | Was used for borders/muted UI |
+| `--color-muted-light` | `--color-text-muted` | Placeholder/disabled text |
+| `--color-border` | `--color-border-default` | Standard borders |
+| `--color-accent` | `--color-accent-primary` | Primary accent |
+| `--color-accent-dim` | `--color-accent-primary-hover` | Accent hover state |
+| `--color-red` | `--color-state-error` | Error/danger |
+| `--color-blue` | `--color-accent-secondary` | Secondary accent |
+| `--color-orange` | `--color-accent-warm` | Warm accent |
+| `--color-purple` | *(kept as primitive)* | `var(--primitive-purple-400)` |
+| `--font-heading` | `--font-display` | Display/heading font |
+| `--transition-fast` | Alias: `var(--duration-fast) var(--ease-default)` | Kept as alias during migration |
+| `--transition-normal` | Alias: `var(--duration-normal) var(--ease-default)` | Kept as alias during migration |
+
+### 6.2 Utility Class Updates
 
 | Old Class | Old Token | New Token |
 |---|---|---|
@@ -568,7 +604,7 @@ Current utility classes in `index.css` are updated to reference new tokens:
 | `.text-muted` | `--color-muted-light` | `--color-text-muted` |
 | `.bg-card` | `--color-card` | `--color-bg-surface` |
 | `.bg-card-alt` | `--color-card-alt` | `--color-bg-elevated` |
-| `.font-mono` | `--font-mono` | `--font-mono` (unchanged name) |
+| `.font-mono` | `--font-mono` | `--font-mono` (unchanged) |
 | `.font-heading` | `--font-heading` | `--font-display` |
 
 ---
