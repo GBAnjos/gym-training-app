@@ -1,0 +1,98 @@
+/* ============================================
+   VIDA ANIMATIONS
+   Keyframes, utility classes, glass effects
+   ============================================ */
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes flame {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradientMesh {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Utility classes */
+.animate-fade-in { animation: fadeIn var(--duration-normal) var(--ease-default); }
+.animate-slide-up { animation: slideUp var(--duration-normal) var(--ease-default); }
+.animate-slide-down { animation: slideDown var(--duration-normal) var(--ease-default); }
+.animate-pulse { animation: pulse 2s infinite; }
+.animate-flame { animation: flame 1s ease-in-out infinite; }
+.animate-scale-in { animation: scaleIn var(--duration-normal) var(--ease-bounce); }
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--color-bg-surface) 25%,
+    var(--color-bg-elevated) 50%,
+    var(--color-bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s var(--ease-default) infinite;
+  border-radius: var(--radius-md);
+}
+
+/* Hero-only: gradient mesh background */
+.gradient-mesh {
+  background: linear-gradient(-45deg,
+    var(--color-accent-primary),
+    var(--color-accent-secondary),
+    var(--color-accent-warm),
+    var(--color-accent-primary)
+  );
+  background-size: 400% 400%;
+  animation: gradientMesh 8s ease infinite;
+}
+
+/* Glass effect with fallback */
+.glass {
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+@supports not (backdrop-filter: blur(20px)) {
+  .glass {
+    background: var(--color-bg-elevated);
+    opacity: 0.95;
+  }
+}
