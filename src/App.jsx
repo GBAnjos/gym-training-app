@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { LanguageProvider } from './hooks/useLanguage.jsx';
+import { ThemeProvider } from './hooks/useTheme';
 import { ToastProvider } from './components/Toast';
 import { useOnboarding } from './hooks/useOnboarding';
 import { LoginScreen } from './components/LoginScreen';
@@ -77,13 +78,15 @@ function AppContent() {
 
 function App() {
   return (
-    <LanguageProvider>
-      <AuthProvider>
-        <ToastProvider>
-          <AppContent />
-        </ToastProvider>
-      </AuthProvider>
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
+        </AuthProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 
