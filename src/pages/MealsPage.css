@@ -39,7 +39,7 @@
 
 /* Daily Progress */
 .meals-progress {
-  background: var(--color-bg-surface);
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
@@ -103,7 +103,7 @@
 
 /* Meal Card */
 .meal-card {
-  background-color: var(--color-bg-surface);
+  background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   overflow: hidden;
