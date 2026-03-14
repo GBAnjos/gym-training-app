@@ -80,5 +80,5 @@
 }
 
 .toast--info .toast__icon {
-  color: var(--color-accent-secondary);
+  color: var(--color-text-primary);
 }
