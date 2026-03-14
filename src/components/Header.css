@@ -49,6 +49,7 @@
 
 .header-name {
   font-family: var(--font-display);
+  font-weight: 700;
   white-space: nowrap;
 }
 
