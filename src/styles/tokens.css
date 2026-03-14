@@ -155,34 +155,34 @@
 
 /* Layer 2: Light Theme */
 [data-theme="light"] {
-  --color-bg-primary: var(--primitive-gray-50);
-  --color-bg-surface: var(--primitive-gray-25);
+  --color-bg-primary: #f0f0ec;
+  --color-bg-surface: #f5f5f2;
   --color-bg-elevated: var(--primitive-white);
-  --color-bg-overlay: rgba(0, 0, 0, 0.3);
+  --color-bg-overlay: rgba(0, 0, 0, 0.4);
 
-  --color-text-primary: var(--primitive-gray-800);
-  --color-text-secondary: var(--primitive-gray-500);
-  --color-text-muted: var(--primitive-gray-400);
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-text-muted: #888888;
   --color-text-inverse: var(--primitive-gray-0);
 
-  --color-accent-primary: var(--primitive-lime-800);
-  --color-accent-primary-hover: var(--primitive-lime-700);
+  --color-accent-primary: #2d2d2d;
+  --color-accent-primary-hover: #1a1a1a;
   --color-accent-secondary: var(--primitive-blue-600);
   --color-accent-warm: var(--primitive-orange-600);
 
-  --color-border-default: rgba(0, 0, 0, 0.08);
-  --color-border-subtle: rgba(0, 0, 0, 0.04);
+  --color-border-default: rgba(0, 0, 0, 0.12);
+  --color-border-subtle: rgba(0, 0, 0, 0.06);
 
   --color-state-success: var(--primitive-green-600);
   --color-state-warning: var(--primitive-yellow-600);
   --color-state-error: var(--primitive-red-600);
 
-  --color-glass-bg: rgba(255, 255, 255, 0.65);
-  --color-glass-border: rgba(0, 0, 0, 0.05);
+  --color-glass-bg: rgba(240, 240, 236, 0.85);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
 
-  --elevation-1: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px var(--color-border-subtle);
-  --elevation-2: 0 4px 12px rgba(0,0,0,0.08), 0 0 0 1px var(--color-border-subtle);
-  --elevation-3: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px var(--color-border-subtle);
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --elevation-2: 0 4px 12px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.06);
+  --elevation-3: 0 12px 40px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.05);
 
   --color-morning: var(--primitive-orange-600);
   --color-gym: var(--primitive-lime-800);
