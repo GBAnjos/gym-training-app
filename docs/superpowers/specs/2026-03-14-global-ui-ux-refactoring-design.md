@@ -6,12 +6,12 @@ Vida is a premium, holistic life and sports companion app. The app already has a
 
 ## Approach
 
-**Design Token Overhaul (Approach A):** Rebuild CSS design tokens as a comprehensive 3-tier system with light/dark themes. Swap fonts. Upgrade component CSS files incrementally. No structural JSX rewrites — components keep their existing logic, only CSS evolves.
+**Design Token Overhaul (Approach A):** Rebuild CSS design tokens as a comprehensive 3-tier system with light/dark themes. Swap fonts. Upgrade component CSS files incrementally. Components keep their existing logic — changes are CSS-focused, with minimal JS changes limited to: ThemeProvider integration, theme toggle UI in Settings, and dynamic `<meta>` tag updates.
 
 ### Design Decisions (User-Approved)
 
 - **Theme default:** Match system preference → fallback to dark → user can override in Settings
-- **Typography:** Bold distinctive pairing — Sora (display) + Outfit (body) + JetBrains Mono (data). Replaces Inter + DM Serif Display.
+- **Typography:** Bold distinctive pairing — Sora (display/headings) + Outfit (body) + JetBrains Mono (data/stats). Replaces Inter + DM Serif Display.
 - **Visual intensity:** Mix approach — bold on hero moments (onboarding, generating screen, progress milestones), refined restraint on daily-use screens (schedule, meals, training). Premium without being exhausting.
 
 ---
@@ -20,141 +20,149 @@ Vida is a premium, holistic life and sports companion app. The app already has a
 
 ### 1.1 Three-Tier Token System
 
-**Layer 1 — Primitive Tokens** (raw values, never referenced by components):
+All tokens live in `src/styles/tokens.css`. Primitives are defined in `:root`. Semantic tokens are assigned values inside `[data-theme]` selectors. Component tokens are defined only when a component deviates from its semantic default.
+
+**Layer 1 — Primitive Tokens** (raw values, defined in `:root`, never referenced by components):
 ```css
-/* Grays */
---primitive-gray-950: #0e0e12;
---primitive-gray-900: #14141c;
---primitive-gray-800: #1a1a24;
---primitive-gray-700: #24243a;
---primitive-gray-600: #35354a;
---primitive-gray-500: #55556a;
---primitive-gray-400: #8a8a9a;
---primitive-gray-300: #ababba;
---primitive-gray-200: #d0d0da;
---primitive-gray-100: #e8e8ee;
---primitive-gray-50: #f5f5f0;
---primitive-gray-25: #fafaf8;
+:root {
+  /* Grays */
+  --primitive-gray-950: #0e0e12;
+  --primitive-gray-900: #14141c;
+  --primitive-gray-800: #1a1a24;
+  --primitive-gray-700: #24243a;
+  --primitive-gray-600: #35354a;
+  --primitive-gray-500: #55556a;
+  --primitive-gray-400: #8a8a9a;
+  --primitive-gray-300: #ababba;
+  --primitive-gray-200: #d0d0da;
+  --primitive-gray-100: #e8e8ee;
+  --primitive-gray-50: #f5f5f0;
+  --primitive-gray-25: #fafaf8;
+  --primitive-gray-0: #f0f0f5;
+  --primitive-white: #ffffff;
 
-/* Accents */
---primitive-lime-500: #c8f55a;
---primitive-lime-600: #a8d040;
---primitive-lime-700: #4a7a00;
---primitive-lime-800: #3d6b00;
---primitive-blue-400: #6bcfff;
---primitive-blue-600: #0077b6;
---primitive-orange-400: #ffb86c;
---primitive-orange-600: #d4850a;
+  /* Accents */
+  --primitive-lime-500: #c8f55a;
+  --primitive-lime-600: #a8d040;
+  --primitive-lime-700: #4a7a00;
+  --primitive-lime-800: #3d6b00;
+  --primitive-blue-400: #6bcfff;
+  --primitive-blue-600: #0077b6;
+  --primitive-orange-400: #ffb86c;
+  --primitive-orange-600: #d4850a;
+  --primitive-purple-400: #c899ff;
+  --primitive-purple-600: #8b5cf6;
 
-/* States */
---primitive-red-400: #ff6b6b;
---primitive-red-600: #cc3333;
---primitive-green-400: #69db7c;
---primitive-green-600: #2b8a3e;
---primitive-yellow-400: #ffd43b;
---primitive-yellow-600: #e67700;
+  /* States */
+  --primitive-red-400: #ff6b6b;
+  --primitive-red-600: #cc3333;
+  --primitive-green-400: #69db7c;
+  --primitive-green-600: #2b8a3e;
+  --primitive-yellow-400: #ffd43b;
+  --primitive-yellow-600: #e67700;
+}
 ```
 
-**Layer 2 — Semantic Tokens** (purpose-driven, what components reference):
-```css
-/* Backgrounds */
---color-bg-primary
---color-bg-surface
---color-bg-elevated
---color-bg-overlay
+**Layer 2 — Semantic Tokens** (purpose-driven, assigned inside `[data-theme]` selectors in section 2):
 
-/* Text */
---color-text-primary
---color-text-secondary
---color-text-muted
---color-text-inverse
+| Token | Purpose |
+|---|---|
+| `--color-bg-primary` | Page background |
+| `--color-bg-surface` | Cards, containers |
+| `--color-bg-elevated` | Modals, bottom sheets, dropdowns |
+| `--color-bg-overlay` | Backdrop behind modals |
+| `--color-text-primary` | Main body text |
+| `--color-text-secondary` | Supporting text, descriptions |
+| `--color-text-muted` | Disabled, placeholder text |
+| `--color-text-inverse` | Text on accent-colored backgrounds |
+| `--color-accent-primary` | Primary brand accent (lime) |
+| `--color-accent-primary-hover` | Accent hover state |
+| `--color-accent-secondary` | Secondary accent (blue) |
+| `--color-accent-warm` | Warm accent (orange) |
+| `--color-border-default` | Standard borders |
+| `--color-border-subtle` | Faint separators |
+| `--color-state-success` | Success indicators |
+| `--color-state-warning` | Warning indicators |
+| `--color-state-error` | Error indicators |
+| `--color-glass-bg` | Glassmorphism background |
+| `--color-glass-border` | Glassmorphism border |
 
-/* Accents */
---color-accent-primary
---color-accent-primary-hover
---color-accent-secondary
---color-accent-warm
+**Layer 3 — Component Tokens** (scoped overrides):
 
-/* Borders */
---color-border-default
---color-border-subtle
-
-/* States */
---color-state-success
---color-state-warning
---color-state-error
-
-/* Glass */
---color-glass-bg
---color-glass-border
-```
-
-**Layer 3 — Component Tokens** (scoped overrides, only when a component deviates from semantic):
-```css
---button-bg
---button-text
---button-border
---card-bg
---card-border
---input-bg
---input-border
---input-focus-ring
---nav-bg
---nav-active
---nav-inactive
-```
+Component tokens do NOT exist by default. They are created only when a specific component needs to deviate from its semantic token. For example, if BottomNav needs a different bg than `--color-bg-surface`, define `--nav-bg` locally in the component's CSS. Until that need arises, components use semantic tokens directly.
 
 ### 1.2 Spacing Scale (4px base)
 
-```css
---space-1: 0.25rem;    /* 4px */
---space-2: 0.5rem;     /* 8px */
---space-3: 0.75rem;    /* 12px */
---space-4: 1rem;       /* 16px */
---space-6: 1.5rem;     /* 24px */
---space-8: 2rem;       /* 32px */
---space-10: 2.5rem;    /* 40px */
---space-12: 3rem;      /* 48px */
---space-16: 4rem;      /* 64px */
-```
+New numeric naming coexists with old named tokens during migration. Mapping:
+
+| New Token | Value | Old Token (alias) |
+|---|---|---|
+| `--space-1` | 0.25rem (4px) | `--space-xs` |
+| `--space-2` | 0.5rem (8px) | `--space-sm` |
+| `--space-3` | 0.75rem (12px) | *(new)* |
+| `--space-4` | 1rem (16px) | `--space-md` |
+| `--space-6` | 1.5rem (24px) | `--space-lg` |
+| `--space-8` | 2rem (32px) | `--space-xl` |
+| `--space-10` | 2.5rem (40px) | *(new)* |
+| `--space-12` | 3rem (48px) | `--space-2xl` |
+| `--space-16` | 4rem (64px) | *(new)* |
+
+During migration, old token names are aliased to new values (e.g., `--space-xs: var(--space-1)`). Old aliases are removed in the cleanup step.
 
 ### 1.3 Typography Scale (~1.25 ratio)
 
-| Token | Size | Line Height | Weight | Use |
-|---|---|---|---|---|
-| `--text-xs` | 0.75rem | 1.5 | 400 | Captions, badges |
-| `--text-sm` | 0.875rem | 1.5 | 400 | Secondary text, labels |
-| `--text-base` | 1rem | 1.6 | 400 | Body text |
-| `--text-lg` | 1.125rem | 1.5 | 500 | Emphasized body |
-| `--text-xl` | 1.25rem | 1.4 | 600 | Section headers |
-| `--text-2xl` | 1.5rem | 1.3 | 600 | Page titles |
-| `--text-3xl` | 1.875rem | 1.2 | 700 | Hero headings |
-| `--text-display` | 2.25rem | 1.1 | 700 | Onboarding/splash |
+| Token | Size | Line Height | Weight | Font | Use |
+|---|---|---|---|---|---|
+| `--text-xs` | 0.75rem | 1.5 | 400 | Outfit | Captions, badges |
+| `--text-sm` | 0.875rem | 1.5 | 400 | Outfit | Secondary text, labels |
+| `--text-base` | 1rem | 1.6 | 400 | Outfit | Body text |
+| `--text-lg` | 1.125rem | 1.5 | 500 | Outfit | Emphasized body |
+| `--text-xl` | 1.25rem | 1.4 | 600 | Sora | Section headers |
+| `--text-2xl` | 1.5rem | 1.3 | 600 | Sora | Page titles |
+| `--text-3xl` | 1.875rem | 1.2 | 700 | Sora | Hero headings |
+| `--text-display` | 2.25rem | 1.1 | 700 | Sora | Onboarding/splash |
 
-**Font stacks:**
-- Display: `'Sora', sans-serif`
-- Body: `'Outfit', sans-serif`
-- Mono: `'JetBrains Mono', monospace`
+**Font stacks (CSS variables):**
+```css
+--font-display: 'Sora', sans-serif;
+--font-body: 'Outfit', sans-serif;
+--font-mono: 'JetBrains Mono', monospace;
+```
+
+**Font assignment rule:** `h1`-`h4` and any element with size `--text-xl` or larger uses `--font-display`. Everything else uses `--font-body`. Numeric data/stats use `--font-mono`.
+
+**Font loading:** Replace the existing `@import` in `index.css` with `<link>` tags in `index.html` for non-blocking loading:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+```
+Remove the old `@import url(...)` line from `index.css`.
 
 ### 1.4 Border Radius Scale
 
+Unchanged from current codebase except for one addition:
 ```css
---radius-sm: 6px;
---radius-md: 12px;
---radius-lg: 16px;
---radius-xl: 24px;
---radius-full: 9999px;
+--radius-sm: 6px;    /* existing */
+--radius-md: 12px;   /* existing */
+--radius-lg: 16px;   /* existing */
+--radius-xl: 24px;   /* existing */
+--radius-full: 9999px;  /* NEW — for pills, circles */
 ```
 
 ### 1.5 Elevation System
 
+Elevation tokens are defined **inside** `[data-theme]` selectors (not globally) since they differ per theme:
+
+**Dark theme:**
 ```css
-/* Dark theme */
 --elevation-1: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px var(--color-border-subtle);
 --elevation-2: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px var(--color-border-subtle);
 --elevation-3: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--color-border-subtle);
+```
 
-/* Light theme */
+**Light theme:**
+```css
 --elevation-1: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px var(--color-border-subtle);
 --elevation-2: 0 4px 12px rgba(0,0,0,0.08), 0 0 0 1px var(--color-border-subtle);
 --elevation-3: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px var(--color-border-subtle);
@@ -172,40 +180,98 @@ Vida is a premium, holistic life and sports companion app. The app already has a
 --ease-out: cubic-bezier(0, 0, 0.2, 1);
 ```
 
+Transition aliases for migration compatibility:
+```css
+--transition-fast: var(--duration-fast) var(--ease-default);
+--transition-normal: var(--duration-normal) var(--ease-default);
+```
+
 Daily screens use `--duration-fast` / `--duration-normal`. Hero moments use `--duration-slow` / `--duration-dramatic` with `--ease-bounce`.
+
+### 1.7 Z-Index Scale
+
+```css
+--z-base: 0;
+--z-sticky: 100;       /* sticky headers */
+--z-nav: 200;           /* bottom nav */
+--z-overlay: 300;       /* modal backdrop */
+--z-modal: 400;         /* bottom sheet, modals */
+--z-toast: 500;         /* toast notifications */
+```
+
+### 1.8 Schedule Block Colors
+
+Functional colors used by the schedule system. These are preserved and themed:
+
+**Dark theme:**
+```css
+--color-morning: var(--primitive-orange-400);   /* #ffb86c */
+--color-gym: var(--primitive-lime-500);          /* #c8f55a */
+--color-food: var(--primitive-blue-400);         /* #6bcfff */
+--color-work: var(--primitive-gray-500);         /* #55556a */
+--color-free: var(--primitive-purple-400);       /* #c899ff */
+--color-sleep: var(--primitive-gray-700);        /* #24243a */
+--color-chore: var(--primitive-gray-400);        /* #8a8a9a */
+--color-social: var(--primitive-red-400);        /* #ff6b6b */
+--color-flex: var(--primitive-gray-300);         /* #ababba */
+```
+
+**Light theme:** Same hue family but adapted for light backgrounds (darker/more saturated variants where needed for contrast).
 
 ---
 
 ## 2. Theme Palettes
 
-### 2.1 Dark Theme (Default)
+### 2.1 Dark Theme (Default fallback)
 
 ```css
 [data-theme="dark"], :root {
+  /* Backgrounds */
   --color-bg-primary: var(--primitive-gray-950);     /* #0e0e12 */
   --color-bg-surface: var(--primitive-gray-800);      /* #1a1a24 */
   --color-bg-elevated: var(--primitive-gray-700);     /* #24243a */
   --color-bg-overlay: rgba(0, 0, 0, 0.6);
 
-  --color-text-primary: #f0f0f5;
+  /* Text */
+  --color-text-primary: var(--primitive-gray-0);      /* #f0f0f5 */
   --color-text-secondary: var(--primitive-gray-400);  /* #8a8a9a */
   --color-text-muted: var(--primitive-gray-500);      /* #55556a */
-  --color-text-inverse: var(--primitive-gray-950);
+  --color-text-inverse: var(--primitive-gray-950);    /* #0e0e12 */
 
+  /* Accents */
   --color-accent-primary: var(--primitive-lime-500);  /* #c8f55a */
   --color-accent-primary-hover: var(--primitive-lime-600);
   --color-accent-secondary: var(--primitive-blue-400);
   --color-accent-warm: var(--primitive-orange-400);
 
+  /* Borders */
   --color-border-default: rgba(255, 255, 255, 0.08);
   --color-border-subtle: rgba(255, 255, 255, 0.04);
 
+  /* States */
   --color-state-success: var(--primitive-green-400);
   --color-state-warning: var(--primitive-yellow-400);
   --color-state-error: var(--primitive-red-400);
 
+  /* Glass */
   --color-glass-bg: rgba(255, 255, 255, 0.04);
   --color-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Elevations */
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px var(--color-border-subtle);
+  --elevation-2: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px var(--color-border-subtle);
+  --elevation-3: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--color-border-subtle);
+
+  /* Schedule blocks */
+  --color-morning: var(--primitive-orange-400);
+  --color-gym: var(--primitive-lime-500);
+  --color-food: var(--primitive-blue-400);
+  --color-work: var(--primitive-gray-500);
+  --color-free: var(--primitive-purple-400);
+  --color-sleep: var(--primitive-gray-700);
+  --color-chore: var(--primitive-gray-400);
+  --color-social: var(--primitive-red-400);
+  --color-flex: var(--primitive-gray-300);
 }
 ```
 
@@ -213,91 +279,176 @@ Daily screens use `--duration-fast` / `--duration-normal`. Hero moments use `--d
 
 ```css
 [data-theme="light"] {
+  /* Backgrounds */
   --color-bg-primary: var(--primitive-gray-50);       /* #f5f5f0 */
   --color-bg-surface: var(--primitive-gray-25);        /* #fafaf8 */
-  --color-bg-elevated: #ffffff;
+  --color-bg-elevated: var(--primitive-white);         /* #ffffff */
   --color-bg-overlay: rgba(0, 0, 0, 0.3);
 
+  /* Text */
   --color-text-primary: var(--primitive-gray-800);    /* #1a1a24 */
-  --color-text-secondary: #6a6a7a;
-  --color-text-muted: #9a9aaa;
-  --color-text-inverse: #f0f0f5;
+  --color-text-secondary: var(--primitive-gray-500);  /* #55556a */
+  --color-text-muted: var(--primitive-gray-400);      /* #8a8a9a */
+  --color-text-inverse: var(--primitive-gray-0);      /* #f0f0f5 */
 
+  /* Accents */
   --color-accent-primary: var(--primitive-lime-800);  /* #3d6b00 */
   --color-accent-primary-hover: var(--primitive-lime-700);
   --color-accent-secondary: var(--primitive-blue-600);
   --color-accent-warm: var(--primitive-orange-600);
 
+  /* Borders */
   --color-border-default: rgba(0, 0, 0, 0.08);
   --color-border-subtle: rgba(0, 0, 0, 0.04);
 
+  /* States */
   --color-state-success: var(--primitive-green-600);
   --color-state-warning: var(--primitive-yellow-600);
   --color-state-error: var(--primitive-red-600);
 
+  /* Glass */
   --color-glass-bg: rgba(255, 255, 255, 0.65);
   --color-glass-border: rgba(0, 0, 0, 0.05);
+
+  /* Elevations */
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px var(--color-border-subtle);
+  --elevation-2: 0 4px 12px rgba(0,0,0,0.08), 0 0 0 1px var(--color-border-subtle);
+  --elevation-3: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px var(--color-border-subtle);
+
+  /* Schedule blocks — same hues, adjusted for light bg contrast */
+  --color-morning: var(--primitive-orange-600);
+  --color-gym: var(--primitive-lime-800);
+  --color-food: var(--primitive-blue-600);
+  --color-work: var(--primitive-gray-400);
+  --color-free: var(--primitive-purple-600);
+  --color-sleep: var(--primitive-gray-200);
+  --color-chore: var(--primitive-gray-500);
+  --color-social: var(--primitive-red-600);
+  --color-flex: var(--primitive-gray-400);
 }
 ```
 
-### 2.3 Theme Switch Transition
+### 2.3 Theme Accessibility Notes
 
-```css
-html[data-theme] {
-  transition: background-color 0.3s var(--ease-default),
-              color 0.2s var(--ease-default);
-}
-```
+Contrast ratios to verify during implementation (WCAG AA minimum 4.5:1 for text):
+- `--color-text-muted` on `--color-bg-primary` (both themes)
+- `--color-accent-primary` as text on `--color-bg-primary` (light theme: `#3d6b00` on `#f5f5f0`)
+- `--color-accent-primary` as text on `--color-bg-surface` (both themes)
+
+If any fail AA, adjust the primitive value. The accent colors are fine for large text (3:1 ratio) and decorative use regardless.
 
 ---
 
-## 3. Component Pattern Upgrades
+## 3. useTheme Hook API
 
-### 3.1 Buttons
+### 3.1 Interface
+
+```typescript
+const { theme, setTheme, toggleTheme, isDark } = useTheme()
+```
+
+| Property | Type | Description |
+|---|---|---|
+| `theme` | `'dark' \| 'light'` | Current active theme |
+| `setTheme` | `(theme: string) => void` | Set specific theme |
+| `toggleTheme` | `() => void` | Toggle between dark/light |
+| `isDark` | `boolean` | Convenience flag |
+
+### 3.2 Initialization Logic
+
+```
+1. Check localStorage key 'vida_theme'
+2. If found → use that value
+3. If not found → check window.matchMedia('(prefers-color-scheme: dark)')
+   - If matches dark → 'dark'
+   - If matches light → 'light'
+   - If matchMedia unavailable → 'dark' (fallback)
+4. Apply to document: document.documentElement.setAttribute('data-theme', theme)
+5. Update <meta name="theme-color"> to match bg-primary
+6. Update <meta name="color-scheme"> to match theme
+```
+
+### 3.3 System Preference Listener
+
+The hook registers a `matchMedia` change listener. If the user has NOT manually set a preference (no `vida_theme` in localStorage), theme updates live when system preference changes.
+
+### 3.4 Persistence
+
+- **localStorage key:** `vida_theme`
+- **Values:** `'dark'` | `'light'`
+- **Not synced to Supabase** — theme is device-local, not account-level.
+
+### 3.5 Provider Placement
+
+`ThemeProvider` is added to the provider chain in `App.jsx` as the outermost wrapper (before `LanguageProvider`), so theme context is available everywhere. `main.jsx` is NOT modified.
+
+---
+
+## 4. Component Pattern Upgrades
+
+### 4.1 Buttons
 
 - **Primary:** Solid `--color-accent-primary` fill, `--color-text-inverse` text, `--radius-md`, `--elevation-2` on hover. Press: `scale(0.97)` with `--duration-fast`.
 - **Secondary/Ghost:** Transparent bg, accent border, accent text. Hover: fills `rgba(accent, 0.1)`.
 - **Icon button:** `--radius-full`, glass bg (dark) / surface bg (light).
 - **All:** `--duration-fast` transitions, `focus-visible` ring using `--color-accent-primary` with 3px offset.
 
-### 3.2 Cards & Containers
+### 4.2 Cards & Containers
 
 - **Standard Card:** `--color-bg-surface`, `--radius-lg`, `--elevation-1`, `--color-border-subtle` 1px border. Interactive cards lift to `--elevation-2` on hover.
-- **Glass Card (hero only):** `--color-glass-bg` + `backdrop-filter: blur(20px)`, `--color-glass-border`. Used in onboarding, generating screen, progress highlights.
+- **Glass Card (hero only):** `--color-glass-bg` + `backdrop-filter: blur(20px)`, `--color-glass-border`. Fallback for unsupported browsers: solid `--color-bg-elevated` with 0.85 opacity (no blur). Used in onboarding, generating screen, progress highlights.
 - **Stat Card:** Compact, accent-colored top border (2px), mono font for numbers.
 
-### 3.3 Form Inputs
+### 4.3 Form Inputs
 
 - **Text/Time:** `--color-bg-elevated` fill, `--radius-md`, `--color-border-default`. Focus: border → `--color-accent-primary` + glow `box-shadow: 0 0 0 3px rgba(accent, 0.15)`.
 - **Sliders:** Custom track (`--color-border-subtle`), filled portion uses accent. Thumb: solid accent circle, `--elevation-2`.
 - **Multi-select chips:** `--radius-full`, ghost default, accent fill on selection + checkmark. Staggered entrance on step load.
 - **Day counter:** Large touch targets, accent highlight on active number.
 
-### 3.4 Navigation
+### 4.4 Navigation
 
-- **Bottom Nav:** Glass bg (dark: `backdrop-filter: blur(24px)`, light: semi-transparent surface). Active: accent icon + label + dot indicator. Inactive: `--color-text-muted`.
-- **Header:** Minimal — display font (Sora), avatar with glass bg. No heavy background.
+- **Bottom Nav:** Glass bg (dark: `backdrop-filter: blur(24px)`, light: semi-transparent surface). `backdrop-filter` fallback: solid `--color-bg-surface` with 0.95 opacity. Active: accent icon + label + dot indicator. Inactive: `--color-text-muted`. `z-index: var(--z-nav)`.
+- **Header:** Minimal — display font (Sora), avatar with glass bg. No heavy background. `z-index: var(--z-sticky)`.
 
-### 3.5 Bottom Sheet & Modals
+### 4.5 Bottom Sheet & Modals
 
-Glass bg (`--color-bg-elevated` + blur overlay). `--radius-xl` top corners. Drag handle pill at top center. Enter: slide up `--ease-out` `--duration-normal`. Exit: faster slide down.
+Glass bg (`--color-bg-elevated` + blur overlay at `var(--z-overlay)`). Sheet at `var(--z-modal)`. `--radius-xl` top corners. Drag handle pill at top center. Enter: slide up `--ease-out` `--duration-normal`. Exit: faster slide down.
 
-### 3.6 Toast Notifications
+### 4.6 Toast Notifications
 
-Pill shape (`--radius-full`), top-center. State colors for bg. Entrance: fade + slide down. Auto-dismiss with shrinking accent progress bar.
+Pill shape (`--radius-full`), top-center. `z-index: var(--z-toast)`. State colors for bg. Entrance: fade + slide down. Auto-dismiss with shrinking accent progress bar.
 
-### 3.7 Charts (Progress Page)
+### 4.7 Charts (Progress Page)
 
 - Grid lines: `--color-border-subtle`
 - Data: accent gradient fills
 - Tooltips: glass card style
 - Labels: Outfit, `--color-text-secondary`
 
-### 3.8 Loading & Skeleton States
+### 4.8 Loading & Skeleton States
 
-Shimmer gradient animation: `--color-bg-surface` → `--color-bg-elevated` → `--color-bg-surface`. Applied via `.skeleton` CSS class.
+Shimmer keyframe definition (in `animations.css`):
+```css
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
 
-### 3.9 Onboarding Hero Moments
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-surface) 25%,
+    var(--color-bg-elevated) 50%,
+    var(--color-bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s var(--ease-default) infinite;
+  border-radius: var(--radius-md);
+}
+```
+
+### 4.9 Onboarding Hero Moments
 
 - **Step transitions:** Crossfade + slight vertical slide
 - **Welcome screen:** Animated gradient mesh background, display font, accent glow
@@ -306,52 +457,182 @@ Shimmer gradient animation: `--color-bg-surface` → `--color-bg-elevated` → `
 
 ---
 
-## 4. Migration Strategy
+## 5. Animations File Contents (`src/styles/animations.css`)
 
-### 4.1 File Changes
+```css
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-**New files:**
-- `src/styles/tokens.css` — all 3 token layers
-- `src/styles/animations.css` — motion tokens + reusable keyframes
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes flame {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradientMesh {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Utility classes */
+.animate-fade-in { animation: fadeIn var(--duration-normal) var(--ease-default); }
+.animate-slide-up { animation: slideUp var(--duration-normal) var(--ease-default); }
+.animate-slide-down { animation: slideDown var(--duration-normal) var(--ease-default); }
+.animate-pulse { animation: pulse 2s infinite; }
+.animate-flame { animation: flame 1s ease-in-out infinite; }
+.animate-scale-in { animation: scaleIn var(--duration-normal) var(--ease-bounce); }
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--color-bg-surface) 25%,
+    var(--color-bg-elevated) 50%,
+    var(--color-bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s var(--ease-default) infinite;
+  border-radius: var(--radius-md);
+}
+
+/* Hero-only: gradient mesh background */
+.gradient-mesh {
+  background: linear-gradient(-45deg,
+    var(--color-accent-primary),
+    var(--color-accent-secondary),
+    var(--color-accent-warm),
+    var(--color-accent-primary)
+  );
+  background-size: 400% 400%;
+  animation: gradientMesh 8s ease infinite;
+}
+
+/* Glass effect with fallback */
+.glass {
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+@supports not (backdrop-filter: blur(20px)) {
+  .glass {
+    background: var(--color-bg-elevated);
+    opacity: 0.95;
+  }
+}
+```
+
+---
+
+## 6. Utility Class Migration
+
+Current utility classes in `index.css` are updated to reference new tokens:
+
+| Old Class | Old Token | New Token |
+|---|---|---|
+| `.text-accent` | `--color-accent` | `--color-accent-primary` |
+| `.text-dim` | `--color-text-dim` | `--color-text-secondary` |
+| `.text-muted` | `--color-muted-light` | `--color-text-muted` |
+| `.bg-card` | `--color-card` | `--color-bg-surface` |
+| `.bg-card-alt` | `--color-card-alt` | `--color-bg-elevated` |
+| `.font-mono` | `--font-mono` | `--font-mono` (unchanged name) |
+| `.font-heading` | `--font-heading` | `--font-display` |
+
+---
+
+## 7. Migration Strategy
+
+### 7.1 File Changes
+
+**New files (3):**
+- `src/styles/tokens.css` — all 3 token layers + theme palettes
+- `src/styles/animations.css` — motion tokens + keyframes + utility classes
 - `src/hooks/useTheme.jsx` — ThemeProvider + context + hook
 
-**Modified files (CSS only, no logic changes):**
-- `src/index.css` — strip old tokens, import new token files, keep reset/base
-- `src/main.jsx` — wrap with ThemeProvider
-- `src/App.jsx` — add ThemeProvider to provider chain
-- `index.html` — Google Fonts link (Sora, Outfit, JetBrains Mono)
-- `src/components/Header.jsx` + `.css`
-- `src/components/BottomNav.jsx` + `.css`
-- `src/components/Toast.jsx` + `.css`
-- `src/components/BottomSheet.jsx` + `.css`
-- `src/components/LoadingScreen.jsx` + `.css`
-- `src/components/LoginScreen.jsx` + `.css`
-- `src/components/OnboardingFlow.jsx` + `.css`
-- `src/pages/SchedulePage.jsx` + `.css`
-- `src/pages/MealsPage.jsx` + `.css`
-- `src/pages/TrainingPage.jsx` + `.css`
-- `src/pages/ProgressPage.jsx` + `.css`
-- `src/pages/SettingsPage.jsx` + `.css`
+**Modified files — JS changes (3):**
+- `src/App.jsx` — wrap provider chain with `ThemeProvider` (outermost)
+- `src/pages/SettingsPage.jsx` — add theme toggle UI (dark/light/system)
+- `index.html` — replace font loading, update meta tags
+
+**Modified files — CSS migration (all existing `.css` files):**
+- `src/index.css` — remove old tokens (moved to `tokens.css`), remove old `@import`, remove old animations (moved to `animations.css`), keep reset/base styles, add `@import` for new files
+- `src/App.css`
+- `src/components/Header.css`
+- `src/components/BottomNav.css`
+- `src/components/Toast.css`
+- `src/components/BottomSheet.css`
+- `src/components/LoadingScreen.css`
+- `src/components/LoginScreen.css`
+- `src/components/OnboardingFlow.css`
+- `src/components/ExerciseMedia.css`
+- `src/components/VideoPlayerModal.css`
+- `src/pages/SchedulePage.css`
+- `src/pages/MealsPage.css`
+- `src/pages/TrainingPage.css`
+- `src/pages/ProgressPage.css`
+- `src/pages/SettingsPage.css`
 
 **Untouched:**
-- All hooks (except adding useTheme)
+- `src/components/Icon.jsx` (no CSS, just a wrapper)
+- All hooks except adding `useTheme`
 - `src/data/*`
 - `src/services/*`
 - `supabase/*`
 
-### 4.2 Migration Order
+### 7.2 Migration Order
 
-1. **Tokens** — Create `tokens.css` + `animations.css`, import in `index.css`. Old and new tokens coexist.
-2. **Fonts** — Add Sora/Outfit/JetBrains Mono to `index.html`, update font-family variables.
-3. **Theme hook** — Create `useTheme.jsx`, add `ThemeProvider` to `main.jsx`. Dark matches current look.
-4. **Base components** — Migrate Header, BottomNav, Toast, BottomSheet, LoadingScreen to new tokens.
-5. **Page CSS** — Update each page's CSS. Add theme toggle to Settings.
-6. **Login & Onboarding** — Hero moment upgrades: glass cards, enhanced animations, generating screen.
-7. **Cleanup** — Remove old token definitions, verify no hardcoded colors remain.
+1. **Tokens + Animations** — Create `src/styles/tokens.css` and `src/styles/animations.css`. Import them in `index.css`. Old and new tokens coexist side by side.
 
-### 4.3 Risk Mitigation
+2. **Fonts** — Update `index.html` with `<link>` tags for Sora, Outfit, JetBrains Mono (with preconnect). Remove old `@import` from `index.css`. Update `--font-heading` → `--font-display`, `--font-body`, `--font-mono` to new stacks.
 
-- No structural JSX changes — only CSS and className additions.
-- Token coexistence — old variables remain until each component migrates.
-- One component at a time — app stays deployable after each step.
-- Theme fallback — `:root` level dark tokens ensure app looks correct even if hook fails.
+3. **Theme hook** — Create `useTheme.jsx`. Add `ThemeProvider` to `App.jsx` provider chain (outermost). Default dark theme matches current look — no visual change.
+
+4. **Base components** — Migrate Header, BottomNav, Toast, BottomSheet, LoadingScreen CSS to new tokens. These are shared, so upgrading them lifts everything.
+
+5. **Page CSS** — Update each page's CSS. Add theme toggle to SettingsPage (dark/light/system selector).
+
+6. **Login & Onboarding** — Hero moment upgrades: glass cards, enhanced animations, generating screen drama. Also migrate ExerciseMedia.css, VideoPlayerModal.css.
+
+7. **Cleanup** — Remove old token definitions from `index.css`. Update utility classes. Remove old `--transition-*` aliases. Verify no hardcoded colors remain. Remove old spacing aliases.
+
+### 7.3 Risk Mitigation
+
+- Token coexistence — old variables remain until each component is migrated, preventing unstyled flashes.
+- One component at a time — app stays deployable after each migration step.
+- Theme fallback — `:root` selector includes dark theme values, so even without the hook the app looks correct.
+- `backdrop-filter` fallback — solid backgrounds provided for browsers without blur support.
+- Font `display=swap` — prevents invisible text during font loading.
+- No structural JSX changes — component logic stays untouched. JS changes are limited to ThemeProvider wiring and a theme toggle in Settings.
