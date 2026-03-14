@@ -65,8 +65,11 @@ export const OBS_TRANSLATIONS = {
   'Explosivo na subida': { 'pt-BR': 'Explosivo na subida', 'en': 'Explosive on the way up' },
 };
 
-export const TREINOS = {
-  "segunda": {
+// ==================== SPLIT-BASED WORKOUT CATALOG ====================
+
+// PPL (Push/Pull/Legs) — 5 or 6 day split
+export const PPL_WORKOUTS = {
+  "Push": {
     "nome": { "pt-BR": "Push A", "en": "Push A" },
     "grupos": ["Peito", "Ombros", "Tríceps"],
     "exercicios": [
@@ -78,8 +81,7 @@ export const TREINOS = {
       { "id": "triceps_corda", "nome": "Tríceps corda", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Tríceps"] }
     ]
   },
-
-  "terca": {
+  "Pull": {
     "nome": { "pt-BR": "Pull A", "en": "Pull A" },
     "grupos": ["Costas", "Bíceps"],
     "exercicios": [
@@ -91,8 +93,7 @@ export const TREINOS = {
       { "id": "rosca_martelo", "nome": "Rosca martelo", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Bíceps"] }
     ]
   },
-
-  "quarta": {
+  "Legs": {
     "nome": { "pt-BR": "Legs A", "en": "Legs A" },
     "grupos": ["Quadríceps", "Glúteos", "Panturrilhas"],
     "exercicios": [
@@ -104,8 +105,7 @@ export const TREINOS = {
       { "id": "panturrilha_pe", "nome": "Panturrilha em pé", "series": "4", "reps": "15–20", "obs": "", "musculos": ["Panturrilhas"] }
     ]
   },
-
-  "quinta": {
+  "Push+": {
     "nome": { "pt-BR": "Push B", "en": "Push B" },
     "grupos": ["Peito", "Ombros", "Tríceps"],
     "exercicios": [
@@ -117,8 +117,7 @@ export const TREINOS = {
       { "id": "triceps_overhead", "nome": "Extensão de tríceps overhead", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Tríceps"] }
     ]
   },
-
-  "sexta": {
+  "Pull+": {
     "nome": { "pt-BR": "Pull B", "en": "Pull B" },
     "grupos": ["Costas", "Bíceps", "Trapézio"],
     "exercicios": [
@@ -130,8 +129,7 @@ export const TREINOS = {
       { "id": "rosca_scott", "nome": "Rosca Scott", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Bíceps"] }
     ]
   },
-
-  "sabado": {
+  "Legs+": {
     "nome": { "pt-BR": "Legs B", "en": "Legs B" },
     "grupos": ["Posterior", "Glúteos", "Panturrilhas"],
     "exercicios": [
@@ -145,6 +143,66 @@ export const TREINOS = {
   }
 };
 
+// Upper/Lower — 4 day split
+export const UPPER_LOWER_WORKOUTS = {
+  "Upper": {
+    "nome": { "pt-BR": "Upper A", "en": "Upper A" },
+    "grupos": ["Peito", "Costas", "Ombros", "Bíceps", "Tríceps"],
+    "exercicios": [
+      { "id": "supino_reto", "nome": "Supino reto com barra", "series": "4", "reps": "6–8", "obs": "Carga pesada", "musculos": ["Peito"] },
+      { "id": "remada_curvada", "nome": "Remada curvada com barra", "series": "4", "reps": "6–8", "obs": "", "musculos": ["Costas"] },
+      { "id": "desenvolvimento_militar", "nome": "Desenvolvimento militar", "series": "3", "reps": "8–10", "obs": "", "musculos": ["Ombros"] },
+      { "id": "barra_fixa", "nome": "Barra fixa / Pulldown", "series": "3", "reps": "8–10", "obs": "", "musculos": ["Costas"] },
+      { "id": "rosca_direta", "nome": "Rosca direta com barra", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Bíceps"] },
+      { "id": "triceps_corda", "nome": "Tríceps corda", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Tríceps"] }
+    ]
+  },
+  "Lower": {
+    "nome": { "pt-BR": "Lower A", "en": "Lower A" },
+    "grupos": ["Quadríceps", "Posterior", "Glúteos", "Panturrilhas"],
+    "exercicios": [
+      { "id": "agachamento", "nome": "Agachamento livre", "series": "4", "reps": "6–8", "obs": "Carga pesada", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "stiff", "nome": "Stiff", "series": "4", "reps": "8–10", "obs": "", "musculos": ["Posterior", "Glúteos"] },
+      { "id": "leg_press", "nome": "Leg press", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "mesa_flexora", "nome": "Mesa flexora", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Posterior"] },
+      { "id": "extensora", "nome": "Extensora", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Quadríceps"] },
+      { "id": "panturrilha_pe", "nome": "Panturrilha em pé", "series": "4", "reps": "15–20", "obs": "", "musculos": ["Panturrilhas"] }
+    ]
+  }
+};
+
+// Full Body — 3 day split
+export const FULL_BODY_WORKOUTS = {
+  "Full Body": {
+    "nome": { "pt-BR": "Full Body", "en": "Full Body" },
+    "grupos": ["Peito", "Costas", "Quadríceps", "Ombros"],
+    "exercicios": [
+      { "id": "agachamento", "nome": "Agachamento livre", "series": "4", "reps": "6–8", "obs": "Carga pesada", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "supino_reto", "nome": "Supino reto com barra", "series": "4", "reps": "6–8", "obs": "", "musculos": ["Peito"] },
+      { "id": "remada_curvada", "nome": "Remada curvada com barra", "series": "4", "reps": "8–10", "obs": "", "musculos": ["Costas"] },
+      { "id": "desenvolvimento_militar", "nome": "Desenvolvimento militar", "series": "3", "reps": "8–10", "obs": "", "musculos": ["Ombros"] },
+      { "id": "rosca_direta", "nome": "Rosca direta com barra", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Bíceps"] },
+      { "id": "triceps_corda", "nome": "Tríceps corda", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Tríceps"] }
+    ]
+  }
+};
+
+// Lookup workout by split name
+export function getWorkoutBySplit(splitName) {
+  return PPL_WORKOUTS[splitName] || UPPER_LOWER_WORKOUTS[splitName] || FULL_BODY_WORKOUTS[splitName] || null;
+}
+
+// ==================== LEGACY DAY-BASED MAPPING (default PPL) ====================
+
+export const TREINOS = {
+  "segunda": PPL_WORKOUTS["Push"],
+  "terca": PPL_WORKOUTS["Pull"],
+  "quarta": PPL_WORKOUTS["Legs"],
+  "quinta": PPL_WORKOUTS["Push+"],
+  "sexta": PPL_WORKOUTS["Pull+"],
+  "sabado": PPL_WORKOUTS["Legs+"]
+};
+
 export const DAY_MAP = {
   "domingo": "domingo",
   "segunda-feira": "segunda",
@@ -153,6 +211,17 @@ export const DAY_MAP = {
   "quinta-feira": "quinta",
   "sexta-feira": "sexta",
   "sábado": "sabado"
+};
+
+// Map schedule day keys (Seg, Ter...) to legacy treinos keys
+export const SCHEDULE_TO_TREINO_DAY = {
+  'Seg': 'segunda',
+  'Ter': 'terca',
+  'Qua': 'quarta',
+  'Qui': 'quinta',
+  'Sex': 'sexta',
+  'Sáb': 'sabado',
+  'Dom': 'domingo'
 };
 
 export const TRAINING_DAYS = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];

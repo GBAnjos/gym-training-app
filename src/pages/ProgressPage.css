@@ -904,3 +904,147 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ===== Weekly Insights ===== */
+.weekly-insights {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+@media (min-width: 480px) {
+  .weekly-insights {
+    padding: var(--space-lg);
+    margin-bottom: var(--space-lg);
+  }
+}
+
+.insights-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.insights-header .insights-icon {
+  font-size: 1.1rem;
+  color: var(--color-accent-primary);
+}
+
+.insights-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.insights-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.insight-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.insight-progress-ring {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 480px) {
+  .insight-progress-ring {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-bg {
+  fill: none;
+  stroke: var(--color-bg-primary);
+  stroke-width: 3;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: var(--color-accent-primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.6s ease;
+}
+
+.ring-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 480px) {
+  .ring-value {
+    font-size: 0.85rem;
+  }
+}
+
+.insight-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.insight-split {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (min-width: 480px) {
+  .insight-split {
+    font-size: 0.75rem;
+  }
+}
+
+.insight-message {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+@media (min-width: 480px) {
+  .insight-message {
+    font-size: 0.9rem;
+  }
+}
+
+.insight-streak {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  margin-top: 4px;
+}
+
+.insight-streak .lni {
+  font-size: 0.8rem;
+}
