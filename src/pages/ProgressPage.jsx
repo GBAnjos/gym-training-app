@@ -360,6 +360,13 @@ export function ProgressPage() {
         </div>
       </div>
 
+      {/* Weekly Insights */}
+      <WeeklyInsights
+        thisWeekCount={thisWeekCount}
+        streak={streak}
+        language={language}
+      />
+
       {/* Weight Chart */}
       {weightLog.length > 0 && (
         <div className="chart-section">
@@ -497,6 +504,101 @@ export function ProgressPage() {
           </button>
         </div>
       </BottomSheet>
+    </div>
+  );
+}
+
+// Weekly Insights Component
+function WeeklyInsights({ thisWeekCount, streak, language }) {
+  // Load workout plan to know planned days
+  const workoutPlan = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('vida_workout_plan');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return null;
+  }, []);
+
+  const plannedDays = workoutPlan?.trainingDays?.length || 5;
+  const splitType = workoutPlan?.splitType || 'PPL';
+  const adherence = plannedDays > 0 ? Math.min(Math.round((thisWeekCount / plannedDays) * 100), 100) : 0;
+
+  // Generate insight message
+  const getInsight = () => {
+    if (thisWeekCount === 0) {
+      return language === 'pt-BR'
+        ? 'Semana começando — hora de fazer acontecer!'
+        : 'Week is starting — time to make it happen!';
+    }
+    if (thisWeekCount >= plannedDays) {
+      return language === 'pt-BR'
+        ? 'Semana completa! Você é consistência pura.'
+        : 'Week complete! You\'re pure consistency.';
+    }
+    if (adherence >= 60) {
+      const remaining = plannedDays - thisWeekCount;
+      return language === 'pt-BR'
+        ? `Bom ritmo! Falta${remaining === 1 ? '' : 'm'} ${remaining} treino${remaining === 1 ? '' : 's'} pra fechar a semana.`
+        : `Good pace! ${remaining} workout${remaining === 1 ? '' : 's'} left to close the week.`;
+    }
+    return language === 'pt-BR'
+      ? 'Ainda dá tempo de recuperar o ritmo essa semana.'
+      : 'Still time to get back on track this week.';
+  };
+
+  const getStreakMessage = () => {
+    if (streak === 0) return null;
+    if (streak >= 7) {
+      return language === 'pt-BR'
+        ? `${streak} dias seguidos treinando — animal!`
+        : `${streak} consecutive days training — beast!`;
+    }
+    if (streak >= 3) {
+      return language === 'pt-BR'
+        ? `${streak} dias de sequência — mantém!`
+        : `${streak} day streak — keep it up!`;
+    }
+    return null;
+  };
+
+  const streakMsg = getStreakMessage();
+
+  return (
+    <div className="weekly-insights">
+      <div className="insights-header">
+        <Icon name="bar-chart-4" className="insights-icon" />
+        <h3>{language === 'pt-BR' ? 'Resumo da Semana' : 'Weekly Summary'}</h3>
+      </div>
+
+      <div className="insights-body">
+        <div className="insight-row">
+          <div className="insight-progress-ring">
+            <svg viewBox="0 0 36 36" className="ring-svg">
+              <path
+                className="ring-bg"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="ring-fill"
+                strokeDasharray={`${adherence}, 100`}
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <span className="ring-value">{thisWeekCount}/{plannedDays}</span>
+          </div>
+          <div className="insight-text">
+            <span className="insight-split">
+              {language === 'pt-BR' ? 'Plano' : 'Plan'}: {splitType} · {plannedDays}x/{language === 'pt-BR' ? 'semana' : 'week'}
+            </span>
+            <p className="insight-message">{getInsight()}</p>
+            {streakMsg && (
+              <p className="insight-streak">
+                <Icon name="fire-1" /> {streakMsg}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

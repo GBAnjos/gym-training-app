@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { TREINOS, DAY_MAP, TRAINING_DAYS, getExerciseName, getMuscle, getObs, getWorkoutName } from '../data/treinos';
+import { useState, useEffect, useMemo } from 'react';
+import { TREINOS, DAY_MAP, TRAINING_DAYS, SCHEDULE_TO_TREINO_DAY, getExerciseName, getMuscle, getObs, getWorkoutName, getWorkoutBySplit } from '../data/treinos';
 import { muscleColors } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
 import { useLanguage } from '../hooks/useLanguage';
@@ -8,18 +8,64 @@ import { ExerciseMedia } from '../components/ExerciseMedia';
 import { Icon } from '../components/Icon';
 import './TrainingPage.css';
 
+// Load workout plan from localStorage
+function useWorkoutPlan() {
+  return useMemo(() => {
+    try {
+      const raw = localStorage.getItem('vida_workout_plan');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {
+      console.error('Error loading workout plan:', e);
+    }
+    return null;
+  }, []);
+}
+
+// Map schedule days to workouts based on workout plan
+function buildTrainingMap(plan) {
+  if (!plan || !plan.split || !plan.trainingDays) return null;
+  const map = {};
+  plan.split.forEach((splitEntry, i) => {
+    const scheduleDay = plan.trainingDays[i];
+    const treinoKey = SCHEDULE_TO_TREINO_DAY[scheduleDay];
+    if (!treinoKey) return;
+    const workout = getWorkoutBySplit(splitEntry.name);
+    if (workout) {
+      map[treinoKey] = {
+        ...workout,
+        nome: {
+          'pt-BR': `Dia ${splitEntry.label}: ${splitEntry.name}`,
+          'en': `Day ${splitEntry.label}: ${splitEntry.name}`
+        }
+      };
+    }
+  });
+  return map;
+}
+
+function getActiveDays(plan) {
+  if (!plan || !plan.trainingDays) return TRAINING_DAYS;
+  return plan.trainingDays.map(d => SCHEDULE_TO_TREINO_DAY[d]).filter(Boolean);
+}
+
 export function TrainingPage() {
   const { t, language } = useLanguage();
   const toast = useToast();
+  const workoutPlan = useWorkoutPlan();
+  const trainingMap = useMemo(() => buildTrainingMap(workoutPlan), [workoutPlan]);
+  const activeDays = useMemo(() => getActiveDays(workoutPlan), [workoutPlan]);
+
   const [selectedDay, setSelectedDay] = useState(() => {
     const today = new Date().toLocaleDateString("pt-BR", { weekday: "long" });
-    return DAY_MAP[today] || 'segunda';
+    const todayKey = DAY_MAP[today] || 'segunda';
+    const days = workoutPlan ? getActiveDays(workoutPlan) : TRAINING_DAYS;
+    return days.includes(todayKey) ? todayKey : days[0];
   });
   const [timerSeconds, setTimerSeconds] = useState(null);
   const [timerActive, setTimerActive] = useState(false);
   const { debouncedSync } = useDataSync();
 
-  const treino = TREINOS[selectedDay];
+  const treino = (trainingMap && trainingMap[selectedDay]) || TREINOS[selectedDay];
 
   // Timer logic
   useEffect(() => {
@@ -105,7 +151,7 @@ export function TrainingPage() {
     <div className="training-page">
       {/* Day Selector */}
       <div className="training-day-selector">
-        {TRAINING_DAYS.map(day => (
+        {activeDays.map(day => (
           <button
             key={day}
             className={`training-day-btn ${selectedDay === day ? 'active' : ''}`}

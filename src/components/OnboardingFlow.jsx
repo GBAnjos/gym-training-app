@@ -886,8 +886,74 @@ function GeneratingStep({ t }) {
 
 // ==================== SCHEDULE GENERATION ====================
 
+// Determine training split based on goals
+function getTrainingSplit(goals) {
+  const hasMusclGain = goals.includes('muscle_gain');
+  const hasWeightLoss = goals.includes('weight_loss');
+
+  if (hasMusclGain) {
+    // 5-day PPL for muscle gain
+    return {
+      type: 'PPL',
+      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+      split: [
+        { label: 'A', name: 'Push', focus: { 'pt-BR': 'Peito, Ombro, Tríceps', 'en': 'Chest, Shoulder, Triceps' }, icon: '💪' },
+        { label: 'B', name: 'Pull', focus: { 'pt-BR': 'Costas, Bíceps', 'en': 'Back, Biceps' }, icon: '🔙' },
+        { label: 'C', name: 'Legs', focus: { 'pt-BR': 'Quadríceps, Glúteo, Posterior', 'en': 'Quads, Glutes, Hamstrings' }, icon: '🦵' },
+        { label: 'D', name: 'Push+', focus: { 'pt-BR': 'Ombro foco, Tríceps', 'en': 'Shoulder focus, Triceps' }, icon: '🔥' },
+        { label: 'E', name: 'Pull+', focus: { 'pt-BR': 'Costas largura, Bíceps', 'en': 'Back width, Biceps' }, icon: '⚡' },
+      ]
+    };
+  } else if (hasWeightLoss) {
+    // 4-day Upper/Lower for weight loss
+    return {
+      type: 'Upper/Lower',
+      days: ['Seg', 'Ter', 'Qui', 'Sex'],
+      split: [
+        { label: 'A', name: 'Upper', focus: { 'pt-BR': 'Peito, Costas, Ombros, Braços', 'en': 'Chest, Back, Shoulders, Arms' }, icon: '💪' },
+        { label: 'B', name: 'Lower', focus: { 'pt-BR': 'Quadríceps, Posterior, Glúteos', 'en': 'Quads, Hamstrings, Glutes' }, icon: '🦵' },
+        { label: 'C', name: 'Upper', focus: { 'pt-BR': 'Peito, Costas, Ombros, Braços', 'en': 'Chest, Back, Shoulders, Arms' }, icon: '💪' },
+        { label: 'D', name: 'Lower', focus: { 'pt-BR': 'Quadríceps, Posterior, Glúteos', 'en': 'Quads, Hamstrings, Glutes' }, icon: '🦵' },
+      ]
+    };
+  } else {
+    // 3-day Full Body for maintain/general
+    return {
+      type: 'Full Body',
+      days: ['Seg', 'Qua', 'Sex'],
+      split: [
+        { label: 'A', name: 'Full Body', focus: { 'pt-BR': 'Corpo Inteiro', 'en': 'Full Body' }, icon: '💪' },
+        { label: 'B', name: 'Full Body', focus: { 'pt-BR': 'Corpo Inteiro', 'en': 'Full Body' }, icon: '💪' },
+        { label: 'C', name: 'Full Body', focus: { 'pt-BR': 'Corpo Inteiro', 'en': 'Full Body' }, icon: '💪' },
+      ]
+    };
+  }
+}
+
+// Per-day motivational wake-up subs
+const WAKE_SUBS = {
+  'Seg': { 'pt-BR': 'Semana começa agora. Bora.', 'en': 'Week starts now. Let\'s go.' },
+  'Ter': { 'pt-BR': 'Segundo dia — mantém o ritmo.', 'en': 'Day two — keep the rhythm.' },
+  'Qua': { 'pt-BR': 'Metade da semana — tá no caminho.', 'en': 'Halfway — you\'re on track.' },
+  'Qui': { 'pt-BR': 'Quase lá. Foco mais um dia.', 'en': 'Almost there. One more focused day.' },
+  'Sex': { 'pt-BR': 'Sexta. A semana é sua agora.', 'en': 'Friday. The week is yours now.' },
+  'Sáb': { 'pt-BR': 'Sem alarme. Descansa.', 'en': 'No alarm. Rest up.' },
+  'Dom': { 'pt-BR': 'Sem pressa. É domingo.', 'en': 'No rush. It\'s Sunday.' },
+};
+
+// Per-day dinner subs (varied)
+const DINNER_SUBS = {
+  'Seg': { 'pt-BR': 'Proteína + carboidrato + legume', 'en': 'Protein + carb + veggies' },
+  'Ter': { 'pt-BR': 'Salmão, ovo ou frango — varia', 'en': 'Salmon, egg or chicken — vary it' },
+  'Qua': { 'pt-BR': 'Carne vermelha ou leguminosa', 'en': 'Red meat or legumes tonight' },
+  'Qui': { 'pt-BR': 'Peru, atum, frango — come com calma', 'en': 'Turkey, tuna, chicken — eat calmly' },
+  'Sex': { 'pt-BR': 'Algo gostoso. Não precisa ser perfeito.', 'en': 'Something tasty. Doesn\'t need to be perfect.' },
+  'Sáb': { 'pt-BR': 'Mais solto — entrega, restaurante, o que vier', 'en': 'More relaxed — delivery, restaurant, whatever' },
+  'Dom': { 'pt-BR': 'Comida da semana pronta — usa ela', 'en': 'Week food is ready — use it' },
+};
+
 function generateScheduleFromProfile(profile) {
-  const { wakeTime, sleepHours, lunchTime, dinnerTime, gymPreference, officeDaysCount, officeStart, officeEnd } = profile;
+  const { wakeTime, sleepHours, lunchTime, dinnerTime, gymPreference, officeDaysCount, officeStart, officeEnd, goals } = profile;
 
   // Parse times
   const [wakeH, wakeM] = wakeTime.split(':').map(Number);
@@ -902,75 +968,117 @@ function generateScheduleFromProfile(profile) {
   let windDownH = sleepH - 1;
   if (windDownH < 0) windDownH += 24;
 
-  // Helper to format time
   const formatTime = (h, m = 0, approximate = false) => {
     const prefix = approximate ? '~' : '';
     return `${prefix}${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
   };
 
-  // Helper to add minutes to time
   const addMinutes = (h, m, mins) => {
     const totalMins = h * 60 + m + mins;
     return [Math.floor(totalMins / 60) % 24, totalMins % 60];
   };
 
-  // Generate blocks for a day type
-  const generateDayBlocks = (isWeekday, isOfficeDay) => {
-    const blocks = [];
-    const approx = !isWeekday; // Weekend times are approximate
+  // Get workout split based on goals
+  const trainingSplit = getTrainingSplit(goals || []);
+  const trainingDaySet = new Set(trainingSplit.days);
 
-    // 1. Wake up
+  // Build a map of day → split info
+  const daySplitMap = {};
+  trainingSplit.days.forEach((day, i) => {
+    daySplitMap[day] = trainingSplit.split[i];
+  });
+
+  // Goal-aware helpers
+  const hasWeightLoss = (goals || []).includes('weight_loss');
+  const hasMusclGain = (goals || []).includes('muscle_gain');
+
+  // Office days: assign by count (Mon first, then Tue, etc.)
+  const weekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
+  const officeDaySet = new Set(weekdays.slice(0, officeDaysCount || 0));
+
+  const allDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
+  const schedule = {};
+
+  allDays.forEach(day => {
+    const isWeekend = day === 'Sáb' || day === 'Dom';
+    const isWeekday = !isWeekend;
+    const isFriday = day === 'Sex';
+    const isSunday = day === 'Dom';
+    const isSaturday = day === 'Sáb';
+    const isOfficeDay = officeDaySet.has(day);
+    const isTrainingDay = trainingDaySet.has(day);
+    const splitInfo = daySplitMap[day];
+    const approx = isWeekend;
+
+    const blocks = [];
+
+    // 1. Wake up (varied per day)
+    const wakeUpH = isWeekend ? wakeH + 1 : wakeH;
+    const wakeUpM = isWeekend ? 0 : wakeM;
     blocks.push({
-      time: formatTime(wakeH, wakeM, approx),
+      time: formatTime(wakeUpH, wakeUpM, approx),
       icon: 'sun-1',
-      label: { 'pt-BR': 'Acordar', 'en': 'Wake up' },
-      sub: { 'pt-BR': 'Novo dia, novas conquistas', 'en': 'New day, new achievements' },
+      label: { 'pt-BR': isWeekend ? 'Acorda no seu tempo' : 'Acordar', 'en': isWeekend ? 'Wake up at your pace' : 'Wake up' },
+      sub: WAKE_SUBS[day],
       type: 'morning'
     });
 
     // 2. Morning ritual
-    const [ritualH, ritualM] = addMinutes(wakeH, wakeM, 15);
+    const [ritualH, ritualM] = addMinutes(wakeUpH, wakeUpM, 15);
     blocks.push({
       time: formatTime(ritualH, ritualM, approx),
       icon: 'coffee-cup-2',
       label: { 'pt-BR': 'Rotina matinal', 'en': 'Morning routine' },
-      sub: { 'pt-BR': 'Café, alongamento', 'en': 'Coffee, stretching' },
+      sub: { 'pt-BR': 'Café, alongamento, intenção do dia', 'en': 'Coffee, stretching, set intention' },
       type: 'morning'
     });
 
-    // 3. Gym (if morning preference)
-    if (gymPreference === 'morning') {
-      const [gymH, gymM] = addMinutes(wakeH, wakeM, 45);
+    // 3. Morning gym (with split info)
+    const isMorningGym = isTrainingDay && (gymPreference === 'morning' || (gymPreference === 'flexible' && !isOfficeDay));
+    if (isMorningGym && splitInfo) {
+      const [gymH, gymM] = addMinutes(wakeUpH, wakeUpM, 45);
+      const focusPt = splitInfo.focus['pt-BR'];
+      const focusEn = splitInfo.focus['en'];
       blocks.push({
         time: formatTime(gymH, gymM, approx),
         icon: 'dumbbell-1',
         label: { 'pt-BR': 'Academia', 'en': 'Gym' },
-        sub: { 'pt-BR': '60-75 min de treino', 'en': '60-75 min workout' },
+        sub: {
+          'pt-BR': `60–75 min · Dia ${splitInfo.label}: ${splitInfo.name} (${focusPt})`,
+          'en': `60–75 min · Day ${splitInfo.label}: ${splitInfo.name} (${focusEn})`
+        },
         type: 'gym',
         tag: 'gym'
       });
     }
 
     // 4. Breakfast
-    const breakfastOffset = gymPreference === 'morning' ? 120 : 45;
-    const [breakfastH, breakfastM] = addMinutes(wakeH, wakeM, breakfastOffset);
+    const breakfastOffset = isMorningGym ? 120 : 45;
+    const [breakfastH, breakfastM] = addMinutes(wakeUpH, wakeUpM, breakfastOffset);
     blocks.push({
       time: formatTime(breakfastH, breakfastM, approx),
       icon: 'knife-fork-1',
-      label: { 'pt-BR': 'Café da manhã', 'en': 'Breakfast' },
-      sub: { 'pt-BR': 'Refeição completa', 'en': 'Full meal' },
+      label: {
+        'pt-BR': isMorningGym ? 'Ducha + café da manhã' : 'Café da manhã',
+        'en': isMorningGym ? 'Shower + breakfast' : 'Breakfast'
+      },
+      sub: {
+        'pt-BR': hasMusclGain ? 'Ovos, aveia, fruta — refeição completa' : 'Refeição completa pra começar bem',
+        'en': hasMusclGain ? 'Eggs, oatmeal, fruit — full meal' : 'Full meal to start the day right'
+      },
       type: 'food'
     });
 
-    // 5. Work (if weekday)
+    // 5. Work blocks (weekday only)
     if (isWeekday) {
-      if (isOfficeDay && officeDaysCount > 0) {
-        const [startH, startM] = officeStart.split(':').map(Number);
+      if (isOfficeDay) {
+        const [startH, startM] = (officeStart || '09:00').split(':').map(Number);
         blocks.push({
           time: formatTime(startH, startM),
           icon: 'briefcase-1',
           label: { 'pt-BR': 'Escritório', 'en': 'Office' },
-          sub: { 'pt-BR': 'Foco no trabalho', 'en': 'Focus on work' },
+          sub: { 'pt-BR': 'Foco no que importa', 'en': 'Focus on what matters' },
           type: 'work',
           tag: 'office'
         });
@@ -978,8 +1086,8 @@ function generateScheduleFromProfile(profile) {
         blocks.push({
           time: '09:00',
           icon: 'laptop-2',
-          label: { 'pt-BR': 'Trabalho', 'en': 'Work' },
-          sub: { 'pt-BR': 'Bloco de foco', 'en': 'Focus block' },
+          label: { 'pt-BR': 'Trabalho — bloco profundo', 'en': 'Work — deep focus block' },
+          sub: { 'pt-BR': 'Tarefa mais importante primeiro', 'en': 'Most important task first' },
           type: 'work'
         });
       }
@@ -990,105 +1098,272 @@ function generateScheduleFromProfile(profile) {
       time: formatTime(lunchH, lunchM, approx),
       icon: 'knife-fork-1',
       label: { 'pt-BR': 'Almoço', 'en': 'Lunch' },
-      sub: { 'pt-BR': 'Pausa pra comer bem', 'en': 'Eat well break' },
+      sub: {
+        'pt-BR': isWeekend ? 'Refeição sem pressa' : 'Refeição de verdade · sai da mesa',
+        'en': isWeekend ? 'Unhurried meal' : 'Real meal · step away from desk'
+      },
       type: 'food'
     });
 
-    // 7. Afternoon work (if weekday)
+    // 6b. Post-lunch walk (home office weekdays)
+    if (isWeekday && !isOfficeDay) {
+      const [walkH, walkM] = addMinutes(lunchH, lunchM, 45);
+      blocks.push({
+        time: formatTime(walkH, walkM),
+        icon: 'direction-1',
+        label: { 'pt-BR': 'Caminhada curta', 'en': 'Short walk' },
+        sub: { 'pt-BR': '15 min fora · obrigatório em dias home', 'en': '15 min outside · mandatory on home days' },
+        type: 'free'
+      });
+    }
+
+    // 7. Afternoon work (weekday)
     if (isWeekday) {
       const [afternoonH] = addMinutes(lunchH, lunchM, 60);
       blocks.push({
         time: formatTime(afternoonH, 0),
         icon: 'laptop-2',
-        label: { 'pt-BR': 'Trabalho — tarde', 'en': 'Work — afternoon' },
-        sub: { 'pt-BR': 'Finalizar tarefas', 'en': 'Finish tasks' },
+        label: {
+          'pt-BR': isFriday ? 'Trabalho — tarde curta' : 'Trabalho — tarde',
+          'en': isFriday ? 'Work — short afternoon' : 'Work — afternoon'
+        },
+        sub: {
+          'pt-BR': isFriday ? 'Fecha pendências, não começa coisa nova' : 'Finalizar tarefas do dia',
+          'en': isFriday ? 'Close pending items, don\'t start new things' : 'Finish today\'s tasks'
+        },
         type: 'work'
       });
 
       // End of work
-      if (isOfficeDay && officeDaysCount > 0) {
-        const [endH, endM] = officeEnd.split(':').map(Number);
+      if (isOfficeDay) {
+        const [endH, endM] = (officeEnd || '18:00').split(':').map(Number);
         blocks.push({
           time: formatTime(endH, endM),
           icon: 'locked-1',
           label: { 'pt-BR': 'Fechar trabalho', 'en': 'End work' },
-          sub: { 'pt-BR': 'Acabou por hoje', 'en': 'Done for today' },
+          sub: { 'pt-BR': 'Acabou. Não volta mais hoje.', 'en': 'Done. Not coming back today.' },
           type: 'work'
         });
       } else {
         blocks.push({
           time: '17:00',
           icon: 'locked-1',
-          label: { 'pt-BR': 'Fechar trabalho', 'en': 'End work' },
-          sub: { 'pt-BR': 'Acabou por hoje', 'en': 'Done for today' },
+          label: { 'pt-BR': 'Fecha o laptop', 'en': 'Close laptop' },
+          sub: {
+            'pt-BR': isFriday ? 'Semana encerrada. Sério.' : 'Acabou por hoje.',
+            'en': isFriday ? 'Week closed. Seriously.' : 'Done for today.'
+          },
           type: 'work'
         });
       }
     }
 
-    // 8. Gym (if evening preference)
-    if (gymPreference === 'evening') {
+    // 8. Post-work chores (weekday, varied by day)
+    if (isWeekday && !isFriday) {
+      if (day === 'Seg') {
+        blocks.push({
+          time: '17:15',
+          icon: 'home-2',
+          label: { 'pt-BR': 'Limpeza rápida', 'en': 'Quick cleaning' },
+          sub: { 'pt-BR': '30 min · aspirar, organizar', 'en': '30 min · vacuum, organize' },
+          type: 'chore',
+          tag: 'chore'
+        });
+      } else if (day === 'Ter') {
+        blocks.push({
+          time: '17:15',
+          icon: 'home-2',
+          label: { 'pt-BR': 'Mercado', 'en': 'Grocery store' },
+          sub: { 'pt-BR': 'Lista no celular · compra pra semana', 'en': 'List on phone · buy for the week' },
+          type: 'chore',
+          tag: 'chore'
+        });
+      } else if (day === 'Qua') {
+        blocks.push({
+          time: '17:15',
+          icon: 'home-2',
+          label: { 'pt-BR': 'Lavar roupa', 'en': 'Do laundry' },
+          sub: { 'pt-BR': 'Coloca na máquina — termina sozinha', 'en': 'Put in machine — finishes on its own' },
+          type: 'chore',
+          tag: 'chore'
+        });
+      }
+    }
+
+    // 9. Evening gym (with split info)
+    const isEveningGym = isTrainingDay && !isMorningGym;
+    if (isEveningGym && splitInfo) {
+      const focusPt = splitInfo.focus['pt-BR'];
+      const focusEn = splitInfo.focus['en'];
       blocks.push({
         time: formatTime(18, 0, approx),
         icon: 'dumbbell-1',
         label: { 'pt-BR': 'Academia', 'en': 'Gym' },
-        sub: { 'pt-BR': '60-75 min de treino', 'en': '60-75 min workout' },
+        sub: {
+          'pt-BR': `60–75 min · Dia ${splitInfo.label}: ${splitInfo.name} (${focusPt})`,
+          'en': `60–75 min · Day ${splitInfo.label}: ${splitInfo.name} (${focusEn})`
+        },
         type: 'gym',
         tag: 'gym'
       });
     }
 
-    // 9. Free time
-    if (gymPreference !== 'evening' || !isWeekday) {
+    // 10. Friday flex block
+    if (isFriday) {
       blocks.push({
-        time: formatTime(18, 30, approx),
+        time: '17:15',
+        icon: 'star-fat',
+        label: { 'pt-BR': 'BLOCO FLEX', 'en': 'FLEX BLOCK' },
+        sub: { 'pt-BR': 'Festa? Amigos? Série? Você decide na hora.', 'en': 'Party? Friends? Series? You decide on the spot.' },
+        type: 'flex',
+        tag: 'flex'
+      });
+    }
+
+    // 11. Weekend-specific blocks
+    if (isSaturday) {
+      // Optional gym / cardio
+      if (!isTrainingDay) {
+        blocks.push({
+          time: formatTime(wakeUpH + 2, 30, true),
+          icon: 'dumbbell-1',
+          label: { 'pt-BR': 'Academia (opcional)', 'en': 'Gym (optional)' },
+          sub: {
+            'pt-BR': hasWeightLoss ? 'Cardio leve ou caminhada — sem pressão' : 'Sessão leve, mobilidade — sem pressão',
+            'en': hasWeightLoss ? 'Light cardio or walk — no pressure' : 'Light session, mobility — no pressure'
+          },
+          type: 'gym',
+          tag: 'gym'
+        });
+      }
+      blocks.push({
+        time: '~14:00',
         icon: 'book-1',
-        label: { 'pt-BR': 'Tempo livre', 'en': 'Free time' },
-        sub: { 'pt-BR': 'Hobbies, descanso', 'en': 'Hobbies, rest' },
+        label: { 'pt-BR': 'Tarde livre', 'en': 'Free afternoon' },
+        sub: { 'pt-BR': 'Amigos, passeio, hobby — tudo válido', 'en': 'Friends, outing, hobby — all valid' },
         type: 'free'
       });
     }
 
-    // 10. Dinner
+    if (isSunday) {
+      blocks.push({
+        time: '~10:00',
+        icon: 'book-1',
+        label: { 'pt-BR': 'Tempo de qualidade', 'en': 'Quality time' },
+        sub: { 'pt-BR': 'Leitura, hobby, saída curta — o que renova', 'en': 'Reading, hobby, short outing — whatever renews' },
+        type: 'free'
+      });
+      blocks.push({
+        time: '~14:30',
+        icon: 'home-2',
+        label: { 'pt-BR': 'MEAL PREP', 'en': 'MEAL PREP' },
+        sub: { 'pt-BR': '2–3h cozinhando pra semana · arroz, proteínas, legumes', 'en': '2–3h cooking for the week · rice, proteins, veggies' },
+        type: 'chore',
+        tag: 'meal'
+      });
+      blocks.push({
+        time: '~17:30',
+        icon: 'home-2',
+        label: { 'pt-BR': 'Limpeza rápida', 'en': 'Quick cleaning' },
+        sub: { 'pt-BR': '30 min · aspirador, banheiro, organiza', 'en': '30 min · vacuum, bathroom, organize' },
+        type: 'chore',
+        tag: 'chore'
+      });
+      blocks.push({
+        time: '~18:30',
+        icon: 'star-fat',
+        label: { 'pt-BR': 'Semana planejada', 'en': 'Week planned' },
+        sub: { 'pt-BR': '5 min: o que tem pra fazer? Pronto.', 'en': '5 min: what to do this week? Done.' },
+        type: 'free'
+      });
+    }
+
+    // 12. Free time (weekdays, if no evening gym and not Friday)
+    if (isWeekday && !isEveningGym && !isFriday) {
+      blocks.push({
+        time: formatTime(18, 30),
+        icon: 'book-1',
+        label: { 'pt-BR': 'Tempo seu', 'en': 'Your time' },
+        sub: { 'pt-BR': 'Leitura, projeto pessoal — sem culpa', 'en': 'Reading, personal project — guilt-free' },
+        type: 'free'
+      });
+    }
+
+    // 13. Dinner (varied per day)
     blocks.push({
       time: formatTime(dinnerH, dinnerM, approx),
       icon: 'knife-fork-1',
-      label: { 'pt-BR': 'Jantar', 'en': 'Dinner' },
-      sub: { 'pt-BR': 'Refeição nutritiva', 'en': 'Nutritious meal' },
+      label: {
+        'pt-BR': isFriday ? 'Jantar (se em casa)' : 'Jantar',
+        'en': isFriday ? 'Dinner (if at home)' : 'Dinner'
+      },
+      sub: DINNER_SUBS[day],
       type: 'food'
     });
 
-    // 11. Wind down
-    blocks.push({
-      time: formatTime(windDownH, 0, approx),
-      icon: 'moon-half-right-5',
-      label: { 'pt-BR': 'Relaxar', 'en': 'Wind down' },
-      sub: { 'pt-BR': 'Preparar pra dormir', 'en': 'Prepare for sleep' },
-      type: 'sleep'
-    });
+    // 13b. Friday night
+    if (isFriday) {
+      blocks.push({
+        time: '?',
+        icon: 'heart',
+        label: { 'pt-BR': 'A noite é sua', 'en': 'The night is yours' },
+        sub: { 'pt-BR': 'Sem horário, sem regra. Só não dorme menos de 6h.', 'en': 'No schedule, no rules. Just don\'t sleep less than 6h.' },
+        type: 'social',
+        tag: 'social'
+      });
+    }
 
-    // 12. Sleep
-    blocks.push({
-      time: formatTime(sleepH, wakeM, approx),
-      icon: 'moon-half-right-5',
-      label: { 'pt-BR': 'Dormir', 'en': 'Sleep' },
-      sub: { 'pt-BR': `${sleepHours}h de sono`, 'en': `${sleepHours}h of sleep` },
-      type: 'sleep'
-    });
+    // 14. Wind down + sleep (skip for Friday)
+    if (!isFriday) {
+      blocks.push({
+        time: formatTime(windDownH, 0, approx),
+        icon: 'moon-half-right-5',
+        label: {
+          'pt-BR': isSunday ? 'Wind down longo' : 'Relaxar',
+          'en': isSunday ? 'Long wind down' : 'Wind down'
+        },
+        sub: {
+          'pt-BR': 'Prepara pra dormir, sem telas',
+          'en': 'Prepare for sleep, no screens'
+        },
+        type: 'sleep'
+      });
 
-    return blocks;
+      blocks.push({
+        time: formatTime(sleepH, wakeM, approx),
+        icon: 'moon-half-right-5',
+        label: { 'pt-BR': 'Dormir', 'en': 'Sleep' },
+        sub: {
+          'pt-BR': `${sleepHours}h de sono`,
+          'en': `${sleepHours}h of sleep`
+        },
+        type: 'sleep'
+      });
+    }
+
+    // Determine day type
+    let type = 'home';
+    if (isWeekend) type = 'weekend';
+    else if (isOfficeDay) type = 'office';
+
+    schedule[day] = { type, blocks };
+  });
+
+  // Save workout plan data alongside the schedule
+  const workoutPlan = {
+    splitType: trainingSplit.type,
+    trainingDays: trainingSplit.days,
+    split: trainingSplit.split.map((s, i) => ({
+      day: trainingSplit.days[i],
+      label: s.label,
+      name: s.name,
+      focus: s.focus,
+      icon: s.icon
+    })),
+    goals: goals || [],
+    generatedAt: new Date().toISOString()
   };
-
-  // Generate schedule for each day
-  const schedule = {
-    'Seg': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 1) },
-    'Ter': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 2) },
-    'Qua': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 3) },
-    'Qui': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 4) },
-    'Sex': { type: 'weekday', blocks: generateDayBlocks(true, officeDaysCount >= 5) },
-    'Sáb': { type: 'weekend', blocks: generateDayBlocks(false, false) },
-    'Dom': { type: 'weekend', blocks: generateDayBlocks(false, false) },
-  };
+  localStorage.setItem('vida_workout_plan', JSON.stringify(workoutPlan));
 
   return schedule;
 }
