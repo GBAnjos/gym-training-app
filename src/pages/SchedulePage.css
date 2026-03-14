@@ -60,7 +60,7 @@
 
 .day-tab.active {
   border-color: var(--color-accent-primary);
-  background-color: rgba(200, 245, 90, 0.1);
+  background-color: rgba(217, 255, 0, 0.1);
 }
 
 .day-tab.today .day-name {
@@ -160,8 +160,8 @@
 }
 
 .day-note.home {
-  background: linear-gradient(135deg, rgba(200, 245, 90, 0.1), rgba(200, 245, 90, 0.05));
-  border: 1px solid rgba(200, 245, 90, 0.2);
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.1), rgba(217, 255, 0, 0.05));
+  border: 1px solid rgba(217, 255, 0, 0.2);
 }
 
 .day-note.weekend {

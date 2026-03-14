@@ -307,7 +307,7 @@
 
 .option-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .option-btn .option-icon {
@@ -431,7 +431,7 @@
 
 .day-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.15);
+  background: rgba(217, 255, 0, 0.15);
   color: var(--color-accent-primary);
 }
 
@@ -464,7 +464,7 @@
 
 .goal-card.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .goal-icon {
@@ -510,7 +510,7 @@
 
 .level-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .level-label {
@@ -550,7 +550,7 @@
 
 .time-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .time-icon {
@@ -594,7 +594,7 @@
 
 .language-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .language-flag {
@@ -643,14 +643,14 @@
 
 .restriction-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.15);
+  background: rgba(217, 255, 0, 0.15);
   color: var(--color-accent-primary);
 }
 
 /* Summary Card */
 .summary-card {
-  background: linear-gradient(135deg, rgba(200, 245, 90, 0.08), rgba(107, 207, 255, 0.05));
-  border: 1px solid rgba(200, 245, 90, 0.2);
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.08), rgba(107, 207, 255, 0.05));
+  border: 1px solid rgba(217, 255, 0, 0.2);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
 }
@@ -872,7 +872,7 @@
   justify-content: center;
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, rgba(200, 245, 90, 0.15), rgba(107, 207, 255, 0.1));
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.15), rgba(107, 207, 255, 0.1));
   border-radius: 50%;
   margin-bottom: var(--space-md);
 }
@@ -948,7 +948,7 @@
   background: var(--color-accent-primary);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(200, 245, 90, 0.4);
+  box-shadow: 0 2px 8px rgba(217, 255, 0, 0.4);
   transition: transform var(--transition-fast);
 }
 
@@ -963,7 +963,7 @@
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 8px rgba(200, 245, 90, 0.4);
+  box-shadow: 0 2px 8px rgba(217, 255, 0, 0.4);
 }
 
 .slider-value {
@@ -1000,7 +1000,7 @@
 }
 
 .sleep-feedback.feedback-good {
-  background: rgba(200, 245, 90, 0.15);
+  background: rgba(217, 255, 0, 0.15);
   color: var(--color-accent-primary);
 }
 
@@ -1077,7 +1077,7 @@
 
 .gym-pref-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .gym-pref-icon {
@@ -1128,7 +1128,7 @@
 
 .counter-btn:hover:not(:disabled) {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .counter-btn:disabled {
@@ -1243,7 +1243,7 @@
 
 .goal-chip.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
   color: var(--color-accent-primary);
 }
 
@@ -1487,7 +1487,7 @@
 
 .exercise-type-card.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .exercise-type-icon {
@@ -1535,7 +1535,7 @@
 
 .gym-type-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .gym-type-icon {
@@ -1580,7 +1580,7 @@
 
 .sport-btn.selected {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.15);
+  background: rgba(217, 255, 0, 0.15);
 }
 
 .sport-icon {
@@ -1753,7 +1753,7 @@
 
 .sex-btn.selected {
   border-color: var(--color-accent);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .sex-icon {

@@ -130,8 +130,8 @@
 }
 
 .meal-card.completed {
-  background: rgba(200, 245, 90, 0.05);
-  border-color: rgba(200, 245, 90, 0.3);
+  background: rgba(217, 255, 0, 0.05);
+  border-color: rgba(217, 255, 0, 0.3);
 }
 
 .meal-card.completed .meal-name {
@@ -146,7 +146,7 @@
   min-height: 32px;
   border-radius: 50%;
   border: 2px dashed var(--color-border-default);
-  background: rgba(200, 245, 90, 0.05);
+  background: rgba(217, 255, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,7 +176,7 @@
   border-color: var(--color-accent-primary);
   border-style: solid;
   color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.15);
+  background: rgba(217, 255, 0, 0.15);
   opacity: 0.7;
 }
 

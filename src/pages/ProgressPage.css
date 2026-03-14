@@ -77,8 +77,8 @@
 
 /* Goal Section */
 .goal-section {
-  background: linear-gradient(135deg, rgba(200, 245, 90, 0.1), rgba(200, 245, 90, 0.05));
-  border: 1px solid rgba(200, 245, 90, 0.2);
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.1), rgba(217, 255, 0, 0.05));
+  border: 1px solid rgba(217, 255, 0, 0.2);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   margin-bottom: var(--space-md);
@@ -417,7 +417,7 @@
 }
 
 .weight-diff.down {
-  background-color: rgba(200, 245, 90, 0.1);
+  background-color: rgba(217, 255, 0, 0.1);
   color: var(--color-accent-primary);
 }
 

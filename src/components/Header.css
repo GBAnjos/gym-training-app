@@ -2,8 +2,10 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  background: linear-gradient(to right, var(--color-bg-surface), var(--color-bg-elevated));
-  border-bottom: 1px solid var(--color-border-default);
+  background: var(--color-glass-bg);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--color-glass-border);
   padding: var(--space-sm) var(--space-md);
   padding-top: max(var(--space-sm), env(safe-area-inset-top));
 }
@@ -74,13 +76,13 @@
 
 .goal-badge {
   padding: var(--space-xs) var(--space-sm);
-  background-color: rgba(200, 245, 90, 0.15);
+  background-color: rgba(217, 255, 0, 0.15);
   color: var(--color-accent-primary);
   font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(200, 245, 90, 0.3);
+  border: 1px solid rgba(217, 255, 0, 0.3);
   white-space: nowrap;
   display: none;
 }
