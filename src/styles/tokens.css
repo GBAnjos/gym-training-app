@@ -102,7 +102,7 @@
   --color-bg-overlay: rgba(0, 0, 0, 0.6);
 
   --color-text-primary: var(--primitive-gray-0);
-  --color-text-secondary: var(--primitive-gray-400);
+  --color-text-secondary: var(--primitive-gray-300);
   --color-text-muted: var(--primitive-gray-500);
   --color-text-inverse: var(--primitive-gray-950);
 
