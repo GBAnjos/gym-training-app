@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../hooks/useLanguage';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { Icon } from '../components/Icon';
+import { useTheme } from '../hooks/useTheme';
 import './SettingsPage.css';
 
 export function SettingsPage() {
@@ -10,6 +11,9 @@ export function SettingsPage() {
   const { t, language, setLanguage, languages } = useLanguage();
   const { userProfile, resetOnboarding } = useOnboarding();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const { theme, setTheme, setSystemTheme, isManual } = useTheme();
+
+  const themeMode = isManual ? theme : 'system';
 
   const handleLogout = async () => {
     await logout();
@@ -107,6 +111,38 @@ export function SettingsPage() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* Theme Section */}
+      <section className="settings-section">
+        <div className="settings-section-header">
+          <Icon name="moon-half-right-5" className="section-icon" />
+          <h2>{language === 'pt-BR' ? 'Tema' : 'Theme'}</h2>
+        </div>
+
+        <div className="theme-selector">
+          <button
+            className={`theme-option ${themeMode === 'dark' ? 'active' : ''}`}
+            onClick={() => setTheme('dark')}
+          >
+            <Icon name="moon-half-right-5" className="theme-icon" />
+            <span>{language === 'pt-BR' ? 'Escuro' : 'Dark'}</span>
+          </button>
+          <button
+            className={`theme-option ${themeMode === 'light' ? 'active' : ''}`}
+            onClick={() => setTheme('light')}
+          >
+            <Icon name="sun-1" className="theme-icon" />
+            <span>{language === 'pt-BR' ? 'Claro' : 'Light'}</span>
+          </button>
+          <button
+            className={`theme-option ${themeMode === 'system' ? 'active' : ''}`}
+            onClick={() => setSystemTheme()}
+          >
+            <Icon name="laptop-2" className="theme-icon" />
+            <span>{language === 'pt-BR' ? 'Sistema' : 'System'}</span>
+          </button>
+        </div>
       </section>
 
       {/* Language Section */}
