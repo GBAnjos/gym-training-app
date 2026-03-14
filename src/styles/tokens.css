@@ -1,0 +1,213 @@
+/* ============================================
+   VIDA DESIGN TOKENS
+   3-tier: Primitives → Semantic → Component
+   ============================================ */
+
+/* Layer 1: Primitives (raw values, never referenced by components) */
+:root {
+  /* Grays */
+  --primitive-gray-950: #0e0e12;
+  --primitive-gray-900: #14141c;
+  --primitive-gray-800: #1a1a24;
+  --primitive-gray-700: #24243a;
+  --primitive-gray-600: #35354a;
+  --primitive-gray-500: #55556a;
+  --primitive-gray-400: #8a8a9a;
+  --primitive-gray-300: #ababba;
+  --primitive-gray-200: #d0d0da;
+  --primitive-gray-100: #e8e8ee;
+  --primitive-gray-50: #f5f5f0;
+  --primitive-gray-25: #fafaf8;
+  --primitive-gray-0: #f0f0f5;
+  --primitive-white: #ffffff;
+
+  /* Accents */
+  --primitive-lime-500: #c8f55a;
+  --primitive-lime-600: #a8d040;
+  --primitive-lime-700: #4a7a00;
+  --primitive-lime-800: #3d6b00;
+  --primitive-blue-400: #6bcfff;
+  --primitive-blue-600: #0077b6;
+  --primitive-orange-400: #ffb86c;
+  --primitive-orange-600: #d4850a;
+  --primitive-purple-400: #c899ff;
+  --primitive-purple-600: #8b5cf6;
+
+  /* States */
+  --primitive-red-400: #ff6b6b;
+  --primitive-red-600: #cc3333;
+  --primitive-green-400: #69db7c;
+  --primitive-green-600: #2b8a3e;
+  --primitive-yellow-400: #ffd43b;
+  --primitive-yellow-600: #e67700;
+
+  /* Typography */
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Spacing aliases (migration compatibility — remove in cleanup) */
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-4);
+  --space-lg: var(--space-6);
+  --space-xl: var(--space-8);
+  --space-2xl: var(--space-12);
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-dramatic: 700ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Transition aliases (migration compatibility — remove in cleanup) */
+  --transition-fast: var(--duration-fast) var(--ease-default);
+  --transition-normal: var(--duration-normal) var(--ease-default);
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-sticky: 100;
+  --z-nav: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* Layer 2: Dark Theme (also serves as :root fallback) */
+[data-theme="dark"], :root {
+  --color-bg-primary: var(--primitive-gray-950);
+  --color-bg-surface: var(--primitive-gray-800);
+  --color-bg-elevated: var(--primitive-gray-700);
+  --color-bg-overlay: rgba(0, 0, 0, 0.6);
+
+  --color-text-primary: var(--primitive-gray-0);
+  --color-text-secondary: var(--primitive-gray-400);
+  --color-text-muted: var(--primitive-gray-500);
+  --color-text-inverse: var(--primitive-gray-950);
+
+  --color-accent-primary: var(--primitive-lime-500);
+  --color-accent-primary-hover: var(--primitive-lime-600);
+  --color-accent-secondary: var(--primitive-blue-400);
+  --color-accent-warm: var(--primitive-orange-400);
+
+  --color-border-default: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  --color-state-success: var(--primitive-green-400);
+  --color-state-warning: var(--primitive-yellow-400);
+  --color-state-error: var(--primitive-red-400);
+
+  --color-glass-bg: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px var(--color-border-subtle);
+  --elevation-2: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px var(--color-border-subtle);
+  --elevation-3: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--color-border-subtle);
+
+  --color-morning: var(--primitive-orange-400);
+  --color-gym: var(--primitive-lime-500);
+  --color-food: var(--primitive-blue-400);
+  --color-work: var(--primitive-gray-500);
+  --color-free: var(--primitive-purple-400);
+  --color-sleep: var(--primitive-gray-700);
+  --color-chore: var(--primitive-gray-400);
+  --color-social: var(--primitive-red-400);
+  --color-flex: var(--primitive-gray-300);
+
+  /* Migration aliases (old token names → new, remove in cleanup) */
+  --color-bg: var(--color-bg-primary);
+  --color-card: var(--color-bg-surface);
+  --color-card-alt: var(--color-bg-elevated);
+  --color-text: var(--color-text-primary);
+  --color-text-dim: var(--color-text-secondary);
+  --color-muted: var(--color-border-default);
+  --color-muted-light: var(--color-text-muted);
+  --color-border: var(--color-border-default);
+  --color-accent: var(--color-accent-primary);
+  --color-accent-dim: var(--color-accent-primary-hover);
+  --color-red: var(--color-state-error);
+  --color-blue: var(--color-accent-secondary);
+  --color-orange: var(--color-accent-warm);
+  --color-purple: var(--primitive-purple-400);
+  --font-heading: var(--font-display);
+}
+
+/* Layer 2: Light Theme */
+[data-theme="light"] {
+  --color-bg-primary: var(--primitive-gray-50);
+  --color-bg-surface: var(--primitive-gray-25);
+  --color-bg-elevated: var(--primitive-white);
+  --color-bg-overlay: rgba(0, 0, 0, 0.3);
+
+  --color-text-primary: var(--primitive-gray-800);
+  --color-text-secondary: var(--primitive-gray-500);
+  --color-text-muted: var(--primitive-gray-400);
+  --color-text-inverse: var(--primitive-gray-0);
+
+  --color-accent-primary: var(--primitive-lime-800);
+  --color-accent-primary-hover: var(--primitive-lime-700);
+  --color-accent-secondary: var(--primitive-blue-600);
+  --color-accent-warm: var(--primitive-orange-600);
+
+  --color-border-default: rgba(0, 0, 0, 0.08);
+  --color-border-subtle: rgba(0, 0, 0, 0.04);
+
+  --color-state-success: var(--primitive-green-600);
+  --color-state-warning: var(--primitive-yellow-600);
+  --color-state-error: var(--primitive-red-600);
+
+  --color-glass-bg: rgba(255, 255, 255, 0.65);
+  --color-glass-border: rgba(0, 0, 0, 0.05);
+
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px var(--color-border-subtle);
+  --elevation-2: 0 4px 12px rgba(0,0,0,0.08), 0 0 0 1px var(--color-border-subtle);
+  --elevation-3: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px var(--color-border-subtle);
+
+  --color-morning: var(--primitive-orange-600);
+  --color-gym: var(--primitive-lime-800);
+  --color-food: var(--primitive-blue-600);
+  --color-work: var(--primitive-gray-400);
+  --color-free: var(--primitive-purple-600);
+  --color-sleep: var(--primitive-gray-200);
+  --color-chore: var(--primitive-gray-500);
+  --color-social: var(--primitive-red-600);
+  --color-flex: var(--primitive-gray-400);
+
+  /* Migration aliases for light theme */
+  --color-bg: var(--color-bg-primary);
+  --color-card: var(--color-bg-surface);
+  --color-card-alt: var(--color-bg-elevated);
+  --color-text: var(--color-text-primary);
+  --color-text-dim: var(--color-text-secondary);
+  --color-muted: var(--color-border-default);
+  --color-muted-light: var(--color-text-muted);
+  --color-border: var(--color-border-default);
+  --color-accent: var(--color-accent-primary);
+  --color-accent-dim: var(--color-accent-primary-hover);
+  --color-red: var(--color-state-error);
+  --color-blue: var(--color-accent-secondary);
+  --color-orange: var(--color-accent-warm);
+  --color-purple: var(--primitive-purple-400);
+  --font-heading: var(--font-display);
+}
