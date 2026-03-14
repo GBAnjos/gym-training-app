@@ -212,7 +212,7 @@
 
 .language-option.active {
   border-color: var(--color-accent-primary);
-  background: rgba(200, 245, 90, 0.1);
+  background: rgba(217, 255, 0, 0.1);
 }
 
 .language-option:active {

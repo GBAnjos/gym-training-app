@@ -222,7 +222,7 @@ function TimeBlock({ block, language }) {
 
 function TagBadge({ tag }) {
   const tagColors = {
-    gym: { bg: 'rgba(200, 245, 90, 0.2)', color: '#c8f55a' },
+    gym: { bg: 'rgba(217, 255, 0, 0.2)', color: '#d9ff00' },
     office: { bg: 'rgba(107, 207, 255, 0.2)', color: '#6bcfff' },
     chore: { bg: 'rgba(136, 136, 136, 0.2)', color: '#888' },
     social: { bg: 'rgba(255, 107, 107, 0.2)', color: '#ff6b6b' },

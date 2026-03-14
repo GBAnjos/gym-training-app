@@ -5,25 +5,25 @@
 
 /* Layer 1: Primitives (raw values, never referenced by components) */
 :root {
-  /* Grays */
-  --primitive-gray-950: #0e0e12;
-  --primitive-gray-900: #14141c;
-  --primitive-gray-800: #1a1a24;
-  --primitive-gray-700: #24243a;
-  --primitive-gray-600: #35354a;
-  --primitive-gray-500: #55556a;
-  --primitive-gray-400: #8a8a9a;
-  --primitive-gray-300: #ababba;
-  --primitive-gray-200: #d0d0da;
-  --primitive-gray-100: #e8e8ee;
-  --primitive-gray-50: #f5f5f0;
+  /* Grays — Figma palette */
+  --primitive-gray-950: #050505;
+  --primitive-gray-900: #121212;
+  --primitive-gray-800: #1a1a1a;
+  --primitive-gray-700: #242424;
+  --primitive-gray-600: #353535;
+  --primitive-gray-500: #64748b;
+  --primitive-gray-400: #94a3b8;
+  --primitive-gray-300: #cbd5e1;
+  --primitive-gray-200: #e2e8f0;
+  --primitive-gray-100: #f1f5f9;
+  --primitive-gray-50: #f8fafc;
   --primitive-gray-25: #fafaf8;
-  --primitive-gray-0: #f0f0f5;
+  --primitive-gray-0: #f1f5f9;
   --primitive-white: #ffffff;
 
-  /* Accents */
-  --primitive-lime-500: #c8f55a;
-  --primitive-lime-600: #a8d040;
+  /* Accents — Figma palette */
+  --primitive-lime-500: #d9ff00;
+  --primitive-lime-600: #c4e600;
   --primitive-lime-700: #4a7a00;
   --primitive-lime-800: #3d6b00;
   --primitive-blue-400: #6bcfff;
@@ -42,7 +42,7 @@
   --primitive-yellow-600: #e67700;
 
   /* Typography */
-  --font-display: 'Sora', sans-serif;
+  --font-display: 'Lexend', sans-serif;
   --font-body: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -97,8 +97,8 @@
 /* Layer 2: Dark Theme (also serves as :root fallback) */
 [data-theme="dark"], :root {
   --color-bg-primary: var(--primitive-gray-950);
-  --color-bg-surface: var(--primitive-gray-800);
-  --color-bg-elevated: var(--primitive-gray-700);
+  --color-bg-surface: var(--primitive-gray-900);
+  --color-bg-elevated: var(--primitive-gray-800);
   --color-bg-overlay: rgba(0, 0, 0, 0.6);
 
   --color-text-primary: var(--primitive-gray-0);
@@ -111,19 +111,19 @@
   --color-accent-secondary: var(--primitive-blue-400);
   --color-accent-warm: var(--primitive-orange-400);
 
-  --color-border-default: rgba(255, 255, 255, 0.08);
-  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-border-default: rgba(255, 255, 255, 0.05);
+  --color-border-subtle: rgba(255, 255, 255, 0.03);
 
   --color-state-success: var(--primitive-green-400);
   --color-state-warning: var(--primitive-yellow-400);
   --color-state-error: var(--primitive-red-400);
 
-  --color-glass-bg: rgba(255, 255, 255, 0.04);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-bg: rgba(5, 5, 5, 0.8);
+  --color-glass-border: rgba(217, 255, 0, 0.1);
 
-  --elevation-1: 0 1px 3px rgba(0,0,0,0.3), 0 0 0 1px var(--color-border-subtle);
-  --elevation-2: 0 4px 12px rgba(0,0,0,0.4), 0 0 0 1px var(--color-border-subtle);
-  --elevation-3: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--color-border-subtle);
+  --elevation-1: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px var(--color-border-subtle);
+  --elevation-2: 0 4px 12px rgba(0,0,0,0.5), 0 0 0 1px var(--color-border-subtle);
+  --elevation-3: 0 25px 50px -12px rgba(217,255,0,0.05);
 
   --color-morning: var(--primitive-orange-400);
   --color-gym: var(--primitive-lime-500);

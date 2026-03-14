@@ -75,7 +75,7 @@
 
 .training-day-btn.active {
   border-color: var(--color-accent-primary);
-  background-color: rgba(200, 245, 90, 0.1);
+  background-color: rgba(217, 255, 0, 0.1);
   color: var(--color-accent-primary);
 }
 
@@ -183,8 +183,8 @@
 }
 
 .exercise-card.completed {
-  background-color: rgba(200, 245, 90, 0.05);
-  border-color: rgba(200, 245, 90, 0.3);
+  background-color: rgba(217, 255, 0, 0.05);
+  border-color: rgba(217, 255, 0, 0.3);
 }
 
 .exercise-header {
@@ -339,7 +339,7 @@
   justify-content: center;
   min-width: 48px;
   min-height: 48px;
-  background: rgba(200, 245, 90, 0.05);
+  background: rgba(217, 255, 0, 0.05);
   border: 2px dashed var(--color-border-default);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -350,7 +350,7 @@
 .done-checkbox:hover {
   border-color: var(--color-accent-primary);
   border-style: solid;
-  background: rgba(200, 245, 90, 0.15);
+  background: rgba(217, 255, 0, 0.15);
   opacity: 0.7;
 }
 
@@ -410,7 +410,7 @@
 
 .floating-timer.done {
   border-color: var(--color-accent-primary);
-  background: linear-gradient(135deg, rgba(200, 245, 90, 0.15), var(--color-bg-surface));
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.15), var(--color-bg-surface));
 }
 
 .floating-timer-content {
