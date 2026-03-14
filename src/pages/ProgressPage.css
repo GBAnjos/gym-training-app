@@ -28,7 +28,7 @@
 
 .progress-title {
   font-size: 1.4rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -41,8 +41,8 @@
 /* Mode Toggle */
 .mode-toggle {
   display: flex;
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: 2px;
 }
@@ -51,7 +51,7 @@
   padding: var(--space-xs) var(--space-sm);
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   background: transparent;
   border: none;
   border-radius: var(--radius-sm);
@@ -67,12 +67,12 @@
 }
 
 .mode-btn.active {
-  background-color: var(--color-accent);
-  color: var(--color-bg);
+  background-color: var(--color-accent-primary);
+  color: var(--color-bg-primary);
 }
 
 .mode-btn:not(.active):hover {
-  color: var(--color-text);
+  color: var(--color-text-primary);
 }
 
 /* Goal Section */
@@ -125,7 +125,7 @@
 
 .goal-label {
   font-size: 0.75rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 @media (min-width: 480px) {
@@ -137,7 +137,7 @@
 .goal-range {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   font-family: var(--font-mono);
 }
 
@@ -149,7 +149,7 @@
 
 .goal-progress-bar {
   height: 28px;
-  background-color: var(--color-card);
+  background-color: var(--color-bg-surface);
   border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
@@ -164,7 +164,7 @@
 
 .goal-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dim));
+  background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-primary-hover));
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
@@ -184,7 +184,7 @@
 .goal-current {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--color-bg);
+  color: var(--color-bg-primary);
 }
 
 @media (min-width: 480px) {
@@ -198,7 +198,7 @@
   justify-content: space-between;
   margin-top: var(--space-xs);
   font-size: 0.65rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-family: var(--font-mono);
 }
 
@@ -216,9 +216,9 @@
   gap: var(--space-sm);
   width: 100%;
   padding: var(--space-md);
-  background-color: var(--color-card);
-  border: 2px dashed var(--color-border);
-  color: var(--color-text);
+  background-color: var(--color-bg-surface);
+  border: 2px dashed var(--color-border-default);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-md);
@@ -237,8 +237,8 @@
 }
 
 .add-weight-btn:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-accent-primary);
+  color: var(--color-accent-primary);
 }
 
 .add-weight-btn:active {
@@ -264,8 +264,8 @@
 }
 
 .weight-modal-content {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-xl);
   padding: var(--space-lg);
   width: 100%;
@@ -303,15 +303,15 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--color-muted);
+  color: var(--color-border-default);
   font-size: 1rem;
   border-radius: 50%;
   transition: all var(--transition-fast);
 }
 
 .weight-modal-close:hover {
-  background-color: var(--color-card-alt);
-  color: var(--color-text);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
 }
 
 .weight-modal-header {
@@ -324,12 +324,12 @@
 
 .weight-modal-icon {
   font-size: 2.5rem;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 .weight-modal-header h3 {
   font-size: 1.1rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -344,20 +344,20 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-card-alt);
+  background-color: var(--color-bg-elevated);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-md);
 }
 
 .previous-label {
   font-size: 0.8rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 .previous-value {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
 }
 
@@ -374,28 +374,28 @@
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
-  background-color: var(--color-bg);
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  border: 2px solid var(--color-border-default);
   border-radius: var(--radius-md);
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
   min-height: 56px;
   transition: border-color var(--transition-fast);
 }
 
 .weight-modal-input input:focus {
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-primary);
   outline: none;
 }
 
 .weight-modal-input input::placeholder {
-  color: var(--color-muted);
+  color: var(--color-border-default);
 }
 
 .weight-unit {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--color-muted);
+  color: var(--color-border-default);
 }
 
 .weight-diff {
@@ -413,12 +413,12 @@
 
 .weight-diff.up {
   background-color: rgba(255, 107, 107, 0.1);
-  color: var(--color-red);
+  color: var(--color-state-error);
 }
 
 .weight-diff.down {
   background-color: rgba(200, 245, 90, 0.1);
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 .weight-modal-submit {
@@ -428,8 +428,8 @@
   gap: var(--space-sm);
   width: 100%;
   padding: var(--space-md);
-  background-color: var(--color-accent);
-  color: var(--color-bg);
+  background-color: var(--color-accent-primary);
+  color: var(--color-bg-primary);
   font-size: 1rem;
   font-weight: 600;
   border-radius: var(--radius-md);
@@ -438,7 +438,7 @@
 }
 
 .weight-modal-submit:hover:not(:disabled) {
-  background-color: var(--color-accent-dim);
+  background-color: var(--color-accent-primary-hover);
 }
 
 .weight-modal-submit:active:not(:disabled) {
@@ -472,8 +472,8 @@
 }
 
 .stat-card {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
   text-align: center;
@@ -495,7 +495,7 @@
   display: block;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
   line-height: 1.2;
 }
@@ -507,12 +507,12 @@
 }
 
 .stat-card.accent .stat-value {
-  color: var(--color-orange);
+  color: var(--color-accent-warm);
 }
 
 .stat-label {
   font-size: 0.65rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   margin-top: 2px;
 }
 
@@ -525,8 +525,8 @@
 
 /* Chart Section */
 .chart-section {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-md);
 }
@@ -540,7 +540,7 @@
 
 .chart-section h3 {
   font-size: 0.9rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-sm);
 }
 
@@ -563,8 +563,8 @@
 }
 
 .no-data {
-  background-color: var(--color-card);
-  border: 2px dashed var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 2px dashed var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-xl);
   text-align: center;
@@ -584,7 +584,7 @@
 
 .no-data-icon {
   font-size: 2.5rem;
-  color: var(--color-muted);
+  color: var(--color-border-default);
 }
 
 @media (min-width: 480px) {
@@ -594,7 +594,7 @@
 }
 
 .no-data p {
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   margin: 0;
 }
@@ -633,13 +633,13 @@
   background: rgba(107, 207, 255, 0.2);
   border-radius: 50%;
   font-size: 1.25rem;
-  color: var(--color-blue);
+  color: var(--color-accent-secondary);
 }
 
 .recomp-content h4 {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin: 0 0 var(--space-xs);
 }
 
@@ -652,7 +652,7 @@
 
 .recomp-content p {
   font-size: 0.8rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0;
 }
@@ -676,7 +676,7 @@
 
 .measurements-section h3 {
   font-size: 0.9rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-sm);
 }
 
@@ -707,8 +707,8 @@
 
 /* Measurement Card */
 .measurement-card {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
 }
@@ -729,12 +729,12 @@
 
 .measurement-icon {
   font-size: 0.9rem;
-  color: var(--color-muted);
+  color: var(--color-border-default);
 }
 
 .measurement-label {
   font-size: 0.7rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 @media (min-width: 480px) {
@@ -746,7 +746,7 @@
 .measurement-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
 }
 
@@ -773,11 +773,11 @@
 }
 
 .measurement-delta.positive {
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 .measurement-delta.negative {
-  color: var(--color-red);
+  color: var(--color-state-error);
 }
 
 /* Body Fat Chart */
@@ -820,12 +820,12 @@
   gap: var(--space-xs);
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--color-text-primary);
 }
 
 .entry-input-group label .lni {
   font-size: 1rem;
-  color: var(--color-muted);
+  color: var(--color-border-default);
 }
 
 .entry-input-group input {
@@ -833,28 +833,28 @@
   font-size: 1.1rem;
   font-weight: 600;
   text-align: center;
-  background-color: var(--color-bg);
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  border: 2px solid var(--color-border-default);
   border-radius: var(--radius-md);
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
   min-height: 48px;
   transition: border-color var(--transition-fast);
 }
 
 .entry-input-group input:focus {
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-primary);
   outline: none;
 }
 
 .entry-input-group input::placeholder {
-  color: var(--color-muted);
+  color: var(--color-border-default);
 }
 
 .entry-section-title {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-muted-light);
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: var(--space-sm);
@@ -881,8 +881,8 @@
   gap: var(--space-sm);
   width: 100%;
   padding: var(--space-md);
-  background-color: var(--color-accent);
-  color: var(--color-bg);
+  background-color: var(--color-accent-primary);
+  color: var(--color-bg-primary);
   font-size: 1rem;
   font-weight: 600;
   border: none;
@@ -893,7 +893,7 @@
 }
 
 .entry-submit:hover:not(:disabled) {
-  background-color: var(--color-accent-dim);
+  background-color: var(--color-accent-primary-hover);
 }
 
 .entry-submit:active:not(:disabled) {
