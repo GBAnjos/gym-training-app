@@ -14,7 +14,7 @@
 
 .no-training {
   text-align: center;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   padding: var(--space-xl);
   font-size: 0.9rem;
 }
@@ -52,10 +52,10 @@
   flex: 1;
   min-width: 44px;
   padding: var(--space-sm);
-  background-color: var(--color-card);
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-default);
   border-radius: var(--radius-md);
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-size: 0.8rem;
   font-weight: 500;
   transition: all var(--transition-fast);
@@ -70,13 +70,13 @@
 }
 
 .training-day-btn:hover {
-  border-color: var(--color-muted);
+  border-color: var(--color-border-default);
 }
 
 .training-day-btn.active {
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-primary);
   background-color: rgba(200, 245, 90, 0.1);
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 /* Workout Header */
@@ -92,7 +92,7 @@
 
 .workout-name {
   font-size: 1.25rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-xs);
 }
 
@@ -103,17 +103,17 @@
 }
 
 .workout-groups {
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
 }
 
 /* Progress Section */
 .progress-section {
-  background-color: var(--color-card);
+  background-color: var(--color-bg-surface);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
   margin-bottom: var(--space-md);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-default);
 }
 
 @media (min-width: 480px) {
@@ -129,24 +129,24 @@
   justify-content: space-between;
   margin-bottom: var(--space-xs);
   font-size: 0.8rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 .progress-percent {
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   font-weight: 600;
 }
 
 .progress-bar {
   height: 6px;
-  background-color: var(--color-card-alt);
+  background-color: var(--color-bg-elevated);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dim));
+  background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-primary-hover));
   border-radius: 4px;
   transition: width var(--transition-normal);
 }
@@ -167,8 +167,8 @@
 
 /* Exercise Card */
 .exercise-card {
-  background-color: var(--color-card);
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
   transition: all var(--transition-fast);
@@ -209,7 +209,7 @@
 .exercise-name {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-xs);
   line-height: 1.3;
 }
@@ -229,8 +229,8 @@
 
 .exercise-sets {
   padding: 2px 6px;
-  background-color: var(--color-card-alt);
-  color: var(--color-text-dim);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
@@ -239,7 +239,7 @@
 .exercise-obs {
   padding: 2px 6px;
   background-color: rgba(255, 184, 108, 0.2);
-  color: var(--color-orange);
+  color: var(--color-accent-warm);
   font-size: 0.75rem;
   font-weight: 500;
   border-radius: var(--radius-sm);
@@ -279,7 +279,7 @@
 .weight-input-group label {
   display: block;
   font-size: 0.7rem;
-  color: var(--color-muted-light);
+  color: var(--color-text-muted);
   margin-bottom: var(--space-xs);
 }
 
@@ -305,10 +305,10 @@
   justify-content: center;
   gap: 2px;
   padding: var(--space-sm);
-  background-color: var(--color-card-alt);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
-  color: var(--color-blue);
+  color: var(--color-accent-secondary);
   min-width: 44px;
   min-height: 44px;
   transition: all var(--transition-fast);
@@ -316,7 +316,7 @@
 
 .timer-btn:hover {
   background-color: rgba(107, 207, 255, 0.15);
-  border-color: var(--color-blue);
+  border-color: var(--color-accent-secondary);
 }
 
 .timer-btn:active {
@@ -340,7 +340,7 @@
   min-width: 48px;
   min-height: 48px;
   background: rgba(200, 245, 90, 0.05);
-  border: 2px dashed var(--color-muted);
+  border: 2px dashed var(--color-border-default);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -348,7 +348,7 @@
 }
 
 .done-checkbox:hover {
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-primary);
   border-style: solid;
   background: rgba(200, 245, 90, 0.15);
   opacity: 0.7;
@@ -364,21 +364,21 @@
 
 .done-checkbox .checkbox-icon {
   font-size: 1.5rem;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .exercise-card.completed .done-checkbox {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
+  background-color: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
   border-style: solid;
   opacity: 1;
 }
 
 .exercise-card.completed .done-checkbox .checkbox-icon {
-  color: var(--color-bg);
+  color: var(--color-bg-primary);
 }
 
 /* ===== Floating Timer ===== */
@@ -388,8 +388,8 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  background: var(--color-card);
-  border: 2px solid var(--color-blue);
+  background: var(--color-bg-surface);
+  border: 2px solid var(--color-accent-secondary);
   border-radius: var(--radius-xl);
   padding: var(--space-sm) var(--space-md);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -409,8 +409,8 @@
 }
 
 .floating-timer.done {
-  border-color: var(--color-accent);
-  background: linear-gradient(135deg, rgba(200, 245, 90, 0.15), var(--color-card));
+  border-color: var(--color-accent-primary);
+  background: linear-gradient(135deg, rgba(200, 245, 90, 0.15), var(--color-bg-surface));
 }
 
 .floating-timer-content {
@@ -422,7 +422,7 @@
 
 .floating-timer-label {
   font-size: 0.75rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
@@ -430,26 +430,26 @@
   font-size: 1.5rem;
   font-weight: 700;
   font-family: var(--font-mono);
-  color: var(--color-blue);
+  color: var(--color-accent-secondary);
 }
 
 .floating-timer-done {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 .floating-timer-check {
   font-size: 1.25rem;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
 }
 
 .floating-timer-stop {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--color-card-alt);
-  color: var(--color-text-dim);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -459,21 +459,21 @@
 }
 
 .floating-timer-stop:hover {
-  background: var(--color-muted);
-  color: var(--color-text);
+  background: var(--color-border-default);
+  color: var(--color-text-primary);
 }
 
 .floating-timer-progress {
   margin-top: var(--space-xs);
   height: 3px;
-  background: var(--color-card-alt);
+  background: var(--color-bg-elevated);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .floating-timer-bar {
   height: 100%;
-  background: var(--color-blue);
+  background: var(--color-accent-secondary);
   transition: width 1s linear;
 }
 
