@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+  z-index: var(--z-overlay);
   display: flex;
   align-items: flex-end;
   animation: fadeIn 0.2s ease;
@@ -16,7 +16,7 @@
 .bottom-sheet {
   width: 100%;
   max-height: 90vh;
-  background-color: var(--color-card);
+  background-color: var(--color-bg-surface);
   border-top-left-radius: var(--radius-xl);
   border-top-right-radius: var(--radius-xl);
   padding: var(--space-sm) var(--space-md) var(--space-lg);
@@ -47,7 +47,7 @@
 .bottom-sheet-handle {
   width: 40px;
   height: 4px;
-  background-color: var(--color-muted);
+  background-color: var(--color-border-default);
   border-radius: 2px;
   margin: 0 auto var(--space-md);
 }
@@ -68,7 +68,7 @@
 .bottom-sheet-header h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -86,15 +86,15 @@
   justify-content: center;
   background: transparent;
   border: none;
-  color: var(--color-muted);
+  color: var(--color-border-default);
   font-size: 1rem;
   border-radius: 50%;
   transition: all var(--transition-fast);
 }
 
 .bottom-sheet-close:hover {
-  background-color: var(--color-card-alt);
-  color: var(--color-text);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
 }
 
 .bottom-sheet-content {
