@@ -14,7 +14,7 @@
 
 .meals-title {
   font-size: 1.4rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-xs);
 }
 
@@ -25,7 +25,7 @@
 }
 
 .meals-subtitle {
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   margin-bottom: var(--space-md);
 }
@@ -39,8 +39,8 @@
 
 /* Daily Progress */
 .meals-progress {
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-sm);
   margin-bottom: var(--space-md);
@@ -63,26 +63,26 @@
 
 .meals-progress-label {
   font-size: 0.8rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 .meals-progress-count {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   font-family: var(--font-mono);
 }
 
 .meals-progress-bar {
   height: 6px;
-  background: var(--color-card-alt);
+  background: var(--color-bg-elevated);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .meals-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dim));
+  background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-primary-hover));
   border-radius: 3px;
   transition: width var(--transition-normal);
 }
@@ -103,8 +103,8 @@
 
 /* Meal Card */
 .meal-card {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
@@ -118,7 +118,7 @@
 }
 
 .meal-card:hover {
-  border-color: var(--color-muted);
+  border-color: var(--color-border-default);
 }
 
 .meal-card:active {
@@ -126,7 +126,7 @@
 }
 
 .meal-card.expanded {
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-primary);
 }
 
 .meal-card.completed {
@@ -136,7 +136,7 @@
 
 .meal-card.completed .meal-name {
   text-decoration: line-through;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 .meal-check {
@@ -145,7 +145,7 @@
   min-width: 32px;
   min-height: 32px;
   border-radius: 50%;
-  border: 2px dashed var(--color-muted);
+  border: 2px dashed var(--color-border-default);
   background: rgba(200, 245, 90, 0.05);
   display: flex;
   align-items: center;
@@ -153,7 +153,7 @@
   flex-shrink: 0;
   cursor: pointer;
   transition: all var(--transition-fast);
-  color: var(--color-muted);
+  color: var(--color-border-default);
   font-size: 1rem;
   position: relative;
   z-index: 2;
@@ -173,9 +173,9 @@
 }
 
 .meal-check:hover {
-  border-color: var(--color-accent);
+  border-color: var(--color-accent-primary);
   border-style: solid;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   background: rgba(200, 245, 90, 0.15);
   opacity: 0.7;
 }
@@ -185,10 +185,10 @@
 }
 
 .meal-check.checked {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
   border-style: solid;
-  color: var(--color-bg);
+  color: var(--color-bg-primary);
   opacity: 1;
 }
 
@@ -230,7 +230,7 @@
 .meal-name {
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
 }
 
 @media (min-width: 480px) {
@@ -241,7 +241,7 @@
 
 .meal-time {
   font-size: 0.75rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   font-family: var(--font-mono);
 }
 
@@ -252,7 +252,7 @@
 }
 
 .meal-arrow {
-  color: var(--color-muted);
+  color: var(--color-border-default);
   font-size: 0.7rem;
   transition: transform var(--transition-fast);
   flex-shrink: 0;
@@ -270,7 +270,7 @@
 
 .meal-content {
   padding: 0 var(--space-sm) var(--space-sm);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border-default);
   margin-top: var(--space-xs);
   padding-top: var(--space-sm);
 }
@@ -285,7 +285,7 @@
 
 .meal-note {
   font-size: 0.8rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
   margin-bottom: var(--space-sm);
   font-style: italic;
 }
@@ -324,14 +324,14 @@
 .option-number {
   width: 20px;
   height: 20px;
-  background-color: var(--color-card-alt);
+  background-color: var(--color-bg-elevated);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.65rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-primary);
   flex-shrink: 0;
 }
 
@@ -345,7 +345,7 @@
 
 .option-text {
   font-size: 0.8rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   line-height: 1.4;
   padding-top: 2px;
 }
@@ -359,8 +359,8 @@
 
 /* Macros Panel */
 .macros-panel {
-  background: linear-gradient(135deg, var(--color-card), var(--color-card-alt));
-  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, var(--color-bg-surface), var(--color-bg-elevated));
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-md);
 }
@@ -374,7 +374,7 @@
 
 .macros-title {
   font-size: 0.9rem;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   margin-bottom: var(--space-sm);
 }
 
@@ -437,7 +437,7 @@
 
 .macro-label {
   font-size: 0.65rem;
-  color: var(--color-text-dim);
+  color: var(--color-text-secondary);
 }
 
 @media (min-width: 480px) {
@@ -449,7 +449,7 @@
 .macro-value {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
 }
 
