@@ -44,10 +44,18 @@ export function OnboardingFlow({ onComplete }) {
     // Step 7: Goals
     goals: [],
 
-    // Step 8: Physical data (optional)
+    // Step 8: Physical data
+    sex: '', // 'male' | 'female'
+    age: '',
     weight: '',
     height: '',
+    // Advanced mode fields
+    physicalMode: 'basic', // 'basic' | 'advanced'
     bodyFatPercent: '',
+    braco: '',
+    peito: '',
+    cintura: '',
+    coxa: '',
 
     // Settings
     preferredLanguage: language
@@ -673,7 +681,7 @@ function GoalsStep({ t, profile, toggleGoal, errors, onNext, onBack }) {
   );
 }
 
-function PhysicalDataStep({ t, profile, updateProfile, onBack, onFinish }) {
+function PhysicalDataStep({ t, profile, updateProfile, onBack, onFinish, language }) {
   return (
     <div className="step">
       <div className="step-header">
@@ -685,8 +693,55 @@ function PhysicalDataStep({ t, profile, updateProfile, onBack, onFinish }) {
       </div>
 
       <div className="form-section">
+        {/* Sex Selection */}
         <div className="input-group">
-          <label>{t('step_physical_weight')} <span className="label-optional">{t('optional')}</span></label>
+          <label>{t('step_physical_sex')}</label>
+          <div className="sex-options">
+            <button
+              type="button"
+              className={`sex-btn ${profile.sex === 'male' ? 'selected' : ''}`}
+              onClick={() => updateProfile('sex', 'male')}
+            >
+              <Icon name="male-1" className="sex-icon" />
+              <span>{t('step_physical_male')}</span>
+            </button>
+            <button
+              type="button"
+              className={`sex-btn ${profile.sex === 'female' ? 'selected' : ''}`}
+              onClick={() => updateProfile('sex', 'female')}
+            >
+              <Icon name="female-1" className="sex-icon" />
+              <span>{t('step_physical_female')}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Basic fields row */}
+        <div className="physical-row">
+          <div className="input-group half">
+            <label>{t('step_physical_age')}</label>
+            <input
+              type="number"
+              value={profile.age}
+              onChange={(e) => updateProfile('age', e.target.value)}
+              placeholder="Ex: 28"
+              className="input-field"
+            />
+          </div>
+          <div className="input-group half">
+            <label>{t('step_physical_height')}</label>
+            <input
+              type="number"
+              value={profile.height}
+              onChange={(e) => updateProfile('height', e.target.value)}
+              placeholder="Ex: 178"
+              className="input-field"
+            />
+          </div>
+        </div>
+
+        <div className="input-group">
+          <label>{t('step_physical_weight')}</label>
           <input
             type="number"
             value={profile.weight}
@@ -697,28 +752,96 @@ function PhysicalDataStep({ t, profile, updateProfile, onBack, onFinish }) {
           />
         </div>
 
-        <div className="input-group">
-          <label>{t('step_physical_height')} <span className="label-optional">{t('optional')}</span></label>
-          <input
-            type="number"
-            value={profile.height}
-            onChange={(e) => updateProfile('height', e.target.value)}
-            placeholder="Ex: 178"
-            className="input-field"
-          />
+        {/* Advanced Mode Toggle */}
+        <div className="recomp-toggle-section">
+          <div className="recomp-toggle-header" onClick={() => updateProfile('physicalMode', profile.physicalMode === 'basic' ? 'advanced' : 'basic')}>
+            <div className="recomp-toggle-info">
+              <Icon name="fire-1" className="recomp-icon" />
+              <div className="recomp-toggle-text">
+                <span className="recomp-toggle-title">{t('step_physical_recomp_title')}</span>
+                <span className="recomp-toggle-desc">{t('step_physical_recomp_desc')}</span>
+              </div>
+            </div>
+            <div className={`toggle-switch ${profile.physicalMode === 'advanced' ? 'active' : ''}`}>
+              <div className="toggle-thumb"></div>
+            </div>
+          </div>
         </div>
 
-        <div className="input-group">
-          <label>{t('step_physical_bodyfat')} <span className="label-optional">{t('optional')}</span></label>
-          <input
-            type="number"
-            value={profile.bodyFatPercent}
-            onChange={(e) => updateProfile('bodyFatPercent', e.target.value)}
-            placeholder="Ex: 18"
-            className="input-field"
-            step="0.1"
-          />
-        </div>
+        {/* Advanced fields */}
+        {profile.physicalMode === 'advanced' && (
+          <div className="advanced-measurements">
+            <div className="input-group">
+              <label>
+                <Icon name="fire-1" />
+                {t('step_physical_bodyfat')}
+              </label>
+              <input
+                type="number"
+                value={profile.bodyFatPercent}
+                onChange={(e) => updateProfile('bodyFatPercent', e.target.value)}
+                placeholder="Ex: 18"
+                className="input-field"
+                step="0.1"
+              />
+            </div>
+
+            <div className="measurements-title">
+              <Icon name="ruler-1" />
+              <span>{language === 'pt-BR' ? 'Medidas (cm)' : 'Measurements (cm)'}</span>
+            </div>
+
+            <div className="physical-row">
+              <div className="input-group half">
+                <label>{t('progress_arm')}</label>
+                <input
+                  type="number"
+                  value={profile.braco}
+                  onChange={(e) => updateProfile('braco', e.target.value)}
+                  placeholder="Ex: 35"
+                  className="input-field"
+                  step="0.1"
+                />
+              </div>
+              <div className="input-group half">
+                <label>{t('progress_chest')}</label>
+                <input
+                  type="number"
+                  value={profile.peito}
+                  onChange={(e) => updateProfile('peito', e.target.value)}
+                  placeholder="Ex: 100"
+                  className="input-field"
+                  step="0.1"
+                />
+              </div>
+            </div>
+
+            <div className="physical-row">
+              <div className="input-group half">
+                <label>{t('progress_waist')}</label>
+                <input
+                  type="number"
+                  value={profile.cintura}
+                  onChange={(e) => updateProfile('cintura', e.target.value)}
+                  placeholder="Ex: 80"
+                  className="input-field"
+                  step="0.1"
+                />
+              </div>
+              <div className="input-group half">
+                <label>{t('progress_thigh')}</label>
+                <input
+                  type="number"
+                  value={profile.coxa}
+                  onChange={(e) => updateProfile('coxa', e.target.value)}
+                  placeholder="Ex: 55"
+                  className="input-field"
+                  step="0.1"
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         <p className="skip-hint">
           <Icon name="information-circle-1" />

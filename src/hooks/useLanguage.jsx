@@ -89,9 +89,15 @@ const translations = {
     // Onboarding Step 8 - Physical Data
     step_physical_title: 'Seus dados físicos',
     step_physical_desc: 'Opcional, mas ajuda a personalizar ainda mais',
-    step_physical_weight: 'Peso atual (kg)',
+    step_physical_sex: 'Sexo biológico',
+    step_physical_male: 'Masculino',
+    step_physical_female: 'Feminino',
+    step_physical_age: 'Idade',
+    step_physical_weight: 'Peso (kg)',
     step_physical_height: 'Altura (cm)',
     step_physical_bodyfat: 'Gordura corporal (%)',
+    step_physical_recomp_title: 'Recomposição corporal',
+    step_physical_recomp_desc: 'Acompanhar medidas detalhadas',
     step_physical_skip_hint: 'Você pode pular e adicionar depois',
 
     // Profile step (kept for compatibility)
@@ -369,9 +375,15 @@ const translations = {
     // Onboarding Step 8 - Physical Data
     step_physical_title: 'Your physical data',
     step_physical_desc: 'Optional, but helps personalize even more',
-    step_physical_weight: 'Current weight (kg)',
+    step_physical_sex: 'Biological sex',
+    step_physical_male: 'Male',
+    step_physical_female: 'Female',
+    step_physical_age: 'Age',
+    step_physical_weight: 'Weight (kg)',
     step_physical_height: 'Height (cm)',
     step_physical_bodyfat: 'Body fat (%)',
+    step_physical_recomp_title: 'Body recomposition',
+    step_physical_recomp_desc: 'Track detailed measurements',
     step_physical_skip_hint: 'You can skip and add later',
 
     // Profile step (kept for compatibility)

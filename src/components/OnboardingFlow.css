@@ -1716,3 +1716,191 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* Sex Selection */
+.sex-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.sex-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  background: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sex-btn:hover {
+  border-color: var(--color-muted);
+  background: var(--color-card-alt);
+}
+
+.sex-btn.selected {
+  border-color: var(--color-accent);
+  background: rgba(200, 245, 90, 0.1);
+}
+
+.sex-icon {
+  font-size: 2rem;
+}
+
+.sex-btn span {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+/* Physical Row */
+.physical-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.input-group.half {
+  flex: 1;
+}
+
+/* Recomp Toggle Section */
+.recomp-toggle-section {
+  margin-top: var(--space-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.recomp-toggle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.recomp-toggle-header:hover {
+  background: var(--color-card-alt);
+}
+
+.recomp-toggle-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.recomp-icon {
+  font-size: 1.5rem;
+  color: var(--color-orange);
+}
+
+.recomp-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recomp-toggle-title {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.recomp-toggle-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  width: 48px;
+  height: 28px;
+  background: var(--color-card-alt);
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  position: relative;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.toggle-switch.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--color-text);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition-fast);
+}
+
+.toggle-switch.active .toggle-thumb {
+  transform: translateX(20px);
+  background: var(--color-bg);
+}
+
+/* Advanced Measurements */
+.advanced-measurements {
+  animation: slideDown 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.measurements-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: var(--space-sm);
+}
+
+.advanced-measurements .input-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Mobile adjustments for physical data */
+@media (max-width: 400px) {
+  .physical-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .sex-options {
+    gap: var(--space-sm);
+  }
+
+  .sex-btn {
+    padding: var(--space-md);
+  }
+}
