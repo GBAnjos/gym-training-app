@@ -12,10 +12,12 @@ const STEPS = [
   'sleepHours',    // Step 2: How many hours do you sleep?
   'lunchTime',     // Step 3: What time do you have lunch?
   'dinnerTime',    // Step 4: What time do you have dinner?
-  'gymPreference', // Step 5: When do you prefer to workout?
-  'officeDays',    // Step 6: Office days + hours
-  'goals',         // Step 7: What are your goals?
-  'physicalData',  // Step 8: Physical data (optional)
+  'activitySelect',   // Step 5: What activities do you do?
+  'activityAddons',    // Step 5b: Any add-on activities?
+  'activityTime',      // Step 5c: When do you prefer to train?
+  'officeDays',
+  'goals',
+  'physicalData',
   'generating'
 ];
 
@@ -33,8 +35,10 @@ export function OnboardingFlow({ onComplete }) {
     lunchTime: '12:30',
     dinnerTime: '19:30',
 
-    // Step 5: Gym preference
-    gymPreference: '', // 'morning' | 'evening' | 'flexible'
+    // Step 5: Activities
+    mainActivities: [],          // ['gym', 'crossfit', ...]
+    addOnActivities: [],         // [{ type: 'running', frequency: 2 }, ...]
+    gymPreference: '',           // 'morning' | 'afternoon' | 'evening' | 'flexible'
 
     // Step 6: Office
     officeDaysCount: 0,
@@ -120,7 +124,13 @@ export function OnboardingFlow({ onComplete }) {
         }
         break;
 
-      case 'gymPreference':
+      case 'activitySelect':
+        if (profile.mainActivities.length === 0) {
+          newErrors.mainActivities = t('error_required_activity');
+        }
+        break;
+
+      case 'activityTime':
         if (!profile.gymPreference) {
           newErrors.gymPreference = t('error_required_gym_pref');
         }
@@ -141,7 +151,7 @@ export function OnboardingFlow({ onComplete }) {
     const currentStepName = STEPS[currentStep];
 
     // Skip validation for welcome, language, physicalData (optional), generating
-    const skipValidation = ['welcome', 'language', 'sleepHours', 'lunchTime', 'dinnerTime', 'officeDays', 'physicalData', 'generating'];
+    const skipValidation = ['welcome', 'language', 'sleepHours', 'lunchTime', 'dinnerTime', 'activityAddons', 'officeDays', 'physicalData', 'generating'];
 
     if (skipValidation.includes(currentStepName) || validateStep(currentStepName)) {
       if (currentStep < STEPS.length - 1) {
@@ -216,8 +226,12 @@ export function OnboardingFlow({ onComplete }) {
         return <LunchTimeStep {...props} />;
       case 'dinnerTime':
         return <DinnerTimeStep {...props} />;
-      case 'gymPreference':
-        return <GymPreferenceStep {...props} />;
+      case 'activitySelect':
+        return <ActivitySelectStep {...props} />;
+      case 'activityAddons':
+        return <ActivityAddonsStep {...props} />;
+      case 'activityTime':
+        return <ActivityTimeStep {...props} />;
       case 'officeDays':
         return <OfficeDaysStep {...props} />;
       case 'goals':
