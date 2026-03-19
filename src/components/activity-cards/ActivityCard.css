@@ -176,3 +176,50 @@
   min-width: 40px;
   text-align: center;
 }
+
+/* Calisthenics specific */
+.calisthenics-skill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border-default);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.calisthenics-skill:last-child {
+  border-bottom: none;
+}
+
+.calisthenics-skill.done {
+  opacity: 0.5;
+}
+
+.calisthenics-skill-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.calisthenics-skill-name {
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+}
+
+.calisthenics-level-badge {
+  display: inline-flex;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.calisthenics-detail {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-right: var(--space-sm);
+}
