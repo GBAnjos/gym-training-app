@@ -288,6 +288,46 @@ const translations = {
     progress_weight_chart: 'Evolução do Peso',
     progress_bodyfat_chart: 'Evolução da Gordura',
     progress_no_bodyfat_data: 'Registre sua gordura corporal para ver o gráfico',
+
+    // Activity selection (onboarding)
+    onboarding_activity_title: 'Como você treina?',
+    onboarding_activity_subtitle: 'Selecione todas que pratica',
+    activity_gym: 'Academia',
+    activity_crossfit: 'CrossFit',
+    activity_calisthenics: 'Calistenia',
+    activity_pilates: 'Pilates',
+
+    // Activity add-ons (onboarding)
+    onboarding_addons_title: 'Pratica mais alguma?',
+    onboarding_addons_skip: 'Pular',
+    activity_running: 'Corrida',
+    activity_yoga: 'Yoga',
+    frequency_label: 'vezes/semana',
+
+    // Activity time preference (onboarding)
+    onboarding_time_title: 'Quando prefere treinar?',
+    time_morning: 'Manhã',
+    time_afternoon: 'Tarde',
+    time_evening: 'Noite',
+    time_flexible: 'Flexível',
+
+    // Activity card labels
+    crossfit_wod: 'WOD',
+    crossfit_rounds: 'Rounds',
+    crossfit_score: 'Score',
+    crossfit_movements: 'Movimentos',
+    calisthenics_level: 'Nível',
+    calisthenics_hold: 'Segurar',
+    calisthenics_sets: 'Séries',
+    pilates_flow: 'Flow',
+    pilates_duration: 'Duração',
+    pilates_moves: 'Movimentos',
+    running_distance: 'Distância',
+    running_pace: 'Pace',
+    running_zone: 'Zona',
+    yoga_style: 'Estilo',
+    yoga_duration: 'Duração',
+    yoga_focus: 'Foco',
   },
 
   'en': {
@@ -574,6 +614,46 @@ const translations = {
     progress_weight_chart: 'Weight History',
     progress_bodyfat_chart: 'Body Fat History',
     progress_no_bodyfat_data: 'Log your body fat to see the chart',
+
+    // Activity selection (onboarding)
+    onboarding_activity_title: 'How do you train?',
+    onboarding_activity_subtitle: 'Select all that apply',
+    activity_gym: 'Gym',
+    activity_crossfit: 'CrossFit',
+    activity_calisthenics: 'Calisthenics',
+    activity_pilates: 'Pilates',
+
+    // Activity add-ons (onboarding)
+    onboarding_addons_title: 'Do you also do any of these?',
+    onboarding_addons_skip: 'Skip',
+    activity_running: 'Running',
+    activity_yoga: 'Yoga',
+    frequency_label: 'times/week',
+
+    // Activity time preference (onboarding)
+    onboarding_time_title: 'When do you prefer to train?',
+    time_morning: 'Morning',
+    time_afternoon: 'Afternoon',
+    time_evening: 'Evening',
+    time_flexible: 'Flexible',
+
+    // Activity card labels
+    crossfit_wod: 'WOD',
+    crossfit_rounds: 'Rounds',
+    crossfit_score: 'Score',
+    crossfit_movements: 'Movements',
+    calisthenics_level: 'Level',
+    calisthenics_hold: 'Hold',
+    calisthenics_sets: 'Sets',
+    pilates_flow: 'Flow',
+    pilates_duration: 'Duration',
+    pilates_moves: 'Movements',
+    running_distance: 'Distance',
+    running_pace: 'Pace',
+    running_zone: 'Zone',
+    yoga_style: 'Style',
+    yoga_duration: 'Duration',
+    yoga_focus: 'Focus',
   }
 };
 
