@@ -1,11 +1,17 @@
 import { useState, useEffect, useMemo } from 'react';
 import { TREINOS, DAY_MAP, TRAINING_DAYS, SCHEDULE_TO_TREINO_DAY, getExerciseName, getMuscle, getObs, getWorkoutName, getWorkoutBySplit } from '../data/treinos';
 import { muscleColors } from '../data/design';
+import { DESIGN } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
 import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { ExerciseMedia } from '../components/ExerciseMedia';
 import { Icon } from '../components/Icon';
+import { CrossFitCard } from '../components/activity-cards/CrossFitCard';
+import { CalisthenicsCard } from '../components/activity-cards/CalisthenicsCard';
+import { PilatesCard } from '../components/activity-cards/PilatesCard';
+import { RunCard } from '../components/activity-cards/RunCard';
+import { YogaCard } from '../components/activity-cards/YogaCard';
 import './TrainingPage.css';
 
 // Load workout plan from localStorage
@@ -23,7 +29,15 @@ function useWorkoutPlan() {
 
 // Map schedule days to workouts based on workout plan
 function buildTrainingMap(plan) {
-  if (!plan || !plan.split || !plan.trainingDays) return null;
+  if (!plan) return null;
+
+  // New multi-activity path
+  if (plan.dayActivities) {
+    return plan.dayActivities;
+  }
+
+  // Legacy gym-only path
+  if (!plan.split || !plan.trainingDays) return null;
   const map = {};
   plan.split.forEach((splitEntry, i) => {
     const scheduleDay = plan.trainingDays[i];
@@ -44,7 +58,15 @@ function buildTrainingMap(plan) {
 }
 
 function getActiveDays(plan) {
-  if (!plan || !plan.trainingDays) return TRAINING_DAYS;
+  if (!plan) return TRAINING_DAYS;
+
+  // New multi-activity path: dayActivities keys are schedule days (Seg, Ter, etc.)
+  if (plan.dayActivities) {
+    return Object.keys(plan.dayActivities);
+  }
+
+  // Legacy path
+  if (!plan.trainingDays) return TRAINING_DAYS;
   return plan.trainingDays.map(d => SCHEDULE_TO_TREINO_DAY[d]).filter(Boolean);
 }
 
@@ -56,9 +78,17 @@ export function TrainingPage() {
   const activeDays = useMemo(() => getActiveDays(workoutPlan), [workoutPlan]);
 
   const [selectedDay, setSelectedDay] = useState(() => {
+    const days = workoutPlan ? getActiveDays(workoutPlan) : TRAINING_DAYS;
+    if (workoutPlan?.dayActivities) {
+      // Multi-activity: use schedule day keys
+      const dayMap = { 'domingo': 'Dom', 'segunda': 'Seg', 'terça': 'Ter', 'quarta': 'Qua', 'quinta': 'Qui', 'sexta': 'Sex', 'sábado': 'Sáb' };
+      const today = new Date().toLocaleDateString("pt-BR", { weekday: "long" });
+      const todayKey = dayMap[today.toLowerCase()] || days[0];
+      return days.includes(todayKey) ? todayKey : days[0];
+    }
+    // Legacy
     const today = new Date().toLocaleDateString("pt-BR", { weekday: "long" });
     const todayKey = DAY_MAP[today] || 'segunda';
-    const days = workoutPlan ? getActiveDays(workoutPlan) : TRAINING_DAYS;
     return days.includes(todayKey) ? todayKey : days[0];
   });
   const [timerSeconds, setTimerSeconds] = useState(null);
@@ -137,7 +167,26 @@ export function TrainingPage() {
     }
   }, [completed, total, selectedDay, toast, language]);
 
-  if (!treino) {
+  const renderActivityCard = (dayActivity, day) => {
+    switch (dayActivity.type) {
+      case 'crossfit':
+        return <CrossFitCard dayActivity={dayActivity} day={day} language={language} toast={toast} />;
+      case 'calisthenics':
+        return <CalisthenicsCard dayActivity={dayActivity} day={day} language={language} toast={toast} />;
+      case 'pilates':
+        return <PilatesCard dayActivity={dayActivity} day={day} language={language} toast={toast} />;
+      case 'running':
+        return <RunCard dayActivity={dayActivity} day={day} language={language} toast={toast} />;
+      case 'yoga':
+        return <YogaCard dayActivity={dayActivity} day={day} language={language} toast={toast} />;
+      default:
+        return null;
+    }
+  };
+
+  const isNonGymDay = workoutPlan?.dayActivities?.[selectedDay] && workoutPlan.dayActivities[selectedDay].type !== 'gym';
+
+  if (!treino && !isNonGymDay) {
     return (
       <div className="training-page">
         <p className="no-training">
@@ -151,48 +200,70 @@ export function TrainingPage() {
     <div className="training-page">
       {/* Day Selector */}
       <div className="training-day-selector">
-        {activeDays.map(day => (
-          <button
-            key={day}
-            className={`training-day-btn ${selectedDay === day ? 'active' : ''}`}
-            onClick={() => setSelectedDay(day)}
-          >
-            {day.charAt(0).toUpperCase() + day.slice(1, 3)}
-          </button>
-        ))}
+        {activeDays.map(day => {
+          const activityType = workoutPlan?.dayActivities?.[day]?.type;
+          const dotColor = activityType ? DESIGN.sportColors[activityType]?.primary : null;
+          return (
+            <button
+              key={day}
+              className={`training-day-btn ${selectedDay === day ? 'active' : ''}`}
+              onClick={() => setSelectedDay(day)}
+            >
+              {day.charAt(0).toUpperCase() + day.slice(1, 3)}
+              {dotColor && <span className="activity-dot" style={{ backgroundColor: dotColor }} />}
+            </button>
+          );
+        })}
       </div>
 
       {/* Workout Header */}
-      <div className="workout-header">
-        <h2 className="workout-name">{getWorkoutName(treino, language)}</h2>
-        <p className="workout-groups">{treino.grupos.map(g => getMuscle(g, language)).join(' • ')}</p>
-      </div>
-
-      {/* Progress Bar */}
-      <div className="progress-section">
-        <div className="progress-info">
-          <span>{completed} {language === 'pt-BR' ? 'de' : 'of'} {total} {language === 'pt-BR' ? 'exercícios' : 'exercises'}</span>
-          <span className="progress-percent">{progress}%</span>
+      {workoutPlan?.dayActivities?.[selectedDay]?.type && workoutPlan.dayActivities[selectedDay].type !== 'gym' ? (
+        <div className="workout-header">
+          <h2 className="workout-name">
+            {workoutPlan.dayActivities[selectedDay].session?.name?.[language] ||
+             workoutPlan.dayActivities[selectedDay].type.charAt(0).toUpperCase() + workoutPlan.dayActivities[selectedDay].type.slice(1)}
+          </h2>
         </div>
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${progress}%` }} />
+      ) : treino ? (
+        <div className="workout-header">
+          <h2 className="workout-name">{getWorkoutName(treino, language)}</h2>
+          <p className="workout-groups">{treino.grupos.map(g => getMuscle(g, language)).join(' • ')}</p>
         </div>
-      </div>
+      ) : null}
 
-      {/* Exercise List */}
-      <div className="exercise-list">
-        {treino.exercicios.map(ex => (
-          <ExerciseCard
-            key={ex.id}
-            exercise={ex}
-            dayKey={selectedDay}
-            onSync={debouncedSync}
-            onStartTimer={startTimer}
-            toast={toast}
-            language={language}
-          />
-        ))}
-      </div>
+      {/* Progress Bar - only for gym */}
+      {(!workoutPlan?.dayActivities?.[selectedDay] || workoutPlan.dayActivities[selectedDay].type === 'gym') && treino && (
+        <div className="progress-section">
+          <div className="progress-info">
+            <span>{completed} {language === 'pt-BR' ? 'de' : 'of'} {total} {language === 'pt-BR' ? 'exercícios' : 'exercises'}</span>
+            <span className="progress-percent">{progress}%</span>
+          </div>
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: `${progress}%` }} />
+          </div>
+        </div>
+      )}
+
+      {/* Exercise List / Activity Card */}
+      {workoutPlan?.dayActivities?.[selectedDay] && workoutPlan.dayActivities[selectedDay].type !== 'gym' ? (
+        <div className="exercise-list">
+          {renderActivityCard(workoutPlan.dayActivities[selectedDay], selectedDay)}
+        </div>
+      ) : (
+        <div className="exercise-list">
+          {treino?.exercicios?.map(ex => (
+            <ExerciseCard
+              key={ex.id}
+              exercise={ex}
+              dayKey={selectedDay}
+              onSync={debouncedSync}
+              onStartTimer={startTimer}
+              toast={toast}
+              language={language}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Floating Timer */}
       {timerSeconds !== null && (
