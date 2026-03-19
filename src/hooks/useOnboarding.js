@@ -141,6 +141,9 @@ export function useOnboarding() {
         exercise_type: profileData.exerciseType || null,
         gym_type: profileData.gymType || [],
         sports: profileData.sports || [],
+        main_activities: profileData.mainActivities || ['gym'],
+        addon_activities: JSON.stringify(profileData.addOnActivities || []),
+        activity_preference: profileData.gymPreference || 'flexible',
         preferred_language: profileData.preferredLanguage || 'pt-BR',
         onboarding_complete: true,
         updated_at: new Date().toISOString()
