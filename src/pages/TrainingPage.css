@@ -61,8 +61,17 @@
   transition: all var(--transition-fast);
   min-height: 44px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.training-day-btn .activity-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin: 2px auto 0;
 }
 
 .training-day-btn:active {
