@@ -3,6 +3,11 @@ import { useOnboarding } from '../hooks/useOnboarding';
 import { useLanguage } from '../hooks/useLanguage.jsx';
 import { Icon } from './Icon';
 import { DESIGN } from '../data/design.js';
+import { getWodByIndex } from '../data/crossfit.js';
+import { getCalisthenicsSplitByIndex } from '../data/calisthenics.js';
+import { getPilatesFlowByIndex } from '../data/pilates.js';
+import { getRunSessionByIndex } from '../data/running.js';
+import { getYogaSessionByIndex } from '../data/yoga.js';
 import './OnboardingFlow.css';
 
 // New 8-step onboarding flow per Patch 01 spec
@@ -1101,8 +1106,122 @@ const DINNER_SUBS = {
   'Dom': { 'pt-BR': 'Comida da semana pronta — usa ela', 'en': 'Week food is ready — use it' },
 };
 
+function getActivityPlan(goals, mainActivities, addOnActivities) {
+  // Backward compat: default to gym-only
+  const mains = mainActivities && mainActivities.length > 0 ? mainActivities : ['gym'];
+  const addons = addOnActivities || [];
+
+  // 1. Get total training days from goals
+  const hasMusclGain = goals.includes('muscle_gain');
+  const hasWeightLoss = goals.includes('weight_loss');
+  const totalMainDays = hasMusclGain ? 5 : hasWeightLoss ? 4 : 3;
+
+  // 2. Get gym split (used for gym days and as base for day count)
+  const gymSplit = getTrainingSplit(goals);
+  const trainingDaySlots = gymSplit.days.slice(0, totalMainDays); // e.g. ['Seg','Ter','Qua','Qui','Sex']
+
+  // 3. Distribute main activities round-robin across training days
+  // First selected activity gets most days
+  const dayActivities = {};
+  const activityCounters = {}; // track index per activity for rotation
+  mains.forEach(a => { activityCounters[a] = 0; });
+
+  trainingDaySlots.forEach((day, i) => {
+    const activityType = mains[i % mains.length];
+    const counter = activityCounters[activityType];
+
+    let session = null;
+    if (activityType === 'gym') {
+      session = { ...gymSplit.split[counter % gymSplit.split.length] };
+    } else if (activityType === 'crossfit') {
+      session = getWodByIndex(counter);
+    } else if (activityType === 'calisthenics') {
+      session = getCalisthenicsSplitByIndex(counter);
+    } else if (activityType === 'pilates') {
+      session = getPilatesFlowByIndex(counter);
+    }
+
+    dayActivities[day] = { type: activityType, session };
+    activityCounters[activityType] = counter + 1;
+  });
+
+  // 4. Place add-ons on free weekdays
+  const allWeekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const freeDays = allWeekdays.filter(d => !dayActivities[d]);
+  const addonCounters = {};
+
+  addons.forEach(addon => {
+    addonCounters[addon.type] = 0;
+    let placed = 0;
+    const targetFreq = addon.frequency || 2;
+
+    for (let d = 0; d < freeDays.length && placed < targetFreq; d++) {
+      const day = freeDays[d];
+      if (dayActivities[day]) continue; // already taken by another add-on
+
+      // Running avoids leg-heavy gym days (check adjacent days)
+      if (addon.type === 'running') {
+        const dayIdx = allWeekdays.indexOf(day);
+        const prevDay = dayIdx > 0 ? allWeekdays[dayIdx - 1] : null;
+        const nextDay = dayIdx < allWeekdays.length - 1 ? allWeekdays[dayIdx + 1] : null;
+        const isLegDay = (d) => {
+          const act = dayActivities[d];
+          if (!act || act.type !== 'gym') return false;
+          const name = act.session?.name || '';
+          return name === 'Legs' || name === 'Lower';
+        };
+        if ((prevDay && isLegDay(prevDay)) || (nextDay && isLegDay(nextDay))) continue;
+      }
+
+      let session = null;
+      if (addon.type === 'running') {
+        session = getRunSessionByIndex(addonCounters[addon.type]);
+      } else if (addon.type === 'yoga') {
+        session = getYogaSessionByIndex(addonCounters[addon.type]);
+      }
+
+      dayActivities[day] = { type: addon.type, session };
+      addonCounters[addon.type] = (addonCounters[addon.type] || 0) + 1;
+      placed++;
+      freeDays.splice(d, 1); // remove from free list
+      d--; // adjust index
+    }
+
+    // Overflow: if couldn't place enough, stack as secondary on main days
+    if (placed < targetFreq) {
+      const mainDays = Object.keys(dayActivities).filter(d =>
+        dayActivities[d].type !== addon.type && !dayActivities[d].secondary
+      );
+      for (let m = 0; m < mainDays.length && placed < targetFreq; m++) {
+        let session = null;
+        if (addon.type === 'running') {
+          session = getRunSessionByIndex(addonCounters[addon.type]);
+        } else if (addon.type === 'yoga') {
+          session = getYogaSessionByIndex(addonCounters[addon.type]);
+        }
+        dayActivities[mainDays[m]].secondary = { type: addon.type, session };
+        addonCounters[addon.type] = (addonCounters[addon.type] || 0) + 1;
+        placed++;
+      }
+    }
+  });
+
+  return {
+    trainingDays: Object.keys(dayActivities),
+    dayActivities,
+    splitType: gymSplit.type,
+    split: gymSplit.split.map((s, i) => ({
+      day: gymSplit.days[i],
+      label: s.label,
+      name: s.name,
+      focus: s.focus,
+      icon: s.icon
+    })),
+  };
+}
+
 function generateScheduleFromProfile(profile) {
-  const { wakeTime, sleepHours, lunchTime, dinnerTime, gymPreference, officeDaysCount, officeStart, officeEnd, goals } = profile;
+  const { wakeTime, sleepHours, lunchTime, dinnerTime, gymPreference, officeDaysCount, officeStart, officeEnd, goals, mainActivities, addOnActivities } = profile;
 
   // Parse times
   const [wakeH, wakeM] = wakeTime.split(':').map(Number);
@@ -1127,14 +1246,96 @@ function generateScheduleFromProfile(profile) {
     return [Math.floor(totalMins / 60) % 24, totalMins % 60];
   };
 
-  // Get workout split based on goals
-  const trainingSplit = getTrainingSplit(goals || []);
-  const trainingDaySet = new Set(trainingSplit.days);
+  // Helper to create a training block from an activity
+  const buildTrainingBlock = (activity, time) => {
+    const { type, session } = activity;
+    if (type === 'gym' && session) {
+      return {
+        time,
+        icon: 'dumbbell-1',
+        label: { 'pt-BR': 'Academia', 'en': 'Gym' },
+        sub: {
+          'pt-BR': `60–75 min · Dia ${session.label}: ${session.name} (${session.focus['pt-BR']})`,
+          'en': `60–75 min · Day ${session.label}: ${session.name} (${session.focus['en']})`
+        },
+        type: 'gym',
+        tag: 'gym'
+      };
+    } else if (type === 'crossfit' && session) {
+      return {
+        time,
+        icon: 'fire-1',
+        label: { 'pt-BR': 'CrossFit', 'en': 'CrossFit' },
+        sub: {
+          'pt-BR': `${session.timeCap} min · ${session.name['pt-BR']}`,
+          'en': `${session.timeCap} min · ${session.name['en']}`
+        },
+        type: 'sport',
+        tag: 'crossfit'
+      };
+    } else if (type === 'calisthenics' && session) {
+      return {
+        time,
+        icon: 'bolt-alt',
+        label: { 'pt-BR': 'Calistenia', 'en': 'Calisthenics' },
+        sub: {
+          'pt-BR': `60 min · ${session.name['pt-BR']}`,
+          'en': `60 min · ${session.name['en']}`
+        },
+        type: 'sport',
+        tag: 'calisthenics'
+      };
+    } else if (type === 'pilates' && session) {
+      return {
+        time,
+        icon: 'heart',
+        label: { 'pt-BR': 'Pilates', 'en': 'Pilates' },
+        sub: {
+          'pt-BR': `${session.duration} min · ${session.name['pt-BR']}`,
+          'en': `${session.duration} min · ${session.name['en']}`
+        },
+        type: 'sport',
+        tag: 'pilates'
+      };
+    } else if (type === 'running' && session) {
+      return {
+        time,
+        icon: 'direction-1',
+        label: { 'pt-BR': 'Corrida', 'en': 'Running' },
+        sub: {
+          'pt-BR': `${session.duration} min · ${session.distance}km · ${session.name['pt-BR']}`,
+          'en': `${session.duration} min · ${session.distance}km · ${session.name['en']}`
+        },
+        type: 'sport',
+        tag: 'running'
+      };
+    } else if (type === 'yoga' && session) {
+      return {
+        time,
+        icon: 'moon-half-right-5',
+        label: { 'pt-BR': 'Yoga', 'en': 'Yoga' },
+        sub: {
+          'pt-BR': `${session.duration} min · ${session.name['pt-BR']}`,
+          'en': `${session.duration} min · ${session.name['en']}`
+        },
+        type: 'sport',
+        tag: 'yoga'
+      };
+    }
+    return null;
+  };
 
-  // Build a map of day → split info
+  // Get activity plan (multi-activity aware)
+  const activityPlan = getActivityPlan(goals || [], mainActivities, addOnActivities);
+  const trainingDaySet = new Set(activityPlan.trainingDays);
+
+  // Build backward-compatible split map for gym days
   const daySplitMap = {};
-  trainingSplit.days.forEach((day, i) => {
-    daySplitMap[day] = trainingSplit.split[i];
+  activityPlan.trainingDays.forEach(day => {
+    const act = activityPlan.dayActivities[day];
+    if (act.type === 'gym' && act.session) {
+      daySplitMap[day] = act.session;
+    }
   });
 
   // Goal-aware helpers
@@ -1157,7 +1358,6 @@ function generateScheduleFromProfile(profile) {
     const isSaturday = day === 'Sáb';
     const isOfficeDay = officeDaySet.has(day);
     const isTrainingDay = trainingDaySet.has(day);
-    const splitInfo = daySplitMap[day];
     const approx = isWeekend;
 
     const blocks = [];
@@ -1183,34 +1383,26 @@ function generateScheduleFromProfile(profile) {
       type: 'morning'
     });
 
-    // 3. Morning gym (with split info)
-    const isMorningGym = isTrainingDay && (gymPreference === 'morning' || (gymPreference === 'flexible' && !isOfficeDay));
-    if (isMorningGym && splitInfo) {
-      const [gymH, gymM] = addMinutes(wakeUpH, wakeUpM, 45);
-      const focusPt = splitInfo.focus['pt-BR'];
-      const focusEn = splitInfo.focus['en'];
-      blocks.push({
-        time: formatTime(gymH, gymM, approx),
-        icon: 'dumbbell-1',
-        label: { 'pt-BR': 'Academia', 'en': 'Gym' },
-        sub: {
-          'pt-BR': `60–75 min · Dia ${splitInfo.label}: ${splitInfo.name} (${focusPt})`,
-          'en': `60–75 min · Day ${splitInfo.label}: ${splitInfo.name} (${focusEn})`
-        },
-        type: 'gym',
-        tag: 'gym'
-      });
+    // 3. Morning training (with activity info)
+    const dayActivity = activityPlan.dayActivities[day];
+    const activityType = dayActivity?.type;
+    const isMorningTraining = isTrainingDay && (gymPreference === 'morning' || (gymPreference === 'flexible' && !isOfficeDay));
+    const isAfternoonTraining = isTrainingDay && gymPreference === 'afternoon';
+
+    if (isMorningTraining && dayActivity) {
+      const [trainH, trainM] = addMinutes(wakeUpH, wakeUpM, 45);
+      blocks.push(buildTrainingBlock(dayActivity, formatTime(trainH, trainM, approx)));
     }
 
     // 4. Breakfast
-    const breakfastOffset = isMorningGym ? 120 : 45;
+    const breakfastOffset = isMorningTraining ? 120 : 45;
     const [breakfastH, breakfastM] = addMinutes(wakeUpH, wakeUpM, breakfastOffset);
     blocks.push({
       time: formatTime(breakfastH, breakfastM, approx),
       icon: 'knife-fork-1',
       label: {
-        'pt-BR': isMorningGym ? 'Ducha + café da manhã' : 'Café da manhã',
-        'en': isMorningGym ? 'Shower + breakfast' : 'Breakfast'
+        'pt-BR': isMorningTraining ? 'Ducha + café da manhã' : 'Café da manhã',
+        'en': isMorningTraining ? 'Shower + breakfast' : 'Breakfast'
       },
       sub: {
         'pt-BR': hasMusclGain ? 'Ovos, aveia, fruta — refeição completa' : 'Refeição completa pra começar bem',
@@ -1307,6 +1499,11 @@ function generateScheduleFromProfile(profile) {
       }
     }
 
+    // 8b. Afternoon training
+    if (isAfternoonTraining && dayActivity) {
+      blocks.push(buildTrainingBlock(dayActivity, formatTime(14, 0, approx)));
+    }
+
     // 8. Post-work chores (weekday, varied by day)
     if (isWeekday && !isFriday) {
       if (day === 'Seg') {
@@ -1339,22 +1536,17 @@ function generateScheduleFromProfile(profile) {
       }
     }
 
-    // 9. Evening gym (with split info)
-    const isEveningGym = isTrainingDay && !isMorningGym;
-    if (isEveningGym && splitInfo) {
-      const focusPt = splitInfo.focus['pt-BR'];
-      const focusEn = splitInfo.focus['en'];
-      blocks.push({
-        time: formatTime(18, 0, approx),
-        icon: 'dumbbell-1',
-        label: { 'pt-BR': 'Academia', 'en': 'Gym' },
-        sub: {
-          'pt-BR': `60–75 min · Dia ${splitInfo.label}: ${splitInfo.name} (${focusPt})`,
-          'en': `60–75 min · Day ${splitInfo.label}: ${splitInfo.name} (${focusEn})`
-        },
-        type: 'gym',
-        tag: 'gym'
-      });
+    // 9. Evening training
+    const isEveningTraining = isTrainingDay && !isMorningTraining && !isAfternoonTraining;
+    if (isEveningTraining && dayActivity) {
+      blocks.push(buildTrainingBlock(dayActivity, formatTime(18, 0, approx)));
+    }
+
+    // 9b. Secondary activity (stacked add-on)
+    if (dayActivity?.secondary) {
+      const secondaryTime = isMorningTraining ? formatTime(18, 0, approx) : formatTime(wakeUpH + 1, 0, approx);
+      const secondaryBlock = buildTrainingBlock(dayActivity.secondary, secondaryTime);
+      if (secondaryBlock) blocks.push(secondaryBlock);
     }
 
     // 10. Friday flex block
@@ -1428,7 +1620,7 @@ function generateScheduleFromProfile(profile) {
     }
 
     // 12. Free time (weekdays, if no evening gym and not Friday)
-    if (isWeekday && !isEveningGym && !isFriday) {
+    if (isWeekday && !isEveningTraining && !isFriday) {
       blocks.push({
         time: formatTime(18, 30),
         icon: 'book-1',
@@ -1500,15 +1692,10 @@ function generateScheduleFromProfile(profile) {
 
   // Save workout plan data alongside the schedule
   const workoutPlan = {
-    splitType: trainingSplit.type,
-    trainingDays: trainingSplit.days,
-    split: trainingSplit.split.map((s, i) => ({
-      day: trainingSplit.days[i],
-      label: s.label,
-      name: s.name,
-      focus: s.focus,
-      icon: s.icon
-    })),
+    splitType: activityPlan.splitType,
+    trainingDays: activityPlan.trainingDays,
+    dayActivities: activityPlan.dayActivities,
+    split: activityPlan.split,
     goals: goals || [],
     generatedAt: new Date().toISOString()
   };
