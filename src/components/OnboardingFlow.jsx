@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { useLanguage } from '../hooks/useLanguage.jsx';
 import { Icon } from './Icon';
+import { DESIGN } from '../data/design.js';
 import './OnboardingFlow.css';
 
 // New 8-step onboarding flow per Patch 01 spec
@@ -513,12 +514,21 @@ function DinnerTimeStep({ t, profile, updateProfile, dinnerGapWarning, onNext, o
   );
 }
 
-function GymPreferenceStep({ t, profile, updateProfile, errors, onNext, onBack }) {
-  const options = [
-    { id: 'morning', icon: 'sun-1', label: t('step_gym_morning'), desc: t('step_gym_morning_desc') },
-    { id: 'evening', icon: 'moon-half-right-5', label: t('step_gym_evening'), desc: t('step_gym_evening_desc') },
-    { id: 'flexible', icon: 'refresh-circle-1-clockwise', label: t('step_gym_flexible'), desc: t('step_gym_flexible_desc') },
-  ];
+const MAIN_ACTIVITIES = [
+  { id: 'gym', icon: 'dumbbell-1', color: DESIGN.sportColors.gym },
+  { id: 'crossfit', icon: 'fire-1', color: DESIGN.sportColors.crossfit },
+  { id: 'calisthenics', icon: 'bolt-alt', color: DESIGN.sportColors.calisthenics },
+  { id: 'pilates', icon: 'heart', color: DESIGN.sportColors.pilates },
+];
+
+function ActivitySelectStep({ t, profile, updateProfile, errors, onNext, onBack }) {
+  const toggleActivity = (id) => {
+    const current = profile.mainActivities;
+    const updated = current.includes(id)
+      ? current.filter(a => a !== id)
+      : [...current, id];
+    updateProfile('mainActivities', updated);
+  };
 
   return (
     <div className="step">
@@ -526,10 +536,136 @@ function GymPreferenceStep({ t, profile, updateProfile, errors, onNext, onBack }
         <div className="step-icon-wrapper">
           <Icon name="dumbbell-1" className="step-icon" />
         </div>
-        <h2>{t('step_gym_title')}</h2>
-        <p>{t('step_gym_desc')}</p>
+        <h2>{t('onboarding_activity_title')}</h2>
+        <p>{t('onboarding_activity_subtitle')}</p>
       </div>
+      <div className="form-section">
+        <div className="activity-grid">
+          {MAIN_ACTIVITIES.map(act => {
+            const selected = profile.mainActivities.includes(act.id);
+            return (
+              <button
+                key={act.id}
+                type="button"
+                className={`activity-card ${selected ? 'selected' : ''}`}
+                style={selected ? {
+                  borderColor: act.color.primary,
+                  background: act.color.bg,
+                } : {}}
+                onClick={() => toggleActivity(act.id)}
+              >
+                <Icon name={act.icon} className="activity-card-icon" style={selected ? { color: act.color.primary } : {}} />
+                <span className="activity-card-label">{t(`activity_${act.id}`)}</span>
+              </button>
+            );
+          })}
+        </div>
+        {errors.mainActivities && <span className="error-text">{errors.mainActivities}</span>}
+      </div>
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
+const ADDON_ACTIVITIES = [
+  { id: 'running', icon: 'direction-1', color: DESIGN.sportColors.running },
+  { id: 'yoga', icon: 'moon-half-right-5', color: DESIGN.sportColors.yoga },
+];
+
+function ActivityAddonsStep({ t, profile, updateProfile, onNext, onBack }) {
+  const toggleAddon = (id) => {
+    const current = profile.addOnActivities;
+    const existing = current.find(a => a.type === id);
+    if (existing) {
+      updateProfile('addOnActivities', current.filter(a => a.type !== id));
+    } else {
+      updateProfile('addOnActivities', [...current, { type: id, frequency: 2 }]);
+    }
+  };
+
+  const setFrequency = (id, freq) => {
+    updateProfile('addOnActivities', profile.addOnActivities.map(a =>
+      a.type === id ? { ...a, frequency: freq } : a
+    ));
+  };
+
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="direction-1" className="step-icon" />
+        </div>
+        <h2>{t('onboarding_addons_title')}</h2>
+      </div>
+      <div className="form-section">
+        <div className="addon-list">
+          {ADDON_ACTIVITIES.map(act => {
+            const addon = profile.addOnActivities.find(a => a.type === act.id);
+            const selected = !!addon;
+            return (
+              <div key={act.id} className={`addon-card ${selected ? 'selected' : ''}`}
+                style={selected ? { borderColor: act.color.primary, background: act.color.bg } : {}}>
+                <button type="button" className="addon-toggle" onClick={() => toggleAddon(act.id)}>
+                  <Icon name={act.icon} className="addon-icon" style={selected ? { color: act.color.primary } : {}} />
+                  <span className="addon-label">{t(`activity_${act.id}`)}</span>
+                </button>
+                {selected && (
+                  <div className="addon-frequency">
+                    {[1, 2, 3].map(f => (
+                      <button key={f} type="button"
+                        className={`addon-frequency-btn ${addon.frequency === f ? 'active' : ''}`}
+                        style={addon.frequency === f ? { background: act.color.primary, color: '#0d0d0d' } : {}}
+                        onClick={() => setFrequency(act.id, f)}
+                      >
+                        {f}x
+                      </button>
+                    ))}
+                    <span className="addon-frequency-label">{t('frequency_label')}</span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="step-actions">
+        <button type="button" className="btn-secondary" onClick={onBack}>
+          <Icon name="arrow-left-1" /> {t('back')}
+        </button>
+        <button type="button" className="btn-primary" onClick={onNext}>
+          {t('continue')} <Icon name="arrow-right-1" />
+        </button>
+      </div>
+      <button type="button" className="skip-btn" onClick={onNext}>
+        {t('onboarding_addons_skip')}
+      </button>
+    </div>
+  );
+}
+
+function ActivityTimeStep({ t, profile, updateProfile, errors, onNext, onBack }) {
+  const options = [
+    { id: 'morning', icon: 'sun-1', label: t('time_morning'), desc: t('step_gym_morning_desc') },
+    { id: 'afternoon', icon: 'clock-3', label: t('time_afternoon'), desc: '' },
+    { id: 'evening', icon: 'moon-half-right-5', label: t('time_evening'), desc: t('step_gym_evening_desc') },
+    { id: 'flexible', icon: 'refresh-circle-1-clockwise', label: t('time_flexible'), desc: t('step_gym_flexible_desc') },
+  ];
+
+  return (
+    <div className="step">
+      <div className="step-header">
+        <div className="step-icon-wrapper">
+          <Icon name="clock-3" className="step-icon" />
+        </div>
+        <h2>{t('onboarding_time_title')}</h2>
+      </div>
       <div className="form-section">
         <div className="gym-preference-options">
           {options.map(opt => (
@@ -542,14 +678,13 @@ function GymPreferenceStep({ t, profile, updateProfile, errors, onNext, onBack }
               <Icon name={opt.icon} className="gym-pref-icon" />
               <div className="gym-pref-content">
                 <span className="gym-pref-label">{opt.label}</span>
-                <span className="gym-pref-desc">{opt.desc}</span>
+                {opt.desc && <span className="gym-pref-desc">{opt.desc}</span>}
               </div>
             </button>
           ))}
         </div>
         {errors.gymPreference && <span className="error-text">{errors.gymPreference}</span>}
       </div>
-
       <div className="step-actions">
         <button type="button" className="btn-secondary" onClick={onBack}>
           <Icon name="arrow-left-1" /> {t('back')}
