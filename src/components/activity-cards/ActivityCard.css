@@ -223,3 +223,167 @@
   font-weight: 600;
   margin-right: var(--space-sm);
 }
+
+/* Pilates specific */
+.pilates-movements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: movement;
+}
+
+.pilates-movement {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border-default);
+  counter-increment: movement;
+}
+
+.pilates-movement:last-child {
+  border-bottom: none;
+}
+
+.pilates-movement::before {
+  content: counter(movement);
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.pilates-focus-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: var(--space-sm);
+}
+
+/* Running specific */
+.run-inputs {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.run-input-group {
+  flex: 1;
+}
+
+.run-input-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.run-input-group input {
+  width: 100%;
+  padding: 8px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.run-pace {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+.run-pace-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-left: var(--space-sm);
+}
+
+.run-pace-unit {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-left: 4px;
+}
+
+.run-zones {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.run-zone {
+  width: 40px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: default;
+  color: var(--color-text-secondary);
+}
+
+.run-zone.active {
+  font-weight: 700;
+}
+
+/* Yoga specific */
+.yoga-poses {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: pose;
+}
+
+.yoga-pose {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border-default);
+  counter-increment: pose;
+}
+
+.yoga-pose:last-child {
+  border-bottom: none;
+}
+
+.yoga-pose::before {
+  content: counter(pose);
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.yoga-focus-tag {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: var(--space-sm);
+}
