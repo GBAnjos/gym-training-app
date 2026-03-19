@@ -1,0 +1,178 @@
+/* Shared Activity Card Styles */
+.activity-training-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.activity-training-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.activity-training-card-header .sport-icon {
+  font-size: 1.5rem;
+}
+
+.activity-training-card-header .sport-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.activity-training-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.activity-training-card-body {
+  padding: var(--space-sm) 0;
+}
+
+.activity-training-card-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.activity-training-card-field:last-child {
+  border-bottom: none;
+}
+
+.activity-training-card-field label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.activity-training-card-field input {
+  width: 80px;
+  padding: 6px 8px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.activity-training-card-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.activity-training-card-complete {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+  width: 100%;
+  justify-content: center;
+}
+
+.activity-training-card-complete.done {
+  border-color: currentColor;
+  opacity: 0.8;
+}
+
+.activity-training-card-complete .check-icon {
+  font-size: 1.1rem;
+}
+
+/* CrossFit specific */
+.crossfit-movements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.crossfit-movement {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.crossfit-movement:last-child {
+  border-bottom: none;
+}
+
+.crossfit-movement-name {
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+}
+
+.crossfit-movement-reps {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.crossfit-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.crossfit-timer .timer-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.crossfit-round-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+}
+
+.crossfit-round-counter button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crossfit-round-counter .round-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: center;
+}
