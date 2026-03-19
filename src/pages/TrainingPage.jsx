@@ -95,7 +95,27 @@ export function TrainingPage() {
   const [timerActive, setTimerActive] = useState(false);
   const { debouncedSync } = useDataSync();
 
-  const treino = (trainingMap && trainingMap[selectedDay]) || TREINOS[selectedDay];
+  // Resolve treino: for multi-activity gym days, look up the workout by split name
+  const treino = useMemo(() => {
+    const dayActivity = workoutPlan?.dayActivities?.[selectedDay];
+    if (dayActivity && dayActivity.type === 'gym' && dayActivity.session) {
+      const workout = getWorkoutBySplit(dayActivity.session.name);
+      if (workout) {
+        return {
+          ...workout,
+          nome: {
+            'pt-BR': `Dia ${dayActivity.session.label}: ${dayActivity.session.name}`,
+            'en': `Day ${dayActivity.session.label}: ${dayActivity.session.name}`
+          }
+        };
+      }
+    }
+    // Legacy path or fallback
+    if (trainingMap && trainingMap[selectedDay] && trainingMap[selectedDay].exercicios) {
+      return trainingMap[selectedDay];
+    }
+    return TREINOS[selectedDay] || null;
+  }, [workoutPlan, trainingMap, selectedDay]);
 
   // Timer logic
   useEffect(() => {
@@ -139,7 +159,7 @@ export function TrainingPage() {
 
   // Calculate completion
   const getCompletedCount = () => {
-    if (!treino) return { completed: 0, total: 0 };
+    if (!treino || !treino.exercicios) return { completed: 0, total: 0 };
     let completed = 0;
     treino.exercicios.forEach(ex => {
       const key = `${selectedDay}_${ex.id}`;
