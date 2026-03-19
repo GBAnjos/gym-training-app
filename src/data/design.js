@@ -27,6 +27,16 @@ export const DESIGN = {
     chore:   "#888",
     social:  "#ff6b6b",
     flex:    "#aaa",
+    sport:   "#ffc832",
+  },
+
+  sportColors: {
+    gym: { primary: '#c8f55a', bg: 'rgba(200,245,90,0.1)', border: 'rgba(200,245,90,0.2)' },
+    crossfit: { primary: '#ff6b6b', bg: 'rgba(255,107,107,0.1)', border: 'rgba(255,107,107,0.2)' },
+    calisthenics: { primary: '#6bcfff', bg: 'rgba(107,207,255,0.1)', border: 'rgba(107,207,255,0.2)' },
+    pilates: { primary: '#c899ff', bg: 'rgba(200,153,255,0.1)', border: 'rgba(200,153,255,0.2)' },
+    running: { primary: '#ffc832', bg: 'rgba(255,200,50,0.1)', border: 'rgba(255,200,50,0.2)' },
+    yoga: { primary: '#82dcb4', bg: 'rgba(130,220,180,0.1)', border: 'rgba(130,220,180,0.2)' },
   },
 
   typography: {
