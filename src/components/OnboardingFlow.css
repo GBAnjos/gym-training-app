@@ -1102,6 +1102,125 @@
   color: var(--color-text-secondary);
 }
 
+/* Activity Selection Grid */
+.activity-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-bg-surface);
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.activity-card:hover {
+  background: var(--color-bg-elevated);
+}
+
+.activity-card-icon {
+  font-size: 2rem;
+  transition: color var(--transition-fast);
+}
+
+.activity-card-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+}
+
+/* Add-on Activities */
+.addon-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.addon-card {
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.addon-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.addon-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.addon-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text-primary);
+}
+
+.addon-frequency {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--space-sm) var(--space-lg) var(--space-md);
+}
+
+.addon-frequency-btn {
+  width: 40px;
+  height: 32px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.addon-frequency-btn:hover {
+  background: var(--color-bg-elevated);
+}
+
+.addon-frequency-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.skip-btn {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm);
+  margin-top: var(--space-sm);
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.skip-btn:hover {
+  color: var(--color-text-primary);
+}
+
 /* Counter Input */
 .counter-input {
   display: flex;
