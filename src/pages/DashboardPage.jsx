@@ -25,9 +25,7 @@ export function DashboardPage({ onTabChange }) {
         getDateActivityData={data.getDateActivityData}
       />
       <MonthlyReport
-        monthlyData={data.monthlyData}
-        currentMonthCount={data.currentMonthCount}
-        prevMonthCount={data.prevMonthCount}
+        trainingDays={data.trainingDays}
         gymStats={data.gymStats}
       />
       <MuscleDistribution muscleSets={data.muscleSets} />
