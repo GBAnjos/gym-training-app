@@ -44,10 +44,10 @@ export function BodyComposition({ profile }) {
   const weightDelta = prevWeight && currentWeight !== '--' ? (parseFloat(currentWeight) - prevWeight).toFixed(1) : null;
 
   // Goal progress
-  const goalProgress = profile.currentWeight && profile.targetWeight
+  const goalDiff = Math.abs(profile.targetWeight - profile.currentWeight);
+  const goalProgress = profile.currentWeight && profile.targetWeight && goalDiff > 0
     ? Math.min(100, Math.max(0, Math.round(
-        Math.abs(parseFloat(currentWeight) - profile.currentWeight) /
-        Math.abs(profile.targetWeight - profile.currentWeight) * 100
+        Math.abs(parseFloat(currentWeight) - profile.currentWeight) / goalDiff * 100
       ))) : null;
 
   // Delta color based on goal
