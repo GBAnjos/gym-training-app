@@ -3,11 +3,7 @@ import { useOnboarding } from '../hooks/useOnboarding';
 import { useLanguage } from '../hooks/useLanguage.jsx';
 import { Icon } from './Icon';
 import { DESIGN } from '../data/design.js';
-import { getWodByIndex } from '../data/crossfit.js';
-import { getCalisthenicsSplitByIndex } from '../data/calisthenics.js';
-import { getPilatesFlowByIndex } from '../data/pilates.js';
-import { getRunSessionByIndex } from '../data/running.js';
-import { getYogaSessionByIndex } from '../data/yoga.js';
+import { generateWorkoutPlan } from '../utils/planGenerator';
 import './OnboardingFlow.css';
 
 // New 8-step onboarding flow per Patch 01 spec
@@ -1040,50 +1036,6 @@ function GeneratingStep({ t }) {
 
 // ==================== SCHEDULE GENERATION ====================
 
-// Determine training split based on goals
-function getTrainingSplit(goals) {
-  const hasMusclGain = goals.includes('muscle_gain');
-  const hasWeightLoss = goals.includes('weight_loss');
-
-  if (hasMusclGain) {
-    // 5-day PPL for muscle gain
-    return {
-      type: 'PPL',
-      days: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
-      split: [
-        { label: 'A', name: 'Push', focus: { 'pt-BR': 'Peito, Ombro, Tríceps', 'en': 'Chest, Shoulder, Triceps' }, icon: '💪' },
-        { label: 'B', name: 'Pull', focus: { 'pt-BR': 'Costas, Bíceps', 'en': 'Back, Biceps' }, icon: '🔙' },
-        { label: 'C', name: 'Legs', focus: { 'pt-BR': 'Quadríceps, Glúteo, Posterior', 'en': 'Quads, Glutes, Hamstrings' }, icon: '🦵' },
-        { label: 'D', name: 'Push+', focus: { 'pt-BR': 'Ombro foco, Tríceps', 'en': 'Shoulder focus, Triceps' }, icon: '🔥' },
-        { label: 'E', name: 'Pull+', focus: { 'pt-BR': 'Costas largura, Bíceps', 'en': 'Back width, Biceps' }, icon: '⚡' },
-      ]
-    };
-  } else if (hasWeightLoss) {
-    // 4-day Upper/Lower for weight loss
-    return {
-      type: 'Upper/Lower',
-      days: ['Seg', 'Ter', 'Qui', 'Sex'],
-      split: [
-        { label: 'A', name: 'Upper', focus: { 'pt-BR': 'Peito, Costas, Ombros, Braços', 'en': 'Chest, Back, Shoulders, Arms' }, icon: '💪' },
-        { label: 'B', name: 'Lower', focus: { 'pt-BR': 'Quadríceps, Posterior, Glúteos', 'en': 'Quads, Hamstrings, Glutes' }, icon: '🦵' },
-        { label: 'C', name: 'Upper', focus: { 'pt-BR': 'Peito, Costas, Ombros, Braços', 'en': 'Chest, Back, Shoulders, Arms' }, icon: '💪' },
-        { label: 'D', name: 'Lower', focus: { 'pt-BR': 'Quadríceps, Posterior, Glúteos', 'en': 'Quads, Hamstrings, Glutes' }, icon: '🦵' },
-      ]
-    };
-  } else {
-    // 3-day Full Body for maintain/general
-    return {
-      type: 'Full Body',
-      days: ['Seg', 'Qua', 'Sex'],
-      split: [
-        { label: 'A', name: 'Full Body', focus: { 'pt-BR': 'Corpo Inteiro', 'en': 'Full Body' }, icon: '💪' },
-        { label: 'B', name: 'Full Body', focus: { 'pt-BR': 'Corpo Inteiro', 'en': 'Full Body' }, icon: '💪' },
-        { label: 'C', name: 'Full Body', focus: { 'pt-BR': 'Corpo Inteiro', 'en': 'Full Body' }, icon: '💪' },
-      ]
-    };
-  }
-}
-
 // Per-day motivational wake-up subs
 const WAKE_SUBS = {
   'Seg': { 'pt-BR': 'Semana começa agora. Bora.', 'en': 'Week starts now. Let\'s go.' },
@@ -1105,120 +1057,6 @@ const DINNER_SUBS = {
   'Sáb': { 'pt-BR': 'Mais solto — entrega, restaurante, o que vier', 'en': 'More relaxed — delivery, restaurant, whatever' },
   'Dom': { 'pt-BR': 'Comida da semana pronta — usa ela', 'en': 'Week food is ready — use it' },
 };
-
-function getActivityPlan(goals, mainActivities, addOnActivities) {
-  // Backward compat: default to gym-only
-  const mains = mainActivities && mainActivities.length > 0 ? mainActivities : ['gym'];
-  const addons = addOnActivities || [];
-
-  // 1. Get total training days from goals
-  const hasMusclGain = goals.includes('muscle_gain');
-  const hasWeightLoss = goals.includes('weight_loss');
-  const totalMainDays = hasMusclGain ? 5 : hasWeightLoss ? 4 : 3;
-
-  // 2. Get gym split (used for gym days and as base for day count)
-  const gymSplit = getTrainingSplit(goals);
-  const trainingDaySlots = gymSplit.days.slice(0, totalMainDays); // e.g. ['Seg','Ter','Qua','Qui','Sex']
-
-  // 3. Distribute main activities round-robin across training days
-  // First selected activity gets most days
-  const dayActivities = {};
-  const activityCounters = {}; // track index per activity for rotation
-  mains.forEach(a => { activityCounters[a] = 0; });
-
-  trainingDaySlots.forEach((day, i) => {
-    const activityType = mains[i % mains.length];
-    const counter = activityCounters[activityType];
-
-    let session = null;
-    if (activityType === 'gym') {
-      session = { ...gymSplit.split[counter % gymSplit.split.length] };
-    } else if (activityType === 'crossfit') {
-      session = getWodByIndex(counter);
-    } else if (activityType === 'calisthenics') {
-      session = getCalisthenicsSplitByIndex(counter);
-    } else if (activityType === 'pilates') {
-      session = getPilatesFlowByIndex(counter);
-    }
-
-    dayActivities[day] = { type: activityType, session };
-    activityCounters[activityType] = counter + 1;
-  });
-
-  // 4. Place add-ons on free weekdays
-  const allWeekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  const freeDays = allWeekdays.filter(d => !dayActivities[d]);
-  const addonCounters = {};
-
-  addons.forEach(addon => {
-    addonCounters[addon.type] = 0;
-    let placed = 0;
-    const targetFreq = addon.frequency || 2;
-
-    for (let d = 0; d < freeDays.length && placed < targetFreq; d++) {
-      const day = freeDays[d];
-      if (dayActivities[day]) continue; // already taken by another add-on
-
-      // Running avoids leg-heavy gym days (check adjacent days)
-      if (addon.type === 'running') {
-        const dayIdx = allWeekdays.indexOf(day);
-        const prevDay = dayIdx > 0 ? allWeekdays[dayIdx - 1] : null;
-        const nextDay = dayIdx < allWeekdays.length - 1 ? allWeekdays[dayIdx + 1] : null;
-        const isLegDay = (d) => {
-          const act = dayActivities[d];
-          if (!act || act.type !== 'gym') return false;
-          const name = act.session?.name || '';
-          return name === 'Legs' || name === 'Lower';
-        };
-        if ((prevDay && isLegDay(prevDay)) || (nextDay && isLegDay(nextDay))) continue;
-      }
-
-      let session = null;
-      if (addon.type === 'running') {
-        session = getRunSessionByIndex(addonCounters[addon.type]);
-      } else if (addon.type === 'yoga') {
-        session = getYogaSessionByIndex(addonCounters[addon.type]);
-      }
-
-      dayActivities[day] = { type: addon.type, session };
-      addonCounters[addon.type] = (addonCounters[addon.type] || 0) + 1;
-      placed++;
-      freeDays.splice(d, 1); // remove from free list
-      d--; // adjust index
-    }
-
-    // Overflow: if couldn't place enough, stack as secondary on main days
-    if (placed < targetFreq) {
-      const mainDays = Object.keys(dayActivities).filter(d =>
-        dayActivities[d].type !== addon.type && !dayActivities[d].secondary
-      );
-      for (let m = 0; m < mainDays.length && placed < targetFreq; m++) {
-        let session = null;
-        if (addon.type === 'running') {
-          session = getRunSessionByIndex(addonCounters[addon.type]);
-        } else if (addon.type === 'yoga') {
-          session = getYogaSessionByIndex(addonCounters[addon.type]);
-        }
-        dayActivities[mainDays[m]].secondary = { type: addon.type, session };
-        addonCounters[addon.type] = (addonCounters[addon.type] || 0) + 1;
-        placed++;
-      }
-    }
-  });
-
-  return {
-    trainingDays: Object.keys(dayActivities),
-    dayActivities,
-    splitType: gymSplit.type,
-    split: gymSplit.split.map((s, i) => ({
-      day: gymSplit.days[i],
-      label: s.label,
-      name: s.name,
-      focus: s.focus,
-      icon: s.icon
-    })),
-  };
-}
 
 function generateScheduleFromProfile(profile) {
   const { wakeTime, sleepHours, lunchTime, dinnerTime, gymPreference, officeDaysCount, officeStart, officeEnd, goals, mainActivities, addOnActivities } = profile;
@@ -1326,7 +1164,8 @@ function generateScheduleFromProfile(profile) {
   };
 
   // Get activity plan (multi-activity aware)
-  const activityPlan = getActivityPlan(goals || [], mainActivities, addOnActivities);
+  const workoutPlan = generateWorkoutPlan(profile);
+  const activityPlan = workoutPlan;
   const trainingDaySet = new Set(activityPlan.trainingDays);
 
   // Build backward-compatible split map for gym days
@@ -1691,14 +1530,6 @@ function generateScheduleFromProfile(profile) {
   });
 
   // Save workout plan data alongside the schedule
-  const workoutPlan = {
-    splitType: activityPlan.splitType,
-    trainingDays: activityPlan.trainingDays,
-    dayActivities: activityPlan.dayActivities,
-    split: activityPlan.split,
-    goals: goals || [],
-    generatedAt: new Date().toISOString()
-  };
   localStorage.setItem('vida_workout_plan', JSON.stringify(workoutPlan));
 
   return schedule;
