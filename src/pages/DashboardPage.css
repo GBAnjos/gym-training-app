@@ -275,6 +275,51 @@
 }
 
 /* ===== Monthly Report ===== */
+.monthly-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.monthly-header-row .dashboard-section-title {
+  margin-bottom: 0;
+}
+
+.year-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.year-nav-btn {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.year-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.year-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  min-width: 40px;
+  text-align: center;
+}
+
 .monthly-chart-container {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-default);
