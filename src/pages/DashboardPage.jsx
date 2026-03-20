@@ -5,6 +5,7 @@ import { HeroHeader } from '../components/dashboard/HeroHeader';
 import { ActivityCalendar } from '../components/dashboard/ActivityCalendar';
 import { MonthlyReport } from '../components/dashboard/MonthlyReport';
 import { MuscleDistribution } from '../components/dashboard/MuscleDistribution';
+import { ProgressionChart } from '../components/dashboard/ProgressionChart';
 import './DashboardPage.css';
 
 export function DashboardPage({ onTabChange }) {
@@ -29,6 +30,7 @@ export function DashboardPage({ onTabChange }) {
         gymStats={data.gymStats}
       />
       <MuscleDistribution muscleSets={data.muscleSets} />
+      <ProgressionChart activityTypes={data.activityTypes} />
     </div>
   );
 }
