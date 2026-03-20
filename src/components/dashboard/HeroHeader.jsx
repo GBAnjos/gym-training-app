@@ -1,13 +1,15 @@
 import { useLanguage } from '../../hooks/useLanguage';
+import { useAuth } from '../../hooks/useAuth';
 import { DESIGN } from '../../data/design';
 import { Icon } from '../Icon';
 import { getWorkoutBySplit } from '../../data/treinos';
 
 export function HeroHeader({ data, onNavigateToTraining }) {
   const { t, language } = useLanguage();
+  const { user } = useAuth();
   const { profile, todayActivity, weekStreak, weeklyCount, weeklyTarget, primaryActivity, gymStats } = data;
 
-  const firstName = (profile.name || '').split(' ')[0] || '';
+  const firstName = (profile.name || user?.user_metadata?.full_name || '').split(' ')[0] || '';
 
   // Goal label
   const goalLabels = {
