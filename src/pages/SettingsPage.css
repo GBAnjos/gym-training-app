@@ -113,10 +113,40 @@
   min-width: 0;
 }
 
+.profile-name-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .profile-name {
   font-weight: 600;
   color: var(--color-text-primary);
   font-size: 1rem;
+}
+
+.profile-edit-icon {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+.profile-name-input {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-emphasis);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
 }
 
 .profile-email {

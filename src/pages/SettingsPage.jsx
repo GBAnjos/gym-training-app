@@ -9,11 +9,33 @@ import './SettingsPage.css';
 export function SettingsPage() {
   const { user, logout } = useAuth();
   const { t, language, setLanguage, languages } = useLanguage();
-  const { userProfile, resetOnboarding } = useOnboarding();
+  const { userProfile, resetOnboarding, updateProfile } = useOnboarding();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [editingName, setEditingName] = useState(false);
+  const [nameValue, setNameValue] = useState('');
   const { theme, setTheme, setSystemTheme, isManual } = useTheme();
 
   const themeMode = isManual ? theme : 'system';
+
+  const displayName = userProfile?.name || user?.user_metadata?.full_name || '';
+
+  const handleEditName = () => {
+    setNameValue(displayName);
+    setEditingName(true);
+  };
+
+  const handleSaveName = async () => {
+    const trimmed = nameValue.trim();
+    if (trimmed && trimmed !== displayName) {
+      await updateProfile({ name: trimmed });
+    }
+    setEditingName(false);
+  };
+
+  const handleNameKeyDown = (e) => {
+    if (e.key === 'Enter') handleSaveName();
+    if (e.key === 'Escape') setEditingName(false);
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -68,9 +90,22 @@ export function SettingsPage() {
             )}
           </div>
           <div className="profile-info">
-            <span className="profile-name">
-              {userProfile?.name || user?.user_metadata?.full_name || t('profile_name')}
-            </span>
+            {editingName ? (
+              <input
+                className="profile-name-input"
+                value={nameValue}
+                onChange={e => setNameValue(e.target.value)}
+                onBlur={handleSaveName}
+                onKeyDown={handleNameKeyDown}
+                autoFocus
+                placeholder={t('profile_name')}
+              />
+            ) : (
+              <button className="profile-name-btn" onClick={handleEditName}>
+                <span className="profile-name">{displayName || t('profile_name')}</span>
+                <Icon name="pencil-1" className="profile-edit-icon" />
+              </button>
+            )}
             <span className="profile-email">{user?.email}</span>
           </div>
         </div>
