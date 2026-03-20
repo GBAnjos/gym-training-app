@@ -12,7 +12,7 @@ import { BottomNav } from './components/BottomNav';
 import { SchedulePage } from './pages/SchedulePage';
 import { MealsPage } from './pages/MealsPage';
 import { TrainingPage } from './pages/TrainingPage';
-import { ProgressPage } from './pages/ProgressPage';
+import { DashboardPage } from './pages/DashboardPage';
 import { SettingsPage } from './pages/SettingsPage';
 import './App.css';
 
@@ -56,8 +56,8 @@ function AppContent() {
         return <MealsPage />;
       case 'training':
         return <TrainingPage />;
-      case 'progress':
-        return <ProgressPage />;
+      case 'dashboard':
+        return <DashboardPage onTabChange={setActiveTab} />;
       case 'settings':
         return <SettingsPage />;
       default:
