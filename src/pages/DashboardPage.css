@@ -1,0 +1,25 @@
+.dashboard-page {
+  padding: var(--space-sm);
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+  .dashboard-page {
+    padding: var(--space-md);
+    padding-bottom: calc(100px + env(safe-area-inset-bottom, 20px));
+  }
+}
+
+/* Section spacing */
+.dashboard-section {
+  margin-bottom: var(--space-lg);
+}
+
+.dashboard-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-md);
+}
