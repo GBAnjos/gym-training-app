@@ -1,7 +1,7 @@
 import { useLanguage } from '../../hooks/useLanguage';
 import { DESIGN } from '../../data/design';
 import { Icon } from '../Icon';
-import { getWorkoutName, getWorkoutBySplit } from '../../data/treinos';
+import { getWorkoutBySplit } from '../../data/treinos';
 
 export function HeroHeader({ data, onNavigateToTraining }) {
   const { t, language } = useLanguage();
@@ -34,7 +34,7 @@ export function HeroHeader({ data, onNavigateToTraining }) {
           {goalLabel && <span className="hero-goal-badge">{goalLabel}</span>}
         </div>
         <div className={`hero-streak ${weekStreak > 0 ? 'active' : ''}`}>
-          <Icon name="fire-1" />
+          <Icon name="bolt-2" />
           <span>{weekStreak} {t('dashboard_week_streak')}</span>
         </div>
       </div>
@@ -115,7 +115,7 @@ function getTodayInfo(activity, language, t) {
       const distance = session?.targetDistance || '';
       return {
         title: name,
-        subtitle: distance ? `${distance} km target` : '~30 min',
+        subtitle: distance ? `${distance} km` : '~30 min',
       };
     }
     case 'yoga': {

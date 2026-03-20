@@ -79,10 +79,10 @@ export function useProgress() {
       weight: entry.weight ? parseFloat(entry.weight) : null,
       bodyFat: entry.bodyFat ? parseFloat(entry.bodyFat) : null,
       measurements: {
-        braco: entry.braco ? parseFloat(entry.braco) : null,
-        cintura: entry.cintura ? parseFloat(entry.cintura) : null,
-        peito: entry.peito ? parseFloat(entry.peito) : null,
-        coxa: entry.coxa ? parseFloat(entry.coxa) : null,
+        braco: (entry.measurements?.braco ?? entry.braco) ? parseFloat(entry.measurements?.braco ?? entry.braco) : null,
+        cintura: (entry.measurements?.cintura ?? entry.cintura) ? parseFloat(entry.measurements?.cintura ?? entry.cintura) : null,
+        peito: (entry.measurements?.peito ?? entry.peito) ? parseFloat(entry.measurements?.peito ?? entry.peito) : null,
+        coxa: (entry.measurements?.coxa ?? entry.coxa) ? parseFloat(entry.measurements?.coxa ?? entry.coxa) : null,
       }
     };
 
