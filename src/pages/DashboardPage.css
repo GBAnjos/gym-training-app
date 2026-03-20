@@ -273,3 +273,76 @@
   color: var(--color-text-muted);
   padding: var(--space-md);
 }
+
+/* ===== Monthly Report ===== */
+.monthly-chart-container {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-xs) 0;
+  margin-bottom: var(--space-sm);
+}
+
+.monthly-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: var(--space-md);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.monthly-tabs::-webkit-scrollbar { display: none; }
+
+.monthly-tab {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.monthly-tab.active {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  color: var(--color-bg-primary);
+}
+
+.monthly-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.monthly-summary-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+.monthly-summary-label {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.monthly-summary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.monthly-summary-delta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.monthly-summary-delta.positive { color: var(--color-state-success); }
+.monthly-summary-delta.negative { color: var(--color-state-error); }
