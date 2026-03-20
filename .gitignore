@@ -22,6 +22,12 @@ dist
 .DS_Store
 Thumbs.db
 
+# Worktrees
+.worktrees
+
+# Superpowers
+.superpowers
+
 # Debug logs
 npm-debug.log*
 yarn-debug.log*
