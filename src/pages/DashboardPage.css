@@ -410,3 +410,119 @@
   font-weight: 700;
   color: var(--color-text-secondary);
 }
+
+/* ===== Progression ===== */
+.progression-search {
+  position: relative;
+  margin-bottom: var(--space-sm);
+}
+
+.progression-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.progression-search-input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) 36px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  min-height: 44px;
+}
+
+.progression-results {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+  overflow: hidden;
+}
+
+.progression-result-item {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--color-text-primary);
+  background: transparent;
+  border-bottom: 1px solid var(--color-border-default);
+  transition: background var(--transition-fast);
+}
+
+.progression-result-item:last-child { border-bottom: none; }
+.progression-result-item:active { background: var(--color-bg-elevated); }
+
+.progression-recent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.progression-recent-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.progression-recent-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-secondary);
+}
+
+.progression-empty {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  padding: var(--space-lg);
+}
+
+.progression-chart-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.progression-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.progression-chart-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.progression-chart-pr {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+}
+
+.progression-summary {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--space-sm);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.progression-summary strong {
+  color: var(--color-text-primary);
+}
