@@ -48,10 +48,21 @@ export function MyActivities() {
 
   const saveAndRegenerate = async (updates) => {
     const merged = { ...userProfile, ...updates };
-    await updateProfile(updates);
+    try {
+      await updateProfile(updates);
+    } catch {
+      // Still update locally even if remote fails
+    }
     const plan = generateWorkoutPlan(merged);
     localStorage.setItem('vida_workout_plan', JSON.stringify(plan));
     toast.success(t('settings_plan_updated'));
+  };
+
+  // Count unique days used
+  const getUniqueDays = () => {
+    const days = new Set(trainingDays);
+    addOnActivities.forEach(a => (a.days || []).forEach(d => days.add(d)));
+    return [...days];
   };
 
   // --- Main activity day toggle ---
@@ -131,13 +142,6 @@ export function MyActivities() {
         addOnActivities: addOnActivities.filter(a => a.type !== type),
       });
     }
-  };
-
-  // Count unique days used
-  const getUniqueDays = () => {
-    const days = new Set(trainingDays);
-    addOnActivities.forEach(a => (a.days || []).forEach(d => days.add(d)));
-    return [...days];
   };
 
   return (
