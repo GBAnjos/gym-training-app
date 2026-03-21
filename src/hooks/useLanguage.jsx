@@ -339,6 +339,7 @@ const translations = {
     dashboard_progressions: 'progressões',
     dashboard_poses: 'poses',
     dashboard_min_cap: 'min cap',
+    dashboard_tomorrow: 'Amanhã',
 
     // Activity selection (onboarding)
     onboarding_activity_title: 'Como você treina?',
@@ -716,6 +717,7 @@ const translations = {
     dashboard_progressions: 'progressions',
     dashboard_poses: 'poses',
     dashboard_min_cap: 'min cap',
+    dashboard_tomorrow: 'Tomorrow',
 
     // Activity selection (onboarding)
     onboarding_activity_title: 'How do you train?',
