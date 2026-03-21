@@ -4,6 +4,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { Icon } from '../components/Icon';
 import { useTheme } from '../hooks/useTheme';
+import { MyActivities } from '../components/settings/MyActivities';
 import './SettingsPage.css';
 
 export function SettingsPage() {
@@ -147,6 +148,8 @@ export function SettingsPage() {
           </div>
         )}
       </section>
+
+      <MyActivities />
 
       {/* Theme Section */}
       <section className="settings-section">

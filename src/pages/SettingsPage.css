@@ -461,3 +461,187 @@
 .theme-option .theme-icon {
   font-size: 1.25rem;
 }
+
+/* ===== My Activities ===== */
+.settings-section-header {
+  position: relative;
+}
+
+.activity-add-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-accent-primary);
+  color: var(--color-bg-base);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.activity-card {
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.activity-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.activity-card-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-card-icon {
+  font-size: 1.3rem;
+}
+
+.activity-card-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  display: block;
+}
+
+.activity-card-badge {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.activity-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activity-freq-badge {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.activity-per-week {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.activity-remove-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.activity-remove-btn:hover {
+  opacity: 1;
+  color: #ef4444;
+}
+
+.activity-freq-stepper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.freq-btn {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-primary);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.freq-value {
+  font-weight: 600;
+  font-size: 0.95rem;
+  min-width: 24px;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+.activity-day-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.day-pill {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-muted);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.day-pill.active {
+  font-weight: 700;
+}
+
+/* Add Activity BottomSheet */
+.add-activity-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.add-activity-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.add-activity-option .lni {
+  font-size: 1.5rem;
+}
+
+.add-activity-option.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.add-activity-added {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
