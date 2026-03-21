@@ -45,6 +45,7 @@
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-md);
+  position: relative;
 }
 
 .settings-section-header .section-icon {
@@ -463,10 +464,6 @@
 }
 
 /* ===== My Activities ===== */
-.settings-section-header {
-  position: relative;
-}
-
 .activity-add-btn {
   position: absolute;
   right: 0;
