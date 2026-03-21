@@ -152,6 +152,7 @@ export function RunCard({ dayActivity, day, language, toast }) {
 
         {/* Zone explainer - collapsible */}
         <button
+          type="button"
           className="zone-explainer-toggle"
           onClick={() => setShowZones(!showZones)}
         >
@@ -166,9 +167,9 @@ export function RunCard({ dayActivity, day, language, toast }) {
                   {z.label}
                 </span>
                 <div className="zone-explainer-info">
-                  <span className="zone-explainer-name">{z.name[language]}</span>
+                  <span className="zone-explainer-name">{z.name[language] || z.name['en']}</span>
                   <span className="zone-explainer-hr">{z.hr} {language === 'pt-BR' ? 'FC máx' : 'HR max'}</span>
-                  <span className="zone-explainer-desc">{z.description[language]}</span>
+                  <span className="zone-explainer-desc">{z.description[language] || z.description['en']}</span>
                 </div>
               </div>
             ))}
