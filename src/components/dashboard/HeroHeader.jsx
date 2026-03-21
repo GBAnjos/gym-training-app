@@ -48,12 +48,12 @@ export function HeroHeader({ data, onNavigateToTraining }) {
           const info = getActivityInfo(activity, language, t);
           const sportColor = DESIGN.sportColors[activity.type]?.primary;
           return (
-            <button key={i} className="hero-today-card" onClick={onNavigateToTraining} style={{ borderLeftColor: sportColor }}>
+            <button key={activity.type} className="hero-today-card" onClick={onNavigateToTraining} style={{ borderLeftColor: sportColor }}>
               <div className="hero-today-info">
                 <span className="hero-today-title">{info.title}</span>
                 <span className="hero-today-subtitle">
                   <span className="hero-sport-dot" style={{ color: sportColor }}>●</span>
-                  {' '}{info.sportLabel}{timeLabel ? ` · ${timeLabel}` : ''} · {info.subtitle}
+                  {' '}{info.sportLabel}{timeLabel ? ` · ${timeLabel}` : ''}{info.subtitle ? ` · ${info.subtitle}` : ''}
                 </span>
               </div>
               <span className="hero-today-action">{t('dashboard_start')} →</span>
@@ -137,7 +137,7 @@ function getActivityInfo(activity, language, t) {
     case 'running': {
       const name = session?.name?.[language] || session?.name || 'Running';
       const distance = session?.distance || '';
-      return { title: name, subtitle: distance ? `${distance} · Z${session?.zone || ''}` : '~30 min', sportLabel };
+      return { title: name, subtitle: distance ? `${distance}${session?.zone ? ` · Z${session.zone}` : ''}` : '~30 min', sportLabel };
     }
     case 'yoga': {
       const name = session?.name?.[language] || session?.name || 'Yoga';
