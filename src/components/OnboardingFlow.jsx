@@ -1165,13 +1165,12 @@ function generateScheduleFromProfile(profile) {
 
   // Get activity plan (multi-activity aware)
   const workoutPlan = generateWorkoutPlan(profile);
-  const activityPlan = workoutPlan;
-  const trainingDaySet = new Set(activityPlan.trainingDays);
+  const trainingDaySet = new Set(workoutPlan.trainingDays);
 
   // Build backward-compatible split map for gym days
   const daySplitMap = {};
-  activityPlan.trainingDays.forEach(day => {
-    const act = activityPlan.dayActivities[day];
+  workoutPlan.trainingDays.forEach(day => {
+    const act = workoutPlan.dayActivities[day];
     if (act.type === 'gym' && act.session) {
       daySplitMap[day] = act.session;
     }
@@ -1223,7 +1222,7 @@ function generateScheduleFromProfile(profile) {
     });
 
     // 3. Morning training (with activity info)
-    const dayActivity = activityPlan.dayActivities[day];
+    const dayActivity = workoutPlan.dayActivities[day];
     const activityType = dayActivity?.type;
     const isMorningTraining = isTrainingDay && (gymPreference === 'morning' || (gymPreference === 'flexible' && !isOfficeDay));
     const isAfternoonTraining = isTrainingDay && gymPreference === 'afternoon';
