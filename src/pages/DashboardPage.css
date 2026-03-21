@@ -111,6 +111,11 @@
   color: var(--color-text-secondary);
 }
 
+.hero-sport-dot {
+  font-size: 0.6rem;
+  vertical-align: middle;
+}
+
 .hero-today-action {
   font-size: 0.85rem;
   font-weight: 600;
