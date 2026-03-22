@@ -5,6 +5,7 @@ import { toMusculos } from '../data/bodyPartToMusculos';
 import { muscleColors } from '../data/design';
 import { Icon } from '../components/Icon';
 import { ExerciseDetailSheet } from '../components/ExerciseDetailSheet';
+import { useExercisePrefetch } from '../hooks/useExercisePrefetch';
 import './ExerciseLibraryPage.css';
 
 const MUSCLE_FILTERS = [
@@ -37,6 +38,7 @@ export function ExerciseLibraryPage() {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const searchTimeoutRef = useRef(null);
   const gridRef = useRef(null);
+  useExercisePrefetch(true);  // Trigger on library page mount
 
   useEffect(() => {
     isFullCatalogAvailable().then(available => setIsOffline(!available));
