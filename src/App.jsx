@@ -14,6 +14,7 @@ import { MealsPage } from './pages/MealsPage';
 import { TrainingPage } from './pages/TrainingPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { ExerciseLibraryPage } from './pages/ExerciseLibraryPage';
 import './App.css';
 
 function AppContent() {
@@ -58,6 +59,8 @@ function AppContent() {
         return <TrainingPage />;
       case 'dashboard':
         return <DashboardPage onTabChange={setActiveTab} />;
+      case 'library':
+        return <ExerciseLibraryPage />;
       case 'settings':
         return <SettingsPage />;
       default:

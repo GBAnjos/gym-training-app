@@ -9,6 +9,7 @@ export function BottomNav({ activeTab, onTabChange }) {
     { id: 'schedule', icon: 'calendar-days', labelKey: 'nav_schedule' },
     { id: 'meals', icon: 'knife-fork-1', labelKey: 'nav_meals' },
     { id: 'training', icon: 'dumbbell-1', labelKey: 'nav_training' },
+    { id: 'library', icon: 'search-1', labelKey: 'nav_library' },
     { id: 'dashboard', icon: 'bar-chart-4', labelKey: 'nav_dashboard' },
   ];
 
