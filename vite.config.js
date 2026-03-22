@@ -19,4 +19,9 @@ function versionPlugin() {
 export default defineConfig({
   plugins: [react(), versionPlugin()],
   base: '/gym-training-app/',
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: [],
+  },
 })
