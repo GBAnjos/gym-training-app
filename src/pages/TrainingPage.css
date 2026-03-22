@@ -19,6 +19,187 @@
   font-size: 0.9rem;
 }
 
+/* ===== Plan Selection Empty State ===== */
+.training-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.training-empty-icon {
+  font-size: 3rem;
+  color: var(--color-accent-primary);
+  opacity: 0.6;
+  margin-bottom: var(--space-4);
+}
+
+.training-empty-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.training-empty-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-8);
+  max-width: 280px;
+}
+
+.training-option-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 400px;
+}
+
+.training-option-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  text-align: left;
+  min-height: 72px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.training-option-card:hover {
+  border-color: var(--color-accent-primary);
+}
+
+.training-option-card:active {
+  transform: scale(0.98);
+}
+
+.training-option-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.training-option-icon.smart {
+  background-color: rgba(217, 255, 0, 0.15);
+  color: var(--color-accent-primary);
+}
+
+.training-option-icon.scratch {
+  background-color: rgba(107, 207, 255, 0.15);
+  color: var(--color-accent-secondary);
+}
+
+.training-option-icon.programs {
+  background-color: rgba(255, 184, 108, 0.15);
+  color: var(--color-accent-warm);
+}
+
+[data-theme="light"] .training-option-icon.smart {
+  background-color: rgba(45, 45, 45, 0.08);
+  color: var(--color-accent-primary);
+}
+
+[data-theme="light"] .training-option-icon.scratch {
+  background-color: rgba(0, 119, 182, 0.1);
+  color: var(--color-accent-secondary);
+}
+
+[data-theme="light"] .training-option-icon.programs {
+  background-color: rgba(212, 133, 10, 0.1);
+  color: var(--color-accent-warm);
+}
+
+.training-option-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.training-option-text h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 2px;
+}
+
+.training-option-text p {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.training-option-arrow {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* ===== Active Plan Header ===== */
+.training-plan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.training-plan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.training-plan-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.training-plan-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.training-change-plan {
+  background: none;
+  border: none;
+  color: var(--color-accent-primary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.training-change-plan:hover {
+  background-color: rgba(217, 255, 0, 0.1);
+}
+
+[data-theme="light"] .training-change-plan:hover {
+  background-color: rgba(45, 45, 45, 0.06);
+}
+
 /* Day Selector */
 .training-day-selector {
   display: flex;

@@ -73,7 +73,7 @@ function getActiveDays(plan) {
   return plan.trainingDays.map(d => SCHEDULE_TO_TREINO_DAY[d]).filter(Boolean);
 }
 
-export function TrainingPage() {
+export function TrainingPage({ onTabChange }) {
   const { t, language } = useLanguage();
   const toast = useToast();
   const workoutPlan = useWorkoutPlan();
@@ -209,6 +209,54 @@ export function TrainingPage() {
 
   const isNonGymDay = workoutPlan?.dayActivities?.[selectedDay] && workoutPlan.dayActivities[selectedDay].type !== 'gym';
 
+  // No plan at all — show plan selection empty state
+  if (!workoutPlan) {
+    return (
+      <div className="training-page">
+        <div className="training-empty-state">
+          <Icon name="dumbbell-1" className="training-empty-icon" />
+          <h2 className="training-empty-title">{t('training_empty_title')}</h2>
+          <p className="training-empty-desc">{t('training_empty_desc')}</p>
+
+          <div className="training-option-cards">
+            <button className="training-option-card" onClick={() => onTabChange?.('smart-plan')}>
+              <div className="training-option-icon smart">
+                <Icon name="wand" />
+              </div>
+              <div className="training-option-text">
+                <h3>{t('training_option_smart')}</h3>
+                <p>{t('training_option_smart_desc')}</p>
+              </div>
+              <Icon name="chevron-right" className="training-option-arrow" />
+            </button>
+
+            <button className="training-option-card" onClick={() => onTabChange?.('build-plan')}>
+              <div className="training-option-icon scratch">
+                <Icon name="pencil-1" />
+              </div>
+              <div className="training-option-text">
+                <h3>{t('training_option_scratch')}</h3>
+                <p>{t('training_option_scratch_desc')}</p>
+              </div>
+              <Icon name="chevron-right" className="training-option-arrow" />
+            </button>
+
+            <button className="training-option-card" onClick={() => onTabChange?.('programs')}>
+              <div className="training-option-icon programs">
+                <Icon name="list-3" />
+              </div>
+              <div className="training-option-text">
+                <h3>{t('training_option_programs')}</h3>
+                <p>{t('training_option_programs_desc')}</p>
+              </div>
+              <Icon name="chevron-right" className="training-option-arrow" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!treino && !isNonGymDay) {
     return (
       <div className="training-page">
@@ -221,6 +269,17 @@ export function TrainingPage() {
 
   return (
     <div className="training-page">
+      {/* Active Plan Header */}
+      <div className="training-plan-header">
+        <div className="training-plan-info">
+          <span className="training-plan-label">{t('training_active_plan')}</span>
+          <span className="training-plan-name">{workoutPlan.name || (language === 'pt-BR' ? 'Meu Plano' : 'My Plan')}</span>
+        </div>
+        <button className="training-change-plan" onClick={() => onTabChange?.('programs')}>
+          {t('training_change_plan')}
+        </button>
+      </div>
+
       {/* Day Selector */}
       <div className="training-day-selector">
         {activeDays.map(day => {

@@ -470,7 +470,7 @@
   top: 50%;
   transform: translateY(-50%);
   background: var(--color-accent-primary);
-  color: var(--color-bg-base);
+  color: var(--color-text-inverse);
   border: none;
   border-radius: var(--radius-sm);
   padding: 6px 14px;

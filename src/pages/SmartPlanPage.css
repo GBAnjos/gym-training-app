@@ -1,0 +1,372 @@
+.smart-plan-page {
+  padding: var(--space-sm);
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
+}
+
+/* Header */
+.smart-plan-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.smart-plan-back {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-plan-back:active {
+  transform: scale(0.95);
+}
+
+.smart-plan-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Progress */
+.smart-plan-progress {
+  margin-bottom: var(--space-6);
+}
+
+.smart-plan-step-text {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.smart-plan-progress-bar {
+  height: 4px;
+  background-color: var(--color-bg-elevated);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.smart-plan-progress-fill {
+  height: 100%;
+  background-color: var(--color-accent-primary);
+  border-radius: 2px;
+  transition: width var(--duration-normal) var(--ease-default);
+}
+
+/* Content area */
+.smart-plan-content {
+  flex: 1;
+}
+
+.smart-plan-question {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+  line-height: 1.35;
+}
+
+.smart-plan-hint {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-4);
+}
+
+/* Options grid (for goals, durations) */
+.smart-plan-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.smart-plan-options.vertical {
+  flex-direction: column;
+}
+
+.smart-plan-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 12px 18px;
+  min-height: 48px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-plan-option:active {
+  transform: scale(0.97);
+}
+
+.smart-plan-option.active {
+  border-color: var(--color-accent-primary);
+  background-color: rgba(217, 255, 0, 0.1);
+  color: var(--color-accent-primary);
+  font-weight: 600;
+}
+
+[data-theme="light"] .smart-plan-option.active {
+  background-color: rgba(45, 45, 45, 0.08);
+  color: var(--color-accent-primary);
+}
+
+.smart-plan-option-icon {
+  font-size: 1.1rem;
+}
+
+/* Option cards (for levels, equipment) */
+.smart-plan-option-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  min-height: 60px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-plan-option-card:active {
+  transform: scale(0.98);
+}
+
+.smart-plan-option-card.active {
+  border-color: var(--color-accent-primary);
+  background-color: rgba(217, 255, 0, 0.08);
+}
+
+[data-theme="light"] .smart-plan-option-card.active {
+  background-color: rgba(45, 45, 45, 0.06);
+}
+
+.smart-plan-option-card .smart-plan-option-icon {
+  font-size: 1.5rem;
+  color: var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.smart-plan-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.smart-plan-option-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.smart-plan-option-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Days grid */
+.smart-plan-day-grid {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.smart-plan-day-btn {
+  flex: 1;
+  min-height: 56px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-plan-day-btn:active {
+  transform: scale(0.95);
+}
+
+.smart-plan-day-btn.active {
+  border-color: var(--color-accent-primary);
+  background-color: rgba(217, 255, 0, 0.12);
+  color: var(--color-accent-primary);
+}
+
+[data-theme="light"] .smart-plan-day-btn.active {
+  background-color: rgba(45, 45, 45, 0.08);
+  color: var(--color-accent-primary);
+}
+
+/* Next button */
+.smart-plan-next {
+  margin-top: var(--space-6);
+  width: 100%;
+  padding: 14px;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-inverse);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-plan-next:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.smart-plan-next:not(:disabled):hover {
+  background-color: var(--color-accent-primary-hover);
+}
+
+.smart-plan-next:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* ===== Result Screen ===== */
+.smart-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.smart-result-hero {
+  text-align: center;
+  padding: var(--space-4) 0;
+}
+
+.smart-result-icon {
+  font-size: 3rem;
+  color: var(--color-accent-primary);
+  margin-bottom: var(--space-3);
+}
+
+.smart-result-hero h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2);
+}
+
+.smart-result-hero p {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.smart-result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.smart-result-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+.smart-result-stat.full-width {
+  grid-column: 1 / -1;
+}
+
+.smart-result-stat-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.smart-result-stat-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.smart-plan-activate {
+  width: 100%;
+  padding: 14px;
+  min-height: 48px;
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-inverse);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+  margin-top: auto;
+}
+
+.smart-plan-activate:hover {
+  background-color: var(--color-accent-primary-hover);
+}
+
+.smart-plan-activate:active {
+  transform: scale(0.98);
+}
+
+.smart-plan-adjust {
+  width: 100%;
+  padding: 12px;
+  min-height: 44px;
+  background: none;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-plan-adjust:hover {
+  border-color: var(--color-text-secondary);
+}

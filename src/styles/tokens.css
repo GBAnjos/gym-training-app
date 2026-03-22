@@ -162,7 +162,7 @@
 
   --color-text-primary: #111111;
   --color-text-secondary: #555555;
-  --color-text-muted: #888888;
+  --color-text-muted: #666666;
   --color-text-inverse: var(--primitive-gray-0);
 
   --color-accent-primary: #2d2d2d;
@@ -170,8 +170,8 @@
   --color-accent-secondary: var(--primitive-blue-600);
   --color-accent-warm: var(--primitive-orange-600);
 
-  --color-border-default: rgba(0, 0, 0, 0.12);
-  --color-border-subtle: rgba(0, 0, 0, 0.06);
+  --color-border-default: rgba(0, 0, 0, 0.20);
+  --color-border-subtle: rgba(0, 0, 0, 0.10);
 
   --color-state-success: var(--primitive-green-600);
   --color-state-warning: var(--primitive-yellow-600);

@@ -72,7 +72,7 @@ export async function getById(id) {
  */
 export function search(query = '', filters = {}) {
   const q = query.toLowerCase().trim();
-  const { bodyParts = [], equipment = [] } = filters;
+  const { bodyParts = [], equipment = [], levels = [] } = filters;
 
   const matches = (ex) => {
     if (q && !ex.name.toLowerCase().includes(q) &&
@@ -90,6 +90,9 @@ export function search(query = '', filters = {}) {
       if (!equipment.includes(normalizedEquip) && !equipment.includes(ex.equipment)) {
         return false;
       }
+    }
+    if (levels.length > 0 && !levels.includes(ex.level)) {
+      return false;
     }
     return true;
   };
