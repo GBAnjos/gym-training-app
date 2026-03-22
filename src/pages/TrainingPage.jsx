@@ -57,12 +57,15 @@ function buildTrainingMap(plan) {
   return map;
 }
 
+const CANONICAL_DAY_ORDER = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
 function getActiveDays(plan) {
   if (!plan) return TRAINING_DAYS;
 
   // New multi-activity path: dayActivities keys are schedule days (Seg, Ter, etc.)
   if (plan.dayActivities) {
-    return Object.keys(plan.dayActivities);
+    const keys = Object.keys(plan.dayActivities);
+    return keys.sort((a, b) => CANONICAL_DAY_ORDER.indexOf(a) - CANONICAL_DAY_ORDER.indexOf(b));
   }
 
   // Legacy path
@@ -81,7 +84,7 @@ export function TrainingPage() {
     const days = workoutPlan ? getActiveDays(workoutPlan) : TRAINING_DAYS;
     if (workoutPlan?.dayActivities) {
       // Multi-activity: use schedule day keys
-      const dayMap = { 'domingo': 'Dom', 'segunda': 'Seg', 'terça': 'Ter', 'quarta': 'Qua', 'quinta': 'Qui', 'sexta': 'Sex', 'sábado': 'Sáb' };
+      const dayMap = { 'domingo': 'Dom', 'segunda-feira': 'Seg', 'terça-feira': 'Ter', 'quarta-feira': 'Qua', 'quinta-feira': 'Qui', 'sexta-feira': 'Sex', 'sábado': 'Sáb' };
       const today = new Date().toLocaleDateString("pt-BR", { weekday: "long" });
       const todayKey = dayMap[today.toLowerCase()] || days[0];
       return days.includes(todayKey) ? todayKey : days[0];

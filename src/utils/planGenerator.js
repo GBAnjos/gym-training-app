@@ -89,7 +89,7 @@ function getActivityPlan(goals, mainActivities, addOnActivities, explicitTrainin
     activityCounters[activityType] = counter + 1;
   });
 
-  const allWeekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const allWeekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
   const freeDays = allWeekdays.filter(d => !dayActivities[d]);
   const addonCounters = {};
 
