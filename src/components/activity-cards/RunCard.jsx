@@ -1,18 +1,11 @@
 import { useState } from 'react';
 import { DESIGN } from '../../data/design.js';
-import { RUN_TYPES } from '../../data/running.js';
+import { RUN_TYPES, ZONE_INFO } from '../../data/running.js';
 import { Icon } from '../Icon';
 import './ActivityCard.css';
 
 const colors = DESIGN.sportColors.running;
 
-const ZONE_COLORS = {
-  1: '#82dcb4',
-  2: '#60c8f0',
-  3: '#ffc832',
-  4: '#ff9432',
-  5: '#ff4f4f',
-};
 
 function formatPace(durationMin, distanceKm) {
   if (!distanceKm || distanceKm <= 0 || !durationMin || durationMin <= 0) return '--\'--"';
@@ -46,6 +39,8 @@ export function RunCard({ dayActivity, day, language, toast }) {
       return data.completed || false;
     } catch { return false; }
   });
+
+  const [showZones, setShowZones] = useState(false);
 
   if (!session) return null;
 
@@ -139,24 +134,47 @@ export function RunCard({ dayActivity, day, language, toast }) {
           <span className="run-pace-unit">min/km</span>
         </div>
 
-        <div className="run-zones">
-          {[1, 2, 3, 4, 5].map((zone) => {
-            const isActive = zone === session.zone;
-            return (
-              <div
-                key={zone}
-                className={`run-zone ${isActive ? 'active' : ''}`}
-                style={isActive ? {
-                  background: ZONE_COLORS[zone],
-                  borderColor: ZONE_COLORS[zone],
-                  color: '#1a1a2e',
-                } : {}}
-              >
-                Z{zone}
-              </div>
-            );
-          })}
+        {/* Zone badges with ZONE_INFO colors */}
+        <div className="run-zone-badges">
+          {ZONE_INFO.map(z => (
+            <span
+              key={z.zone}
+              className={`run-zone-badge ${session.zone === z.zone ? 'active' : ''}`}
+              style={session.zone === z.zone
+                ? { background: z.color + '33', border: `1px solid ${z.color}`, color: z.color }
+                : { background: 'var(--color-bg-elevated)', border: '1px solid var(--color-border-default)', color: 'var(--color-text-muted)' }
+              }
+            >
+              {z.label}{session.zone === z.zone ? ' \u2713' : ''}
+            </span>
+          ))}
         </div>
+
+        {/* Zone explainer - collapsible */}
+        <button
+          type="button"
+          className="zone-explainer-toggle"
+          onClick={() => setShowZones(!showZones)}
+        >
+          <span>{'\u2139'} {language === 'pt-BR' ? 'O que são zonas de treino?' : 'What are training zones?'}</span>
+          <span className={`zone-toggle-arrow ${showZones ? 'open' : ''}`}>{'\u25BC'}</span>
+        </button>
+        {showZones && (
+          <div className="zone-explainer-content">
+            {ZONE_INFO.map(z => (
+              <div key={z.zone} className="zone-explainer-row">
+                <span className="zone-explainer-badge" style={{ background: z.color }}>
+                  {z.label}
+                </span>
+                <div className="zone-explainer-info">
+                  <span className="zone-explainer-name">{z.name[language] || z.name['en']}</span>
+                  <span className="zone-explainer-hr">{z.hr} {language === 'pt-BR' ? 'FC máx' : 'HR max'}</span>
+                  <span className="zone-explainer-desc">{z.description[language] || z.description['en']}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="activity-training-card-actions">

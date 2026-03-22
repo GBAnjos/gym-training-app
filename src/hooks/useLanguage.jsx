@@ -263,6 +263,17 @@ const translations = {
     settings_profile: 'Editar perfil',
     settings_redo_onboarding: 'Refazer questionário',
     settings_language: 'Idioma',
+    settings_my_activities: 'Minhas Atividades',
+    settings_add_activity: 'Adicionar Atividade',
+    settings_main_activity: 'Principal',
+    settings_addon_activity: 'Opcional',
+    settings_per_week: '/sem',
+    settings_already_added: 'Já adicionado',
+    settings_remove: 'Remover',
+    settings_remove_confirm: 'Remover {activity}? Seu plano será atualizado.',
+    settings_plan_updated: 'Plano atualizado!',
+    settings_max_days_warning: 'Máximo de 7 dias por semana',
+    settings_min_main_warning: 'Você precisa de pelo menos uma atividade principal',
 
     // Progress Page - Enhanced
     progress_mode_basic: 'Básico',
@@ -339,6 +350,7 @@ const translations = {
     dashboard_progressions: 'progressões',
     dashboard_poses: 'poses',
     dashboard_min_cap: 'min cap',
+    dashboard_tomorrow: 'Amanhã',
 
     // Activity selection (onboarding)
     onboarding_activity_title: 'Como você treina?',
@@ -640,6 +652,17 @@ const translations = {
     settings_profile: 'Edit profile',
     settings_redo_onboarding: 'Redo questionnaire',
     settings_language: 'Language',
+    settings_my_activities: 'My Activities',
+    settings_add_activity: 'Add Activity',
+    settings_main_activity: 'Main',
+    settings_addon_activity: 'Optional',
+    settings_per_week: '/week',
+    settings_already_added: 'Already added',
+    settings_remove: 'Remove',
+    settings_remove_confirm: 'Remove {activity}? Your plan will be updated.',
+    settings_plan_updated: 'Plan updated!',
+    settings_max_days_warning: 'Maximum 7 days per week',
+    settings_min_main_warning: 'You need at least one main activity',
 
     // Progress Page - Enhanced
     progress_mode_basic: 'Basic',
@@ -716,6 +739,7 @@ const translations = {
     dashboard_progressions: 'progressions',
     dashboard_poses: 'poses',
     dashboard_min_cap: 'min cap',
+    dashboard_tomorrow: 'Tomorrow',
 
     // Activity selection (onboarding)
     onboarding_activity_title: 'How do you train?',

@@ -1,5 +1,38 @@
 // Running Session Catalog - Bilingual (pt-BR / en)
 
+export const ZONE_INFO = [
+  {
+    zone: 1, label: 'Z1', color: '#82dcb4',
+    name: { 'pt-BR': 'Recuperação', en: 'Recovery' },
+    hr: '50-60%',
+    description: { 'pt-BR': 'Esforço muito leve, caminhada rápida', en: 'Very light effort, brisk walk' },
+  },
+  {
+    zone: 2, label: 'Z2', color: '#60c8f0',
+    name: { 'pt-BR': 'Aeróbica', en: 'Aerobic' },
+    hr: '60-70%',
+    description: { 'pt-BR': 'Ritmo de conversa, base aeróbica', en: 'Conversational pace, aerobic base' },
+  },
+  {
+    zone: 3, label: 'Z3', color: '#ffc832',
+    name: { 'pt-BR': 'Tempo', en: 'Tempo' },
+    hr: '70-80%',
+    description: { 'pt-BR': 'Desconforto leve, ritmo sustentado', en: 'Comfortably hard, sustained pace' },
+  },
+  {
+    zone: 4, label: 'Z4', color: '#ff9432',
+    name: { 'pt-BR': 'Limiar', en: 'Threshold' },
+    hr: '80-90%',
+    description: { 'pt-BR': 'Fala difícil, intervalos', en: 'Hard to talk, interval work' },
+  },
+  {
+    zone: 5, label: 'Z5', color: '#ff4f4f',
+    name: { 'pt-BR': 'VO2 Max', en: 'VO2 Max' },
+    hr: '90-100%',
+    description: { 'pt-BR': 'Esforço máximo, sprints', en: 'Maximum effort, sprints' },
+  },
+];
+
 export const RUN_TYPES = {
   easy: { 'pt-BR': 'Corrida Leve', en: 'Easy Run' },
   long: { 'pt-BR': 'Corrida Longa', en: 'Long Run' },

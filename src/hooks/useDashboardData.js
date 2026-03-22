@@ -74,18 +74,46 @@ function calculateWeekStreak(trainingDays) {
   return streak;
 }
 
-// Get today's scheduled activity from workout plan
-function getTodayActivity(plan) {
-  if (!plan?.dayActivities) return null;
+// Get today's scheduled activities from workout plan (supports stacked secondary)
+function getTodayActivities(plan) {
+  if (!plan?.dayActivities) return [];
 
   const dayMap = {
-    'domingo': 'Dom', 'segunda': 'Seg', 'terça': 'Ter',
-    'quarta': 'Qua', 'quinta': 'Qui', 'sexta': 'Sex', 'sábado': 'Sáb'
+    'domingo': 'Dom', 'segunda-feira': 'Seg', 'terça-feira': 'Ter',
+    'quarta-feira': 'Qua', 'quinta-feira': 'Qui', 'sexta-feira': 'Sex',
+    'sábado': 'Sáb'
   };
   const today = new Date().toLocaleDateString('pt-BR', { weekday: 'long' });
   const todayKey = dayMap[today.toLowerCase()];
 
-  return todayKey ? plan.dayActivities[todayKey] || null : null;
+  if (!todayKey) return [];
+  const entry = plan.dayActivities[todayKey];
+  if (!entry) return [];
+
+  const activities = [{ type: entry.type, session: entry.session }];
+  if (entry.secondary) {
+    activities.push({ type: entry.secondary.type, session: entry.secondary.session });
+  }
+  return activities;
+}
+
+// Get next scheduled activity (for rest day context)
+function getNextActivity(plan) {
+  if (!plan?.dayActivities) return null;
+
+  const dayOrder = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const todayIndex = new Date().getDay(); // 0=Sun, 1=Mon...
+
+  for (let i = 1; i <= 7; i++) {
+    const nextIndex = (todayIndex + i) % 7;
+    const dayKey = dayOrder[nextIndex];
+    const entry = plan.dayActivities[dayKey];
+    if (entry) {
+      const isTomorrow = i === 1;
+      return { dayKey, type: entry.type, session: entry.session, isTomorrow };
+    }
+  }
+  return null;
 }
 
 // Count sessions this week
@@ -267,7 +295,8 @@ export function useDashboardData() {
     const trainingDays = getTrainingDays();
     const profile = getUserProfile();
     const plan = getWorkoutPlan();
-    const todayActivity = getTodayActivity(plan);
+    const todayActivities = getTodayActivities(plan);
+    const nextActivity = getNextActivity(plan);
     const primaryActivity = getPrimaryActivity(plan);
     const activityTypes = getUserActivityTypes(plan);
 
@@ -293,7 +322,8 @@ export function useDashboardData() {
       plan,
 
       // Hero
-      todayActivity,
+      todayActivities,
+      nextActivity,
       primaryActivity,
       activityTypes,
       weekStreak,
