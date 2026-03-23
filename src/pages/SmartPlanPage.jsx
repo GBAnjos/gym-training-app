@@ -35,7 +35,7 @@ export function SmartPlanPage({ onBack, onComplete }) {
   const { t, language } = useLanguage();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({
-    goal: null,
+    goals: [],
     level: null,
     days: null,
     equipment: null,
@@ -51,7 +51,7 @@ export function SmartPlanPage({ onBack, onComplete }) {
 
   const canProceed = () => {
     switch (step) {
-      case 1: return answers.goal !== null;
+      case 1: return answers.goals.length > 0;
       case 2: return answers.level !== null;
       case 3: return answers.days !== null;
       case 4: return answers.equipment !== null;
@@ -67,7 +67,7 @@ export function SmartPlanPage({ onBack, onComplete }) {
     } else {
       // Generate the plan when all steps are complete
       const plan = generateAdvancedPlan({
-        goal: answers.goal,
+        goals: answers.goals,
         level: answers.level,
         days: answers.days,
         equipment: answers.equipment,
@@ -131,7 +131,7 @@ export function SmartPlanPage({ onBack, onComplete }) {
           <div className="smart-result-stats">
             <div className="smart-result-stat">
               <span className="smart-result-stat-label">{t('smart_result_goal')}</span>
-              <span className="smart-result-stat-value">{t(`smart_q1_${answers.goal}`)}</span>
+              <span className="smart-result-stat-value">{answers.goals.map(g => t(`smart_q1_${g}`)).join(' + ')}</span>
             </div>
             <div className="smart-result-stat">
               <span className="smart-result-stat-label">{t('smart_result_level')}</span>
@@ -208,7 +208,7 @@ export function SmartPlanPage({ onBack, onComplete }) {
       {/* Step Content */}
       <div className="smart-plan-content">
         {step === 1 && (
-          <StepGoal value={answers.goal} onChange={v => setAnswer('goal', v)} t={t} />
+          <StepGoal value={answers.goals} onChange={v => setAnswer('goals', v)} t={t} />
         )}
         {step === 2 && (
           <StepLevel value={answers.level} onChange={v => setAnswer('level', v)} t={t} />
@@ -240,15 +240,24 @@ export function SmartPlanPage({ onBack, onComplete }) {
 }
 
 function StepGoal({ value, onChange, t }) {
+  const toggle = (goal) => {
+    if (value.includes(goal)) {
+      onChange(value.filter(g => g !== goal));
+    } else if (value.length < 3) {
+      onChange([...value, goal]);
+    }
+  };
+
   return (
     <>
       <h2 className="smart-plan-question">{t('smart_q1_title')}</h2>
+      <p className="smart-plan-hint">{t('smart_q1_desc')}</p>
       <div className="smart-plan-options">
         {GOALS.map(goal => (
           <button
             key={goal}
-            className={`smart-plan-option ${value === goal ? 'active' : ''}`}
-            onClick={() => onChange(goal)}
+            className={`smart-plan-option ${value.includes(goal) ? 'active' : ''}`}
+            onClick={() => toggle(goal)}
           >
             <Icon name={GOAL_ICONS[goal]} className="smart-plan-option-icon" />
             <span>{t(`smart_q1_${goal}`)}</span>

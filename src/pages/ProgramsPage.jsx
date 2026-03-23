@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { PROGRAMS, MODALITY_META, PROGRAM_MODALITIES, PROGRAM_LEVELS } from '../data/programs';
+import { generateAdvancedPlan } from '../utils/advancedPlanGenerator';
 import { Icon } from '../components/Icon';
 import './ProgramsPage.css';
 
@@ -176,13 +177,32 @@ function ProgramDetail({ program, language, t, onBack, onStart }) {
   const meta = MODALITY_META[program.modality] || {};
 
   const handleStart = () => {
-    // Build a workout plan from the program and persist it
+    // For gym/mixed programs, use the advanced generator to populate real exercises
+    if (program.modality === 'gym' || program.modality === 'mixed') {
+      const plan = generateAdvancedPlan({
+        goal: program.goal || 'general',
+        level: program.level || 'beginner',
+        days: program.daysPerWeek || 3,
+        equipment: 'full_gym',
+        duration: 60,
+        priorityMuscles: [],
+      });
+
+      plan.name = program.name[language] || program.name['pt-BR'];
+      plan.programId = program.id;
+
+      localStorage.setItem('vida_workout_plan', JSON.stringify(plan));
+      onStart?.();
+      return;
+    }
+
+    // Non-gym programs (running, yoga, crossfit, calisthenics, pilates)
     const WEEKDAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
     const trainingDays = WEEKDAYS.slice(0, program.daysPerWeek);
     const dayActivities = {};
     trainingDays.forEach((day, i) => {
       dayActivities[day] = {
-        type: program.modality === 'mixed' ? 'gym' : program.modality,
+        type: program.modality,
         session: {
           label: String(i + 1),
           name: `${program.name[language] || program.name['pt-BR']} — ${t('programs_day')} ${i + 1}`,

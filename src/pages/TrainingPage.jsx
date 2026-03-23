@@ -1,5 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { TREINOS, DAY_MAP, TRAINING_DAYS, SCHEDULE_TO_TREINO_DAY, getExerciseName, getMuscle, getObs, getWorkoutName, getWorkoutBySplit } from '../data/treinos';
+import { generateAdvancedPlan } from '../utils/advancedPlanGenerator';
 import { muscleColors } from '../data/design';
 import { DESIGN } from '../data/design';
 import { useDataSync } from '../hooks/useDataSync';
@@ -113,7 +114,7 @@ export function TrainingPage({ onTabChange }) {
   const treino = useMemo(() => {
     const dayActivity = workoutPlan?.dayActivities?.[selectedDay];
     if (dayActivity && dayActivity.type === 'gym' && dayActivity.session) {
-      // Advanced generator: exercises are inline in dayActivities
+      // Tier 1: Advanced generator — exercises inline in dayActivities
       if (dayActivity.exercises && dayActivity.exercises.length > 0) {
         return {
           nome: dayActivity.session.focus || {
@@ -124,7 +125,7 @@ export function TrainingPage({ onTabChange }) {
           exercicios: dayActivity.exercises,
         };
       }
-      // Fallback: legacy split lookup from treinos.js
+      // Tier 2: Legacy split lookup from treinos.js
       const workout = getWorkoutBySplit(dayActivity.session.name);
       if (workout) {
         return {
@@ -134,6 +135,29 @@ export function TrainingPage({ onTabChange }) {
             'en': `Day ${dayActivity.session.label}: ${dayActivity.session.name}`
           }
         };
+      }
+      // Tier 3: On-the-fly generation for plans that have no exercises
+      // (e.g., old plans saved before the advanced generator existed)
+      try {
+        const goal = workoutPlan.goals?.[0] || 'general';
+        const level = workoutPlan.level || 'intermediate';
+        const days = workoutPlan.trainingDays?.length || 3;
+        const equipment = workoutPlan.equipment || 'full_gym';
+        const freshPlan = generateAdvancedPlan({ goal, level, days, equipment, duration: 60, priorityMuscles: [] });
+        // Find the matching day in the freshly generated plan
+        const freshDay = freshPlan.dayActivities?.[selectedDay];
+        if (freshDay?.exercises?.length > 0) {
+          return {
+            nome: dayActivity.session.focus || {
+              'pt-BR': `Dia ${dayActivity.session.label}: ${dayActivity.session.name}`,
+              'en': `Day ${dayActivity.session.label}: ${dayActivity.session.name}`
+            },
+            grupos: freshDay.session?.targetMuscles || [],
+            exercicios: freshDay.exercises,
+          };
+        }
+      } catch (e) {
+        // Generation failed — continue to legacy fallback
       }
     }
     // Legacy path or fallback
@@ -296,7 +320,7 @@ export function TrainingPage({ onTabChange }) {
       <div className="training-plan-header">
         <div className="training-plan-info">
           <span className="training-plan-label">{t('training_active_plan')}</span>
-          <span className="training-plan-name">{workoutPlan.name || (language === 'pt-BR' ? 'Meu Plano' : 'My Plan')}</span>
+          <span className="training-plan-name">{(typeof workoutPlan.name === 'object' ? (workoutPlan.name[language] || workoutPlan.name['pt-BR']) : workoutPlan.name) || (language === 'pt-BR' ? 'Meu Plano' : 'My Plan')}</span>
         </div>
         <button className="training-change-plan" onClick={() => onTabChange?.('programs-from-training')}>
           {t('training_change_plan')}

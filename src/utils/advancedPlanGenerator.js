@@ -285,7 +285,8 @@ const MUSCLE_PT = {
  * Generate a science-based workout plan.
  *
  * @param {Object} params
- * @param {string} params.goal - 'muscle' | 'strength' | 'fat_loss' | 'endurance' | 'general'
+ * @param {string|string[]} params.goals - Array of goals, or single goal string (backward compat)
+ * @param {string} [params.goal] - Single goal string (backward compat, use goals instead)
  * @param {string} params.level - 'beginner' | 'intermediate' | 'advanced'
  * @param {number} params.days - 2-6
  * @param {string} params.equipment - 'full_gym' | 'home' | 'minimal'
@@ -293,15 +294,19 @@ const MUSCLE_PT = {
  * @param {string[]} params.priorityMuscles - 0-2 muscle keys (e.g., ['chest', 'glutes'])
  * @returns {Object} vida_workout_plan-compatible plan
  */
-export function generateAdvancedPlan({ goal, level, days, equipment, duration, priorityMuscles = [] }) {
-  const seed = (goal + level + days + equipment + (priorityMuscles.join(','))).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+export function generateAdvancedPlan({ goals, goal, level, days, equipment, duration, priorityMuscles = [] }) {
+  // Normalize: accept goals array or single goal string
+  const goalsArray = goals ? (Array.isArray(goals) ? goals : [goals]) : (goal ? [goal] : ['general']);
+  const primaryGoal = goalsArray[0];
+
+  const seed = (goalsArray.join(',') + level + days + equipment + (priorityMuscles.join(','))).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
   const rng = seededRandom(seed);
 
   // 1. Choose split
-  const split = chooseSplit(days, level, goal);
+  const split = chooseSplit(days, level, primaryGoal);
 
   // 2. Calculate weekly volume
-  const weeklyVolume = calculateWeeklyVolume(level, goal, priorityMuscles);
+  const weeklyVolume = calculateWeeklyVolume(level, primaryGoal, priorityMuscles);
 
   // 3. Distribute volume across sessions
   const sessionVolumes = distributeVolume(weeklyVolume, split.sessions);
@@ -324,7 +329,7 @@ export function generateAdvancedPlan({ goal, level, days, equipment, duration, p
       session.muscles,
       sessionVolumes[i],
       pool,
-      goal,
+      primaryGoal,
       level,
       duration,
       rng
@@ -359,12 +364,12 @@ export function generateAdvancedPlan({ goal, level, days, equipment, duration, p
   });
 
   return {
-    name: generatePlanName(split.type, goal, level),
+    name: generatePlanName(split.type, primaryGoal, level),
     splitType: split.type,
     trainingDays,
     dayActivities,
     split: splitEntries,
-    goals: [goal],
+    goals: goalsArray,
     // Science metadata
     level,
     equipment,
