@@ -546,6 +546,26 @@ const translations = {
     smart_result_equipment: 'Local',
     smart_result_activate: 'Ativar Plano',
     smart_result_back: 'Voltar e ajustar',
+    smart_result_exercises: 'Exercícios',
+    smart_result_priority: 'Músculos Prioritários',
+    smart_result_progression: 'Modelo de Progressão',
+
+    // Step 6: Priority Muscles
+    smart_q6_title: 'Foco especial em algum músculo?',
+    smart_q6_desc: 'Selecione até 2 músculos para priorizar. Opcional — pule se quiser treino equilibrado.',
+    smart_q6_skip: 'Nenhum selecionado — treino equilibrado para todos os grupos.',
+
+    // Muscle names
+    muscle_chest: 'Peito',
+    muscle_back: 'Costas',
+    muscle_shoulders: 'Ombros',
+    muscle_quads: 'Quadríceps',
+    muscle_hamstrings: 'Posterior',
+    muscle_glutes: 'Glúteos',
+    muscle_biceps: 'Bíceps',
+    muscle_triceps: 'Tríceps',
+    muscle_calves: 'Panturrilhas',
+    muscle_abs: 'Abdômen',
   },
 
   'en': {
@@ -1090,6 +1110,26 @@ const translations = {
     smart_result_equipment: 'Location',
     smart_result_activate: 'Activate Plan',
     smart_result_back: 'Go back and adjust',
+    smart_result_exercises: 'Exercises',
+    smart_result_priority: 'Priority Muscles',
+    smart_result_progression: 'Progression Model',
+
+    // Step 6: Priority Muscles
+    smart_q6_title: 'Focus on any specific muscle?',
+    smart_q6_desc: 'Select up to 2 muscles to prioritize. Optional — skip for a balanced plan.',
+    smart_q6_skip: 'None selected — balanced training for all muscle groups.',
+
+    // Muscle names
+    muscle_chest: 'Chest',
+    muscle_back: 'Back',
+    muscle_shoulders: 'Shoulders',
+    muscle_quads: 'Quads',
+    muscle_hamstrings: 'Hamstrings',
+    muscle_glutes: 'Glutes',
+    muscle_biceps: 'Biceps',
+    muscle_triceps: 'Triceps',
+    muscle_calves: 'Calves',
+    muscle_abs: 'Abs',
   }
 };
 

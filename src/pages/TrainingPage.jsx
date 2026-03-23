@@ -109,10 +109,22 @@ export function TrainingPage({ onTabChange }) {
   const [timerActive, setTimerActive] = useState(false);
   const { debouncedSync } = useDataSync();
 
-  // Resolve treino: for multi-activity gym days, look up the workout by split name
+  // Resolve treino: for multi-activity gym days, look up exercises
   const treino = useMemo(() => {
     const dayActivity = workoutPlan?.dayActivities?.[selectedDay];
     if (dayActivity && dayActivity.type === 'gym' && dayActivity.session) {
+      // Advanced generator: exercises are inline in dayActivities
+      if (dayActivity.exercises && dayActivity.exercises.length > 0) {
+        return {
+          nome: dayActivity.session.focus || {
+            'pt-BR': `Dia ${dayActivity.session.label}: ${dayActivity.session.name}`,
+            'en': `Day ${dayActivity.session.label}: ${dayActivity.session.name}`
+          },
+          grupos: dayActivity.session.targetMuscles || [],
+          exercicios: dayActivity.exercises,
+        };
+      }
+      // Fallback: legacy split lookup from treinos.js
       const workout = getWorkoutBySplit(dayActivity.session.name);
       if (workout) {
         return {
@@ -450,8 +462,10 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
     }
   };
 
-  const exerciseName = getExerciseName(exercise.id, language);
+  const exerciseName = getExerciseName(exercise.id, language) || exercise.nome || exercise.id;
   const obsText = getObs(exercise.obs, language);
+  const restTime = exercise.restSeconds || 60;
+  const rpeLabel = exercise.targetRpe ? `RPE ${exercise.targetRpe}` : null;
 
   return (
     <div className={`exercise-card ${saved.feito ? 'completed' : ''}`}>
@@ -464,6 +478,7 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
           <h4 className="exercise-name">{exerciseName}</h4>
           <div className="exercise-meta">
             <span className="exercise-sets">{exercise.series}x{exercise.reps}</span>
+            {rpeLabel && <span className="exercise-rpe">{rpeLabel}</span>}
             {obsText && <span className="exercise-obs">{obsText}</span>}
           </div>
           <div className="exercise-muscles">
@@ -498,11 +513,11 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
         <div className="exercise-actions">
           <button
             className="timer-btn"
-            onClick={() => onStartTimer(60)}
-            title={language === 'pt-BR' ? 'Timer 60s' : '60s Timer'}
+            onClick={() => onStartTimer(restTime)}
+            title={language === 'pt-BR' ? `Timer ${restTime}s` : `${restTime}s Timer`}
           >
             <Icon name="timer-1" />
-            <span>60s</span>
+            <span>{restTime}s</span>
           </button>
 
           <label className="done-checkbox">

@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
 import { Icon } from '../components/Icon';
+import { PRIORITY_MUSCLE_OPTIONS } from '../data/scienceConfig';
+import { generateAdvancedPlan } from '../utils/advancedPlanGenerator';
 import './SmartPlanPage.css';
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const GOALS = ['muscle', 'fat_loss', 'strength', 'endurance', 'general'];
 const LEVELS = [
@@ -30,7 +32,7 @@ const EQUIPMENT_LABELS = {
 };
 
 export function SmartPlanPage({ onBack, onComplete }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({
     goal: null,
@@ -38,8 +40,10 @@ export function SmartPlanPage({ onBack, onComplete }) {
     days: null,
     equipment: null,
     duration: null,
+    priorityMuscles: [],
   });
   const [showResult, setShowResult] = useState(false);
+  const [generatedPlan, setGeneratedPlan] = useState(null);
 
   const setAnswer = (key, value) => {
     setAnswers(prev => ({ ...prev, [key]: value }));
@@ -52,6 +56,7 @@ export function SmartPlanPage({ onBack, onComplete }) {
       case 3: return answers.days !== null;
       case 4: return answers.equipment !== null;
       case 5: return answers.duration !== null;
+      case 6: return true; // Priority muscles are optional
       default: return false;
     }
   };
@@ -60,6 +65,16 @@ export function SmartPlanPage({ onBack, onComplete }) {
     if (step < TOTAL_STEPS) {
       setStep(step + 1);
     } else {
+      // Generate the plan when all steps are complete
+      const plan = generateAdvancedPlan({
+        goal: answers.goal,
+        level: answers.level,
+        days: answers.days,
+        equipment: answers.equipment,
+        duration: answers.duration,
+        priorityMuscles: answers.priorityMuscles,
+      });
+      setGeneratedPlan(plan);
       setShowResult(true);
     }
   };
@@ -75,12 +90,24 @@ export function SmartPlanPage({ onBack, onComplete }) {
   };
 
   const handleActivate = () => {
-    // Store answers and navigate back to training
-    localStorage.setItem('vida_smart_plan_answers', JSON.stringify(answers));
+    if (generatedPlan) {
+      // Store the full generated plan (consumed by TrainingPage)
+      localStorage.setItem('vida_workout_plan', JSON.stringify(generatedPlan));
+      // Also store answers for re-generation later
+      localStorage.setItem('vida_smart_plan_answers', JSON.stringify(answers));
+    }
     onComplete?.();
   };
 
   if (showResult) {
+    const totalExercises = generatedPlan
+      ? Object.values(generatedPlan.dayActivities).reduce((sum, da) => sum + (da.exercises?.length || 0), 0)
+      : 0;
+    const planName = generatedPlan?.name;
+    const displayName = planName
+      ? (typeof planName === 'object' ? (planName[language] || planName['pt-BR']) : planName)
+      : '';
+
     return (
       <div className="smart-plan-page">
         <div className="smart-plan-header">
@@ -96,6 +123,10 @@ export function SmartPlanPage({ onBack, onComplete }) {
             <h2>{t('smart_result_title')}</h2>
             <p>{t('smart_result_desc')}</p>
           </div>
+
+          {displayName && (
+            <div className="smart-result-plan-name">{displayName}</div>
+          )}
 
           <div className="smart-result-stats">
             <div className="smart-result-stat">
@@ -114,11 +145,35 @@ export function SmartPlanPage({ onBack, onComplete }) {
               <span className="smart-result-stat-label">{t('smart_result_duration')}</span>
               <span className="smart-result-stat-value">{answers.duration} min</span>
             </div>
-            <div className="smart-result-stat full-width">
+            <div className="smart-result-stat">
               <span className="smart-result-stat-label">{t('smart_result_equipment')}</span>
               <span className="smart-result-stat-value">{t(EQUIPMENT_LABELS[answers.equipment])}</span>
             </div>
+            <div className="smart-result-stat">
+              <span className="smart-result-stat-label">{t('smart_result_exercises')}</span>
+              <span className="smart-result-stat-value">{totalExercises}</span>
+            </div>
           </div>
+
+          {answers.priorityMuscles.length > 0 && (
+            <div className="smart-result-priority">
+              <span className="smart-result-stat-label">{t('smart_result_priority')}</span>
+              <div className="smart-result-priority-tags">
+                {answers.priorityMuscles.map(m => (
+                  <span key={m} className="smart-result-priority-tag">{t(`muscle_${m}`)}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {generatedPlan && (
+            <div className="smart-result-progression">
+              <span className="smart-result-stat-label">{t('smart_result_progression')}</span>
+              <span className="smart-result-stat-value">
+                {generatedPlan.progressionModel?.description?.[language] || generatedPlan.progressionModel?.description?.['pt-BR'] || ''}
+              </span>
+            </div>
+          )}
 
           <button className="smart-plan-activate" onClick={handleActivate}>
             {t('smart_result_activate')}
@@ -166,6 +221,9 @@ export function SmartPlanPage({ onBack, onComplete }) {
         )}
         {step === 5 && (
           <StepDuration value={answers.duration} onChange={v => setAnswer('duration', v)} t={t} />
+        )}
+        {step === 6 && (
+          <StepPriorityMuscles value={answers.priorityMuscles} onChange={v => setAnswer('priorityMuscles', v)} t={t} />
         )}
       </div>
 
@@ -281,6 +339,38 @@ function StepDuration({ value, onChange, t }) {
           </button>
         ))}
       </div>
+    </>
+  );
+}
+
+function StepPriorityMuscles({ value, onChange, t }) {
+  const toggle = (key) => {
+    if (value.includes(key)) {
+      onChange(value.filter(m => m !== key));
+    } else if (value.length < 2) {
+      onChange([...value, key]);
+    }
+  };
+
+  return (
+    <>
+      <h2 className="smart-plan-question">{t('smart_q6_title')}</h2>
+      <p className="smart-plan-hint">{t('smart_q6_desc')}</p>
+      <div className="smart-plan-muscle-grid">
+        {PRIORITY_MUSCLE_OPTIONS.map(({ key, labelKey }) => (
+          <button
+            key={key}
+            className={`smart-plan-muscle-btn ${value.includes(key) ? 'active' : ''}`}
+            onClick={() => toggle(key)}
+          >
+            <span className="smart-plan-muscle-label">{t(labelKey)}</span>
+            {value.includes(key) && <Icon name="checkmark-1" className="smart-plan-muscle-check" />}
+          </button>
+        ))}
+      </div>
+      {value.length === 0 && (
+        <p className="smart-plan-skip-hint">{t('smart_q6_skip')}</p>
+      )}
     </>
   );
 }

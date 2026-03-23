@@ -426,6 +426,20 @@
   border-radius: var(--radius-sm);
 }
 
+.exercise-rpe {
+  padding: 4px 8px;
+  background-color: rgba(108, 207, 255, 0.15);
+  color: #6bcfff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+}
+
+[data-theme="light"] .exercise-rpe {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
 .exercise-obs {
   padding: 4px 8px;
   background-color: rgba(255, 184, 108, 0.2);
