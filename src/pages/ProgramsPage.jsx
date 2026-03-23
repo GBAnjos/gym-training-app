@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { PROGRAMS, MODALITY_META, PROGRAM_MODALITIES, PROGRAM_LEVELS } from '../data/programs';
@@ -166,6 +166,13 @@ function ProgramCard({ program, language, t, onClick }) {
 }
 
 function ProgramDetail({ program, language, t, onBack, onStart }) {
+  // Scroll to top when detail view mounts (fixes blank page when list was scrolled)
+  useEffect(() => {
+    const main = document.querySelector('.main-content');
+    if (main) main.scrollTop = 0;
+    else window.scrollTo(0, 0);
+  }, []);
+
   const meta = MODALITY_META[program.modality] || {};
 
   const handleStart = () => {
