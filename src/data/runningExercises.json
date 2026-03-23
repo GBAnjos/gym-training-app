@@ -1,0 +1,895 @@
+[
+  {
+    "id": "easy_run",
+    "name": "Easy Run",
+    "bodyPart": "cardio",
+    "target": "cardiovascular system",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start at a comfortable, conversational pace.",
+      "Maintain relaxed shoulders and a slight forward lean.",
+      "Keep your breathing steady and controlled throughout.",
+      "Run for the prescribed duration, typically 30-60 minutes.",
+      "You should be able to hold a conversation at this effort level."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "long_run",
+    "name": "Long Run",
+    "bodyPart": "cardio",
+    "target": "cardiovascular system",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Begin at an easy, sustainable pace.",
+      "Focus on maintaining consistent effort rather than speed.",
+      "Hydrate at regular intervals, roughly every 20-30 minutes.",
+      "Gradually increase distance week over week by no more than 10%.",
+      "Run for 60-150 minutes depending on training plan."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "tempo_run",
+    "name": "Tempo Run",
+    "bodyPart": "cardio",
+    "target": "lactate threshold",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up with 10-15 minutes of easy running.",
+      "Increase pace to a comfortably hard effort, roughly 80-85% max heart rate.",
+      "Maintain this pace for 20-40 minutes.",
+      "You should be able to speak in short phrases but not full sentences.",
+      "Cool down with 10 minutes of easy jogging."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "progression_run",
+    "name": "Progression Run",
+    "bodyPart": "cardio",
+    "target": "aerobic endurance",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start at an easy, relaxed pace for the first third of your run.",
+      "Gradually increase pace to a moderate effort for the middle third.",
+      "Finish the final third at tempo or threshold pace.",
+      "Each segment should feel noticeably faster than the previous one.",
+      "Total run duration is typically 40-60 minutes."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "fartlek_run",
+    "name": "Fartlek Run",
+    "bodyPart": "cardio",
+    "target": "aerobic and anaerobic system",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up with 10 minutes of easy jogging.",
+      "Alternate between faster surges and easy recovery jogs.",
+      "Vary the length and intensity of surges based on feel.",
+      "Use landmarks like trees or lampposts to mark surge intervals.",
+      "Continue for 20-40 minutes, then cool down with easy jogging."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "negative_split_run",
+    "name": "Negative Split Run",
+    "bodyPart": "cardio",
+    "target": "pacing discipline",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Plan to run the second half faster than the first half.",
+      "Start conservatively at an easy to moderate pace.",
+      "At the halfway point, begin gradually increasing your effort.",
+      "Finish the final miles at a strong, controlled pace.",
+      "This teaches patience and race-day pacing strategy."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "steady_state_run",
+    "name": "Steady State Run",
+    "bodyPart": "cardio",
+    "target": "aerobic capacity",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up with 10 minutes of easy jogging.",
+      "Settle into a pace that is moderately hard, slightly easier than tempo.",
+      "Hold this effort consistently for 25-45 minutes.",
+      "Focus on even breathing and relaxed form throughout.",
+      "Cool down with 10 minutes of easy jogging."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "recovery_run",
+    "name": "Recovery Run",
+    "bodyPart": "cardio",
+    "target": "active recovery",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Run at a very easy, relaxed pace.",
+      "Keep heart rate in zone 1-2, well below conversational effort.",
+      "Duration is typically 20-40 minutes.",
+      "Focus on loose, relaxed form with short strides.",
+      "This run promotes blood flow and aids recovery from hard sessions."
+    ],
+    "modality": "running",
+    "category": "endurance"
+  },
+  {
+    "id": "400m_intervals",
+    "name": "400m Intervals",
+    "bodyPart": "cardio",
+    "target": "speed and VO2max",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up with 15 minutes of easy jogging and dynamic drills.",
+      "Run 400 meters at a hard effort, roughly 90-95% max effort.",
+      "Recover with 200-400 meters of easy jogging between intervals.",
+      "Repeat for 6-12 repetitions depending on fitness level.",
+      "Cool down with 10 minutes of easy jogging."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "800m_intervals",
+    "name": "800m Intervals",
+    "bodyPart": "cardio",
+    "target": "VO2max",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up with 15 minutes of easy jogging and strides.",
+      "Run 800 meters at a hard, controlled effort.",
+      "Recover with 400 meters of easy jogging between repeats.",
+      "Complete 4-8 repetitions.",
+      "Cool down with 10 minutes of easy jogging and stretching."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "mile_repeats",
+    "name": "Mile Repeats",
+    "bodyPart": "cardio",
+    "target": "lactate threshold and VO2max",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Warm up with 15 minutes of easy running and dynamic drills.",
+      "Run 1 mile at threshold to 5K race pace.",
+      "Recover with 3-4 minutes of easy jogging between repeats.",
+      "Complete 3-6 repetitions based on fitness and goal race.",
+      "Cool down with 10-15 minutes of easy jogging."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "sprint_intervals",
+    "name": "Sprint Intervals",
+    "bodyPart": "cardio",
+    "target": "anaerobic power",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up thoroughly with 10 minutes of jogging and dynamic stretches.",
+      "Sprint at 95-100% effort for 100-200 meters.",
+      "Walk or jog slowly for 60-90 seconds to recover.",
+      "Repeat for 8-12 sprints.",
+      "Cool down with 10 minutes of walking and stretching."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "hill_sprints",
+    "name": "Hill Sprints",
+    "bodyPart": "cardio",
+    "target": "power and speed",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Find a hill with a moderate 4-8% grade.",
+      "Warm up with 10-15 minutes of easy jogging on flat ground.",
+      "Sprint uphill for 8-15 seconds at maximum effort.",
+      "Walk back down for full recovery between sprints.",
+      "Start with 4-6 repeats and build up to 10-12 over weeks."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "strides",
+    "name": "Strides",
+    "bodyPart": "cardio",
+    "target": "running economy",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "After an easy run, find a flat stretch of 80-100 meters.",
+      "Gradually accelerate to about 90% of max speed over the first 30 meters.",
+      "Hold that pace through the middle, then decelerate smoothly.",
+      "Walk back to the start for full recovery.",
+      "Complete 4-6 strides, focusing on smooth, relaxed form."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "ladder_intervals",
+    "name": "Ladder Intervals",
+    "bodyPart": "cardio",
+    "target": "multi-pace fitness",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Warm up with 15 minutes of easy running.",
+      "Run 200m, 400m, 800m, 1200m, 800m, 400m, 200m at progressively harder efforts.",
+      "Take equal-distance recovery jogs between each interval.",
+      "The longest interval should be at roughly tempo effort.",
+      "Cool down with 10 minutes of easy jogging."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "tabata_sprints",
+    "name": "Tabata Sprints",
+    "bodyPart": "cardio",
+    "target": "anaerobic capacity",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Warm up with 10-15 minutes of easy jogging and dynamic stretches.",
+      "Sprint at maximum effort for 20 seconds.",
+      "Rest or walk for 10 seconds.",
+      "Repeat for 8 rounds totaling 4 minutes.",
+      "Cool down with 10 minutes of walking and stretching."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "200m_repeats",
+    "name": "200m Repeats",
+    "bodyPart": "cardio",
+    "target": "top-end speed",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Warm up with 15 minutes of jogging, drills, and strides.",
+      "Run 200 meters at 95% effort.",
+      "Recover with 200 meters of walking or easy jogging.",
+      "Complete 8-16 repetitions.",
+      "Cool down with 10 minutes of easy jogging."
+    ],
+    "modality": "running",
+    "category": "speed"
+  },
+  {
+    "id": "a_skip",
+    "name": "A-Skip",
+    "bodyPart": "cardio",
+    "target": "hip flexors",
+    "secondaryMuscles": ["calves", "quadriceps", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with good posture.",
+      "Skip forward, driving one knee up to hip height on each skip.",
+      "Keep the support leg straight and push off the ball of the foot.",
+      "Maintain an upright torso and pump your arms in sync.",
+      "Cover 30-50 meters per set, repeat 2-3 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "b_skip",
+    "name": "B-Skip",
+    "bodyPart": "cardio",
+    "target": "hamstrings",
+    "secondaryMuscles": ["hip flexors", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Begin like an A-Skip by driving the knee up to hip height.",
+      "At the top of the knee drive, extend the leg forward.",
+      "Actively pull the foot back down and underneath your body.",
+      "This pawing motion reinforces proper ground contact mechanics.",
+      "Cover 30-50 meters per set, repeat 2-3 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "high_knees",
+    "name": "High Knees",
+    "bodyPart": "cardio",
+    "target": "hip flexors",
+    "secondaryMuscles": ["calves", "quadriceps", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet hip-width apart.",
+      "Drive one knee up to hip height while pushing off the opposite foot.",
+      "Alternate legs rapidly in a running motion.",
+      "Stay on the balls of your feet and pump your arms.",
+      "Perform for 20-30 seconds or 30-50 meters."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "butt_kicks",
+    "name": "Butt Kicks",
+    "bodyPart": "cardio",
+    "target": "hamstrings",
+    "secondaryMuscles": ["calves", "quadriceps", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall and begin jogging in place or moving forward.",
+      "Focus on kicking your heels up toward your glutes.",
+      "Keep your thighs relatively vertical; the motion is in the lower leg.",
+      "Maintain a quick cadence and light foot contacts.",
+      "Perform for 20-30 seconds or 30-50 meters."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "carioca",
+    "name": "Carioca (Grapevine)",
+    "bodyPart": "cardio",
+    "target": "hip mobility",
+    "secondaryMuscles": ["glutes", "adductors", "abductors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand sideways to the direction of travel.",
+      "Cross your trailing foot in front, then step sideways with the lead foot.",
+      "Cross the trailing foot behind, then step sideways again.",
+      "Rotate your hips with each crossover while keeping shoulders square.",
+      "Cover 30-50 meters, then repeat facing the opposite direction."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "bounding",
+    "name": "Bounding",
+    "bodyPart": "cardio",
+    "target": "glutes",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Begin with a few jogging steps to build momentum.",
+      "Push off powerfully from one foot, driving the opposite knee high.",
+      "Aim for maximum distance and hang time on each bound.",
+      "Land softly on the opposite foot and immediately push off again.",
+      "Cover 30-50 meters per set, repeat 2-4 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "ankle_hops",
+    "name": "Ankle Hops",
+    "bodyPart": "cardio",
+    "target": "calves",
+    "secondaryMuscles": ["ankles", "achilles tendon"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet together.",
+      "Hop forward using only your ankles; keep knees nearly straight.",
+      "Focus on quick, springy contacts with the ground.",
+      "Minimize ground contact time and use your calf muscles to propel.",
+      "Cover 20-30 meters per set, repeat 2-3 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "single_leg_hops",
+    "name": "Single-Leg Hops",
+    "bodyPart": "cardio",
+    "target": "calves",
+    "secondaryMuscles": ["quadriceps", "glutes", "ankles", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on one foot with good balance.",
+      "Hop forward on that single leg, driving off the ball of your foot.",
+      "Use your arms for momentum and balance.",
+      "Land softly and spring forward on each hop.",
+      "Cover 20-30 meters per leg, repeat 2-3 times each side."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "side_shuffles",
+    "name": "Side Shuffles",
+    "bodyPart": "cardio",
+    "target": "adductors",
+    "secondaryMuscles": ["abductors", "glutes", "quadriceps", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand in an athletic stance with knees slightly bent.",
+      "Push off the trailing foot and slide laterally.",
+      "Keep your hips low and feet shoulder-width apart.",
+      "Do not cross your feet; maintain a shuffling motion.",
+      "Cover 30-50 meters each direction, repeat 2-3 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "backwards_run",
+    "name": "Backwards Run",
+    "bodyPart": "cardio",
+    "target": "quadriceps",
+    "secondaryMuscles": ["calves", "glutes", "hip flexors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Find a clear, flat surface free of obstacles.",
+      "Begin jogging backwards at a slow pace.",
+      "Stay on the balls of your feet and reach back with each stride.",
+      "Keep your torso upright and glance over your shoulder periodically.",
+      "Cover 30-50 meters per set, repeat 2-3 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "straight_leg_run",
+    "name": "Straight-Leg Run",
+    "bodyPart": "cardio",
+    "target": "hamstrings",
+    "secondaryMuscles": ["hip flexors", "calves", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Run forward keeping your legs nearly straight.",
+      "Drive each leg down and back using the hip, not the knee.",
+      "Land on the ball of your foot with a quick pawing motion.",
+      "Keep your core engaged and arms pumping naturally.",
+      "Cover 30-40 meters per set, repeat 2-3 times."
+    ],
+    "modality": "running",
+    "category": "drill"
+  },
+  {
+    "id": "single_leg_deadlift",
+    "name": "Single-Leg Deadlift",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["glutes", "core", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on one leg with a slight bend in the knee.",
+      "Hinge at the hips, lowering your torso while extending the free leg behind you.",
+      "Keep your back flat and hips square to the ground.",
+      "Lower until your torso is roughly parallel to the floor.",
+      "Return to standing by driving through the glute. Perform 10-12 reps per side."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "calf_raises",
+    "name": "Calf Raises",
+    "bodyPart": "legs",
+    "target": "calves",
+    "secondaryMuscles": ["ankles", "achilles tendon"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet hip-width apart on flat ground or the edge of a step.",
+      "Rise up onto the balls of your feet as high as possible.",
+      "Hold the top position for 1-2 seconds.",
+      "Lower slowly back down, going below parallel if on a step.",
+      "Perform 15-20 repetitions for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "hip_hike",
+    "name": "Hip Hike",
+    "bodyPart": "legs",
+    "target": "glute medius",
+    "secondaryMuscles": ["hip abductors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand on the edge of a step or sturdy platform on one foot.",
+      "Let the free leg hang off the side of the step.",
+      "Drop the free hip down a few inches, then raise it back up above level.",
+      "Keep the standing leg straight; the motion comes from the hip.",
+      "Perform 12-15 reps per side for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "monster_walk",
+    "name": "Monster Walk",
+    "bodyPart": "legs",
+    "target": "glute medius",
+    "secondaryMuscles": ["glutes", "hip abductors", "quadriceps"],
+    "equipment": "resistance band",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Place a resistance band around your ankles or just above your knees.",
+      "Stand in a quarter-squat position with feet shoulder-width apart.",
+      "Step forward and diagonally outward with one foot.",
+      "Follow with the other foot, maintaining tension on the band.",
+      "Take 10-15 steps forward, then reverse. Repeat for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "lateral_band_walk",
+    "name": "Lateral Band Walk",
+    "bodyPart": "legs",
+    "target": "glute medius",
+    "secondaryMuscles": ["glutes", "hip abductors", "quadriceps"],
+    "equipment": "resistance band",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Place a resistance band around your ankles or just above your knees.",
+      "Stand in a quarter-squat position with feet hip-width apart.",
+      "Step laterally with one foot, then follow with the other, maintaining band tension.",
+      "Keep your hips low and back straight throughout.",
+      "Take 15-20 steps in each direction for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "donkey_kicks",
+    "name": "Donkey Kicks",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start on all fours with hands under shoulders and knees under hips.",
+      "Keep your knee bent at 90 degrees and lift one leg toward the ceiling.",
+      "Squeeze your glute at the top of the movement.",
+      "Lower the knee back down without touching the floor.",
+      "Perform 15-20 reps per side for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "fire_hydrant",
+    "name": "Fire Hydrant",
+    "bodyPart": "legs",
+    "target": "glute medius",
+    "secondaryMuscles": ["glutes", "hip abductors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start on all fours with hands under shoulders and knees under hips.",
+      "Keeping the knee bent at 90 degrees, lift one leg out to the side.",
+      "Raise the leg until the thigh is roughly parallel to the floor.",
+      "Hold briefly, then lower with control.",
+      "Perform 15-20 reps per side for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "glute_bridge_march",
+    "name": "Glute Bridge March",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "core", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with knees bent and feet flat on the floor.",
+      "Drive your hips up into a bridge position, squeezing your glutes.",
+      "While holding the bridge, lift one knee toward your chest.",
+      "Lower that foot and lift the opposite knee in a marching pattern.",
+      "Perform 10-12 marches per leg for 2-3 sets, keeping hips level."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "standing_hip_flexor_raise",
+    "name": "Standing Hip Flexor Raise",
+    "bodyPart": "legs",
+    "target": "hip flexors",
+    "secondaryMuscles": ["quadriceps", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall on one leg, holding a wall for balance if needed.",
+      "Raise the opposite knee as high as possible toward your chest.",
+      "Hold for 1-2 seconds at the top.",
+      "Lower with control back to the starting position.",
+      "Perform 12-15 reps per leg for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "single_leg_calf_raise",
+    "name": "Single-Leg Calf Raise",
+    "bodyPart": "legs",
+    "target": "calves",
+    "secondaryMuscles": ["ankles", "achilles tendon"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on one foot on a step edge, letting the heel hang off.",
+      "Hold a wall or railing for balance.",
+      "Rise up on the ball of your foot as high as possible.",
+      "Lower slowly until the heel drops below the step level.",
+      "Perform 12-15 reps per side for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "runner_lunge",
+    "name": "Runner's Lunge",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "hip flexors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Step forward into a deep lunge position.",
+      "Keep your front knee over your ankle and back knee hovering above the ground.",
+      "Drive through the front heel to return to standing.",
+      "Alternate legs with each repetition.",
+      "Perform 10-12 reps per leg for 2-3 sets."
+    ],
+    "modality": "running",
+    "category": "strength"
+  },
+  {
+    "id": "walking_cooldown",
+    "name": "Walking Cooldown",
+    "bodyPart": "cardio",
+    "target": "active recovery",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "After finishing your run, gradually slow to a walk.",
+      "Walk at a comfortable pace for 5-10 minutes.",
+      "Focus on deep, controlled breathing to lower heart rate.",
+      "Allow your body temperature and heart rate to return to near resting.",
+      "Use this time to mentally review your workout."
+    ],
+    "modality": "running",
+    "category": "recovery"
+  },
+  {
+    "id": "dynamic_stretching_routine",
+    "name": "Dynamic Stretching Routine",
+    "bodyPart": "full body",
+    "target": "flexibility and mobility",
+    "secondaryMuscles": ["hip flexors", "hamstrings", "quadriceps", "calves", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Begin with leg swings: 10 front-to-back and 10 side-to-side per leg.",
+      "Perform walking lunges with a torso twist for 10 reps per side.",
+      "Do inchworms for 6-8 reps to warm up the posterior chain.",
+      "Add arm circles and torso rotations for 10 reps each direction.",
+      "Finish with 10 bodyweight squats to activate the legs."
+    ],
+    "modality": "running",
+    "category": "warmup"
+  },
+  {
+    "id": "foam_roll_it_band",
+    "name": "Foam Roll IT Band",
+    "bodyPart": "legs",
+    "target": "iliotibial band",
+    "secondaryMuscles": ["quadriceps", "glutes", "hip abductors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your side with a foam roller under the outer thigh.",
+      "Support yourself with your hands and opposite foot on the floor.",
+      "Slowly roll from just below the hip to just above the knee.",
+      "Pause on any tender spots for 20-30 seconds.",
+      "Roll for 1-2 minutes per side."
+    ],
+    "modality": "running",
+    "category": "recovery"
+  },
+  {
+    "id": "hip_opener_flow",
+    "name": "Hip Opener Flow",
+    "bodyPart": "legs",
+    "target": "hip mobility",
+    "secondaryMuscles": ["hip flexors", "glutes", "adductors", "hamstrings"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a deep lunge with hands on the floor inside the front foot.",
+      "Rotate the torso toward the front knee, extending the arm to the ceiling.",
+      "Return to center and straighten the front leg for a hamstring stretch.",
+      "Flow back into the lunge and repeat the rotation.",
+      "Perform 5-6 reps per side, holding each position for 3-5 seconds."
+    ],
+    "modality": "running",
+    "category": "recovery"
+  },
+  {
+    "id": "leg_swing_warmup",
+    "name": "Leg Swing Warmup",
+    "bodyPart": "legs",
+    "target": "hip mobility",
+    "secondaryMuscles": ["hip flexors", "hamstrings", "adductors", "abductors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand next to a wall or fence for balance support.",
+      "Swing one leg forward and backward in a controlled pendulum motion.",
+      "Gradually increase the range of motion with each swing.",
+      "Perform 15-20 swings per leg, then switch to lateral swings.",
+      "For lateral swings, face the wall and swing the leg side to side for 15-20 reps."
+    ],
+    "modality": "running",
+    "category": "warmup"
+  },
+  {
+    "id": "post_run_static_stretch",
+    "name": "Post-Run Static Stretch",
+    "bodyPart": "full body",
+    "target": "flexibility",
+    "secondaryMuscles": ["hamstrings", "quadriceps", "calves", "hip flexors", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Hold each stretch for 30-45 seconds without bouncing.",
+      "Start with a standing quad stretch, pulling the heel to the glute.",
+      "Move to a standing hamstring stretch by placing the heel forward and hinging at the hips.",
+      "Perform a calf stretch against a wall, one leg at a time.",
+      "Finish with a seated figure-four stretch to open the hips and glutes."
+    ],
+    "modality": "running",
+    "category": "recovery"
+  },
+  {
+    "id": "walk_jog_warmup",
+    "name": "Walk-Jog Warmup",
+    "bodyPart": "cardio",
+    "target": "cardiovascular warmup",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start with 3-5 minutes of brisk walking.",
+      "Transition to a very light jog for 2-3 minutes.",
+      "Alternate between walking and easy jogging for a total of 10 minutes.",
+      "Gradually increase jogging pace until you reach your desired training pace.",
+      "This warmup prepares the muscles, joints, and cardiovascular system for harder effort."
+    ],
+    "modality": "running",
+    "category": "warmup"
+  },
+  {
+    "id": "jump_rope_warmup",
+    "name": "Jump Rope Warmup",
+    "bodyPart": "cardio",
+    "target": "cardiovascular warmup",
+    "secondaryMuscles": ["calves", "forearms", "shoulders", "core"],
+    "equipment": "jump rope",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Hold the jump rope handles at hip height with elbows close to your body.",
+      "Begin with basic two-foot jumps, clearing the rope by 1-2 inches.",
+      "Stay on the balls of your feet with soft, springy landings.",
+      "Maintain a steady rhythm for 3-5 minutes.",
+      "Progress to alternating foot jumps to mimic running cadence."
+    ],
+    "modality": "running",
+    "category": "warmup"
+  }
+]

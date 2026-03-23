@@ -5,31 +5,35 @@ import { PROGRAMS, MODALITY_META, PROGRAM_MODALITIES, PROGRAM_LEVELS } from '../
 import { Icon } from '../components/Icon';
 import './ProgramsPage.css';
 
-const MODALITY_FILTERS = ['all', ...PROGRAM_MODALITIES];
-
-function getSmartDefaults(userProfile) {
-  if (!userProfile) return { modality: 'all', level: null };
-  const activities = userProfile.mainActivities || ['gym'];
-  const modality = activities[0] || 'gym';
-  return { modality, level: null };
+function getUserModalities(userProfile) {
+  if (!userProfile) return [];
+  const activities = userProfile.mainActivities || [];
+  const addOns = (userProfile.addOnActivities || []).map(a => a.type).filter(Boolean);
+  // Combine and deduplicate
+  return [...new Set([...activities, ...addOns])];
 }
 
-export function ProgramsPage({ onBack }) {
+export function ProgramsPage({ onBack, onComplete, onTabChange }) {
   const { t, language } = useLanguage();
   const { userProfile } = useOnboarding();
-  const defaults = useMemo(() => getSmartDefaults(userProfile), [userProfile]);
+  const userMods = useMemo(() => getUserModalities(userProfile), [userProfile]);
 
-  const [activeModality, setActiveModality] = useState(defaults.modality);
+  // Default to 'user' mode (show only user's modalities), or 'all' if no profile
+  const [activeModality, setActiveModality] = useState(userMods.length > 0 ? 'user' : 'all');
   const [activeLevel, setActiveLevel] = useState(null);
   const [selectedProgram, setSelectedProgram] = useState(null);
 
   const filtered = useMemo(() => {
     return PROGRAMS.filter(p => {
-      if (activeModality !== 'all' && p.modality !== activeModality) return false;
+      if (activeModality === 'user') {
+        if (!userMods.includes(p.modality) && p.modality !== 'mixed') return false;
+      } else if (activeModality !== 'all') {
+        if (p.modality !== activeModality) return false;
+      }
       if (activeLevel && p.level !== activeLevel) return false;
       return true;
     });
-  }, [activeModality, activeLevel]);
+  }, [activeModality, activeLevel, userMods]);
 
   if (selectedProgram) {
     return (
@@ -38,6 +42,7 @@ export function ProgramsPage({ onBack }) {
         language={language}
         t={t}
         onBack={() => setSelectedProgram(null)}
+        onStart={onComplete}
       />
     );
   }
@@ -53,20 +58,46 @@ export function ProgramsPage({ onBack }) {
         <h1 className="programs-title">{t('programs_title')}</h1>
       </div>
 
+      {/* Smart Trainer CTA */}
+      <button className="smart-trainer-card" onClick={() => onTabChange?.('smart-plan')}>
+        <div className="smart-trainer-icon">
+          <Icon name="wand" />
+        </div>
+        <div className="smart-trainer-text">
+          <h3 className="smart-trainer-title">{t('programs_smart_title')}</h3>
+          <p className="smart-trainer-desc">{t('programs_smart_desc')}</p>
+        </div>
+        <Icon name="chevron-right" className="smart-trainer-arrow" />
+      </button>
+
       {/* Modality Filter */}
       <div className="programs-filter-row">
-        {MODALITY_FILTERS.map(mod => (
+        {userMods.length > 0 && (
+          <button
+            className={`programs-filter-pill ${activeModality === 'user' ? 'active' : ''}`}
+            onClick={() => setActiveModality('user')}
+          >
+            {t('programs_for_you')}
+          </button>
+        )}
+        <button
+          className={`programs-filter-pill ${activeModality === 'all' ? 'active' : ''}`}
+          onClick={() => setActiveModality('all')}
+        >
+          {t('programs_all')}
+        </button>
+        {PROGRAM_MODALITIES.map(mod => (
           <button
             key={mod}
             className={`programs-filter-pill ${activeModality === mod ? 'active' : ''}`}
             onClick={() => setActiveModality(mod)}
-            style={activeModality === mod && mod !== 'all' ? {
+            style={activeModality === mod ? {
               borderColor: MODALITY_META[mod]?.color,
               backgroundColor: `${MODALITY_META[mod]?.color}18`,
               color: MODALITY_META[mod]?.color,
             } : undefined}
           >
-            {mod === 'all' ? t('programs_all') : t(`programs_modality_${mod}`)}
+            {t(`programs_modality_${mod}`)}
           </button>
         ))}
       </div>
@@ -134,8 +165,39 @@ function ProgramCard({ program, language, t, onClick }) {
   );
 }
 
-function ProgramDetail({ program, language, t, onBack }) {
+function ProgramDetail({ program, language, t, onBack, onStart }) {
   const meta = MODALITY_META[program.modality] || {};
+
+  const handleStart = () => {
+    // Build a workout plan from the program and persist it
+    const WEEKDAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+    const trainingDays = WEEKDAYS.slice(0, program.daysPerWeek);
+    const dayActivities = {};
+    trainingDays.forEach((day, i) => {
+      dayActivities[day] = {
+        type: program.modality === 'mixed' ? 'gym' : program.modality,
+        session: {
+          label: String(i + 1),
+          name: `${program.name[language] || program.name['pt-BR']} — ${t('programs_day')} ${i + 1}`,
+          focus: program.goal,
+          icon: program.icon,
+        },
+      };
+    });
+
+    const plan = {
+      name: program.name[language] || program.name['pt-BR'],
+      programId: program.id,
+      splitType: program.modality,
+      trainingDays,
+      dayActivities,
+      goals: [program.goal],
+      generatedAt: new Date().toISOString(),
+    };
+
+    localStorage.setItem('vida_workout_plan', JSON.stringify(plan));
+    onStart?.();
+  };
 
   return (
     <div className="programs-page">
@@ -177,7 +239,7 @@ function ProgramDetail({ program, language, t, onBack }) {
           </p>
         </div>
 
-        <button className="program-detail-start">
+        <button className="program-detail-start" onClick={handleStart}>
           {t('programs_start')}
         </button>
       </div>

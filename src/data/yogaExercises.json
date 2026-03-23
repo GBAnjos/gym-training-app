@@ -1,0 +1,1841 @@
+[
+  {
+    "id": "mountain_pose",
+    "name": "Mountain Pose (Tadasana)",
+    "bodyPart": "full body",
+    "target": "posture alignment",
+    "secondaryMuscles": ["quadriceps", "core", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet together, arms at your sides.",
+      "Distribute your weight evenly across both feet.",
+      "Engage your thighs and lift your kneecaps without locking the knees.",
+      "Lengthen your tailbone toward the floor and lift the crown of your head toward the ceiling.",
+      "Roll your shoulders back and down, and let your arms hang naturally with palms facing forward.",
+      "Hold for 5-10 breaths, maintaining steady breathing."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "warrior_i",
+    "name": "Warrior I (Virabhadrasana I)",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["hip flexors", "shoulders", "core", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "From Mountain Pose, step your left foot back 3-4 feet.",
+      "Turn your left foot out about 45 degrees, keeping your right foot pointing forward.",
+      "Bend your right knee to 90 degrees, stacking it over the ankle.",
+      "Square your hips toward the front of the mat.",
+      "Raise both arms overhead with palms facing each other.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "warrior_ii",
+    "name": "Warrior II (Virabhadrasana II)",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["inner thighs", "shoulders", "core", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "From standing, step your feet wide apart, about 4 feet.",
+      "Turn your right foot out 90 degrees and your left foot slightly inward.",
+      "Extend your arms out to the sides at shoulder height, palms facing down.",
+      "Bend your right knee to 90 degrees, keeping it aligned over the ankle.",
+      "Gaze over your right fingertips and sink your hips low.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "warrior_iii",
+    "name": "Warrior III (Virabhadrasana III)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["glutes", "core", "shoulders", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Warrior I, shift your weight onto your front foot.",
+      "Hinge forward at the hips, lifting your back leg off the ground.",
+      "Extend your arms forward alongside your ears or alongside your body.",
+      "Create a straight line from fingertips to back foot, parallel to the floor.",
+      "Keep your standing leg strong with a micro-bend in the knee.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "triangle_pose",
+    "name": "Triangle Pose (Trikonasana)",
+    "bodyPart": "legs",
+    "target": "inner thighs",
+    "secondaryMuscles": ["hamstrings", "obliques", "chest", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with your feet wide apart, about 4 feet.",
+      "Turn your right foot out 90 degrees and your left foot slightly inward.",
+      "Extend your arms to the sides at shoulder height.",
+      "Reach your right hand toward your right foot, hinging at the hip.",
+      "Place your right hand on your shin, ankle, or the floor, and extend your left arm straight up.",
+      "Gaze up at your left hand. Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "extended_side_angle",
+    "name": "Extended Side Angle (Utthita Parsvakonasana)",
+    "bodyPart": "legs",
+    "target": "obliques",
+    "secondaryMuscles": ["quadriceps", "inner thighs", "shoulders", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "From Warrior II, lower your right forearm to your right thigh or place your right hand on the floor outside your right foot.",
+      "Extend your left arm overhead, creating a long line from your left heel to your left fingertips.",
+      "Keep your chest open, rotating your torso toward the ceiling.",
+      "Engage your core and press firmly through both feet.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "half_moon_pose",
+    "name": "Half Moon Pose (Ardha Chandrasana)",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "core", "obliques", "ankles"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Triangle Pose on the right side, bend your right knee and shift your weight onto your right foot.",
+      "Place your right hand on the floor about 12 inches in front of your right foot.",
+      "Lift your left leg parallel to the floor.",
+      "Open your left hip, stacking it over the right, and extend your left arm upward.",
+      "Flex your lifted foot and gaze up at your left hand.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "tree_pose",
+    "name": "Tree Pose (Vrksasana)",
+    "bodyPart": "legs",
+    "target": "ankles",
+    "secondaryMuscles": ["calves", "core", "inner thighs", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand in Mountain Pose and shift your weight onto your left foot.",
+      "Place the sole of your right foot on your left inner thigh or calf (avoid the knee).",
+      "Press your foot and leg into each other for stability.",
+      "Bring your hands to heart center or extend them overhead.",
+      "Fix your gaze on a steady point for balance.",
+      "Hold for 5-10 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "chair_pose",
+    "name": "Chair Pose (Utkatasana)",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "core", "calves", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet together in Mountain Pose.",
+      "Bend your knees deeply as if sitting into an imaginary chair.",
+      "Keep your weight in your heels and your knees behind your toes.",
+      "Extend your arms overhead alongside your ears, palms facing each other.",
+      "Engage your core and lengthen your tailbone toward the floor.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "eagle_pose",
+    "name": "Eagle Pose (Garudasana)",
+    "bodyPart": "legs",
+    "target": "shoulders",
+    "secondaryMuscles": ["hips", "calves", "ankles", "upper back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand in Mountain Pose and bend your knees slightly.",
+      "Cross your right thigh over your left, hooking your right foot behind your left calf if possible.",
+      "Extend your arms forward, cross your left arm over the right, and bend at the elbows.",
+      "Wrap your forearms and press your palms together.",
+      "Sink your hips low and lift your elbows to shoulder height.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "dancer_pose",
+    "name": "Dancer Pose (Natarajasana)",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["hip flexors", "shoulders", "chest", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand in Mountain Pose and shift your weight onto your left foot.",
+      "Bend your right knee and grasp the inside of your right ankle with your right hand.",
+      "Extend your left arm forward and up.",
+      "Press your right foot into your hand, lifting the leg behind you.",
+      "Hinge slightly forward, keeping your chest lifted.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "standing_forward_fold",
+    "name": "Standing Forward Fold (Uttanasana)",
+    "bodyPart": "back",
+    "target": "hamstrings",
+    "secondaryMuscles": ["calves", "lower back", "hips"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet hip-width apart in Mountain Pose.",
+      "Hinge forward at your hips, leading with your chest.",
+      "Let your hands reach toward the floor, your shins, or grasp your elbows.",
+      "Relax your head and neck, letting them hang heavy.",
+      "Keep a slight bend in your knees if your hamstrings are tight.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "wide_legged_forward_fold",
+    "name": "Wide-Legged Forward Fold (Prasarita Padottanasana)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["inner thighs", "lower back", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with your feet 4-5 feet apart, toes pointing slightly inward.",
+      "Place your hands on your hips and hinge forward at the hips.",
+      "Place your hands on the floor between your feet.",
+      "Walk your hands back in line with your feet if flexibility allows.",
+      "Let the crown of your head drop toward the floor.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "pyramid_pose",
+    "name": "Pyramid Pose (Parsvottanasana)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["calves", "hips", "lower back", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Mountain Pose, step your left foot back about 3 feet.",
+      "Square your hips toward the front of the mat.",
+      "Bring your hands behind your back in reverse prayer or hold opposite elbows.",
+      "Hinge forward over your right leg, keeping your spine long.",
+      "Fold as deeply as comfortable while keeping both legs straight.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "revolved_triangle",
+    "name": "Revolved Triangle (Parivrtta Trikonasana)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["obliques", "spine", "hips", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Pyramid Pose on the right side, place your left hand on the floor or a block outside your right foot.",
+      "Twist your torso to the right, extending your right arm toward the ceiling.",
+      "Keep both hips squared toward the front.",
+      "Stack your shoulders and gaze up at your top hand.",
+      "Engage your core to support the twist.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "high_lunge",
+    "name": "High Lunge (Utthita Ashwa Sanchalanasana)",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["hip flexors", "glutes", "core", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "From Standing Forward Fold, step your left foot back into a lunge position.",
+      "Keep your right knee bent at 90 degrees, aligned over the ankle.",
+      "Stay on the ball of your back foot with your heel lifted.",
+      "Raise your arms overhead, framing your ears.",
+      "Engage your core and keep your hips squared forward.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "crescent_lunge",
+    "name": "Crescent Lunge (Anjaneyasana)",
+    "bodyPart": "legs",
+    "target": "hip flexors",
+    "secondaryMuscles": ["quadriceps", "glutes", "core", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "From a low lunge, lower your back knee to the floor.",
+      "Slide your back leg further behind you to deepen the hip flexor stretch.",
+      "Sweep your arms overhead and gently arch your back.",
+      "Keep your front knee stacked over the ankle.",
+      "Lift your chest and gaze upward.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "standing_split",
+    "name": "Standing Split (Urdhva Prasarita Eka Padasana)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["calves", "hips", "lower back", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Standing Forward Fold, shift your weight onto your left foot.",
+      "Lift your right leg straight up behind you as high as possible.",
+      "Keep your hips squared toward the floor.",
+      "Walk your hands closer to your standing foot for a deeper stretch.",
+      "Keep your standing leg strong with a micro-bend in the knee.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "goddess_pose",
+    "name": "Goddess Pose (Utkata Konasana)",
+    "bodyPart": "legs",
+    "target": "inner thighs",
+    "secondaryMuscles": ["quadriceps", "glutes", "core", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet wide apart, about 4 feet, toes turned out 45 degrees.",
+      "Bend your knees deeply, sinking your hips to knee height.",
+      "Keep your knees tracking over your toes.",
+      "Bring your arms to goal-post position or cactus arms at shoulder height.",
+      "Engage your core and keep your spine tall.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "garland_pose",
+    "name": "Garland Pose (Malasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["inner thighs", "lower back", "ankles", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet slightly wider than hip-width, toes turned out.",
+      "Squat deeply, lowering your hips toward the floor.",
+      "Bring your palms together at heart center.",
+      "Press your elbows against your inner knees to open your hips.",
+      "Keep your spine long and chest lifted.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "standing_hand_to_big_toe",
+    "name": "Standing Hand-to-Big-Toe (Utthita Hasta Padangusthasana)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["hips", "core", "ankles", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand in Mountain Pose and shift your weight onto your left foot.",
+      "Lift your right knee toward your chest and grab your right big toe with your right hand.",
+      "Slowly extend your right leg forward, straightening it as much as possible.",
+      "Keep your standing leg strong and your spine upright.",
+      "Optionally open your right leg out to the side.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "seated_forward_fold",
+    "name": "Seated Forward Fold (Paschimottanasana)",
+    "bodyPart": "back",
+    "target": "hamstrings",
+    "secondaryMuscles": ["lower back", "calves", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the floor with legs extended straight in front of you.",
+      "Flex your feet and sit tall, lengthening your spine.",
+      "Inhale and reach your arms overhead.",
+      "Exhale and hinge forward from the hips, reaching for your feet or shins.",
+      "Keep your spine long rather than rounding your back.",
+      "Hold for 5-10 breaths, deepening the fold with each exhale."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "head_to_knee_pose",
+    "name": "Head-to-Knee Pose (Janu Sirsasana)",
+    "bodyPart": "back",
+    "target": "hamstrings",
+    "secondaryMuscles": ["lower back", "hips", "groin"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit with both legs extended. Bend your right knee and place the sole of your right foot against your left inner thigh.",
+      "Turn your torso to face your extended left leg.",
+      "Inhale and lengthen your spine upward.",
+      "Exhale and fold forward over your left leg, reaching for your foot.",
+      "Keep your left foot flexed and leg active.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "butterfly_pose",
+    "name": "Butterfly Pose (Baddha Konasana)",
+    "bodyPart": "legs",
+    "target": "inner thighs",
+    "secondaryMuscles": ["hips", "groin", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the floor and bring the soles of your feet together, letting your knees fall open.",
+      "Hold your feet or ankles with your hands.",
+      "Sit up tall, lengthening your spine.",
+      "Gently press your knees toward the floor using your elbows.",
+      "For a deeper stretch, fold forward from the hips.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "half_lord_of_the_fishes",
+    "name": "Half Lord of the Fishes (Ardha Matsyendrasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["obliques", "hips", "shoulders", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit with legs extended. Bend your right knee and place your right foot outside your left thigh.",
+      "Bend your left knee and tuck your left foot near your right hip.",
+      "Place your right hand behind you for support.",
+      "Hook your left elbow outside your right knee.",
+      "Inhale to lengthen your spine, exhale to deepen the twist.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "lotus_pose",
+    "name": "Lotus Pose (Padmasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["knees", "ankles", "inner thighs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit with legs extended in Staff Pose.",
+      "Bend your right knee and place your right foot on top of your left thigh, close to the hip crease.",
+      "Bend your left knee and place your left foot on top of your right thigh.",
+      "Press your knees gently toward the floor.",
+      "Rest your hands on your knees in a mudra or place them palms-up.",
+      "Sit tall with a long spine. Hold for several minutes with steady breathing."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "hero_pose",
+    "name": "Hero Pose (Virasana)",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["knees", "ankles", "shins"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Kneel on the floor with your knees together and feet slightly wider than hip-width.",
+      "Sit back between your feet, using a block or cushion if needed.",
+      "Place the tops of your feet on the floor with toes pointing straight back.",
+      "Rest your hands on your thighs.",
+      "Lengthen your spine and lift through the crown of your head.",
+      "Hold for 1-3 minutes."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "staff_pose",
+    "name": "Staff Pose (Dandasana)",
+    "bodyPart": "core",
+    "target": "spine",
+    "secondaryMuscles": ["hip flexors", "quadriceps", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the floor with your legs extended straight in front of you.",
+      "Flex your feet and press through your heels.",
+      "Place your palms on the floor beside your hips, fingers pointing forward.",
+      "Sit up tall, stacking your shoulders over your hips.",
+      "Engage your core and quadriceps.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "cow_face_pose",
+    "name": "Cow Face Pose (Gomukhasana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["hips", "triceps", "chest", "outer thighs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit and stack your right knee on top of your left, aligning both knees at center.",
+      "Bring your feet toward opposite hips.",
+      "Reach your right arm overhead, bend the elbow, and drop your right hand behind your back.",
+      "Reach your left arm behind your back from below and clasp your hands together.",
+      "Use a strap between hands if they do not reach.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "fire_log_pose",
+    "name": "Fire Log Pose (Agnistambhasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["glutes", "outer thighs", "groin"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit on the floor and stack your right shin on top of your left shin.",
+      "Align your right ankle over your left knee and your right knee over your left ankle.",
+      "Flex both feet to protect the knees.",
+      "Sit tall and lengthen your spine.",
+      "For a deeper stretch, hinge forward from the hips.",
+      "Hold for 5-8 breaths, then switch the stacking."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "boat_pose",
+    "name": "Boat Pose (Navasana)",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "lower back", "quadriceps"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit with knees bent and feet flat on the floor.",
+      "Lean back slightly, lifting your feet off the floor.",
+      "Straighten your legs to form a V-shape with your torso.",
+      "Extend your arms forward, parallel to the floor.",
+      "Keep your chest lifted and core engaged.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "pigeon_pose",
+    "name": "Pigeon Pose (Eka Pada Rajakapotasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["glutes", "hip flexors", "lower back", "groin"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Downward Dog, bring your right knee forward toward your right wrist.",
+      "Angle your right shin so your foot is near your left hip (or more parallel to the front of the mat for more intensity).",
+      "Extend your left leg straight behind you, top of the foot on the floor.",
+      "Square your hips toward the front of the mat.",
+      "Walk your hands forward and lower your torso over your front shin.",
+      "Hold for 5-10 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "seated_wide_angle_fold",
+    "name": "Seated Wide-Angle Forward Fold (Upavistha Konasana)",
+    "bodyPart": "legs",
+    "target": "inner thighs",
+    "secondaryMuscles": ["hamstrings", "lower back", "groin"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit on the floor and open your legs wide into a straddle position.",
+      "Flex your feet and keep your kneecaps pointing toward the ceiling.",
+      "Sit tall and lengthen your spine.",
+      "Walk your hands forward between your legs, folding from the hips.",
+      "Keep your spine long as you fold deeper.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "easy_pose",
+    "name": "Easy Pose (Sukhasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["spine", "ankles", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the floor and cross your shins, placing each foot beneath the opposite knee.",
+      "Rest your hands on your knees, palms up or down.",
+      "Sit tall, lengthening from your tailbone to the crown of your head.",
+      "Relax your shoulders down and back.",
+      "Close your eyes and breathe deeply.",
+      "Hold for 1-5 minutes, switching the cross of your legs halfway through."
+    ],
+    "modality": "yoga",
+    "category": "seated"
+  },
+  {
+    "id": "cobra_pose",
+    "name": "Cobra Pose (Bhujangasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["chest", "shoulders", "abdominals", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down with your legs extended and the tops of your feet on the floor.",
+      "Place your hands under your shoulders, elbows close to your body.",
+      "Press into your hands and slowly lift your chest off the floor.",
+      "Keep your elbows slightly bent and shoulders away from your ears.",
+      "Engage your back muscles; do not rely solely on your arms.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "upward_facing_dog",
+    "name": "Upward-Facing Dog (Urdhva Mukha Svanasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["chest", "shoulders", "wrists", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie face down and place your hands beside your lower ribs.",
+      "Press into your hands, straightening your arms and lifting your torso and thighs off the floor.",
+      "Only the tops of your feet and your palms should touch the floor.",
+      "Roll your shoulders back and lift your chest high.",
+      "Keep your legs engaged and kneecaps lifted.",
+      "Hold for 3-5 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "locust_pose",
+    "name": "Locust Pose (Salabhasana)",
+    "bodyPart": "back",
+    "target": "lower back",
+    "secondaryMuscles": ["glutes", "hamstrings", "shoulders", "upper back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down with arms alongside your body, palms facing up.",
+      "Rest your forehead on the floor.",
+      "On an inhale, lift your head, chest, arms, and legs off the floor simultaneously.",
+      "Reach your arms back toward your feet and extend through your toes.",
+      "Keep your gaze slightly forward and neck in a neutral position.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "bow_pose",
+    "name": "Bow Pose (Dhanurasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["chest", "quadriceps", "hip flexors", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie face down and bend your knees, bringing your heels toward your glutes.",
+      "Reach back and grasp your ankles with your hands.",
+      "On an inhale, press your feet into your hands, lifting your chest and thighs off the floor.",
+      "Keep your knees hip-width apart.",
+      "Look forward and breathe deeply into your chest.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "sphinx_pose",
+    "name": "Sphinx Pose (Salamba Bhujangasana)",
+    "bodyPart": "back",
+    "target": "lower back",
+    "secondaryMuscles": ["chest", "shoulders", "abdominals"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down with your legs extended behind you.",
+      "Place your forearms on the floor with elbows directly under your shoulders.",
+      "Press into your forearms and lift your chest off the floor.",
+      "Keep your lower body relaxed and grounded.",
+      "Draw your shoulder blades together and down.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "downward_facing_dog",
+    "name": "Downward-Facing Dog (Adho Mukha Svanasana)",
+    "bodyPart": "full body",
+    "target": "hamstrings",
+    "secondaryMuscles": ["calves", "shoulders", "arms", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start on your hands and knees in a tabletop position.",
+      "Tuck your toes and lift your hips up and back.",
+      "Straighten your legs as much as possible, pressing your heels toward the floor.",
+      "Spread your fingers wide and press firmly through your palms.",
+      "Create an inverted V-shape, keeping your spine long.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "plank_pose",
+    "name": "Plank Pose (Phalakasana)",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "arms", "glutes", "quadriceps"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a tabletop position with wrists under shoulders.",
+      "Step your feet back one at a time, extending your legs fully.",
+      "Create a straight line from your head to your heels.",
+      "Engage your core and squeeze your glutes.",
+      "Keep your gaze slightly forward, neck neutral.",
+      "Hold for 5-10 breaths or 30-60 seconds."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "bridge_pose",
+    "name": "Bridge Pose (Setu Bandhasana)",
+    "bodyPart": "back",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "lower back", "chest", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with knees bent and feet hip-width apart, close to your glutes.",
+      "Press into your feet and lift your hips toward the ceiling.",
+      "Interlace your fingers under your back and walk your shoulders closer together.",
+      "Keep your thighs parallel and knees over your ankles.",
+      "Lift your chest toward your chin.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "wheel_pose",
+    "name": "Wheel Pose (Urdhva Dhanurasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["shoulders", "chest", "quadriceps", "glutes", "wrists"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on your back with knees bent, feet flat on the floor hip-width apart.",
+      "Place your hands beside your ears with fingers pointing toward your shoulders.",
+      "Press into your hands and feet, lifting your hips and shoulders off the floor.",
+      "Straighten your arms as much as possible, pressing your chest forward.",
+      "Keep your feet parallel and engage your legs.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "fish_pose",
+    "name": "Fish Pose (Matsyasana)",
+    "bodyPart": "chest",
+    "target": "chest",
+    "secondaryMuscles": ["neck", "shoulders", "hip flexors", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with legs extended and arms alongside your body.",
+      "Slide your hands under your hips, palms facing down.",
+      "Press into your forearms and elbows, lifting your chest toward the ceiling.",
+      "Drop the crown of your head back to lightly touch the floor.",
+      "Keep most of the weight on your forearms, not your head.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "happy_baby_pose",
+    "name": "Happy Baby Pose (Ananda Balasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["inner thighs", "groin", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back and draw your knees toward your chest.",
+      "Grab the outsides of your feet with your hands.",
+      "Open your knees wider than your torso and pull them toward your armpits.",
+      "Keep your ankles directly over your knees, shins perpendicular to the floor.",
+      "Gently rock side to side to massage your lower back.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "supine_spinal_twist",
+    "name": "Supine Spinal Twist (Supta Matsyendrasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["obliques", "hips", "chest", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back and draw your right knee toward your chest.",
+      "Guide your right knee across your body to the left, using your left hand.",
+      "Extend your right arm out to the side at shoulder height.",
+      "Turn your head to gaze toward your right hand.",
+      "Let gravity deepen the twist; keep both shoulders on the floor.",
+      "Hold for 5-10 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "legs_up_the_wall",
+    "name": "Legs Up the Wall (Viparita Karani)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["lower back", "calves", "nervous system"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit sideways next to a wall, then swing your legs up as you lie back.",
+      "Scoot your hips as close to the wall as comfortable.",
+      "Rest your legs vertically against the wall.",
+      "Place your arms at your sides, palms up.",
+      "Close your eyes and relax completely.",
+      "Hold for 5-15 minutes."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "wind_relieving_pose",
+    "name": "Wind-Relieving Pose (Pavanamuktasana)",
+    "bodyPart": "core",
+    "target": "lower back",
+    "secondaryMuscles": ["hips", "abdominals", "digestive organs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with both legs extended.",
+      "Draw your right knee toward your chest and interlace your fingers around your shin.",
+      "Keep your left leg extended on the floor or bent with foot flat.",
+      "Gently pull your knee closer to your chest.",
+      "Keep your head and shoulders relaxed on the floor.",
+      "Hold for 5-8 breaths, then switch sides. Repeat with both knees."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "reclined_hand_to_big_toe",
+    "name": "Reclined Hand-to-Big-Toe (Supta Padangusthasana)",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["hips", "calves", "groin"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with both legs extended.",
+      "Draw your right knee toward your chest and loop a strap or grab your big toe.",
+      "Extend your right leg toward the ceiling, straightening it as much as possible.",
+      "Keep your left leg active and pressed into the floor.",
+      "Relax your shoulders and keep your hips level.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "headstand",
+    "name": "Headstand (Sirsasana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["core", "arms", "back", "neck"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Kneel and interlace your fingers, placing your forearms on the floor with elbows shoulder-width apart.",
+      "Place the crown of your head on the floor, cradled by your interlaced hands.",
+      "Tuck your toes and lift your hips, walking your feet toward your head.",
+      "Engage your core and slowly lift both legs overhead until your body is inverted.",
+      "Stack your hips over your shoulders and your ankles over your hips.",
+      "Hold for 5-20 breaths, coming down slowly and resting in Child's Pose."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "shoulderstand",
+    "name": "Shoulderstand (Sarvangasana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["core", "neck", "upper back", "legs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with arms at your sides.",
+      "Lift your legs and hips off the floor, bringing your legs overhead.",
+      "Place your hands on your lower back for support, elbows on the floor.",
+      "Straighten your legs toward the ceiling, stacking hips over shoulders.",
+      "Keep your weight on your shoulders and upper arms, not your neck.",
+      "Hold for 10-25 breaths."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "plow_pose",
+    "name": "Plow Pose (Halasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["shoulders", "hamstrings", "neck", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Shoulderstand, slowly lower your legs over your head.",
+      "Bring your toes to touch the floor behind your head.",
+      "Keep your legs straight and engage your thighs.",
+      "Interlace your fingers on the floor and walk your shoulders under you.",
+      "Keep your neck neutral and avoid turning your head.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "forearm_stand",
+    "name": "Forearm Stand (Pincha Mayurasana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["core", "arms", "back", "chest"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Start in Dolphin Pose with forearms on the floor, shoulder-width apart.",
+      "Walk your feet toward your elbows, lifting your hips high.",
+      "Gaze between your forearms and engage your core.",
+      "Kick one leg up and then the other, finding balance upside down.",
+      "Stack your hips over your shoulders and legs over your hips.",
+      "Hold for 5-10 breaths, using a wall for support if needed."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "handstand",
+    "name": "Handstand (Adho Mukha Vrksasana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["core", "arms", "wrists", "back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Stand facing a wall about one foot away.",
+      "Place your hands shoulder-width apart on the floor, fingers spread wide.",
+      "Kick one leg up and then the other, using the wall for support.",
+      "Stack your body in a straight vertical line from wrists to ankles.",
+      "Engage your core, squeeze your legs together, and point your toes.",
+      "Hold for 5-15 breaths, building up duration over time."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "dolphin_pose",
+    "name": "Dolphin Pose (Ardha Pincha Mayurasana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["hamstrings", "calves", "core", "upper back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start on hands and knees, then lower to your forearms.",
+      "Tuck your toes and lift your hips up and back, like Downward Dog on forearms.",
+      "Keep your forearms parallel and press firmly into the floor.",
+      "Walk your feet closer to your elbows to increase the shoulder stretch.",
+      "Keep your head off the floor and gaze toward your feet.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "supported_headstand",
+    "name": "Supported Headstand (Salamba Sirsasana II)",
+    "bodyPart": "shoulders",
+    "target": "core",
+    "secondaryMuscles": ["shoulders", "arms", "back", "neck"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Place the crown of your head on the floor and your palms flat on either side, fingers pointing forward.",
+      "Walk your feet in toward your head, lifting your hips over your shoulders.",
+      "Engage your core and slowly lift your legs to vertical.",
+      "Press firmly through your hands to take weight off your neck.",
+      "Find balance by stacking your entire body in one line.",
+      "Hold for 5-15 breaths."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "standing_forward_fold_inversion",
+    "name": "Ragdoll Pose (Uttanasana Variation)",
+    "bodyPart": "back",
+    "target": "hamstrings",
+    "secondaryMuscles": ["lower back", "calves", "neck"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet hip-width apart and fold forward from the hips.",
+      "Bend your knees generously and grab opposite elbows with your hands.",
+      "Let your head hang heavy, releasing tension in the neck.",
+      "Gently sway side to side to release the lower back.",
+      "Keep your weight slightly forward toward the balls of your feet.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "inversion"
+  },
+  {
+    "id": "crow_pose",
+    "name": "Crow Pose (Bakasana)",
+    "bodyPart": "arms",
+    "target": "wrists",
+    "secondaryMuscles": ["core", "shoulders", "hip flexors", "inner thighs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Squat down and place your hands shoulder-width apart on the floor.",
+      "Spread your fingers wide and bend your elbows slightly.",
+      "Place your knees on the backs of your upper arms, near your armpits.",
+      "Lean forward, shifting your weight into your hands.",
+      "Slowly lift one foot, then the other, off the floor.",
+      "Hold for 5-10 breaths, gazing slightly forward."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "side_crow",
+    "name": "Side Crow (Parsva Bakasana)",
+    "bodyPart": "arms",
+    "target": "obliques",
+    "secondaryMuscles": ["wrists", "shoulders", "core", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Squat and twist your torso to the right, placing both hands on the floor to your right.",
+      "Hook your left hip or outer thigh onto your right upper arm.",
+      "Lean forward and shift your weight into your hands.",
+      "Lift both feet off the floor, stacking your legs.",
+      "Engage your core to maintain the twist and balance.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "firefly_pose",
+    "name": "Firefly Pose (Tittibhasana)",
+    "bodyPart": "arms",
+    "target": "wrists",
+    "secondaryMuscles": ["inner thighs", "core", "hamstrings", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Squat with feet slightly wider than shoulder-width.",
+      "Tilt forward and thread your arms between and behind your legs.",
+      "Place your palms flat on the floor behind your feet.",
+      "Shift your weight into your hands and lift your feet off the floor.",
+      "Straighten your legs out to the sides, extending through your heels.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "eight_angle_pose",
+    "name": "Eight-Angle Pose (Astavakrasana)",
+    "bodyPart": "arms",
+    "target": "core",
+    "secondaryMuscles": ["wrists", "shoulders", "obliques", "inner thighs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit and hook your right leg over your right upper arm, high on the shoulder.",
+      "Cross your left ankle over your right and squeeze your legs together.",
+      "Place both hands on the floor and shift your weight forward.",
+      "Bend your elbows like Chaturanga and extend your legs to the right.",
+      "Keep your core strongly engaged and gaze forward.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "peacock_pose",
+    "name": "Peacock Pose (Mayurasana)",
+    "bodyPart": "arms",
+    "target": "wrists",
+    "secondaryMuscles": ["core", "forearms", "shoulders", "back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Kneel and place your hands on the floor with fingers pointing toward your body.",
+      "Bend your elbows and press them into your abdomen.",
+      "Lean forward, placing your forehead on the floor.",
+      "Straighten your legs behind you and engage your core.",
+      "Shift your weight forward until your feet and head lift off the floor.",
+      "Hold for 3-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "scale_pose",
+    "name": "Scale Pose (Tolasana)",
+    "bodyPart": "arms",
+    "target": "core",
+    "secondaryMuscles": ["wrists", "shoulders", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit in Lotus Pose (or cross-legged if Lotus is not accessible).",
+      "Place your palms on the floor beside your hips.",
+      "Press firmly into your hands and lift your entire body off the floor.",
+      "Engage your core and hip flexors to lift your crossed legs.",
+      "Keep your shoulders down and away from your ears.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "flying_pigeon",
+    "name": "Flying Pigeon (Eka Pada Galavasana)",
+    "bodyPart": "arms",
+    "target": "wrists",
+    "secondaryMuscles": ["core", "hips", "shoulders", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "From standing, cross your right ankle over your left knee in a figure-four.",
+      "Bend your standing leg and fold forward, placing your hands on the floor.",
+      "Hook your right foot around your left upper arm.",
+      "Lean forward, bend your elbows, and shift your weight into your hands.",
+      "Extend your left leg straight back as you lift off.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "side_plank_pose",
+    "name": "Side Plank Pose (Vasisthasana)",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["shoulders", "wrists", "glutes", "legs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Plank Pose, shift your weight onto your right hand and the outer edge of your right foot.",
+      "Stack your left foot on top of your right.",
+      "Extend your left arm toward the ceiling.",
+      "Keep your body in one straight line from head to heels.",
+      "Engage your core and lift your hips.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "four_limbed_staff",
+    "name": "Four-Limbed Staff Pose (Chaturanga Dandasana)",
+    "bodyPart": "arms",
+    "target": "triceps",
+    "secondaryMuscles": ["chest", "core", "shoulders", "wrists"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Plank Pose, shift slightly forward on your toes.",
+      "Bend your elbows straight back, lowering your body halfway to the floor.",
+      "Keep your elbows hugged close to your ribs at 90 degrees.",
+      "Maintain a straight line from head to heels.",
+      "Engage your core and keep your shoulders above elbow height.",
+      "Hold for 1-3 breaths before pressing up or transitioning."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "flying_crow",
+    "name": "Flying Crow (Eka Pada Bakasana)",
+    "bodyPart": "arms",
+    "target": "core",
+    "secondaryMuscles": ["wrists", "shoulders", "hip flexors", "back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Start in Crow Pose with knees on the backs of your arms.",
+      "Slowly extend one leg straight back, keeping the other knee on your arm.",
+      "Engage your core strongly to maintain balance.",
+      "Gaze slightly forward, keeping your weight centered over your hands.",
+      "Keep your extended leg active and parallel to the floor.",
+      "Hold for 3-5 breaths, then switch legs."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "revolved_chair",
+    "name": "Revolved Chair Pose (Parivrtta Utkatasana)",
+    "bodyPart": "legs",
+    "target": "obliques",
+    "secondaryMuscles": ["quadriceps", "spine", "core", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in Chair Pose with feet together and knees bent.",
+      "Bring your palms together at heart center.",
+      "Twist to the right, hooking your left elbow outside your right knee.",
+      "Press your palms together to deepen the twist.",
+      "Keep your knees aligned and hips level.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "revolved_crescent_lunge",
+    "name": "Revolved Crescent Lunge (Parivrtta Anjaneyasana)",
+    "bodyPart": "legs",
+    "target": "obliques",
+    "secondaryMuscles": ["hip flexors", "quadriceps", "spine", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From High Lunge with your right foot forward, bring your palms to heart center.",
+      "Twist to the right, hooking your left elbow outside your right knee.",
+      "Press your palms together and use the leverage to deepen the twist.",
+      "Keep your back leg strong and your heel lifted.",
+      "Open your chest toward the ceiling.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "revolved_side_angle",
+    "name": "Revolved Side Angle (Parivrtta Parsvakonasana)",
+    "bodyPart": "legs",
+    "target": "obliques",
+    "secondaryMuscles": ["quadriceps", "spine", "core", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From a High Lunge with your right foot forward, twist to the right.",
+      "Place your left hand on the floor outside your right foot (or on a block).",
+      "Extend your right arm overhead, creating a line from your back heel to your fingertips.",
+      "Open your chest toward the ceiling.",
+      "Keep your front knee at 90 degrees and your back leg strong.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "seated_twist",
+    "name": "Simple Seated Twist (Parivrtta Sukhasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["obliques", "shoulders", "hips"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit in Easy Pose with a tall spine.",
+      "Place your left hand on your right knee.",
+      "Place your right hand behind you on the floor.",
+      "Inhale to lengthen your spine, exhale to twist to the right.",
+      "Keep both sitting bones grounded.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "revolved_head_to_knee",
+    "name": "Revolved Head-to-Knee (Parivrtta Janu Sirsasana)",
+    "bodyPart": "back",
+    "target": "obliques",
+    "secondaryMuscles": ["hamstrings", "spine", "shoulders", "inner thighs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit with legs in a wide straddle. Bend your right knee, placing the sole of your foot against your left inner thigh.",
+      "Lean your torso to the left toward your extended leg.",
+      "Reach your left hand toward your left foot and your right arm overhead.",
+      "Rotate your chest toward the ceiling.",
+      "Keep your left leg active with the foot flexed.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "bharadvaja_twist",
+    "name": "Bharadvaja's Twist (Bharadvajasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["obliques", "hips", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit with legs extended, then shift both legs to the left so your feet are beside your left hip.",
+      "Place your left hand on your right knee.",
+      "Place your right hand behind you on the floor.",
+      "Inhale to lengthen your spine, exhale to twist to the right.",
+      "Look over your right shoulder.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "twisted_lizard",
+    "name": "Twisted Lizard Pose (Parivrtta Utthan Pristhasana)",
+    "bodyPart": "legs",
+    "target": "hip flexors",
+    "secondaryMuscles": ["quadriceps", "spine", "obliques", "chest"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From a low lunge with your right foot forward, place both hands inside your right foot.",
+      "Lower your back knee to the floor.",
+      "Reach your right hand back to grab your left foot.",
+      "Twist your torso open to the right.",
+      "Use the foot-to-hand connection to deepen the quad stretch and twist.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "noose_pose",
+    "name": "Noose Pose (Pasasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["obliques", "shoulders", "ankles", "hips"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Squat with your feet together, heels on the floor (use a blanket if needed).",
+      "Twist your torso to the right, wrapping your left arm around the outside of your right thigh.",
+      "Reach your right arm behind your back and bind your hands together.",
+      "Keep your knees together and chest lifted.",
+      "Deepen the twist with each exhale.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "twist"
+  },
+  {
+    "id": "childs_pose",
+    "name": "Child's Pose (Balasana)",
+    "bodyPart": "back",
+    "target": "lower back",
+    "secondaryMuscles": ["hips", "ankles", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Kneel on the floor with your big toes touching and knees wide apart.",
+      "Sit back on your heels.",
+      "Fold forward, extending your arms in front of you on the floor.",
+      "Rest your forehead on the mat.",
+      "Let your entire body relax and soften.",
+      "Hold for 1-3 minutes, breathing deeply."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "reclined_bound_angle",
+    "name": "Reclined Bound Angle Pose (Supta Baddha Konasana)",
+    "bodyPart": "legs",
+    "target": "inner thighs",
+    "secondaryMuscles": ["hips", "groin", "chest", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back and bring the soles of your feet together.",
+      "Let your knees fall open to the sides.",
+      "Place your arms at your sides, palms facing up.",
+      "Support your knees with blocks or pillows if needed.",
+      "Close your eyes and breathe deeply into your belly.",
+      "Hold for 3-10 minutes."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "supported_fish_pose",
+    "name": "Supported Fish Pose (Salamba Matsyasana)",
+    "bodyPart": "chest",
+    "target": "chest",
+    "secondaryMuscles": ["shoulders", "spine", "neck"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Place a bolster or rolled blanket lengthwise on the floor.",
+      "Sit in front of the bolster and lie back so it supports your spine from mid-back to head.",
+      "Let your arms rest open at your sides, palms facing up.",
+      "Extend your legs or bring the soles of your feet together.",
+      "Allow your chest to open and your shoulders to release.",
+      "Hold for 3-10 minutes."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "corpse_pose",
+    "name": "Corpse Pose (Savasana)",
+    "bodyPart": "full body",
+    "target": "nervous system",
+    "secondaryMuscles": ["full body relaxation"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie flat on your back with legs extended and arms at your sides.",
+      "Let your feet fall open and turn your palms to face the ceiling.",
+      "Close your eyes and release all muscular effort.",
+      "Scan your body from head to toe, consciously relaxing each area.",
+      "Focus on your natural breath without trying to control it.",
+      "Remain still for 5-15 minutes."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "supported_bridge",
+    "name": "Supported Bridge Pose (Salamba Setu Bandhasana)",
+    "bodyPart": "back",
+    "target": "lower back",
+    "secondaryMuscles": ["chest", "hips", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with knees bent and feet flat on the floor.",
+      "Lift your hips and place a block or bolster under your sacrum.",
+      "Rest your weight on the support, allowing your back to release.",
+      "Extend your arms at your sides or overhead.",
+      "Optionally extend your legs one at a time for a deeper stretch.",
+      "Hold for 3-10 minutes."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "reclined_spinal_twist_restorative",
+    "name": "Restorative Supine Twist (Supta Matsyendrasana Variation)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["obliques", "hips", "chest"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back and draw both knees to your chest.",
+      "Let both knees fall to the right side, resting on a bolster or pillow.",
+      "Extend your arms out to the sides in a T-shape.",
+      "Turn your head to the left if comfortable.",
+      "Allow gravity to deepen the twist without forcing.",
+      "Hold for 3-5 minutes, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "supported_childs_pose",
+    "name": "Supported Child's Pose (Salamba Balasana)",
+    "bodyPart": "back",
+    "target": "lower back",
+    "secondaryMuscles": ["hips", "shoulders", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Place a bolster lengthwise on your mat.",
+      "Kneel with knees wide and sit back on your heels.",
+      "Fold forward over the bolster, turning your head to one side.",
+      "Let your arms drape along the sides of the bolster.",
+      "Allow your entire body to relax into the support.",
+      "Hold for 3-10 minutes, switching the direction of your head halfway."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "constructive_rest",
+    "name": "Constructive Rest Pose",
+    "bodyPart": "full body",
+    "target": "lower back",
+    "secondaryMuscles": ["hips", "psoas", "nervous system"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with knees bent and feet flat on the floor, hip-width apart.",
+      "Let your knees rest against each other so your legs can fully relax.",
+      "Place your hands on your belly or at your sides.",
+      "Close your eyes and allow your lower back to release into the floor.",
+      "Breathe naturally and let go of all tension.",
+      "Hold for 5-15 minutes."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "thread_the_needle",
+    "name": "Thread the Needle Pose (Parsva Balasana)",
+    "bodyPart": "back",
+    "target": "upper back",
+    "secondaryMuscles": ["shoulders", "spine", "neck"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a tabletop position on hands and knees.",
+      "Slide your right arm underneath your left arm, lowering your right shoulder and temple to the floor.",
+      "Keep your left hand planted or extend it forward for a deeper stretch.",
+      "Keep your hips stacked over your knees.",
+      "Feel the stretch across your right shoulder and upper back.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "restorative"
+  },
+  {
+    "id": "cat_pose",
+    "name": "Cat Pose (Marjaryasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["core", "neck", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a tabletop position with wrists under shoulders and knees under hips.",
+      "On an exhale, round your spine toward the ceiling.",
+      "Tuck your tailbone and draw your chin toward your chest.",
+      "Press the floor away with your hands to maximize the stretch.",
+      "Engage your abdominals to support the rounding.",
+      "Alternate with Cow Pose for 5-10 rounds."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "cow_pose",
+    "name": "Cow Pose (Bitilasana)",
+    "bodyPart": "back",
+    "target": "spine",
+    "secondaryMuscles": ["core", "neck", "chest"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a tabletop position with wrists under shoulders and knees under hips.",
+      "On an inhale, drop your belly toward the floor.",
+      "Lift your chest and tailbone toward the ceiling.",
+      "Gaze forward or slightly upward.",
+      "Broaden across your collarbones.",
+      "Alternate with Cat Pose for 5-10 rounds."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "camel_pose",
+    "name": "Camel Pose (Ustrasana)",
+    "bodyPart": "chest",
+    "target": "chest",
+    "secondaryMuscles": ["hip flexors", "quadriceps", "spine", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Kneel with your knees hip-width apart, thighs perpendicular to the floor.",
+      "Place your hands on your lower back, fingers pointing down.",
+      "Engage your core and begin to arch backward.",
+      "Reach your hands back to grasp your heels (or keep them on your lower back).",
+      "Push your hips forward and lift your chest toward the ceiling.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "gate_pose",
+    "name": "Gate Pose (Parighasana)",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["inner thighs", "shoulders", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Kneel on the floor and extend your right leg out to the side, foot flat on the floor.",
+      "Inhale and reach your left arm overhead.",
+      "Exhale and lean to the right, sliding your right hand down your right leg.",
+      "Create a long stretch along your left side body.",
+      "Keep your chest open, not collapsing forward.",
+      "Hold for 5-8 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "standing"
+  },
+  {
+    "id": "wild_thing",
+    "name": "Wild Thing (Camatkarasana)",
+    "bodyPart": "chest",
+    "target": "chest",
+    "secondaryMuscles": ["shoulders", "core", "hip flexors", "spine"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "From Downward Dog, lift your right leg and open your hip.",
+      "Let your right foot drop behind you, spinning onto the ball of your right foot.",
+      "Lift your right hand off the floor and reach it overhead.",
+      "Press into your left hand and left foot, lifting your hips high.",
+      "Arch your back and open your chest toward the ceiling.",
+      "Hold for 3-5 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "balance"
+  },
+  {
+    "id": "half_pigeon_reclined",
+    "name": "Reclined Pigeon Pose (Supta Kapotasana)",
+    "bodyPart": "legs",
+    "target": "hips",
+    "secondaryMuscles": ["glutes", "lower back", "outer thighs"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with both knees bent, feet flat on the floor.",
+      "Cross your right ankle over your left knee in a figure-four shape.",
+      "Lift your left foot off the floor and draw your left knee toward your chest.",
+      "Thread your right hand between your legs and interlace your fingers behind your left thigh.",
+      "Gently pull your left knee closer while pressing your right knee away.",
+      "Hold for 5-10 breaths, then switch sides."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  },
+  {
+    "id": "extended_puppy_pose",
+    "name": "Extended Puppy Pose (Uttana Shishosana)",
+    "bodyPart": "shoulders",
+    "target": "shoulders",
+    "secondaryMuscles": ["spine", "chest", "arms"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a tabletop position.",
+      "Walk your hands forward while keeping your hips over your knees.",
+      "Lower your chest and forehead toward the floor.",
+      "Keep your arms active, pressing through your palms.",
+      "Melt your chest toward the floor for a deep shoulder and spine stretch.",
+      "Hold for 5-10 breaths."
+    ],
+    "modality": "yoga",
+    "category": "prone"
+  },
+  {
+    "id": "upward_plank",
+    "name": "Upward Plank Pose (Purvottanasana)",
+    "bodyPart": "arms",
+    "target": "shoulders",
+    "secondaryMuscles": ["chest", "core", "wrists", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit in Staff Pose with legs extended and hands behind your hips, fingers pointing forward.",
+      "Press into your hands and feet, lifting your hips toward the ceiling.",
+      "Straighten your arms and create a straight line from shoulders to feet.",
+      "Point your toes and press the soles of your feet toward the floor.",
+      "Lift your chest and optionally drop your head back.",
+      "Hold for 5-8 breaths."
+    ],
+    "modality": "yoga",
+    "category": "supine"
+  }
+]

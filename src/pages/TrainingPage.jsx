@@ -14,9 +14,9 @@ import { RunCard } from '../components/activity-cards/RunCard';
 import { YogaCard } from '../components/activity-cards/YogaCard';
 import './TrainingPage.css';
 
-// Load workout plan from localStorage
+// Load workout plan from localStorage (re-reads on each mount/navigation)
 function useWorkoutPlan() {
-  return useMemo(() => {
+  const [plan, setPlan] = useState(() => {
     try {
       const raw = localStorage.getItem('vida_workout_plan');
       if (raw) return JSON.parse(raw);
@@ -24,7 +24,18 @@ function useWorkoutPlan() {
       console.error('Error loading workout plan:', e);
     }
     return null;
+  });
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('vida_workout_plan');
+      setPlan(raw ? JSON.parse(raw) : null);
+    } catch (e) {
+      console.error('Error loading workout plan:', e);
+    }
   }, []);
+
+  return plan;
 }
 
 // Map schedule days to workouts based on workout plan
@@ -241,7 +252,7 @@ export function TrainingPage({ onTabChange }) {
               <Icon name="chevron-right" className="training-option-arrow" />
             </button>
 
-            <button className="training-option-card" onClick={() => onTabChange?.('programs')}>
+            <button className="training-option-card" onClick={() => onTabChange?.('programs-from-training')}>
               <div className="training-option-icon programs">
                 <Icon name="list-3" />
               </div>
@@ -275,7 +286,7 @@ export function TrainingPage({ onTabChange }) {
           <span className="training-plan-label">{t('training_active_plan')}</span>
           <span className="training-plan-name">{workoutPlan.name || (language === 'pt-BR' ? 'Meu Plano' : 'My Plan')}</span>
         </div>
-        <button className="training-change-plan" onClick={() => onTabChange?.('programs')}>
+        <button className="training-change-plan" onClick={() => onTabChange?.('programs-from-training')}>
           {t('training_change_plan')}
         </button>
       </div>

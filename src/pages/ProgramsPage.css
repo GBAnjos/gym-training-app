@@ -39,6 +39,75 @@
   margin: 0;
 }
 
+/* Smart Trainer Card */
+.smart-trainer-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.12) 0%, rgba(217, 255, 0, 0.04) 100%);
+  border: 1px solid rgba(217, 255, 0, 0.25);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: var(--space-3);
+  min-height: 64px;
+  -webkit-tap-highlight-color: transparent;
+  transition: all var(--duration-fast) var(--ease-default);
+  font-family: var(--font-body);
+}
+
+.smart-trainer-card:active {
+  transform: scale(0.98);
+}
+
+[data-theme="light"] .smart-trainer-card {
+  background: linear-gradient(135deg, rgba(45, 45, 45, 0.06) 0%, rgba(45, 45, 45, 0.02) 100%);
+  border-color: rgba(45, 45, 45, 0.15);
+}
+
+.smart-trainer-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--color-accent-primary);
+  background-color: rgba(217, 255, 0, 0.15);
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .smart-trainer-icon {
+  background-color: rgba(45, 45, 45, 0.08);
+  color: var(--color-accent-primary);
+}
+
+.smart-trainer-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.smart-trainer-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 2px;
+}
+
+.smart-trainer-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.smart-trainer-arrow {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
 /* Filter row */
 .programs-filter-row {
   display: flex;

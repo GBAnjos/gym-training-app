@@ -1,0 +1,1769 @@
+[
+  {
+    "id": "push_up",
+    "name": "Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a high plank position with hands slightly wider than shoulder-width apart.",
+      "Keep your body in a straight line from head to heels, core engaged.",
+      "Lower your chest toward the floor by bending your elbows to about 90 degrees.",
+      "Push through your palms to return to the starting position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "diamond_push_up",
+    "name": "Diamond Push-Up",
+    "bodyPart": "arms",
+    "target": "triceps",
+    "secondaryMuscles": ["pectorals", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a high plank position with your hands close together, forming a diamond shape with your index fingers and thumbs.",
+      "Keep your body in a straight line and core tight.",
+      "Lower your chest toward your hands by bending your elbows, keeping them close to your body.",
+      "Push back up to the starting position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "wide_push_up",
+    "name": "Wide Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["anterior deltoids", "triceps", "serratus anterior"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a high plank position with hands placed wider than shoulder-width apart.",
+      "Keep your core engaged and body in a straight line.",
+      "Lower your chest toward the floor, allowing elbows to flare out to the sides.",
+      "Push back up to the starting position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "decline_push_up",
+    "name": "Decline Push-Up",
+    "bodyPart": "chest",
+    "target": "upper pectorals",
+    "secondaryMuscles": ["anterior deltoids", "triceps", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Place your feet on an elevated surface such as a bench or step.",
+      "Position your hands on the floor slightly wider than shoulder-width apart.",
+      "Keep your body in a straight line from head to heels.",
+      "Lower your chest toward the floor by bending your elbows.",
+      "Push back up to the starting position and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "pike_push_up",
+    "name": "Pike Push-Up",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "upper pectorals", "trapezius"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a downward dog position with hips raised high, forming an inverted V shape.",
+      "Place hands shoulder-width apart on the floor.",
+      "Bend your elbows and lower the top of your head toward the floor between your hands.",
+      "Push back up to the starting position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "handstand_push_up",
+    "name": "Handstand Push-Up",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "trapezius", "upper pectorals", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Kick up into a handstand against a wall with hands shoulder-width apart.",
+      "Engage your core and keep your body in a straight line.",
+      "Slowly lower yourself by bending your elbows until the top of your head lightly touches the floor.",
+      "Press back up to full arm extension.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "pseudo_planche_push_up",
+    "name": "Pseudo Planche Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["anterior deltoids", "triceps", "biceps", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a push-up position but place your hands by your waist with fingers pointing to the sides or slightly backward.",
+      "Lean your shoulders forward past your hands.",
+      "Keep your core engaged and body in a straight line.",
+      "Lower your chest toward the floor while maintaining the forward lean.",
+      "Push back up to the starting position and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "archer_push_up",
+    "name": "Archer Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a wide push-up position with hands placed much wider than shoulder-width.",
+      "Shift your weight to one side and bend that arm while keeping the other arm straight.",
+      "Lower your chest toward the bent arm side.",
+      "Push back up to the starting position.",
+      "Alternate sides or complete all reps on one side before switching."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "one_arm_push_up",
+    "name": "One-Arm Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core", "obliques"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Start in a push-up position with feet wider than shoulder-width for balance.",
+      "Place one hand behind your back.",
+      "Engage your core tightly to prevent rotation.",
+      "Lower your chest toward the floor by bending the working arm.",
+      "Push back up to the starting position. Complete all reps then switch arms."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "dips",
+    "name": "Dips",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids"],
+    "equipment": "parallel bars",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Grip the parallel bars and lift yourself up to the starting position with arms straight.",
+      "Lean slightly forward to emphasize the chest.",
+      "Lower your body by bending your elbows until your upper arms are parallel to the floor.",
+      "Push back up to the starting position by extending your arms.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "ring_dips",
+    "name": "Ring Dips",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core", "stabilizers"],
+    "equipment": "gymnastic rings",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Grip the gymnastic rings and lift yourself to a support hold with arms straight and rings turned out.",
+      "Keep the rings close to your body and core engaged.",
+      "Lower your body by bending your elbows until your shoulders are below your elbows.",
+      "Press back up to the top position, turning the rings out at the top.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "bar_muscle_up",
+    "name": "Bar Muscle-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["pectorals", "triceps", "biceps", "anterior deltoids", "core"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar with a false (thumbless) grip, slightly wider than shoulder-width.",
+      "Generate a slight swing or kip and pull explosively, bringing your hips toward the bar.",
+      "As your chest reaches bar height, transition by leaning over the bar.",
+      "Press out to full arm extension above the bar.",
+      "Lower back down with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "ring_muscle_up",
+    "name": "Ring Muscle-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["pectorals", "triceps", "biceps", "anterior deltoids", "core"],
+    "equipment": "gymnastic rings",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from gymnastic rings with a false grip.",
+      "Pull yourself up explosively while bringing the rings close to your chest.",
+      "Transition through the bottom of a dip by rolling your shoulders over the rings.",
+      "Press out to a full support hold on top of the rings.",
+      "Lower back down with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "clap_push_up",
+    "name": "Clap Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a standard push-up position.",
+      "Lower your chest toward the floor.",
+      "Push up explosively so your hands leave the ground.",
+      "Clap your hands together in mid-air.",
+      "Land with soft elbows and immediately go into the next repetition."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "hindu_push_up",
+    "name": "Hindu Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["anterior deltoids", "triceps", "hip flexors", "erector spinae"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a downward dog position with hips raised high.",
+      "Swoop your chest down and forward, skimming close to the floor.",
+      "Continue the motion upward into an upward dog position with hips low and chest lifted.",
+      "Reverse the motion back to the downward dog position.",
+      "Repeat in a fluid, continuous motion."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "tricep_dips_bench",
+    "name": "Bench Tricep Dips",
+    "bodyPart": "arms",
+    "target": "triceps",
+    "secondaryMuscles": ["anterior deltoids", "pectorals"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the edge of a bench or chair with hands gripping the edge beside your hips.",
+      "Slide your hips off the bench with legs extended or bent.",
+      "Lower your body by bending your elbows to about 90 degrees.",
+      "Push back up to the starting position by straightening your arms.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "incline_push_up",
+    "name": "Incline Push-Up",
+    "bodyPart": "chest",
+    "target": "lower pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Place your hands on an elevated surface like a bench, shoulder-width apart.",
+      "Extend your legs back so your body forms a straight line.",
+      "Lower your chest toward the elevated surface by bending your elbows.",
+      "Push back up to the starting position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "ring_push_up",
+    "name": "Ring Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core", "stabilizers"],
+    "equipment": "gymnastic rings",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Set rings at a low height and grip them in a push-up position.",
+      "Keep your body in a straight line with core engaged.",
+      "Lower your chest between the rings by bending your elbows.",
+      "Push back up, turning the rings out at the top of the movement.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "elevated_pike_push_up",
+    "name": "Elevated Pike Push-Up",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "trapezius", "upper pectorals"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Place your feet on an elevated surface and assume a pike position with hips high.",
+      "Hands should be shoulder-width apart on the floor.",
+      "Lower your head toward the floor by bending your elbows.",
+      "Push back up to the starting pike position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "explosive_push_up",
+    "name": "Explosive Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a standard push-up position.",
+      "Lower your chest to the floor.",
+      "Push up as explosively as possible so your hands leave the ground.",
+      "Land softly with slightly bent elbows to absorb impact.",
+      "Immediately descend into the next rep."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "staggered_push_up",
+    "name": "Staggered Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a push-up position with one hand placed higher than the other.",
+      "Keep your core engaged and body straight.",
+      "Lower your chest toward the floor by bending both elbows.",
+      "Push back up to the starting position.",
+      "Switch hand positions after completing reps on one side."
+    ],
+    "modality": "calisthenics",
+    "category": "push"
+  },
+  {
+    "id": "pull_up",
+    "name": "Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "brachialis", "rear deltoids", "rhomboids"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar with a pronated (overhand) grip, hands slightly wider than shoulder-width.",
+      "Engage your back muscles and pull yourself up until your chin clears the bar.",
+      "Keep your core tight and avoid excessive swinging.",
+      "Lower yourself back down with control to a full hang.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "chin_up",
+    "name": "Chin-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "brachialis", "forearms"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar with a supinated (underhand) grip, hands shoulder-width apart.",
+      "Pull yourself up until your chin is above the bar.",
+      "Focus on squeezing your biceps and back at the top.",
+      "Lower yourself with control to a full dead hang.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "wide_grip_pull_up",
+    "name": "Wide-Grip Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["teres major", "rear deltoids", "biceps", "rhomboids"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar with a wide overhand grip, hands well outside shoulder-width.",
+      "Pull yourself up by driving your elbows down and back.",
+      "Aim to bring your chest toward the bar.",
+      "Lower yourself back to a full hang with control.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "archer_pull_up",
+    "name": "Archer Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "rear deltoids", "core"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar with a wide overhand grip.",
+      "Pull yourself up toward one hand while keeping the other arm straight.",
+      "Your chin should reach the pulling hand at the top.",
+      "Lower back down with control.",
+      "Alternate sides or complete all reps on one side before switching."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "l_sit_pull_up",
+    "name": "L-Sit Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "core", "hip flexors", "quadriceps"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar and raise your legs to a 90-degree L-sit position.",
+      "Maintain the L-sit throughout the entire movement.",
+      "Pull yourself up until your chin clears the bar.",
+      "Lower yourself back down with control, keeping legs parallel to the floor.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "typewriter_pull_up",
+    "name": "Typewriter Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "rear deltoids", "core"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Pull yourself up above the bar with a wide overhand grip.",
+      "At the top, shift your body laterally toward one hand, keeping your chin above the bar.",
+      "Slide across to the other hand while staying above the bar.",
+      "This lateral movement counts as one rep.",
+      "Lower down after completing the desired slides."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "front_lever_raise",
+    "name": "Front Lever Raise",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["core", "rear deltoids", "biceps"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar with an overhand grip.",
+      "With straight arms, engage your lats and core to raise your body until it is horizontal.",
+      "Keep your body straight and rigid throughout the movement.",
+      "Lower back down with control to the hanging position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "front_lever_hold",
+    "name": "Front Lever Hold",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["core", "rear deltoids", "biceps", "erector spinae"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar with an overhand grip.",
+      "Engage your lats and core to raise your entire body to a horizontal position.",
+      "Keep your body straight and rigid, parallel to the ground.",
+      "Hold this position for the desired duration.",
+      "Lower down with control when finished."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "back_lever",
+    "name": "Back Lever",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "rear deltoids", "core", "pectorals"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar and perform a skin the cat to rotate backward.",
+      "Slowly lower your body until it is horizontal, face down.",
+      "Keep your body straight and core engaged.",
+      "Hold the position for the desired duration.",
+      "Tuck your knees and rotate back to the starting position to exit safely."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "inverted_row",
+    "name": "Inverted Row",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "rear deltoids", "rhomboids", "trapezius"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Set a bar at waist height and hang underneath it with an overhand grip.",
+      "Keep your body in a straight line with heels on the ground.",
+      "Pull your chest up toward the bar by squeezing your shoulder blades together.",
+      "Lower yourself back down with control.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "australian_pull_up",
+    "name": "Australian Pull-Up",
+    "bodyPart": "back",
+    "target": "rhomboids",
+    "secondaryMuscles": ["latissimus dorsi", "biceps", "rear deltoids", "trapezius"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Set a bar at about hip height and grip it with an underhand grip, shoulder-width apart.",
+      "Walk your feet forward so your body is at an angle under the bar.",
+      "Keep your body straight and pull your chest to the bar.",
+      "Squeeze your shoulder blades at the top.",
+      "Lower back down with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "toes_to_bar",
+    "name": "Toes-to-Bar",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "latissimus dorsi", "forearms"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar with an overhand grip.",
+      "Engage your core and initiate a slight kip if needed.",
+      "Raise both legs with control until your toes touch the bar.",
+      "Lower your legs back down with control.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "close_grip_chin_up",
+    "name": "Close-Grip Chin-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "brachialis", "forearms"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar with an underhand grip, hands about 6 inches apart.",
+      "Pull yourself up until your chin clears the bar.",
+      "Focus on squeezing your biceps and lats at the top.",
+      "Lower yourself with control to a full hang.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "commando_pull_up",
+    "name": "Commando Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "obliques", "core", "rear deltoids"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand perpendicular to the bar and grip it with both hands in a staggered position, palms facing each other.",
+      "Pull yourself up, bringing one shoulder to the bar.",
+      "Lower back down with control.",
+      "Pull up again, this time bringing the opposite shoulder to the bar.",
+      "Alternate sides for each repetition."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "ring_row",
+    "name": "Ring Row",
+    "bodyPart": "back",
+    "target": "rhomboids",
+    "secondaryMuscles": ["latissimus dorsi", "biceps", "rear deltoids"],
+    "equipment": "gymnastic rings",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Set rings at about waist height and grip them with arms extended.",
+      "Walk your feet forward so your body is at an angle, the steeper the harder.",
+      "Keep your body straight and pull your chest toward the rings.",
+      "Squeeze your shoulder blades together at the top.",
+      "Lower back with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "pistol_squat",
+    "name": "Pistol Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "hip flexors", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Stand on one leg with the other leg extended straight in front of you.",
+      "Extend your arms forward for balance.",
+      "Slowly lower yourself by bending the standing leg into a deep squat.",
+      "Go as low as possible while keeping the extended leg off the floor.",
+      "Push through the standing foot to return to the starting position."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "shrimp_squat",
+    "name": "Shrimp Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Stand on one leg and grab the foot of your free leg behind you.",
+      "Keep your torso upright and core engaged.",
+      "Slowly lower yourself by bending the standing leg until the knee of the rear leg touches the floor.",
+      "Push through the standing foot to return to the starting position.",
+      "Complete all reps on one side before switching."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "bodyweight_bulgarian_split_squat",
+    "name": "Bulgarian Split Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand about two feet in front of a bench and place one foot behind you on the bench.",
+      "Keep your torso upright and core engaged.",
+      "Lower your body by bending the front knee until the rear knee nearly touches the floor.",
+      "Push through the front heel to return to the starting position.",
+      "Complete all reps on one side before switching legs."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "jump_squat",
+    "name": "Jump Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand with feet shoulder-width apart.",
+      "Lower into a squat position with thighs parallel to the floor.",
+      "Explode upward, jumping as high as possible.",
+      "Land softly with bent knees to absorb the impact.",
+      "Immediately descend into the next squat and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "box_jump",
+    "name": "Box Jump",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand facing a sturdy box or platform at an appropriate height.",
+      "Bend your knees and swing your arms back to generate momentum.",
+      "Jump onto the box, landing softly with both feet flat on top.",
+      "Stand fully upright on the box.",
+      "Step back down carefully and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "calf_raise",
+    "name": "Calf Raise",
+    "bodyPart": "legs",
+    "target": "calves",
+    "secondaryMuscles": ["soleus"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand on the edge of a step with your heels hanging off.",
+      "Rise up onto your toes as high as possible.",
+      "Hold the top position for a moment and squeeze your calves.",
+      "Lower your heels below the step level for a full stretch.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "nordic_curl",
+    "name": "Nordic Curl",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["glutes", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Kneel on a pad with your feet anchored under something sturdy.",
+      "Keep your body straight from knees to head.",
+      "Slowly lower your torso toward the ground by extending at the knees.",
+      "Control the descent as long as possible, using your hamstrings to resist gravity.",
+      "Catch yourself with your hands and push back up, using your hamstrings to pull you back to the start."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "glute_bridge",
+    "name": "Glute Bridge",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with knees bent and feet flat on the floor, hip-width apart.",
+      "Press through your heels and squeeze your glutes to lift your hips off the floor.",
+      "Raise your hips until your body forms a straight line from shoulders to knees.",
+      "Hold at the top for a moment, squeezing your glutes.",
+      "Lower back down with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "step_up",
+    "name": "Step-Up",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand facing a bench or elevated platform.",
+      "Step up with one foot, pressing through the heel.",
+      "Drive your body up until the working leg is fully extended.",
+      "Step back down with control.",
+      "Alternate legs or complete all reps on one side first."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "lunge",
+    "name": "Lunge",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet hip-width apart.",
+      "Step forward with one leg and lower your hips until both knees are bent at about 90 degrees.",
+      "Keep your front knee tracking over your toes and your torso upright.",
+      "Push through the front heel to return to the starting position.",
+      "Alternate legs with each repetition."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "jump_lunge",
+    "name": "Jump Lunge",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a lunge position with one foot forward and one back.",
+      "Jump explosively into the air.",
+      "Switch your leg positions mid-air.",
+      "Land softly in a lunge with the opposite leg forward.",
+      "Immediately jump again and continue alternating."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "sissy_squat",
+    "name": "Sissy Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["hip flexors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand with feet shoulder-width apart, holding onto a support for balance if needed.",
+      "Rise onto your toes and lean your torso backward.",
+      "Bend your knees and lower your body, pushing your knees forward while keeping your torso and thighs in a straight line.",
+      "Go as low as possible while maintaining balance.",
+      "Push through your toes to return to the starting position."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "bodyweight_squat",
+    "name": "Bodyweight Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet shoulder-width apart, toes slightly turned out.",
+      "Extend your arms forward for balance.",
+      "Push your hips back and bend your knees to lower into a squat.",
+      "Go as low as your mobility allows while keeping your chest up and back straight.",
+      "Push through your heels to return to standing."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "single_leg_calf_raise",
+    "name": "Single-Leg Calf Raise",
+    "bodyPart": "legs",
+    "target": "calves",
+    "secondaryMuscles": ["soleus"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on one foot on the edge of a step, heel hanging off.",
+      "Hold onto something for balance if needed.",
+      "Rise up onto your toes as high as possible.",
+      "Lower your heel below the step for a full stretch.",
+      "Complete all reps then switch to the other leg."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "single_leg_glute_bridge",
+    "name": "Single-Leg Glute Bridge",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with one knee bent and foot flat on the floor; extend the other leg straight.",
+      "Press through the grounded heel to lift your hips.",
+      "Keep the extended leg straight and in line with your torso.",
+      "Squeeze your glute at the top and hold briefly.",
+      "Lower with control and complete all reps before switching legs."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "plank",
+    "name": "Plank",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["obliques", "erector spinae", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a forearm plank position with elbows under your shoulders.",
+      "Keep your body in a straight line from head to heels.",
+      "Engage your core by drawing your navel toward your spine.",
+      "Do not let your hips sag or pike up.",
+      "Hold for the desired duration while breathing steadily."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "side_plank",
+    "name": "Side Plank",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "glutes", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your side with your forearm on the ground, elbow under your shoulder.",
+      "Stack your feet on top of each other.",
+      "Lift your hips off the ground, creating a straight line from head to feet.",
+      "Engage your core and hold the position.",
+      "Hold for the desired duration then switch sides."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "hollow_body_hold",
+    "name": "Hollow Body Hold",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "obliques", "quadriceps"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with arms extended overhead and legs straight.",
+      "Press your lower back firmly into the floor.",
+      "Lift your arms, shoulders, and legs off the ground simultaneously.",
+      "Maintain a slight banana shape with your body.",
+      "Hold for the desired duration while breathing steadily."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "l_sit",
+    "name": "L-Sit",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "triceps", "quadriceps"],
+    "equipment": "parallel bars",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Support yourself on parallel bars or the floor with arms straight.",
+      "Lift your legs until they are parallel to the ground, forming an L shape.",
+      "Keep your legs straight and toes pointed.",
+      "Engage your core and maintain a straight torso.",
+      "Hold for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "v_sit",
+    "name": "V-Sit",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "triceps", "quadriceps"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit on the floor and place your hands beside your hips.",
+      "Lift your legs straight while simultaneously leaning your torso back slightly.",
+      "Raise your legs above the L-sit position toward a V shape.",
+      "Keep your arms straight if performing on parallettes, or balance on your sit bones on the floor.",
+      "Hold for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "dragon_flag",
+    "name": "Dragon Flag",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "obliques", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on a bench and grip the bench behind your head for support.",
+      "Lift your entire body off the bench, pivoting only on your upper back and shoulders.",
+      "Keep your body straight and rigid from shoulders to toes.",
+      "Slowly lower your body toward the bench without letting it touch.",
+      "Raise back up to the starting position and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "human_flag",
+    "name": "Human Flag",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["latissimus dorsi", "shoulders", "abdominals", "forearms"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Grip a vertical pole with both hands, one above the other, in an overhand and underhand grip.",
+      "Push with the bottom arm and pull with the top arm.",
+      "Engage your entire core and lift your body to a horizontal position.",
+      "Keep your body straight and rigid, parallel to the ground.",
+      "Hold for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "ab_wheel_rollout",
+    "name": "Ab Wheel Rollout",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "latissimus dorsi", "shoulders"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Kneel on the floor and grip an ab wheel or use sliders with your hands.",
+      "Slowly roll forward, extending your arms and lowering your torso toward the floor.",
+      "Go as far as you can while maintaining a flat back and tight core.",
+      "Pull yourself back to the starting position using your abs.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "hanging_leg_raise",
+    "name": "Hanging Leg Raise",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "obliques", "forearms"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar with an overhand grip.",
+      "Keep your legs straight and together.",
+      "Raise your legs until they are parallel to the ground or higher.",
+      "Lower your legs back down with control, avoiding swinging.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "windshield_wipers",
+    "name": "Windshield Wipers",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "hip flexors", "forearms"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Hang from a pull-up bar and raise your legs until your toes touch the bar.",
+      "Keeping your legs straight and together, rotate them to one side.",
+      "Control the movement and rotate to the opposite side.",
+      "Continue alternating like a windshield wiper.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "mountain_climber",
+    "name": "Mountain Climber",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "shoulders", "quadriceps"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start in a high plank position with hands under your shoulders.",
+      "Drive one knee toward your chest.",
+      "Quickly switch legs, extending the bent leg back while driving the other knee forward.",
+      "Continue alternating legs at a rapid pace.",
+      "Maintain a flat back and engaged core throughout."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "dead_bug",
+    "name": "Dead Bug",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "obliques"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with arms extended toward the ceiling and knees bent at 90 degrees.",
+      "Press your lower back into the floor.",
+      "Slowly extend one arm overhead and the opposite leg straight, lowering both toward the floor.",
+      "Return to the starting position and repeat on the opposite side.",
+      "Continue alternating sides while keeping your lower back pressed to the floor."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "russian_twist",
+    "name": "Russian Twist",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the floor with knees bent and feet lifted slightly off the ground.",
+      "Lean back slightly and clasp your hands together in front of your chest.",
+      "Rotate your torso to one side, bringing your hands toward the floor beside your hip.",
+      "Rotate to the other side in a controlled manner.",
+      "Continue alternating sides for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "bicycle_crunch",
+    "name": "Bicycle Crunch",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with hands behind your head and legs lifted, knees bent at 90 degrees.",
+      "Bring your right elbow toward your left knee while extending the right leg.",
+      "Switch sides, bringing the left elbow toward the right knee.",
+      "Continue alternating in a pedaling motion.",
+      "Keep your lower back pressed to the floor throughout."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "hanging_knee_raise",
+    "name": "Hanging Knee Raise",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "forearms"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Hang from a pull-up bar with an overhand grip.",
+      "Engage your core and lift your knees toward your chest.",
+      "Pause briefly at the top.",
+      "Lower your legs back down with control.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "handstand",
+    "name": "Handstand Hold",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "trapezius", "core", "forearms"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Place your hands shoulder-width apart on the floor, about a foot from a wall.",
+      "Kick up into a handstand with your heels resting against the wall for support.",
+      "Engage your core, squeeze your glutes, and point your toes.",
+      "Keep your arms straight and push the floor away through your shoulders.",
+      "Hold for the desired duration and come down with control."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "freestanding_handstand",
+    "name": "Freestanding Handstand",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "trapezius", "core", "forearms"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Place your hands shoulder-width apart on the floor.",
+      "Kick up into a handstand without wall support.",
+      "Use finger and wrist pressure to maintain balance.",
+      "Keep your body in a straight line with core and glutes engaged.",
+      "Hold for the desired duration, adjusting balance constantly."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "frog_stand",
+    "name": "Frog Stand",
+    "bodyPart": "arms",
+    "target": "biceps",
+    "secondaryMuscles": ["triceps", "core", "forearms", "wrist flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Squat down and place your hands flat on the floor, shoulder-width apart.",
+      "Place your knees on the backs of your upper arms, near your elbows.",
+      "Lean forward slowly, shifting your weight onto your hands.",
+      "Lift your feet off the ground and balance on your hands.",
+      "Hold the position for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "crow_pose",
+    "name": "Crow Pose",
+    "bodyPart": "arms",
+    "target": "triceps",
+    "secondaryMuscles": ["anterior deltoids", "core", "forearms"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Squat down and place your hands shoulder-width apart on the floor.",
+      "Place your knees against the backs of your upper arms.",
+      "Lean forward, shifting your weight onto your hands.",
+      "Lift both feet off the floor and balance with arms slightly bent.",
+      "Hold the position, keeping your gaze slightly forward for balance."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "planche_lean",
+    "name": "Planche Lean",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["pectorals", "biceps", "core", "wrist flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a push-up position with hands by your hips, fingers pointing forward.",
+      "Lean your shoulders as far forward past your hands as possible.",
+      "Keep your arms straight and core engaged.",
+      "Protract your shoulder blades (push them apart).",
+      "Hold the forward lean for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "skin_the_cat",
+    "name": "Skin the Cat",
+    "bodyPart": "shoulders",
+    "target": "rear deltoids",
+    "secondaryMuscles": ["latissimus dorsi", "pectorals", "biceps", "core"],
+    "equipment": "pull-up bar",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Hang from a pull-up bar or rings with an overhand grip.",
+      "Tuck your knees to your chest and roll backward, passing your feet between your arms.",
+      "Extend your legs as you rotate into a German hang position below and behind the bar.",
+      "Hold briefly and then reverse the movement to return to the starting position.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "tuck_planche",
+    "name": "Tuck Planche",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["pectorals", "triceps", "biceps", "core"],
+    "equipment": "parallel bars",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Support yourself on parallel bars or the floor with straight arms.",
+      "Lean forward and tuck your knees tightly to your chest.",
+      "Lift your hips until your back is parallel to the ground.",
+      "Keep your arms straight and shoulder blades protracted.",
+      "Hold for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "l_sit_to_handstand",
+    "name": "L-Sit to Handstand",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "core", "hip flexors"],
+    "equipment": "parallel bars",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Start in an L-sit position on parallel bars with legs extended.",
+      "Slowly press your legs upward, transitioning through a straddle or pike.",
+      "Continue pressing until you reach a full handstand position.",
+      "Maintain straight arms and engaged core throughout.",
+      "Hold the handstand briefly, then lower with control back to the L-sit."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "elbow_lever",
+    "name": "Elbow Lever",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["biceps", "forearms", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Place your hands on the floor and dig one or both elbows into your lower abdomen.",
+      "Lean forward, shifting your weight onto your hands.",
+      "Extend your legs behind you and lift them off the ground.",
+      "Balance horizontally on your hands with elbows supporting your body.",
+      "Hold for the desired duration."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "press_to_handstand",
+    "name": "Press to Handstand",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "core", "hip flexors", "hamstrings"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Start standing with feet together and place your hands on the floor.",
+      "Lean forward, shifting your weight onto your hands with straight arms.",
+      "Slowly pike or straddle your legs upward using core and shoulder strength.",
+      "Press through your shoulders until you reach a full handstand.",
+      "Hold at the top, then lower with control."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "wall_walk",
+    "name": "Wall Walk",
+    "bodyPart": "shoulders",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["triceps", "core", "trapezius"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a push-up position with your feet against a wall.",
+      "Walk your feet up the wall while simultaneously walking your hands closer to the wall.",
+      "Continue until you are in a handstand position facing the wall.",
+      "Hold briefly at the top.",
+      "Walk your hands out and feet down to return to the starting position."
+    ],
+    "modality": "calisthenics",
+    "category": "skill"
+  },
+  {
+    "id": "burpee",
+    "name": "Burpee",
+    "bodyPart": "full body",
+    "target": "quadriceps",
+    "secondaryMuscles": ["pectorals", "triceps", "core", "shoulders", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand with feet shoulder-width apart.",
+      "Drop into a squat and place your hands on the floor.",
+      "Jump your feet back into a plank position and perform a push-up.",
+      "Jump your feet forward toward your hands.",
+      "Explode upward into a jump with arms overhead and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "plyo"
+  },
+  {
+    "id": "plyo_push_up",
+    "name": "Plyometric Push-Up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "secondaryMuscles": ["triceps", "anterior deltoids", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a standard push-up position.",
+      "Lower your chest toward the floor.",
+      "Push up explosively, launching your upper body off the ground.",
+      "Land with soft elbows and immediately descend into the next rep.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "plyo"
+  },
+  {
+    "id": "broad_jump",
+    "name": "Broad Jump",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand with feet shoulder-width apart.",
+      "Swing your arms back and bend your knees to load the jump.",
+      "Explode forward and upward, jumping as far as possible.",
+      "Swing your arms forward to generate momentum.",
+      "Land softly with bent knees and absorb the impact."
+    ],
+    "modality": "calisthenics",
+    "category": "plyo"
+  },
+  {
+    "id": "tuck_jump",
+    "name": "Tuck Jump",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand with feet shoulder-width apart.",
+      "Jump as high as possible.",
+      "At the peak of the jump, tuck your knees to your chest.",
+      "Extend your legs and land softly with bent knees.",
+      "Immediately jump again and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "plyo"
+  },
+  {
+    "id": "lateral_bound",
+    "name": "Lateral Bound",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "calves", "hip abductors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on one leg with a slight bend in the knee.",
+      "Jump laterally to the opposite side, landing on the other foot.",
+      "Absorb the landing with a bent knee and stabilize.",
+      "Immediately bound back to the starting side.",
+      "Continue alternating sides for the desired repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "plyo"
+  },
+  {
+    "id": "wall_sit",
+    "name": "Wall Sit",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with your back against a wall.",
+      "Slide down until your thighs are parallel to the floor and knees are at 90 degrees.",
+      "Keep your back flat against the wall and feet flat on the floor.",
+      "Hold this position for the desired duration.",
+      "Push back up to standing when finished."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "reverse_lunge",
+    "name": "Reverse Lunge",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet hip-width apart.",
+      "Step one foot backward and lower your hips until both knees are at about 90 degrees.",
+      "Keep your front knee tracking over your toes and torso upright.",
+      "Push through the front heel to return to standing.",
+      "Alternate legs or complete all reps on one side first."
+    ],
+    "modality": "calisthenics",
+    "category": "legs"
+  },
+  {
+    "id": "cat_cow_stretch",
+    "name": "Cat-Cow Stretch",
+    "bodyPart": "back",
+    "target": "erector spinae",
+    "secondaryMuscles": ["abdominals", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start on all fours with wrists under shoulders and knees under hips.",
+      "Inhale and arch your back, dropping your belly toward the floor and lifting your head (cow).",
+      "Exhale and round your spine toward the ceiling, tucking your chin to chest (cat).",
+      "Move slowly between the two positions with each breath.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "mobility"
+  },
+  {
+    "id": "deep_squat_hold",
+    "name": "Deep Squat Hold",
+    "bodyPart": "legs",
+    "target": "hip flexors",
+    "secondaryMuscles": ["quadriceps", "glutes", "calves", "adductors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet slightly wider than shoulder-width, toes turned out.",
+      "Lower into the deepest squat you can achieve with heels on the ground.",
+      "Place your elbows against the insides of your knees and press them apart.",
+      "Keep your chest up and back straight.",
+      "Hold for the desired duration, breathing deeply."
+    ],
+    "modality": "calisthenics",
+    "category": "mobility"
+  },
+  {
+    "id": "thoracic_bridge",
+    "name": "Thoracic Bridge",
+    "bodyPart": "back",
+    "target": "erector spinae",
+    "secondaryMuscles": ["shoulders", "hip flexors", "obliques"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit on the floor with one hand behind you and the opposite foot flat on the floor.",
+      "Push through your supporting hand and foot to lift your hips.",
+      "Rotate your torso and extend the free arm overhead, creating a bridge.",
+      "Hold briefly at the top, opening your chest toward the ceiling.",
+      "Lower with control and repeat on the other side."
+    ],
+    "modality": "calisthenics",
+    "category": "mobility"
+  },
+  {
+    "id": "bridge",
+    "name": "Bridge (Full)",
+    "bodyPart": "back",
+    "target": "erector spinae",
+    "secondaryMuscles": ["glutes", "shoulders", "quadriceps", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with knees bent and feet flat on the floor, close to your glutes.",
+      "Place your hands by your ears with fingers pointing toward your shoulders.",
+      "Push through your hands and feet to lift your hips and chest off the floor.",
+      "Straighten your arms and legs as much as possible, forming an arch.",
+      "Hold for the desired duration and lower down with control."
+    ],
+    "modality": "calisthenics",
+    "category": "mobility"
+  },
+  {
+    "id": "pike_stretch",
+    "name": "Pike Stretch",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["calves", "lower back"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the floor with legs extended straight in front of you.",
+      "Keeping your back straight, hinge at the hips and reach toward your toes.",
+      "Go as far as your flexibility allows without rounding your lower back.",
+      "Hold the stretch for the desired duration.",
+      "Breathe deeply and try to deepen the stretch with each exhale."
+    ],
+    "modality": "calisthenics",
+    "category": "mobility"
+  },
+  {
+    "id": "superman",
+    "name": "Superman",
+    "bodyPart": "back",
+    "target": "erector spinae",
+    "secondaryMuscles": ["glutes", "rear deltoids", "hamstrings"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down on the floor with arms extended overhead.",
+      "Simultaneously lift your arms, chest, and legs off the ground.",
+      "Squeeze your glutes and lower back muscles at the top.",
+      "Hold for a moment, then lower back down with control.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "modality": "calisthenics",
+    "category": "core"
+  },
+  {
+    "id": "bear_crawl",
+    "name": "Bear Crawl",
+    "bodyPart": "full body",
+    "target": "anterior deltoids",
+    "secondaryMuscles": ["core", "quadriceps", "triceps", "hip flexors"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start on all fours with knees hovering about an inch off the ground.",
+      "Move forward by simultaneously advancing the opposite hand and foot.",
+      "Keep your hips low and back flat throughout the movement.",
+      "Continue crawling forward for the desired distance.",
+      "You can also crawl backward or laterally for variation."
+    ],
+    "modality": "calisthenics",
+    "category": "plyo"
+  },
+  {
+    "id": "band_pull_apart",
+    "name": "Band Pull-Apart",
+    "bodyPart": "shoulders",
+    "target": "rear deltoids",
+    "secondaryMuscles": ["rhomboids", "trapezius"],
+    "equipment": "resistance band",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Hold a resistance band in front of you at shoulder height with arms extended.",
+      "Grip the band with both hands, palms facing down.",
+      "Pull the band apart by squeezing your shoulder blades together.",
+      "Stretch the band until it touches your chest.",
+      "Return to the starting position with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  },
+  {
+    "id": "band_assisted_pull_up",
+    "name": "Band-Assisted Pull-Up",
+    "bodyPart": "back",
+    "target": "latissimus dorsi",
+    "secondaryMuscles": ["biceps", "rear deltoids", "rhomboids"],
+    "equipment": "resistance band",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Loop a resistance band over a pull-up bar.",
+      "Place one or both feet into the band loop.",
+      "Grip the bar with an overhand grip, shoulder-width apart.",
+      "Pull yourself up with the assistance of the band until your chin clears the bar.",
+      "Lower yourself with control and repeat."
+    ],
+    "modality": "calisthenics",
+    "category": "pull"
+  }
+]

@@ -1,4 +1,9 @@
 import exerciseBundle from '../data/exerciseBundle.json';
+import yogaExercises from '../data/yogaExercises.json';
+import pilatesExercises from '../data/pilatesExercises.json';
+import calisthenicsExercises from '../data/calisthenicsExercises.json';
+import runningExercises from '../data/runningExercises.json';
+import functionalExercises from '../data/functionalExercises.json';
 import { exerciseIdMap } from '../data/exerciseIdMap';
 import { equipmentMap } from '../data/bodyPartToMusculos';
 import * as store from './exerciseDbStore';
@@ -6,8 +11,18 @@ import * as store from './exerciseDbStore';
 const BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main';
 const FETCH_TIMEOUT = 3000;
 
-// Build a lookup map from the bundle for O(1) access
-const bundleMap = new Map(exerciseBundle.map(ex => [ex.id, ex]));
+// Merge all exercise bundles
+const allBundles = [
+  ...exerciseBundle,
+  ...yogaExercises,
+  ...pilatesExercises,
+  ...calisthenicsExercises,
+  ...runningExercises,
+  ...functionalExercises,
+];
+
+// Build a lookup map from all bundles for O(1) access
+const bundleMap = new Map(allBundles.map(ex => [ex.id, ex]));
 
 function degradedExercise(id, name = null) {
   return {
@@ -72,7 +87,7 @@ export async function getById(id) {
  */
 export function search(query = '', filters = {}) {
   const q = query.toLowerCase().trim();
-  const { bodyParts = [], equipment = [], levels = [] } = filters;
+  const { bodyParts = [], equipment = [], levels = [], modalities = [] } = filters;
 
   const matches = (ex) => {
     if (q && !ex.name.toLowerCase().includes(q) &&
@@ -94,11 +109,15 @@ export function search(query = '', filters = {}) {
     if (levels.length > 0 && !levels.includes(ex.level)) {
       return false;
     }
+    if (modalities.length > 0) {
+      const exModality = ex.modality || 'gym';
+      if (!modalities.includes(exModality)) return false;
+    }
     return true;
   };
 
-  // Tier 1: Bundle (synchronous)
-  const immediate = exerciseBundle.filter(matches);
+  // Tier 1: All bundles (synchronous)
+  const immediate = allBundles.filter(matches);
 
   // Tier 2: IndexedDB (async merge)
   const asyncResults = (async () => {
@@ -124,7 +143,7 @@ export function search(query = '', filters = {}) {
  * Get all exercises from bundle (synchronous).
  */
 export function getBundleExercises() {
-  return exerciseBundle;
+  return allBundles;
 }
 
 /**

@@ -1,0 +1,1427 @@
+[
+  {
+    "id": "the_hundred",
+    "name": "The Hundred",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "inner thighs", "arms"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with knees bent at tabletop position, shins parallel to the floor.",
+      "Curl your head and shoulders off the mat, engaging your abdominals.",
+      "Extend your arms alongside your body, hovering them a few inches off the mat.",
+      "Pump your arms up and down in small controlled movements, inhaling for 5 pumps and exhaling for 5 pumps.",
+      "Complete 10 full breath cycles for a total of 100 pumps."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "roll_up",
+    "name": "Roll Up",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie flat on your back with arms extended overhead, legs together and straight.",
+      "Inhale and bring your arms toward the ceiling, tucking your chin slightly.",
+      "Exhale and peel your spine off the mat one vertebra at a time, reaching forward toward your toes.",
+      "Inhale at the top, sitting tall.",
+      "Exhale and reverse the movement, rolling back down to the mat with control."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "roll_over",
+    "name": "Roll Over",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["spinal extensors", "hamstrings", "hip flexors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on your back with arms by your sides, legs extended straight up toward the ceiling.",
+      "Inhale to prepare, then exhale and lift your hips off the mat, rolling your legs overhead until they are parallel to the floor.",
+      "Open your legs to shoulder width and flex your feet.",
+      "Slowly roll your spine back down to the mat one vertebra at a time, keeping legs extended.",
+      "Close your legs together at the bottom and repeat."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "single_leg_circle",
+    "name": "Single Leg Circle",
+    "bodyPart": "core",
+    "target": "hip flexors",
+    "secondaryMuscles": ["abdominals", "inner thighs", "quadriceps"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with one leg extended on the mat and the other leg reaching straight up to the ceiling.",
+      "Keep your arms pressed into the mat by your sides for stability.",
+      "Circle the raised leg across the body, down, around, and back up to the starting position.",
+      "Complete 5 circles in one direction, then reverse for 5 circles.",
+      "Switch legs and repeat."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "rolling_like_a_ball",
+    "name": "Rolling Like a Ball",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["spinal extensors", "hip flexors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit at the front of your mat with knees bent and drawn toward your chest.",
+      "Hold onto your shins or ankles, lifting your feet off the mat and balancing on your tailbone.",
+      "Tuck your chin and round your spine into a tight ball shape.",
+      "Inhale and roll back to your shoulder blades, keeping the rounded shape.",
+      "Exhale and roll back up to the balanced starting position without letting your feet touch the mat."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "single_leg_stretch",
+    "name": "Single Leg Stretch",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "quadriceps", "obliques"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back and curl your head and shoulders off the mat.",
+      "Bring one knee into your chest, placing the outside hand on the ankle and the inside hand on the knee.",
+      "Extend the other leg out at a 45-degree angle from the floor.",
+      "Switch legs in a smooth scissoring motion, coordinating hand placement with each switch.",
+      "Continue alternating for 8 to 10 repetitions per side, keeping the torso stable."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "double_leg_stretch",
+    "name": "Double Leg Stretch",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "shoulders", "back extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with knees drawn into your chest, head and shoulders curled off the mat.",
+      "Inhale and simultaneously extend your arms overhead and your legs out at a 45-degree angle.",
+      "Exhale and circle your arms around while drawing your knees back into your chest.",
+      "Keep your lower back pressed into the mat throughout the movement.",
+      "Repeat for 8 to 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "scissors",
+    "name": "Scissors",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hamstrings", "hip flexors", "quadriceps"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back and curl your head and shoulders off the mat.",
+      "Extend both legs toward the ceiling.",
+      "Lower one leg toward the floor while pulling the other leg gently toward your face with both hands.",
+      "Switch legs with a quick pulse, catching the opposite ankle.",
+      "Continue alternating in a scissoring motion for 8 to 10 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "lower_lift",
+    "name": "Lower Lift",
+    "bodyPart": "core",
+    "target": "lower abdominals",
+    "secondaryMuscles": ["hip flexors", "inner thighs"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with both legs extended straight up toward the ceiling, head and shoulders curled off the mat.",
+      "Place your hands behind your head for support.",
+      "Inhale and slowly lower both legs toward the floor as far as you can while keeping your back flat on the mat.",
+      "Exhale and lift both legs back up to the starting position.",
+      "Repeat for 8 to 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "criss_cross",
+    "name": "Criss Cross",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "hip flexors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with knees in tabletop position, hands behind your head, head and shoulders curled up.",
+      "Extend one leg out at a 45-degree angle while rotating your torso to bring the opposite elbow toward the bent knee.",
+      "Hold the rotation for a moment, deepening the twist.",
+      "Switch sides, extending the other leg and rotating to the opposite knee.",
+      "Alternate for 8 to 10 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "spine_stretch_forward",
+    "name": "Spine Stretch Forward",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["hamstrings", "abdominals"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit tall with legs extended in front of you, slightly wider than hip-width apart, feet flexed.",
+      "Extend your arms in front of you at shoulder height.",
+      "Inhale to sit taller, then exhale and round forward from the top of your head, reaching past your toes.",
+      "Articulate through the spine as you curl forward, scooping the abdominals in.",
+      "Inhale and stack your spine back up to the tall seated position."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "open_leg_rocker",
+    "name": "Open Leg Rocker",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hamstrings", "hip flexors", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit on your mat and balance on your sit bones with legs extended in a V shape, holding onto your ankles or calves.",
+      "Maintain a rounded C-curve in your spine.",
+      "Inhale and roll back to your shoulder blades, keeping the leg position steady.",
+      "Exhale and roll back up to the balanced V position.",
+      "Repeat for 6 to 8 repetitions, never rolling onto the neck."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "corkscrew",
+    "name": "Corkscrew",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "hip flexors", "lower back"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with arms by your sides, legs extended straight up toward the ceiling.",
+      "Keep your legs together and circle them to the right, down, to the left, and back up to center.",
+      "Use your abdominals to control the movement, keeping your shoulders and hips stable.",
+      "Reverse the direction of the circle.",
+      "Complete 3 to 5 circles in each direction."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "saw",
+    "name": "Saw",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["hamstrings", "spinal extensors", "shoulders"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit tall with legs extended wider than hip-width apart, feet flexed, arms extended to the sides at shoulder height.",
+      "Inhale and rotate your torso to the right.",
+      "Exhale and reach your left hand past your right little toe in a sawing motion, rounding forward.",
+      "Inhale and return to the upright rotated position.",
+      "Exhale and return to center. Repeat on the other side."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "swan_dive",
+    "name": "Swan Dive",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["glutes", "hamstrings", "shoulders"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie face down with hands placed under your shoulders, legs together.",
+      "Press up into a back extension, lifting your chest high off the mat.",
+      "Release your hands and rock forward onto your chest, lifting your legs behind you.",
+      "Rock back, lifting your chest and lowering your legs.",
+      "Continue the rocking motion for 5 to 8 repetitions, using momentum and control."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "single_leg_kick",
+    "name": "Single Leg Kick",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["glutes", "quadriceps", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down propped up on your forearms, elbows directly under shoulders, legs extended behind you.",
+      "Lift your chest and gaze slightly forward, engaging your abdominals.",
+      "Bend one knee and pulse the heel toward your glute with two quick kicks.",
+      "Extend the leg back down and switch to the other leg.",
+      "Alternate for 8 to 10 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "prone"
+  },
+  {
+    "id": "double_leg_kick",
+    "name": "Double Leg Kick",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["hamstrings", "glutes", "shoulders"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie face down with your head turned to one side, hands clasped behind your lower back.",
+      "Bend both knees and pulse your heels toward your glutes three times.",
+      "Extend your legs and arms behind you while lifting your chest off the mat into a back extension.",
+      "Lower back down, turning your head to the opposite side.",
+      "Repeat for 6 to 8 repetitions, alternating the head turn."
+    ],
+    "modality": "pilates",
+    "category": "prone"
+  },
+  {
+    "id": "neck_pull",
+    "name": "Neck Pull",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "spinal extensors", "hamstrings"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on your back with legs hip-width apart, feet flexed, hands behind your head.",
+      "Inhale and curl your head and shoulders off the mat.",
+      "Exhale and continue rolling up and over your legs, rounding forward.",
+      "Inhale and stack your spine to a tall seated position.",
+      "Exhale and hinge back with a flat back, then curl down to the mat one vertebra at a time."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "shoulder_bridge",
+    "name": "Shoulder Bridge",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "abdominals", "quadriceps"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with knees bent, feet flat on the mat hip-width apart, arms by your sides.",
+      "Peel your hips off the mat, rolling up through the spine until you form a straight line from shoulders to knees.",
+      "Extend one leg straight up to the ceiling.",
+      "Lower the extended leg down to knee level, then kick it back up. Repeat 5 times.",
+      "Place the foot back down, switch legs and repeat, then roll the spine back down."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "spine_twist",
+    "name": "Spine Twist",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["spinal extensors", "abdominals"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit tall with legs extended together in front of you, feet flexed, arms extended to the sides at shoulder height.",
+      "Inhale to grow taller through the spine.",
+      "Exhale and rotate your torso to the right with two small pulses, keeping hips stable.",
+      "Inhale and return to center.",
+      "Exhale and rotate to the left. Repeat 4 to 6 times per side."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "jackknife",
+    "name": "Jackknife",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["spinal extensors", "glutes", "hip flexors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on your back with arms by your sides, legs extended at a 45-degree angle from the floor.",
+      "Swing your legs overhead to a rollover position, parallel to the floor.",
+      "Press into your arms and lift your legs straight up to the ceiling, creating a vertical line from shoulders to toes.",
+      "Hold briefly at the top, engaging your powerhouse.",
+      "Slowly roll your spine back down to the mat with control, lowering your legs to the starting angle."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "side_kick_front_back",
+    "name": "Side Kick Front Back",
+    "bodyPart": "legs",
+    "target": "hip flexors",
+    "secondaryMuscles": ["glutes", "hamstrings", "obliques"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your side with your body in a straight line, head resting on your bottom arm.",
+      "Place your top hand on the mat in front of your chest for support.",
+      "Lift your top leg to hip height.",
+      "Swing the top leg forward with a double pulse kick, then sweep it back behind you.",
+      "Keep your torso completely still throughout. Repeat 8 to 10 times per side."
+    ],
+    "modality": "pilates",
+    "category": "side-lying"
+  },
+  {
+    "id": "side_kick_up_down",
+    "name": "Side Kick Up Down",
+    "bodyPart": "legs",
+    "target": "hip abductors",
+    "secondaryMuscles": ["glutes", "inner thighs", "obliques"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your side in the side kick starting position.",
+      "Turn your top leg out slightly from the hip so the knee faces the ceiling.",
+      "Kick the top leg up toward the ceiling with energy.",
+      "Resist on the way down, lowering the leg with control.",
+      "Repeat 8 to 10 times, then switch sides."
+    ],
+    "modality": "pilates",
+    "category": "side-lying"
+  },
+  {
+    "id": "side_kick_circles",
+    "name": "Side Kick Circles",
+    "bodyPart": "legs",
+    "target": "hip abductors",
+    "secondaryMuscles": ["glutes", "inner thighs", "core"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your side in the side kick starting position with your top leg at hip height.",
+      "Draw small circles with your top leg, keeping the movement controlled.",
+      "Complete 8 circles in one direction.",
+      "Reverse the direction for 8 more circles.",
+      "Switch sides and repeat."
+    ],
+    "modality": "pilates",
+    "category": "side-lying"
+  },
+  {
+    "id": "teaser",
+    "name": "Teaser",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "quadriceps", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on your back with legs extended at a 45-degree angle, arms reaching overhead.",
+      "Inhale to prepare, then exhale and simultaneously roll your upper body off the mat while lifting your legs to form a V shape.",
+      "Reach your arms parallel to your legs, balancing on your sit bones.",
+      "Hold the V position briefly.",
+      "Exhale and slowly roll everything back down to the starting position with control."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "swimming",
+    "name": "Swimming",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["glutes", "hamstrings", "shoulders"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie face down with arms extended overhead and legs straight behind you.",
+      "Lift your arms, chest, and legs off the mat simultaneously.",
+      "Begin alternating opposite arm and leg lifts in a flutter motion, as if swimming.",
+      "Inhale for 5 counts and exhale for 5 counts while maintaining the flutter.",
+      "Continue for 2 to 3 breath cycles."
+    ],
+    "modality": "pilates",
+    "category": "prone"
+  },
+  {
+    "id": "leg_pull_front",
+    "name": "Leg Pull Front",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "glutes", "hamstrings", "calves"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a plank position with hands directly under shoulders, body in a straight line.",
+      "Lift one leg off the mat, reaching it straight back and up.",
+      "Rock back on the supporting foot, pressing your heel toward the mat.",
+      "Rock forward to the starting position and lower the leg.",
+      "Alternate legs for 5 to 8 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "leg_pull_back",
+    "name": "Leg Pull Back",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["triceps", "shoulders", "glutes", "hamstrings"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit with legs extended in front of you, hands placed on the mat behind your hips with fingers pointing toward your feet.",
+      "Lift your hips off the mat to form a reverse plank, creating a straight line from head to heels.",
+      "Kick one leg straight up toward the ceiling without dropping your hips.",
+      "Lower the leg with control and switch sides.",
+      "Repeat 5 times per leg."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "side_bend",
+    "name": "Side Bend",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["shoulders", "lats", "hip abductors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit on one hip with your legs stacked and slightly bent, bottom hand placed on the mat directly under your shoulder.",
+      "Inhale and press up into a side plank, lifting your hips and extending your top arm overhead in an arc.",
+      "Create a long curved line from fingertips to feet.",
+      "Exhale and lower back down with control to the starting position.",
+      "Repeat 4 to 6 times, then switch sides."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "boomerang",
+    "name": "Boomerang",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "shoulders", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit tall with legs extended, one ankle crossed over the other, arms by your sides.",
+      "Roll back to your shoulder blades, lifting your legs overhead.",
+      "Switch the cross of your ankles while overhead.",
+      "Roll back up to the Teaser V position, then reach your arms behind you and clasp your hands.",
+      "Round forward over your legs, stretching your clasped hands up behind you."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "seal",
+    "name": "Seal",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["spinal extensors", "hip flexors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on your mat and balance on your tailbone with knees open, feet together.",
+      "Thread your arms inside your legs and wrap your hands around the outside of your ankles.",
+      "Clap your feet together three times like a seal.",
+      "Roll back to your shoulder blades, clap three times at the top.",
+      "Roll back up to the balanced position and repeat 8 to 10 times."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "mermaid_stretch",
+    "name": "Mermaid Stretch",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["lats", "intercostals", "shoulders"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit with both legs folded to one side, holding your ankle with the bottom hand.",
+      "Extend the top arm up and over, reaching toward the opposite side in a lateral stretch.",
+      "Feel a deep stretch along the side of your body.",
+      "Return to the upright position.",
+      "Repeat 3 to 4 times, then switch sides."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "pilates_push_up",
+    "name": "Pilates Push Up",
+    "bodyPart": "arms",
+    "target": "triceps",
+    "secondaryMuscles": ["chest", "shoulders", "abdominals"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand tall at the back of your mat with arms by your sides.",
+      "Nod your chin and roll down through the spine, walking your hands out to a plank position.",
+      "Perform 3 to 5 push-ups with elbows close to your body, lowering with control.",
+      "Walk your hands back toward your feet.",
+      "Roll up through the spine to the standing position."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "swan",
+    "name": "Swan",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["glutes", "shoulders", "abdominals"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down with hands placed under your shoulders, elbows bent and close to your body.",
+      "Press into your hands and slowly lift your chest off the mat, extending through the upper back.",
+      "Keep your hips and legs pressed into the mat.",
+      "Hold the extension for a breath.",
+      "Lower back down with control. Repeat 5 to 8 times."
+    ],
+    "modality": "pilates",
+    "category": "prone"
+  },
+  {
+    "id": "hip_circles",
+    "name": "Hip Circles",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "obliques", "inner thighs"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Sit with your hands on the mat behind you, fingers pointing forward, legs extended up at a diagonal.",
+      "Circle both legs to the right, down, to the left, and back up.",
+      "Keep your torso lifted and stable throughout the circle.",
+      "Reverse the direction after 5 circles.",
+      "Complete 5 circles in each direction."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "control_balance",
+    "name": "Control Balance",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hamstrings", "glutes", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on your back and roll your legs overhead into a rollover position.",
+      "Hold one ankle with both hands while extending the other leg straight up to the ceiling.",
+      "Pull the held leg toward you with a double pulse.",
+      "Switch legs by scissoring them and catching the other ankle.",
+      "Continue alternating for 6 to 8 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "reformer_footwork_parallel",
+    "name": "Reformer Footwork Parallel",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "calves", "hamstrings"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on the reformer carriage with your head on the headrest, feet placed parallel on the foot bar hip-width apart.",
+      "Press out through your feet to extend your legs fully, moving the carriage.",
+      "Keep your spine neutral and abdominals engaged throughout.",
+      "Slowly bend your knees to return the carriage to the starting position.",
+      "Repeat for 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_footwork_v_position",
+    "name": "Reformer Footwork V Position",
+    "bodyPart": "legs",
+    "target": "inner thighs",
+    "secondaryMuscles": ["quadriceps", "glutes", "calves"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on the reformer with heels together and toes apart on the foot bar in a small V position.",
+      "Press out to extend your legs fully, squeezing your inner thighs together.",
+      "Maintain the V position of the feet throughout the movement.",
+      "Return the carriage with control by bending your knees.",
+      "Repeat for 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_footwork_heels",
+    "name": "Reformer Footwork on Heels",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["quadriceps", "glutes", "tibialis anterior"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on the reformer with your heels on the foot bar, toes flexed toward you.",
+      "Press out through your heels to fully extend your legs.",
+      "Keep your feet flexed and ankles stable throughout.",
+      "Return with control, keeping heels firmly on the bar.",
+      "Repeat for 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_elephant",
+    "name": "The Elephant",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hamstrings", "shoulders", "spinal extensors"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on the reformer carriage with your hands on the foot bar, heels pressing against the shoulder blocks.",
+      "Round your spine into a deep C-curve, drawing your abdominals in and up.",
+      "Use your abdominals to press the carriage back a few inches.",
+      "Pull the carriage back in using your core, not your arms.",
+      "Repeat for 8 to 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_long_stretch",
+    "name": "Long Stretch",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "chest", "triceps", "quadriceps"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Place your hands on the foot bar and feet against the shoulder blocks in a plank position on the reformer.",
+      "Maintain a long straight line from head to heels.",
+      "Push the carriage back by pressing through your arms while holding the plank.",
+      "Pull the carriage forward by engaging your core and shoulders.",
+      "Repeat for 6 to 8 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_down_stretch",
+    "name": "Down Stretch",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["chest", "shoulders", "hip flexors", "quadriceps"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Kneel on the reformer carriage with feet against the shoulder blocks, hands on the foot bar.",
+      "Press your hips forward, creating a long line from knees to head with a slight back extension.",
+      "Push the carriage back by bending through the upper body, hinging at the hips.",
+      "Pull the carriage forward by pressing hips through and lifting the chest.",
+      "Repeat for 6 to 8 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_up_stretch",
+    "name": "Up Stretch",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "hamstrings", "spinal extensors"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand on the reformer with hands on the foot bar and feet against the shoulder blocks, hips piked up.",
+      "Form an inverted V shape with your body.",
+      "Push the carriage back while maintaining the pike position.",
+      "Lower through a plank, then scoop the abs to return to the pike position.",
+      "Repeat for 5 to 8 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_knee_stretches_round",
+    "name": "Knee Stretches Round Back",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["quadriceps", "hip flexors", "shoulders"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Kneel on the carriage with hands on the foot bar, toes curled against the shoulder blocks.",
+      "Round your spine into a C-curve, tucking your pelvis and drawing your navel to your spine.",
+      "Press the carriage back with your legs while maintaining the rounded shape.",
+      "Pull the carriage back in using your abdominals.",
+      "Repeat for 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_knee_stretches_flat",
+    "name": "Knee Stretches Flat Back",
+    "bodyPart": "core",
+    "target": "quadriceps",
+    "secondaryMuscles": ["abdominals", "hip flexors", "spinal extensors"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Kneel on the carriage with hands on the foot bar, toes against the shoulder blocks.",
+      "Maintain a flat, neutral spine with your back long and straight.",
+      "Press the carriage back by extending your hips and knees.",
+      "Pull back in with control, keeping the flat back position.",
+      "Repeat for 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_running",
+    "name": "Reformer Running",
+    "bodyPart": "legs",
+    "target": "calves",
+    "secondaryMuscles": ["quadriceps", "hamstrings", "ankles"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on the reformer with the balls of both feet on the foot bar, legs extended.",
+      "Bend one knee while lowering the opposite heel below the bar in a calf stretch.",
+      "Alternate feet in a running motion, pressing one heel down as the other rises.",
+      "Keep the carriage still and movement smooth and rhythmic.",
+      "Continue for 20 alternating repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_pelvic_lift",
+    "name": "Reformer Pelvic Lift",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "abdominals", "lower back"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on the reformer with feet on the foot bar in parallel position.",
+      "Peel your hips off the carriage into a bridge position.",
+      "While holding the bridge, press the carriage out by extending your legs.",
+      "Pull the carriage back in by bending your knees, maintaining the lifted hips.",
+      "Repeat 8 to 10 times, then roll the spine down."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_long_box_pulling_straps",
+    "name": "Long Box Pulling Straps",
+    "bodyPart": "back",
+    "target": "lats",
+    "secondaryMuscles": ["rhomboids", "rear deltoids", "spinal extensors"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie face down on the long box placed on the reformer, chest just past the edge.",
+      "Hold the straps with straight arms hanging down toward the floor.",
+      "Pull the straps back alongside your body, lifting your chest into extension.",
+      "Squeeze your shoulder blades together at the top of the pull.",
+      "Return with control to the starting position. Repeat 6 to 8 times."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_short_box_round",
+    "name": "Short Box Round Back",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "spinal extensors"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Sit on the short box with feet secured under the foot strap, arms wrapped around your waist.",
+      "Round your spine into a deep C-curve.",
+      "Roll back, peeling your spine away from the box one vertebra at a time.",
+      "Go back as far as you can while maintaining the C-curve shape.",
+      "Curl back up to the seated position. Repeat 5 to 8 times."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_short_box_flat",
+    "name": "Short Box Flat Back",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "spinal extensors", "quadriceps"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Sit on the short box with feet under the strap, arms extended overhead or holding a bar.",
+      "Maintain a flat, tall spine.",
+      "Hinge back from the hips with the flat back, leaning as far as you can control.",
+      "Engage your core to pull yourself back up to the seated position.",
+      "Repeat 5 to 8 times."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_tendon_stretch",
+    "name": "Tendon Stretch",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "wrists", "hamstrings"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Stand on the reformer carriage facing the foot bar with hands on the foot bar, feet on the carriage edge.",
+      "Round your spine deeply and press your heels down toward the carriage.",
+      "Push the carriage back with your feet while keeping hands fixed on the bar.",
+      "Use your abdominals to pull the carriage back under you.",
+      "Repeat for 5 to 8 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "reformer_long_spine_massage",
+    "name": "Long Spine Massage",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["abdominals", "hamstrings", "glutes"],
+    "equipment": "reformer",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Lie on the reformer with feet in the straps, legs extended at a 45-degree angle.",
+      "Press your legs toward the ceiling until they are vertical.",
+      "Continue lifting your hips and rolling through the spine until your body is inverted, supported by the straps.",
+      "Open your legs to shoulder width and slowly roll down through the spine one vertebra at a time.",
+      "Close your legs at the bottom and repeat 3 to 5 times."
+    ],
+    "modality": "pilates",
+    "category": "reformer"
+  },
+  {
+    "id": "standing_roll_down",
+    "name": "Standing Roll Down",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["hamstrings", "abdominals"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet hip-width apart, arms relaxed by your sides.",
+      "Nod your chin to your chest and begin rolling down through the spine vertebra by vertebra.",
+      "Let your arms hang heavy as you round forward, reaching toward the floor.",
+      "Allow a slight bend in the knees if needed.",
+      "Slowly reverse the movement, stacking your spine back up one vertebra at a time."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_side_leg_lift",
+    "name": "Standing Side Leg Lift",
+    "bodyPart": "legs",
+    "target": "hip abductors",
+    "secondaryMuscles": ["glutes", "obliques", "standing leg stabilizers"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet together, hands on hips or holding a support for balance.",
+      "Shift your weight to one leg and engage your core.",
+      "Lift the other leg out to the side, keeping it straight and toes facing forward.",
+      "Lift to a comfortable height without tilting your torso.",
+      "Lower with control and repeat 10 to 12 times per side."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_leg_press",
+    "name": "Standing Leg Press",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "calves"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand on one leg with the other leg lifted in front of you, knee bent at 90 degrees.",
+      "Slowly bend the standing leg as if sitting back into a single-leg squat.",
+      "Press through the standing foot to return to the starting position.",
+      "Keep your core engaged and torso upright throughout.",
+      "Repeat 8 to 10 times per leg."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_pilates_lunge",
+    "name": "Standing Pilates Lunge",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings", "hip flexors", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand with one foot forward and the other back in a split stance.",
+      "Bend both knees to lower into a lunge, keeping your front knee over your ankle.",
+      "Maintain a tall, lifted spine with shoulders over hips.",
+      "Press through the front foot to return to standing.",
+      "Repeat 8 to 10 times per side."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_spine_twist",
+    "name": "Standing Spine Twist",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["spinal extensors", "abdominals"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand tall with feet hip-width apart, arms extended to the sides at shoulder height.",
+      "Inhale to grow taller through the spine.",
+      "Exhale and rotate your torso to the right, keeping hips squared forward.",
+      "Inhale and return to center.",
+      "Exhale and rotate to the left. Repeat 6 to 8 times per side."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_calf_raises",
+    "name": "Standing Pilates Calf Raises",
+    "bodyPart": "legs",
+    "target": "calves",
+    "secondaryMuscles": ["ankles", "core", "quadriceps"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand in Pilates stance with heels together, toes slightly apart in a small V.",
+      "Rise up onto the balls of your feet, lifting your heels as high as possible.",
+      "Hold at the top, squeezing your inner thighs together.",
+      "Lower down with control, maintaining the V position.",
+      "Repeat for 12 to 15 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_balance_leg_extension",
+    "name": "Standing Balance Leg Extension",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["hip flexors", "core", "glutes"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Stand tall on one leg, lifting the other knee to hip height in front of you.",
+      "Slowly extend the lifted leg straight in front of you.",
+      "Hold for 2 to 3 seconds with the leg fully extended.",
+      "Bend the knee back to the starting position.",
+      "Repeat 8 times per side."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "standing_pilates_squat",
+    "name": "Standing Pilates Squat",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "inner thighs", "core"],
+    "equipment": "body weight",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet slightly wider than hip-width apart, toes turned out at about 45 degrees.",
+      "Keep your spine tall and arms extended in front of you.",
+      "Bend your knees and lower into a squat, keeping your knees tracking over your toes.",
+      "Squeeze your glutes and inner thighs as you press back up to standing.",
+      "Repeat for 10 to 12 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "ball_bridge",
+    "name": "Ball Bridge",
+    "bodyPart": "legs",
+    "target": "glutes",
+    "secondaryMuscles": ["hamstrings", "abdominals", "lower back"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with your feet resting on top of a stability ball, arms by your sides.",
+      "Press your feet into the ball and lift your hips off the mat into a bridge position.",
+      "Squeeze your glutes at the top, forming a straight line from shoulders to feet.",
+      "Hold for 2 to 3 seconds.",
+      "Lower your hips back down with control. Repeat 10 to 12 times."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_pike",
+    "name": "Ball Pike",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "hip flexors", "arms"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "expert",
+    "instructions": [
+      "Start in a plank position with your shins resting on a stability ball, hands under shoulders.",
+      "Engage your core and lift your hips up toward the ceiling, rolling the ball toward your hands.",
+      "Form an inverted V shape with your body, keeping your legs straight.",
+      "Hold briefly at the top.",
+      "Slowly lower back to the plank position. Repeat 8 to 10 times."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_jackknife",
+    "name": "Ball Jackknife",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "shoulders", "lower back"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Start in a plank position with your shins on a stability ball.",
+      "Bend your knees and roll the ball toward your chest, tucking your knees in.",
+      "Keep your shoulders stable over your wrists.",
+      "Extend your legs back out to the plank position with control.",
+      "Repeat for 10 to 12 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_plank",
+    "name": "Ball Plank",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "chest", "glutes", "quadriceps"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Place your forearms on a stability ball with your legs extended behind you in a plank position.",
+      "Engage your abdominals and maintain a straight line from head to heels.",
+      "Keep the ball as still as possible, resisting any rolling.",
+      "Hold the position for 30 to 60 seconds.",
+      "Rest and repeat 2 to 3 times."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_hamstring_curl",
+    "name": "Ball Hamstring Curl",
+    "bodyPart": "legs",
+    "target": "hamstrings",
+    "secondaryMuscles": ["glutes", "calves", "abdominals"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie on your back with your heels resting on top of a stability ball, arms by your sides.",
+      "Lift your hips into a bridge position.",
+      "Bend your knees and roll the ball toward your glutes, keeping your hips lifted.",
+      "Extend your legs back out, rolling the ball away.",
+      "Repeat for 10 to 12 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_back_extension",
+    "name": "Ball Back Extension",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["glutes", "hamstrings", "shoulders"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Drape yourself over a stability ball face down, with your hips on the ball and feet anchored on the floor.",
+      "Place your hands behind your head or crossed on your chest.",
+      "Lower your upper body down over the ball.",
+      "Lift your chest by extending your spine, squeezing your back muscles at the top.",
+      "Lower with control. Repeat 10 to 12 times."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_oblique_crunch",
+    "name": "Ball Oblique Crunch",
+    "bodyPart": "core",
+    "target": "obliques",
+    "secondaryMuscles": ["abdominals", "hip abductors"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Lie sideways over a stability ball with your hip resting on the ball, feet staggered on the floor for balance.",
+      "Place your hands behind your head.",
+      "Lower your torso down over the side of the ball.",
+      "Crunch up sideways, lifting your torso by contracting your obliques.",
+      "Repeat 10 to 12 times per side."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "ball_roll_out",
+    "name": "Ball Roll Out",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["shoulders", "lats", "lower back"],
+    "equipment": "stability ball",
+    "gifUrl": null,
+    "level": "intermediate",
+    "instructions": [
+      "Kneel on the floor with your forearms resting on a stability ball in front of you.",
+      "Engage your core and slowly roll the ball forward by extending your arms.",
+      "Keep your body in a straight line as you extend as far as you can control.",
+      "Use your abdominals to pull the ball back to the starting position.",
+      "Repeat for 8 to 10 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "stability"
+  },
+  {
+    "id": "band_leg_press",
+    "name": "Band Leg Press",
+    "bodyPart": "legs",
+    "target": "quadriceps",
+    "secondaryMuscles": ["glutes", "hamstrings"],
+    "equipment": "resistance band",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with a resistance band looped around the arches of your feet, holding the ends in your hands.",
+      "Bring your knees to tabletop position.",
+      "Press your feet away from you, extending your legs at a 45-degree angle against the band resistance.",
+      "Slowly bend your knees back to the tabletop position.",
+      "Repeat for 10 to 12 repetitions."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  },
+  {
+    "id": "band_arm_circles",
+    "name": "Band Arm Circles",
+    "bodyPart": "shoulders",
+    "target": "deltoids",
+    "secondaryMuscles": ["rotator cuff", "upper back", "arms"],
+    "equipment": "resistance band",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Stand with feet hip-width apart, holding a resistance band taut between both hands at shoulder width.",
+      "Raise your arms overhead with the band stretched.",
+      "Circle your arms forward and down, maintaining tension on the band.",
+      "Continue the circle back up to the starting position.",
+      "Repeat 8 circles forward, then 8 circles backward."
+    ],
+    "modality": "pilates",
+    "category": "standing"
+  },
+  {
+    "id": "supine_pelvic_curl",
+    "name": "Supine Pelvic Curl",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["glutes", "hamstrings", "spinal extensors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with knees bent, feet flat on the mat hip-width apart, arms by your sides.",
+      "Inhale to prepare.",
+      "Exhale and tilt your pelvis, pressing your lower back into the mat, then peel your spine off the mat one vertebra at a time.",
+      "Lift until you form a straight line from shoulders to knees.",
+      "Inhale at the top, then exhale and roll back down. Repeat 8 to 10 times."
+    ],
+    "modality": "pilates",
+    "category": "supine"
+  },
+  {
+    "id": "supine_toe_taps",
+    "name": "Supine Toe Taps",
+    "bodyPart": "core",
+    "target": "lower abdominals",
+    "secondaryMuscles": ["hip flexors", "inner thighs"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with legs in tabletop position, knees bent at 90 degrees.",
+      "Keep your lower back pressed into the mat.",
+      "Slowly lower one foot toward the floor, tapping your toes lightly.",
+      "Lift the leg back to tabletop position.",
+      "Alternate legs for 10 to 12 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "supine"
+  },
+  {
+    "id": "dead_bug_pilates",
+    "name": "Dead Bug Pilates",
+    "bodyPart": "core",
+    "target": "abdominals",
+    "secondaryMuscles": ["hip flexors", "shoulders", "lower back"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie on your back with arms extended toward the ceiling and legs in tabletop position.",
+      "Press your lower back into the mat.",
+      "Slowly extend one arm overhead and the opposite leg forward, hovering above the floor.",
+      "Return to the starting position with control.",
+      "Alternate sides for 8 to 10 repetitions per side."
+    ],
+    "modality": "pilates",
+    "category": "supine"
+  },
+  {
+    "id": "prone_dart",
+    "name": "Dart",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["glutes", "hamstrings", "rear deltoids"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Lie face down with arms by your sides, palms facing up, legs together.",
+      "Inhale to prepare.",
+      "Exhale and lift your head, chest, and arms off the mat, reaching your fingertips toward your feet.",
+      "Squeeze your shoulder blades together and lengthen through the crown of your head.",
+      "Hold for a breath, then lower down. Repeat 6 to 8 times."
+    ],
+    "modality": "pilates",
+    "category": "prone"
+  },
+  {
+    "id": "cat_cow_pilates",
+    "name": "Cat Cow Pilates",
+    "bodyPart": "back",
+    "target": "spinal extensors",
+    "secondaryMuscles": ["abdominals", "hip flexors"],
+    "equipment": "mat",
+    "gifUrl": null,
+    "level": "beginner",
+    "instructions": [
+      "Start on all fours with hands under shoulders and knees under hips.",
+      "Inhale and arch your back, lifting your tailbone and head toward the ceiling for cow position.",
+      "Exhale and round your spine toward the ceiling, tucking your chin and pelvis for cat position.",
+      "Move slowly and articulate through each vertebra.",
+      "Repeat for 8 to 10 cycles."
+    ],
+    "modality": "pilates",
+    "category": "mat"
+  }
+]

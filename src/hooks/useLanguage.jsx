@@ -394,6 +394,7 @@ const translations = {
 
     // Exercise Library
     nav_library: 'Exercícios',
+    nav_programs: 'Programas',
     library_title: 'Biblioteca de Exercícios',
     library_search_placeholder: 'Buscar exercícios...',
     library_filter_chest: 'Peito',
@@ -447,6 +448,7 @@ const translations = {
 
     // Programs Page
     programs_title: 'Programas',
+    programs_for_you: 'Para Você',
     programs_all: 'Todos',
     programs_weeks: 'semanas',
     programs_days_week: 'dias/sem',
@@ -474,6 +476,33 @@ const translations = {
     programs_level: 'Nível',
     programs_goal: 'Objetivo',
     programs_about: 'Sobre',
+    programs_day: 'Dia',
+    programs_smart_title: 'Treinador Inteligente',
+    programs_smart_desc: 'Responda algumas perguntas e receba um plano personalizado',
+
+    // Workout Builder
+    builder_title: 'Montar Treino',
+    builder_name_placeholder: 'Nome do treino (ex: Meu Treino A)',
+    builder_select_days: 'Dias da semana',
+    builder_mon: 'Seg',
+    builder_tue: 'Ter',
+    builder_wed: 'Qua',
+    builder_thu: 'Qui',
+    builder_fri: 'Sex',
+    builder_sat: 'Sáb',
+    builder_sun: 'Dom',
+    builder_empty: 'Toque em + para adicionar exercícios',
+    builder_add_exercise: 'Adicionar exercício',
+    builder_sets: 'Séries',
+    builder_reps: 'Reps',
+    builder_deleted: 'Exercício removido',
+    builder_undo: 'Desfazer',
+    builder_days_label: 'dias',
+    builder_exercises_label: 'exercícios',
+    builder_save: 'Salvar Treino',
+    builder_pick_exercise: 'Escolher Exercício',
+    builder_search_placeholder: 'Buscar exercício...',
+    builder_no_results: 'Nenhum exercício encontrado',
 
     // Smart Plan Questionnaire
     smart_plan_title: 'Plano Inteligente',
@@ -909,6 +938,7 @@ const translations = {
 
     // Exercise Library
     nav_library: 'Exercises',
+    nav_programs: 'Programs',
     library_title: 'Exercise Library',
     library_search_placeholder: 'Search exercises...',
     library_filter_chest: 'Chest',
@@ -962,6 +992,7 @@ const translations = {
 
     // Programs Page
     programs_title: 'Programs',
+    programs_for_you: 'For You',
     programs_all: 'All',
     programs_weeks: 'weeks',
     programs_days_week: 'days/wk',
@@ -989,8 +1020,35 @@ const translations = {
     programs_level: 'Level',
     programs_goal: 'Goal',
     programs_about: 'About',
+    programs_day: 'Day',
+    programs_smart_title: 'Smart Trainer',
+    programs_smart_desc: 'Answer a few questions and get a personalized plan',
 
     // Smart Plan Questionnaire
+    // Workout Builder
+    builder_title: 'Build Workout',
+    builder_name_placeholder: 'Workout name (e.g. My Workout A)',
+    builder_select_days: 'Days of the week',
+    builder_mon: 'Mon',
+    builder_tue: 'Tue',
+    builder_wed: 'Wed',
+    builder_thu: 'Thu',
+    builder_fri: 'Fri',
+    builder_sat: 'Sat',
+    builder_sun: 'Sun',
+    builder_empty: 'Tap + to add exercises',
+    builder_add_exercise: 'Add exercise',
+    builder_sets: 'Sets',
+    builder_reps: 'Reps',
+    builder_deleted: 'Exercise removed',
+    builder_undo: 'Undo',
+    builder_days_label: 'days',
+    builder_exercises_label: 'exercises',
+    builder_save: 'Save Workout',
+    builder_pick_exercise: 'Choose Exercise',
+    builder_search_placeholder: 'Search exercise...',
+    builder_no_results: 'No exercises found',
+
     smart_plan_title: 'Smart Plan',
     smart_step: 'Step',
     smart_of: 'of',
