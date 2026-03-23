@@ -6,7 +6,26 @@
  * Source: https://github.com/yuhonas/free-exercise-db
  */
 
+import exerciseBundle from '../data/exerciseBundle.json';
+
 const BASE_URL = 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises';
+
+// ─── Auto-built map from exercise bundle (covers ALL 158 gym exercises) ───
+// Maps by: id, English name (lowercase), and folder name (lowercase)
+const bundleMap = {};
+exerciseBundle.forEach(ex => {
+  if (!ex.gifUrl) return;
+  const folder = ex.gifUrl
+    .replace('https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/', '')
+    .replace(/\/\d+\.jpg$/, '');
+  if (!folder) return;
+  // Map by exercise id (e.g., "incline_dumbbell_press")
+  bundleMap[ex.id] = folder;
+  // Map by English name lowercase (e.g., "incline dumbbell press")
+  bundleMap[ex.name.toLowerCase()] = folder;
+  // Map by folder name lowercase (e.g., "incline_dumbbell_press")
+  bundleMap[folder.toLowerCase()] = folder;
+});
 
 // Map Portuguese exercise names to free-exercise-db folder names
 const exerciseMap = {
@@ -109,21 +128,27 @@ function normalizeExerciseName(name) {
 
 // Find the exercise folder name
 function findExerciseFolder(exerciseName) {
+  if (!exerciseName) return null;
   const normalized = normalizeExerciseName(exerciseName);
 
-  // Try exact match first
+  // Try bundle map first (covers all 158 gym exercises by id, name, and folder)
+  if (bundleMap[normalized]) {
+    return bundleMap[normalized];
+  }
+
+  // Try Portuguese exercise map (exact match)
   if (exerciseMap[normalized]) {
     return exerciseMap[normalized];
   }
 
-  // Try finding by prefix
+  // Try finding by prefix in Portuguese map
   for (const [key, folder] of Object.entries(exerciseMap)) {
     if (normalized.startsWith(key) || key.startsWith(normalized)) {
       return folder;
     }
   }
 
-  // Try finding key as substring
+  // Try finding key as substring in Portuguese map
   for (const [key, folder] of Object.entries(exerciseMap)) {
     if (normalized.includes(key)) {
       return folder;

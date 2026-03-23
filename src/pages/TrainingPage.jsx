@@ -486,7 +486,11 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
     }
   };
 
-  const exerciseName = getExerciseName(exercise.id, language) || exercise.nome || exercise.id;
+  const rawName = getExerciseName(exercise.id, language) || exercise.nome || exercise.id;
+  // Convert underscore IDs to readable names (e.g., "incline_dumbbell_press" → "Incline Dumbbell Press")
+  const exerciseName = rawName.includes('_')
+    ? rawName.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    : rawName;
   const obsText = getObs(exercise.obs, language);
   const restTime = exercise.restSeconds || 60;
   const rpeLabel = exercise.targetRpe ? `RPE ${exercise.targetRpe}` : null;
