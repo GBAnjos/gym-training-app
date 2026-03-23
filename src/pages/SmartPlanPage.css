@@ -478,3 +478,163 @@
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
 }
+
+/* ===== Plan Preview ===== */
+.smart-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.smart-preview-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.smart-preview-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Day tabs */
+.smart-preview-tabs {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+
+.smart-preview-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.smart-preview-tab {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-preview-tab.active {
+  border-color: var(--color-accent-primary);
+  background-color: rgba(217, 255, 0, 0.12);
+  color: var(--color-accent-primary);
+}
+
+[data-theme="light"] .smart-preview-tab.active {
+  background-color: rgba(45, 45, 45, 0.08);
+  color: var(--color-accent-primary);
+}
+
+.smart-preview-tab-day {
+  display: block;
+}
+
+.smart-preview-session {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: capitalize;
+}
+
+/* Exercise list */
+.smart-preview-exercises {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.smart-preview-exercise {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.smart-preview-exercise-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.smart-preview-exercise-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.smart-preview-exercise-meta {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* Action buttons */
+.smart-preview-exercise-actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
+.smart-preview-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  background: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--duration-fast) var(--ease-default);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.smart-preview-btn.swap {
+  color: var(--color-accent-primary);
+}
+
+.smart-preview-btn.swap:active {
+  background-color: rgba(217, 255, 0, 0.12);
+  transform: scale(0.9);
+}
+
+.smart-preview-btn.remove {
+  color: var(--color-text-muted);
+}
+
+.smart-preview-btn.remove:active {
+  background-color: rgba(255, 80, 80, 0.1);
+  color: #ff5050;
+  transform: scale(0.9);
+}
+
+.smart-preview-empty {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-4);
+}

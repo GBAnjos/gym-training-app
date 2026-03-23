@@ -551,6 +551,13 @@ const translations = {
     smart_result_priority: 'Músculos Prioritários',
     smart_result_progression: 'Modelo de Progressão',
 
+    // Plan Preview
+    smart_preview_title: 'Seu Plano de Treino',
+    smart_preview_hint: 'Toque no ícone de troca para substituir um exercício ou no X para removê-lo',
+    smart_preview_swap: 'Trocar exercício',
+    smart_preview_remove: 'Remover exercício',
+    smart_preview_empty: 'Nenhum exercício neste dia',
+
     // Step 6: Priority Muscles
     smart_q6_title: 'Foco especial em algum músculo?',
     smart_q6_desc: 'Selecione até 2 músculos para priorizar. Opcional — pule se quiser treino equilibrado.',
@@ -1115,6 +1122,13 @@ const translations = {
     smart_result_exercises: 'Exercises',
     smart_result_priority: 'Priority Muscles',
     smart_result_progression: 'Progression Model',
+
+    // Plan Preview
+    smart_preview_title: 'Your Workout Plan',
+    smart_preview_hint: 'Tap the swap icon to replace an exercise or X to remove it',
+    smart_preview_swap: 'Swap exercise',
+    smart_preview_remove: 'Remove exercise',
+    smart_preview_empty: 'No exercises for this day',
 
     // Step 6: Priority Muscles
     smart_q6_title: 'Focus on any specific muscle?',

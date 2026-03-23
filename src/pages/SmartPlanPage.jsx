@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../hooks/useLanguage';
 import { Icon } from '../components/Icon';
+import { ExerciseMediaCompact } from '../components/ExerciseMedia';
 import { PRIORITY_MUSCLE_OPTIONS } from '../data/scienceConfig';
-import { generateAdvancedPlan } from '../utils/advancedPlanGenerator';
+import { generateAdvancedPlan, getAlternativeExercise } from '../utils/advancedPlanGenerator';
 import './SmartPlanPage.css';
 
 const TOTAL_STEPS = 6;
@@ -99,6 +100,51 @@ export function SmartPlanPage({ onBack, onComplete }) {
     onComplete?.();
   };
 
+  // ─── Swap exercise handler ───
+  const handleSwapExercise = (dayKey, exerciseIndex) => {
+    if (!generatedPlan) return;
+    const dayActivity = generatedPlan.dayActivities[dayKey];
+    if (!dayActivity?.exercises) return;
+
+    const exerciseToReplace = dayActivity.exercises[exerciseIndex];
+    // Collect all exercise IDs in this day to exclude from alternatives
+    const excludeIds = dayActivity.exercises.map(ex => ex.id);
+
+    const alternative = getAlternativeExercise(
+      exerciseToReplace.id,
+      excludeIds,
+      answers.equipment,
+      answers.goals[0] || 'general',
+      answers.level,
+    );
+
+    if (alternative) {
+      const updatedPlan = { ...generatedPlan };
+      const updatedExercises = [...dayActivity.exercises];
+      updatedExercises[exerciseIndex] = alternative;
+      updatedPlan.dayActivities = {
+        ...updatedPlan.dayActivities,
+        [dayKey]: { ...dayActivity, exercises: updatedExercises },
+      };
+      setGeneratedPlan(updatedPlan);
+    }
+  };
+
+  // ─── Remove exercise handler ───
+  const handleRemoveExercise = (dayKey, exerciseIndex) => {
+    if (!generatedPlan) return;
+    const dayActivity = generatedPlan.dayActivities[dayKey];
+    if (!dayActivity?.exercises) return;
+
+    const updatedExercises = dayActivity.exercises.filter((_, i) => i !== exerciseIndex);
+    const updatedPlan = { ...generatedPlan };
+    updatedPlan.dayActivities = {
+      ...updatedPlan.dayActivities,
+      [dayKey]: { ...dayActivity, exercises: updatedExercises },
+    };
+    setGeneratedPlan(updatedPlan);
+  };
+
   if (showResult) {
     const totalExercises = generatedPlan
       ? Object.values(generatedPlan.dayActivities).reduce((sum, da) => sum + (da.exercises?.length || 0), 0)
@@ -155,24 +201,15 @@ export function SmartPlanPage({ onBack, onComplete }) {
             </div>
           </div>
 
-          {answers.priorityMuscles.length > 0 && (
-            <div className="smart-result-priority">
-              <span className="smart-result-stat-label">{t('smart_result_priority')}</span>
-              <div className="smart-result-priority-tags">
-                {answers.priorityMuscles.map(m => (
-                  <span key={m} className="smart-result-priority-tag">{t(`muscle_${m}`)}</span>
-                ))}
-              </div>
-            </div>
-          )}
-
+          {/* ===== Plan Preview ===== */}
           {generatedPlan && (
-            <div className="smart-result-progression">
-              <span className="smart-result-stat-label">{t('smart_result_progression')}</span>
-              <span className="smart-result-stat-value">
-                {generatedPlan.progressionModel?.description?.[language] || generatedPlan.progressionModel?.description?.['pt-BR'] || ''}
-              </span>
-            </div>
+            <PlanPreview
+              plan={generatedPlan}
+              language={language}
+              t={t}
+              onSwap={handleSwapExercise}
+              onRemove={handleRemoveExercise}
+            />
           )}
 
           <button className="smart-plan-activate" onClick={handleActivate}>
@@ -381,5 +418,85 @@ function StepPriorityMuscles({ value, onChange, t }) {
         <p className="smart-plan-skip-hint">{t('smart_q6_skip')}</p>
       )}
     </>
+  );
+}
+
+// ─── Plan Preview Component ───
+function PlanPreview({ plan, language, t, onSwap, onRemove }) {
+  const [activeDay, setActiveDay] = useState(plan.trainingDays[0]);
+
+  const dayActivity = plan.dayActivities[activeDay];
+  const exercises = dayActivity?.exercises || [];
+  const sessionName = dayActivity?.session?.focus
+    ? (typeof dayActivity.session.focus === 'object'
+      ? (dayActivity.session.focus[language] || dayActivity.session.focus['pt-BR'])
+      : dayActivity.session.focus)
+    : dayActivity?.session?.name || '';
+
+  const formatName = (ex) => {
+    const raw = ex.nome || ex.id;
+    return raw.includes('_')
+      ? raw.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+      : raw;
+  };
+
+  return (
+    <div className="smart-preview">
+      <h3 className="smart-preview-title">{t('smart_preview_title')}</h3>
+      <p className="smart-preview-hint">{t('smart_preview_hint')}</p>
+
+      {/* Day tabs */}
+      <div className="smart-preview-tabs">
+        {plan.trainingDays.map((day, i) => (
+          <button
+            key={day}
+            className={`smart-preview-tab ${activeDay === day ? 'active' : ''}`}
+            onClick={() => setActiveDay(day)}
+          >
+            <span className="smart-preview-tab-day">{day}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Session name */}
+      {sessionName && (
+        <div className="smart-preview-session">{sessionName}</div>
+      )}
+
+      {/* Exercise list */}
+      <div className="smart-preview-exercises">
+        {exercises.map((ex, idx) => (
+          <div key={`${ex.id}-${idx}`} className="smart-preview-exercise">
+            <ExerciseMediaCompact exerciseName={ex.nome || ex.id} />
+            <div className="smart-preview-exercise-info">
+              <span className="smart-preview-exercise-name">{formatName(ex)}</span>
+              <span className="smart-preview-exercise-meta">
+                {ex.series}x{ex.reps}
+                {ex.targetRpe ? ` · RPE ${ex.targetRpe}` : ''}
+              </span>
+            </div>
+            <div className="smart-preview-exercise-actions">
+              <button
+                className="smart-preview-btn swap"
+                onClick={() => onSwap(activeDay, idx)}
+                title={t('smart_preview_swap')}
+              >
+                <Icon name="reload" />
+              </button>
+              <button
+                className="smart-preview-btn remove"
+                onClick={() => onRemove(activeDay, idx)}
+                title={t('smart_preview_remove')}
+              >
+                <Icon name="xmark" />
+              </button>
+            </div>
+          </div>
+        ))}
+        {exercises.length === 0 && (
+          <p className="smart-preview-empty">{t('smart_preview_empty')}</p>
+        )}
+      </div>
+    </div>
   );
 }

@@ -415,3 +415,53 @@ function generatePlanName(splitType, goal, level) {
     en: `${splitType} — ${goalNames[goal]?.en || goal} (${levelNames[level]?.en || level})`,
   };
 }
+
+// ─── Get Alternative Exercise ───
+/**
+ * Find an alternative exercise for a given exercise, matching same muscle group / body part.
+ * @param {string} exerciseId - ID of the exercise to replace
+ * @param {string[]} excludeIds - IDs to exclude (current exercises + the one being replaced)
+ * @param {string} equipment - Equipment setting ('full_gym' | 'home' | 'minimal')
+ * @param {string} goal - Primary goal for rep ranges
+ * @param {string} level - User level for progression model
+ * @returns {Object|null} Formatted replacement exercise or null
+ */
+export function getAlternativeExercise(exerciseId, excludeIds = [], equipment = 'full_gym', goal = 'general', level = 'intermediate') {
+  const pool = buildExercisePool(equipment);
+  const original = pool.find(ex => ex.id === exerciseId);
+  if (!original) return null;
+
+  const goalConfig = REP_RANGES[goal] || REP_RANGES.general;
+  const setsConfig = SETS_CONFIG[goal] || SETS_CONFIG.general;
+  const progressionModel = PROGRESSION_MODELS[level] || PROGRESSION_MODELS.beginner;
+
+  const excludeSet = new Set(excludeIds);
+
+  // Find candidates matching same bodyPart and target
+  const candidates = pool.filter(ex =>
+    !excludeSet.has(ex.id) &&
+    ex.id !== exerciseId &&
+    (ex.bodyPart || '').toLowerCase() === (original.bodyPart || '').toLowerCase() &&
+    (ex.target || '').toLowerCase() === (original.target || '').toLowerCase()
+  );
+
+  // Fallback: match bodyPart only
+  const fallbackCandidates = candidates.length > 0 ? candidates : pool.filter(ex =>
+    !excludeSet.has(ex.id) &&
+    ex.id !== exerciseId &&
+    (ex.bodyPart || '').toLowerCase() === (original.bodyPart || '').toLowerCase()
+  );
+
+  if (fallbackCandidates.length === 0) return null;
+
+  // Pick a random one
+  const pick = fallbackCandidates[Math.floor(Math.random() * fallbackCandidates.length)];
+  const isCompound = pick._isCompound;
+  const repRange = isCompound ? goalConfig.compound : goalConfig.isolation;
+  const sets = isCompound ? setsConfig.compound : setsConfig.isolation;
+
+  const formatted = formatExercise(pick, sets, repRange, progressionModel, isCompound);
+  // Remove internal _pattern before returning
+  const { _pattern, ...clean } = formatted;
+  return clean;
+}
