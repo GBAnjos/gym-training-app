@@ -504,6 +504,8 @@ const translations = {
     builder_search_placeholder: 'Buscar exercício...',
     builder_no_results: 'Nenhum exercício encontrado',
     builder_day_name_placeholder: 'Nome da sessão (ex: Peito + Tríceps)',
+    builder_rest: 'Descanso',
+    builder_rest_placeholder: '60s',
 
     // Smart Plan Questionnaire
     smart_plan_title: 'Plano Inteligente',
@@ -1078,6 +1080,8 @@ const translations = {
     builder_search_placeholder: 'Search exercise...',
     builder_no_results: 'No exercises found',
     builder_day_name_placeholder: 'Session name (e.g., Chest + Triceps)',
+    builder_rest: 'Rest',
+    builder_rest_placeholder: '60s',
 
     smart_plan_title: 'Smart Plan',
     smart_step: 'Step',

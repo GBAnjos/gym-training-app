@@ -58,6 +58,7 @@ export function WorkoutBuilderPage({ onBack, onComplete }) {
           bodyPart: exercise.bodyPart,
           sets: 3,
           reps: '12',
+          rest: 60,
         }],
       };
     });
@@ -131,6 +132,7 @@ export function WorkoutBuilderPage({ onBack, onComplete }) {
           series: e.sets,
           reps: e.reps,
           musculos: [e.bodyPart].filter(Boolean),
+          restSeconds: e.rest || 60,
         })),
       };
     });
@@ -327,6 +329,17 @@ function BuilderExerciseCard({ exercise, index, total, t, onUpdate, onDelete, on
             onChange={e => onUpdate('reps', e.target.value)}
             placeholder="12"
           />
+        </div>
+        <div className="builder-input-group builder-input-rest">
+          <label>{t('builder_rest')}</label>
+          <input
+            type="number"
+            min="0"
+            max="300"
+            value={exercise.rest || 60}
+            onChange={e => onUpdate('rest', parseInt(e.target.value) || 60)}
+          />
+          <span className="builder-input-unit">s</span>
         </div>
       </div>
     </div>

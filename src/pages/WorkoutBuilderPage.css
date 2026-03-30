@@ -324,6 +324,22 @@
   margin-top: 14px;
 }
 
+.builder-input-rest {
+  position: relative;
+}
+.builder-input-unit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  pointer-events: none;
+}
+.builder-input-rest input {
+  padding-right: 24px;
+}
+
 /* Add Button */
 .builder-add-btn {
   display: flex;
