@@ -7,6 +7,7 @@ import { useDataSync } from '../hooks/useDataSync';
 import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { ExerciseMedia } from '../components/ExerciseMedia';
+import { formatExerciseName } from '../utils/formatExerciseName';
 import { Icon } from '../components/Icon';
 import { CrossFitCard } from '../components/activity-cards/CrossFitCard';
 import { CalisthenicsCard } from '../components/activity-cards/CalisthenicsCard';
@@ -486,11 +487,7 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
     }
   };
 
-  const rawName = getExerciseName(exercise.id, language) || exercise.nome || exercise.id;
-  // Convert underscore IDs to readable names (e.g., "incline_dumbbell_press" → "Incline Dumbbell Press")
-  const exerciseName = rawName.includes('_')
-    ? rawName.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-    : rawName;
+  const exerciseName = formatExerciseName(getExerciseName(exercise.id, language) || exercise.nome || exercise.id);
   const obsText = getObs(exercise.obs, language);
   const restTime = exercise.restSeconds || 60;
   const rpeLabel = exercise.targetRpe ? `RPE ${exercise.targetRpe}` : null;
@@ -500,6 +497,7 @@ function ExerciseCard({ exercise, dayKey, onSync, onStartTimer, toast, language 
       <div className="exercise-header">
         <ExerciseMedia
           exerciseName={exercise.nome}
+          exerciseId={exercise.id}
           size="small"
         />
         <div className="exercise-info">

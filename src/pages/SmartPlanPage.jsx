@@ -4,6 +4,7 @@ import { Icon } from '../components/Icon';
 import { ExerciseMediaCompact } from '../components/ExerciseMedia';
 import { PRIORITY_MUSCLE_OPTIONS } from '../data/scienceConfig';
 import { generateAdvancedPlan, getAlternativeExercise } from '../utils/advancedPlanGenerator';
+import { formatExerciseName } from '../utils/formatExerciseName';
 import './SmartPlanPage.css';
 
 const TOTAL_STEPS = 6;
@@ -433,13 +434,6 @@ function PlanPreview({ plan, language, t, onSwap, onRemove }) {
       : dayActivity.session.focus)
     : dayActivity?.session?.name || '';
 
-  const formatName = (ex) => {
-    const raw = ex.nome || ex.id;
-    return raw.includes('_')
-      ? raw.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-      : raw;
-  };
-
   return (
     <div className="smart-preview">
       <h3 className="smart-preview-title">{t('smart_preview_title')}</h3>
@@ -467,9 +461,9 @@ function PlanPreview({ plan, language, t, onSwap, onRemove }) {
       <div className="smart-preview-exercises">
         {exercises.map((ex, idx) => (
           <div key={`${ex.id}-${idx}`} className="smart-preview-exercise">
-            <ExerciseMediaCompact exerciseName={ex.nome || ex.id} />
+            <ExerciseMediaCompact exerciseName={ex.nome || ex.id} exerciseId={ex.id} />
             <div className="smart-preview-exercise-info">
-              <span className="smart-preview-exercise-name">{formatName(ex)}</span>
+              <span className="smart-preview-exercise-name">{formatExerciseName(ex.nome || ex.id)}</span>
               <span className="smart-preview-exercise-meta">
                 {ex.series}x{ex.reps}
                 {ex.targetRpe ? ` · RPE ${ex.targetRpe}` : ''}

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import {
   getExerciseImages,
+  getExerciseImageById,
   hasExerciseImages,
   categorizeExercise,
   getCategoryIcon
@@ -14,6 +15,7 @@ import './ExerciseMedia.css';
  */
 export function ExerciseMedia({
   exerciseName,
+  exerciseId,
   size = 'medium',
   className = ''
 }) {
@@ -25,7 +27,7 @@ export function ExerciseMedia({
   const [thumbLoaded, setThumbLoaded] = useState(false);
   const [thumbError, setThumbError] = useState(false);
 
-  const images = getExerciseImages(exerciseName);
+  const images = (exerciseId && getExerciseImageById(exerciseId)) || getExerciseImages(exerciseName);
   const hasImages = hasExerciseImages(exerciseName);
   const category = categorizeExercise(exerciseName);
   const icon = getCategoryIcon(category);
@@ -157,11 +159,11 @@ export function ExerciseMedia({
  * ExerciseMediaCompact Component
  * Single image thumbnail for exercise lists
  */
-export function ExerciseMediaCompact({ exerciseName, className = '' }) {
+export function ExerciseMediaCompact({ exerciseName, exerciseId, className = '' }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
-  const images = getExerciseImages(exerciseName);
+  const images = (exerciseId && getExerciseImageById(exerciseId)) || getExerciseImages(exerciseName);
   const hasImages = hasExerciseImages(exerciseName);
   const category = categorizeExercise(exerciseName);
   const icon = getCategoryIcon(category);

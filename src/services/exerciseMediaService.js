@@ -249,6 +249,21 @@ export function getCategoryIcon(category) {
 }
 
 /**
+ * Get exercise images directly by exercise ID
+ * @param {string} exerciseId - The exercise ID (key in bundleMap)
+ * @returns {Object|null} Object with startImage and endImage URLs
+ */
+export function getExerciseImageById(exerciseId) {
+  if (!exerciseId) return null;
+  const folder = bundleMap[exerciseId];
+  if (!folder) return null;
+  return {
+    startImage: `${BASE_URL}/${folder}/0.jpg`,
+    endImage: `${BASE_URL}/${folder}/1.jpg`,
+  };
+}
+
+/**
  * Preload images for exercises (for performance)
  * @param {string[]} exerciseNames - Array of exercise names to preload
  */
@@ -266,6 +281,7 @@ export function preloadExerciseImages(exerciseNames) {
 
 export default {
   getExerciseImages,
+  getExerciseImageById,
   getStartImage,
   getEndImage,
   hasExerciseImages,
