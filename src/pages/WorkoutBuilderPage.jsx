@@ -24,6 +24,7 @@ export function WorkoutBuilderPage({ onBack, onComplete }) {
   const [selectedDays, setSelectedDays] = useState([]);
   const [activeDay, setActiveDay] = useState(null);
   const [workoutName, setWorkoutName] = useState('');
+  const [dayNames, setDayNames] = useState({});
   const [showLibrary, setShowLibrary] = useState(false);
   const [undoItem, setUndoItem] = useState(null);
   const undoTimer = useRef(null);
@@ -120,7 +121,7 @@ export function WorkoutBuilderPage({ onBack, onComplete }) {
         type: 'gym',
         session: {
           label: String(selectedDays.indexOf(day) + 1),
-          name: workoutName || (language === 'pt-BR' ? 'Treino Personalizado' : 'Custom Workout'),
+          name: dayNames[day] || workoutName || (language === 'pt-BR' ? 'Treino Personalizado' : 'Custom Workout'),
           focus: 'custom',
           icon: 'pencil-1',
         },
@@ -214,6 +215,17 @@ export function WorkoutBuilderPage({ onBack, onComplete }) {
             </button>
           ))}
         </div>
+      )}
+
+      {/* Day Name Input */}
+      {activeDay && (
+        <input
+          className="builder-day-name-input"
+          type="text"
+          placeholder={t('builder_day_name_placeholder')}
+          value={dayNames[activeDay] || ''}
+          onChange={e => setDayNames(prev => ({ ...prev, [activeDay]: e.target.value }))}
+        />
       )}
 
       {/* Exercise List for Active Day */}

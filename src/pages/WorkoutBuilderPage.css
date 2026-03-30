@@ -161,6 +161,22 @@
   color: var(--color-accent-primary);
 }
 
+.builder-day-name-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 0 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+.builder-day-name-input:focus {
+  border-color: var(--primary);
+}
+
 .builder-day-count {
   display: inline-flex;
   align-items: center;
