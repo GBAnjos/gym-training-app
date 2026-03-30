@@ -479,6 +479,10 @@ const translations = {
     programs_day: 'Dia',
     programs_smart_title: 'Treinador Inteligente',
     programs_smart_desc: 'Responda algumas perguntas e receba um plano personalizado',
+    programs_create_own: 'Montar Meu Treino',
+    programs_create_own_desc: 'Crie seu treino do zero',
+    programs_import: 'Importar Treino',
+    programs_import_desc: 'Cole ou envie um treino gerado por IA',
 
     // Workout Builder
     builder_title: 'Montar Treino',
@@ -1054,6 +1058,10 @@ const translations = {
     programs_day: 'Day',
     programs_smart_title: 'Smart Trainer',
     programs_smart_desc: 'Answer a few questions and get a personalized plan',
+    programs_create_own: 'Create My Own',
+    programs_create_own_desc: 'Build your workout from scratch',
+    programs_import: 'Import Training',
+    programs_import_desc: 'Paste or upload an AI-generated workout',
 
     // Smart Plan Questionnaire
     // Workout Builder

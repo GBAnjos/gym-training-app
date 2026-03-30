@@ -116,6 +116,17 @@ export function ProgramsPage({ onBack, onComplete, onTabChange }) {
         ))}
       </div>
 
+      {/* Action Cards */}
+      <div className="programs-action-cards">
+        <button className="programs-action-card" onClick={() => onTabChange?.('build-plan')}>
+          <Icon name="pencil-1" className="programs-action-icon" />
+          <div>
+            <h3>{t('programs_create_own')}</h3>
+            <p>{t('programs_create_own_desc')}</p>
+          </div>
+        </button>
+      </div>
+
       {/* Program Cards */}
       {filtered.length > 0 ? (
         <div className="programs-list">
