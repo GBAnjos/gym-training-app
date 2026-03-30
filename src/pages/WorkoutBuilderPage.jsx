@@ -3,6 +3,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
 import { search as searchExercises } from '../services/exerciseService';
+import { ExerciseMediaCompact } from '../components/ExerciseMedia';
 import './WorkoutBuilderPage.css';
 
 const WEEKDAYS = [
@@ -292,6 +293,7 @@ function BuilderExerciseCard({ exercise, index, total, t, onUpdate, onDelete, on
   return (
     <div className="builder-exercise-card">
       <div className="builder-exercise-header">
+        <ExerciseMediaCompact exerciseName={exercise.name} exerciseId={exercise.id} className="builder-exercise-thumb" />
         <span className="builder-exercise-name">{exercise.name}</span>
         <div className="builder-exercise-actions">
           {onMoveUp && (
@@ -411,6 +413,7 @@ function ExercisePickerView({ t, language, onBack, onSelect, existingIds }) {
               onClick={() => !alreadyAdded && onSelect(exercise)}
               disabled={alreadyAdded}
             >
+              <ExerciseMediaCompact exerciseName={exercise.name} exerciseId={exercise.id} className="builder-pick-thumb" />
               <div className="builder-pick-info">
                 <span className="builder-pick-name">{exercise.name}</span>
                 <span className="builder-pick-meta">{exercise.bodyPart} &middot; {exercise.equipment}</span>

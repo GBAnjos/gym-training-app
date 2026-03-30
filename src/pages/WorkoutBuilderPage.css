@@ -554,3 +554,17 @@
   color: var(--color-text-muted);
   font-size: 0.85rem;
 }
+
+.builder-exercise-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.builder-pick-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
