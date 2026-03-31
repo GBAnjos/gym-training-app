@@ -499,3 +499,118 @@
     font-size: 0.875rem;
   }
 }
+
+/* ===== Custom Diet View ===== */
+.meals-diet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.meals-diet-header .meals-title {
+  margin-bottom: 0;
+}
+
+.meals-diet-edit-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: none;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.meals-diet-edit-btn:active {
+  transform: scale(0.95);
+}
+
+.meals-diet-empty {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-sm) 0;
+  margin: 0;
+}
+
+.meals-diet-foods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.meals-diet-food-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.meals-diet-food-row:active {
+  transform: scale(0.99);
+}
+
+.meals-diet-food-row.checked {
+  opacity: 0.6;
+}
+
+.meals-diet-food-row.checked .meals-diet-food-name {
+  text-decoration: line-through;
+  color: var(--color-text-secondary);
+}
+
+.meals-diet-food-check {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: 50%;
+  border: 2px dashed var(--color-border-default);
+  background: rgba(217, 255, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-border-default);
+  font-size: 0.7rem;
+  opacity: 0.4;
+  transition: all var(--transition-fast);
+}
+
+.meals-diet-food-check.checked {
+  background: var(--color-accent-primary);
+  border-color: var(--color-accent-primary);
+  border-style: solid;
+  color: var(--color-bg-primary);
+  opacity: 1;
+}
+
+.meals-diet-food-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meals-diet-food-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.meals-diet-food-meta {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
