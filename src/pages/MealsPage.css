@@ -37,6 +37,47 @@
   }
 }
 
+/* Create Diet Button */
+.meals-create-diet-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-3);
+  background: linear-gradient(135deg, rgba(217, 255, 0, 0.12) 0%, rgba(217, 255, 0, 0.04) 100%);
+  border: 1px solid rgba(217, 255, 0, 0.25);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.meals-create-diet-btn:active {
+  transform: scale(0.98);
+}
+
+[data-theme="light"] .meals-create-diet-btn {
+  background: linear-gradient(135deg, rgba(45, 45, 45, 0.06) 0%, rgba(45, 45, 45, 0.02) 100%);
+  border-color: rgba(45, 45, 45, 0.15);
+}
+
+.meals-create-diet-icon {
+  color: var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.meals-create-diet-arrow {
+  margin-left: auto;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
 /* Daily Progress */
 .meals-progress {
   background: var(--color-bg-elevated);

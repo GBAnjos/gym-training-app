@@ -18,6 +18,7 @@ import { ExerciseLibraryPage } from './pages/ExerciseLibraryPage';
 import { ProgramsPage } from './pages/ProgramsPage';
 import { SmartPlanPage } from './pages/SmartPlanPage';
 import { WorkoutBuilderPage } from './pages/WorkoutBuilderPage';
+import { DietBuilderPage } from './pages/DietBuilderPage';
 import './App.css';
 
 function AppContent() {
@@ -57,7 +58,7 @@ function AppContent() {
       case 'schedule':
         return <SchedulePage />;
       case 'meals':
-        return <MealsPage />;
+        return <MealsPage onTabChange={setActiveTab} />;
       case 'training':
         return <TrainingPage onTabChange={setActiveTab} />;
       case 'programs':
@@ -68,6 +69,8 @@ function AppContent() {
         return <SmartPlanPage onBack={() => setActiveTab('training')} onComplete={() => setActiveTab('training')} />;
       case 'build-plan':
         return <WorkoutBuilderPage onBack={() => setActiveTab('training')} onComplete={() => setActiveTab('training')} />;
+      case 'diet-builder':
+        return <DietBuilderPage onBack={() => setActiveTab('meals')} onComplete={() => setActiveTab('meals')} />;
       case 'dashboard':
         return <DashboardPage onTabChange={setActiveTab} />;
       case 'library':

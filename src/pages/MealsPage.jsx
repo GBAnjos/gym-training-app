@@ -5,8 +5,8 @@ import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
 import './MealsPage.css';
 
-export function MealsPage() {
-  const { language } = useLanguage();
+export function MealsPage({ onTabChange }) {
+  const { t, language } = useLanguage();
   const toast = useToast();
   const [expandedMeal, setExpandedMeal] = useState(null);
 
@@ -86,6 +86,13 @@ export function MealsPage() {
       <p className="meals-subtitle">
         {macros.calorias} · {profile ? getGoalLabel(profile.goal) : getGoalLabel('muscle_gain')}
       </p>
+
+      {/* Create Diet CTA */}
+      <button className="meals-create-diet-btn" onClick={() => onTabChange?.('diet-builder')}>
+        <Icon name="plus-circle" className="meals-create-diet-icon" />
+        <span>{t('meals_create_diet')}</span>
+        <Icon name="chevron-right" className="meals-create-diet-arrow" />
+      </button>
 
       {/* Daily Progress */}
       <div className="meals-progress">
