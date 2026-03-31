@@ -125,6 +125,13 @@ export function ProgramsPage({ onBack, onComplete, onTabChange }) {
             <p>{t('programs_create_own_desc')}</p>
           </div>
         </button>
+        <button className="programs-action-card" onClick={() => onTabChange?.('import-training')}>
+          <Icon name="upload-1" className="programs-action-icon" />
+          <div>
+            <h3>{t('programs_import')}</h3>
+            <p>{t('programs_import_desc')}</p>
+          </div>
+        </button>
       </div>
 
       {/* Program Cards */}

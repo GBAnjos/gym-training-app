@@ -117,12 +117,18 @@ function DefaultMealsView({ t, language, toast, onTabChange, expandedMeal, setEx
         {macros.calorias} · {profile ? getGoalLabel(profile.goal) : getGoalLabel('muscle_gain')}
       </p>
 
-      {/* Create Diet CTA */}
-      <button className="meals-create-diet-btn" onClick={() => onTabChange?.('diet-builder')}>
-        <Icon name="plus-circle" className="meals-create-diet-icon" />
-        <span>{t('meals_create_diet')}</span>
-        <Icon name="chevron-right" className="meals-create-diet-arrow" />
-      </button>
+      {/* Action Buttons */}
+      <div className="meals-action-row">
+        <button className="meals-create-diet-btn" onClick={() => onTabChange?.('diet-builder')}>
+          <Icon name="plus-circle" className="meals-create-diet-icon" />
+          <span>{t('meals_create_diet')}</span>
+          <Icon name="chevron-right" className="meals-create-diet-arrow" />
+        </button>
+        <button className="meals-import-diet-btn" onClick={() => onTabChange?.('import-diet')}>
+          <Icon name="upload-1" />
+          <span>{t('meals_import_diet')}</span>
+        </button>
+      </div>
 
       {/* Daily Progress */}
       <div className="meals-progress">

@@ -19,6 +19,7 @@ import { ProgramsPage } from './pages/ProgramsPage';
 import { SmartPlanPage } from './pages/SmartPlanPage';
 import { WorkoutBuilderPage } from './pages/WorkoutBuilderPage';
 import { DietBuilderPage } from './pages/DietBuilderPage';
+import { ImportPage } from './pages/ImportPage';
 import './App.css';
 
 function AppContent() {
@@ -71,6 +72,10 @@ function AppContent() {
         return <WorkoutBuilderPage onBack={() => setActiveTab('training')} onComplete={() => setActiveTab('training')} />;
       case 'diet-builder':
         return <DietBuilderPage onBack={() => setActiveTab('meals')} onComplete={() => setActiveTab('meals')} />;
+      case 'import-training':
+        return <ImportPage type="training" onBack={() => setActiveTab('programs')} onComplete={() => setActiveTab('training')} />;
+      case 'import-diet':
+        return <ImportPage type="diet" onBack={() => setActiveTab('meals')} onComplete={() => setActiveTab('meals')} />;
       case 'dashboard':
         return <DashboardPage onTabChange={setActiveTab} />;
       case 'library':
