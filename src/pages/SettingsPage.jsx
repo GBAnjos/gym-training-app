@@ -4,6 +4,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { Icon } from '../components/Icon';
 import { useTheme } from '../hooks/useTheme';
+import { useToast } from '../components/Toast';
 import { MyActivities } from '../components/settings/MyActivities';
 import './SettingsPage.css';
 
@@ -15,6 +16,7 @@ export function SettingsPage() {
   const [editingName, setEditingName] = useState(false);
   const [nameValue, setNameValue] = useState('');
   const { theme, setTheme, setSystemTheme, isManual } = useTheme();
+  const toast = useToast();
 
   const themeMode = isManual ? theme : 'system';
 
@@ -50,6 +52,32 @@ export function SettingsPage() {
     await resetOnboarding();
     setShowResetConfirm(false);
     window.location.reload();
+  };
+
+  const handleClearWorkout = () => {
+    if (window.confirm(language === 'pt-BR' ? 'Apagar plano de treino?' : 'Delete workout plan?')) {
+      localStorage.removeItem('vida_workout_plan');
+      toast.success(language === 'pt-BR' ? 'Treino apagado' : 'Workout cleared');
+    }
+  };
+
+  const handleClearDiet = () => {
+    if (window.confirm(language === 'pt-BR' ? 'Apagar dieta?' : 'Delete diet?')) {
+      localStorage.removeItem('vida_custom_diet');
+      toast.success(language === 'pt-BR' ? 'Dieta apagada' : 'Diet cleared');
+    }
+  };
+
+  const handleClearAll = () => {
+    if (window.confirm(language === 'pt-BR' ? 'Apagar TODOS os dados? Esta ação não pode ser desfeita.' : 'Delete ALL data? This cannot be undone.')) {
+      const keysToKeep = ['vida_theme', 'vida_language'];
+      const allKeys = Object.keys(localStorage);
+      allKeys.forEach(key => {
+        if (!keysToKeep.includes(key)) localStorage.removeItem(key);
+      });
+      toast.success(language === 'pt-BR' ? 'Dados apagados' : 'Data cleared');
+      window.location.reload();
+    }
   };
 
   const getGoalLabel = (goal) => {
@@ -211,6 +239,25 @@ export function SettingsPage() {
             </button>
           ))}
         </div>
+      </section>
+
+      {/* Data Management */}
+      <section className="settings-section">
+        <h3 className="settings-section-title">
+          {language === 'pt-BR' ? 'Gerenciar Dados' : 'Manage Data'}
+        </h3>
+        <button className="settings-action warning" onClick={handleClearWorkout}>
+          <Icon name="dumbbell-1" />
+          <span>{language === 'pt-BR' ? 'Apagar Plano de Treino' : 'Clear Workout Plan'}</span>
+        </button>
+        <button className="settings-action warning" onClick={handleClearDiet}>
+          <Icon name="knife-fork-1" />
+          <span>{language === 'pt-BR' ? 'Apagar Dieta' : 'Clear Diet'}</span>
+        </button>
+        <button className="settings-action danger" onClick={handleClearAll}>
+          <Icon name="trash-1" />
+          <span>{language === 'pt-BR' ? 'Apagar Todos os Dados' : 'Clear All Data'}</span>
+        </button>
       </section>
 
       {/* Actions Section */}

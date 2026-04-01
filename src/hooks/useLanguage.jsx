@@ -21,6 +21,7 @@ const translations = {
     nav_meals: 'Refeições',
     nav_training: 'Treino',
     nav_progress: 'Progresso',
+    nav_profile: 'Perfil',
 
     // Onboarding - Welcome
     onboarding_welcome_title: 'Bem-vindo ao Vida',
@@ -648,6 +649,7 @@ const translations = {
     nav_meals: 'Meals',
     nav_training: 'Training',
     nav_progress: 'Progress',
+    nav_profile: 'Profile',
 
     // Onboarding - Welcome
     onboarding_welcome_title: 'Welcome to Vida',

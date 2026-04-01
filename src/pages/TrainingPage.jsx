@@ -289,7 +289,7 @@ export function TrainingPage({ onTabChange }) {
               <Icon name="chevron-right" className="training-option-arrow" />
             </button>
 
-            <button className="training-option-card" onClick={() => onTabChange?.('programs-from-training')}>
+            <button className="training-option-card" onClick={() => onTabChange?.('programs')}>
               <div className="training-option-icon programs">
                 <Icon name="list-3" />
               </div>
@@ -323,7 +323,7 @@ export function TrainingPage({ onTabChange }) {
           <span className="training-plan-label">{t('training_active_plan')}</span>
           <span className="training-plan-name">{(typeof workoutPlan.name === 'object' ? (workoutPlan.name[language] || workoutPlan.name['pt-BR']) : workoutPlan.name) || (language === 'pt-BR' ? 'Meu Plano' : 'My Plan')}</span>
         </div>
-        <button className="training-change-plan" onClick={() => onTabChange?.('programs-from-training')}>
+        <button className="training-change-plan" onClick={() => onTabChange?.('programs')}>
           {t('training_change_plan')}
         </button>
       </div>
@@ -394,6 +394,18 @@ export function TrainingPage({ onTabChange }) {
           ))}
         </div>
       )}
+
+      {/* Quick Actions */}
+      <div className="training-actions">
+        <button className="training-action-btn" onClick={() => onTabChange?.('programs')}>
+          <Icon name="list-3" />
+          <span>{language === 'pt-BR' ? 'Programas' : 'Programs'}</span>
+        </button>
+        <button className="training-action-btn" onClick={() => onTabChange?.('dashboard')}>
+          <Icon name="bar-chart-4" />
+          <span>{language === 'pt-BR' ? 'Progresso' : 'Progress'}</span>
+        </button>
+      </div>
 
       {/* Floating Timer */}
       {timerSeconds !== null && (

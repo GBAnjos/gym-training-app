@@ -63,8 +63,6 @@ function AppContent() {
       case 'training':
         return <TrainingPage onTabChange={setActiveTab} />;
       case 'programs':
-        return <ProgramsPage onComplete={() => setActiveTab('training')} onTabChange={setActiveTab} />;
-      case 'programs-from-training':
         return <ProgramsPage onBack={() => setActiveTab('training')} onComplete={() => setActiveTab('training')} onTabChange={setActiveTab} />;
       case 'smart-plan':
         return <SmartPlanPage onBack={() => setActiveTab('training')} onComplete={() => setActiveTab('training')} />;
