@@ -57,7 +57,7 @@ function AppContent() {
   const renderPage = () => {
     switch (activeTab) {
       case 'schedule':
-        return <SchedulePage />;
+        return <SchedulePage onTabChange={setActiveTab} />;
       case 'meals':
         return <MealsPage onTabChange={setActiveTab} />;
       case 'training':
@@ -81,7 +81,7 @@ function AppContent() {
       case 'settings':
         return <SettingsPage />;
       default:
-        return <SchedulePage />;
+        return <SchedulePage onTabChange={setActiveTab} />;
     }
   };
 

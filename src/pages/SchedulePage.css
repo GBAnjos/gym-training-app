@@ -29,9 +29,7 @@
   scroll-snap-type: x mandatory;
 }
 
-.day-tabs::-webkit-scrollbar {
-  display: none;
-}
+.day-tabs::-webkit-scrollbar { display: none; }
 
 .day-tab {
   flex: 1;
@@ -48,16 +46,13 @@
   transition: all var(--transition-fast);
   scroll-snap-align: start;
   min-height: 52px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
 }
 
-.day-tab:active {
-  transform: scale(0.95);
-}
-
-.day-tab:hover {
-  border-color: var(--color-border-default);
-}
-
+.day-tab:active { transform: scale(0.95); }
 .day-tab.active {
   border-color: var(--color-accent-primary);
   background-color: rgba(217, 255, 0, 0.1);
@@ -75,66 +70,24 @@
 }
 
 @media (min-width: 400px) {
-  .day-tab {
-    min-width: 48px;
-    padding: var(--space-sm);
-    gap: 4px;
-  }
-
-  .day-name {
-    font-size: 0.8rem;
-  }
+  .day-tab { min-width: 48px; padding: var(--space-sm); gap: 4px; }
+  .day-name { font-size: 0.8rem; }
 }
 
 @media (min-width: 480px) {
-  .day-tabs {
-    gap: var(--space-xs);
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .day-tab {
-    min-width: 52px;
-  }
-
-  .day-name {
-    font-size: 0.875rem;
-  }
+  .day-tabs { gap: var(--space-xs); margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+  .day-tab { min-width: 52px; }
+  .day-name { font-size: 0.875rem; }
 }
 
-.day-indicators {
-  display: flex;
-  gap: 3px;
-  height: 6px;
-}
-
-.indicator {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
+.day-indicators { display: flex; gap: 3px; height: 6px; }
+.indicator { width: 6px; height: 6px; border-radius: 50%; }
 @media (min-width: 400px) {
-  .day-indicators {
-    gap: 4px;
-    height: 8px;
-  }
-
-  .indicator {
-    width: 8px;
-    height: 8px;
-  }
+  .day-indicators { gap: 4px; height: 8px; }
+  .indicator { width: 8px; height: 8px; }
 }
-
-.indicator.office {
-  background-color: var(--color-accent-secondary);
-}
-
-.indicator.flex {
-  background-color: var(--color-state-error);
-}
+.indicator.office { background-color: var(--color-accent-secondary); }
+.indicator.flex { background-color: var(--color-state-error); }
 
 /* Day Note */
 .day-note {
@@ -142,262 +95,169 @@
   border-radius: var(--radius-md);
   margin-bottom: var(--space-md);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-sm);
-}
-
-@media (min-width: 480px) {
-  .day-note {
-    padding: var(--space-md);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--space-lg);
-  }
 }
 
 .day-note.office {
   background: linear-gradient(135deg, rgba(107, 207, 255, 0.1), rgba(107, 207, 255, 0.05));
   border: 1px solid rgba(107, 207, 255, 0.2);
 }
-
 .day-note.home {
   background: linear-gradient(135deg, rgba(217, 255, 0, 0.1), rgba(217, 255, 0, 0.05));
   border: 1px solid rgba(217, 255, 0, 0.2);
 }
-
 .day-note.weekend {
   background: linear-gradient(135deg, rgba(200, 153, 255, 0.1), rgba(200, 153, 255, 0.05));
   border: 1px solid rgba(200, 153, 255, 0.2);
 }
 
-.note-icon {
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.note-text {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
-  line-height: 1.4;
-}
+.note-icon { font-size: 1rem; flex-shrink: 0; }
+.note-text { font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.4; }
 
 @media (min-width: 480px) {
-  .note-icon {
-    font-size: 1.25rem;
-  }
-
-  .note-text {
-    font-size: 0.875rem;
-    line-height: 1.5;
-  }
+  .day-note { padding: var(--space-md); border-radius: var(--radius-lg); margin-bottom: var(--space-lg); }
+  .note-icon { font-size: 1.25rem; }
+  .note-text { font-size: 0.875rem; }
 }
 
-/* Timeline */
-.timeline {
+/* Action Cards */
+.schedule-cards {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
 }
 
-.time-block {
-  display: grid;
-  grid-template-columns: 42px 18px 1fr;
-  gap: var(--space-xs);
-  padding: var(--space-sm) 0;
-  transition: opacity var(--transition-fast);
-}
-
-@media (min-width: 400px) {
-  .time-block {
-    grid-template-columns: 48px 22px 1fr;
-    gap: var(--space-sm);
-    padding: var(--space-md) 0;
-  }
-}
-
-@media (min-width: 480px) {
-  .time-block {
-    grid-template-columns: 50px 24px 1fr;
-  }
-}
-
-.time-block.approximate {
-  opacity: 0.75;
-}
-
-.time-block.approximate .block-time {
-  color: var(--color-text-muted);
-}
-
-.block-time {
-  font-size: 0.65rem;
-  color: var(--color-text-secondary);
-  text-align: right;
-  padding-top: 2px;
-  font-family: var(--font-mono);
-}
-
-@media (min-width: 400px) {
-  .block-time {
-    font-size: 0.7rem;
-  }
-}
-
-@media (min-width: 480px) {
-  .block-time {
-    font-size: 0.75rem;
-  }
-}
-
-.block-line {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.block-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-@media (min-width: 400px) {
-  .block-dot {
-    width: 12px;
-    height: 12px;
-  }
-}
-
-.block-connector {
-  flex: 1;
-  width: 2px;
-  background-color: var(--color-border-default);
-  margin-top: var(--space-xs);
-}
-
-.time-block:last-child .block-connector {
-  display: none;
-}
-
-.block-content {
-  padding-bottom: var(--space-xs);
-  min-width: 0;
-}
-
-@media (min-width: 400px) {
-  .block-content {
-    padding-bottom: var(--space-sm);
-  }
-}
-
-.block-header {
+.schedule-card {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
-  margin-bottom: 2px;
-}
-
-@media (min-width: 400px) {
-  .block-header {
-    gap: var(--space-sm);
-    margin-bottom: 4px;
-  }
-}
-
-.block-icon {
-  font-size: 1rem;
-  flex-shrink: 0;
-}
-
-@media (min-width: 400px) {
-  .block-icon {
-    font-size: 1.125rem;
-  }
-}
-
-.block-label {
-  font-weight: 600;
-  font-size: 0.9rem;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-left: 3px solid var(--color-accent-primary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--transition-fast);
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
   color: var(--color-text-primary);
 }
 
-@media (min-width: 480px) {
-  .block-label {
-    font-size: 1rem;
-  }
+.schedule-card:active { transform: scale(0.99); }
+
+.schedule-card.empty {
+  border-left-color: var(--color-border-default);
+  opacity: 0.7;
 }
 
-.block-sub {
+.schedule-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  background: rgba(217, 255, 0, 0.1);
+  color: var(--color-text-muted);
+}
+
+.schedule-card-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.schedule-card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.schedule-card-sub {
   font-size: 0.75rem;
   color: var(--color-text-secondary);
-  line-height: 1.3;
 }
 
-@media (min-width: 400px) {
-  .block-sub {
-    font-size: 0.8rem;
-    line-height: 1.4;
-  }
+.schedule-card-arrow {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  flex-shrink: 0;
 }
 
-@media (min-width: 480px) {
-  .block-sub {
-    font-size: 0.875rem;
-  }
-}
-
-/* Tag Badge */
-.tag-badge {
-  font-size: 0.55rem;
+/* Daily Blocks — simplified flat list */
+.schedule-blocks-title {
+  font-size: 0.8rem;
   font-weight: 600;
-  padding: 2px 4px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-sm);
+}
+
+.schedule-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-md);
+}
+
+.schedule-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+}
+
+.schedule-block:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.schedule-block-time {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  min-width: 40px;
+  text-align: right;
+}
+
+.schedule-block-icon {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.schedule-block-label {
+  font-size: 0.85rem;
+  color: var(--color-text-primary);
+  flex: 1;
+}
+
+.schedule-block-tag {
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 1px 5px;
   border-radius: 3px;
+  background: rgba(217, 255, 0, 0.15);
+  color: var(--color-accent-primary);
+  text-transform: uppercase;
   letter-spacing: 0.3px;
 }
 
-@media (min-width: 400px) {
-  .tag-badge {
-    font-size: 0.625rem;
-    padding: 2px 6px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-  }
+@media (min-width: 480px) {
+  .schedule-block-time { font-size: 0.75rem; min-width: 48px; }
+  .schedule-block-icon { font-size: 1rem; }
+  .schedule-block-label { font-size: 0.9rem; }
 }
 
-/* Flex block special styling */
-.time-block.flex .block-content {
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(200, 153, 255, 0.1));
-  border: 1px solid rgba(255, 107, 107, 0.2);
-  border-radius: var(--radius-sm);
-  padding: var(--space-sm);
-  margin-left: calc(-1 * var(--space-xs));
-}
-
-@media (min-width: 400px) {
-  .time-block.flex .block-content {
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-    margin-left: calc(-1 * var(--space-sm));
-  }
-}
-
-.time-block.social .block-content {
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), transparent);
-  border: 1px solid rgba(255, 107, 107, 0.15);
-  border-radius: var(--radius-sm);
-  padding: var(--space-sm);
-  margin-left: calc(-1 * var(--space-xs));
-}
-
-@media (min-width: 400px) {
-  .time-block.social .block-content {
-    border-radius: var(--radius-md);
-    padding: var(--space-md);
-    margin-left: calc(-1 * var(--space-sm));
-  }
-}
-
+/* Office Hint */
 .office-hint {
   text-align: center;
   font-size: 0.7rem;
@@ -409,17 +269,9 @@
   gap: var(--space-xs);
 }
 
-.hint-icon {
-  font-size: 0.9rem;
-}
+.hint-icon { font-size: 0.9rem; }
 
 @media (min-width: 480px) {
-  .office-hint {
-    font-size: 0.75rem;
-    margin-top: var(--space-lg);
-  }
-
-  .hint-icon {
-    font-size: 1rem;
-  }
+  .office-hint { font-size: 0.75rem; margin-top: var(--space-lg); }
+  .hint-icon { font-size: 1rem; }
 }

@@ -72,7 +72,7 @@ function useLongPress(onLongPress, onClick, { delay = 500 } = {}) {
   };
 }
 
-export function SchedulePage() {
+export function SchedulePage({ onTabChange }) {
   const { language } = useLanguage();
   const toast = useToast();
   const today = new Date();
@@ -87,21 +87,63 @@ export function SchedulePage() {
   // Check new key first (vida_generated_schedule), then legacy (vida_user_schedule)
   const schedule = useMemo(() => {
     try {
-      // Try new generated schedule first
       const generated = localStorage.getItem('vida_generated_schedule');
-      if (generated) {
-        return JSON.parse(generated);
-      }
-      // Fallback to legacy schedule
+      if (generated) return JSON.parse(generated);
       const saved = localStorage.getItem('vida_user_schedule');
-      if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (e) {
-      console.error('Error loading schedule:', e);
-    }
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
     return SCHEDULE;
   }, []);
+
+  // Load workout plan for the selected day
+  const workoutInfo = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('vida_workout_plan');
+      if (!raw) return null;
+      const plan = JSON.parse(raw);
+      const dayActivity = plan.dayActivities?.[selectedDay];
+      if (!dayActivity) return null;
+
+      const type = dayActivity.type || 'gym';
+      let name = '';
+      let detail = '';
+
+      if (type === 'gym') {
+        name = dayActivity.session?.name || (language === 'pt-BR' ? 'Treino' : 'Workout');
+        const count = dayActivity.exercises?.length || 0;
+        detail = count > 0
+          ? `${count} ${language === 'pt-BR' ? 'exercícios' : 'exercises'}`
+          : (language === 'pt-BR' ? 'Ver treino' : 'View workout');
+      } else {
+        const sessionName = dayActivity.session?.name;
+        name = (typeof sessionName === 'object' ? sessionName[language] || sessionName['pt-BR'] : sessionName) || type;
+        detail = type.charAt(0).toUpperCase() + type.slice(1);
+      }
+
+      return { type, name, detail };
+    } catch { return null; }
+  }, [selectedDay, language]);
+
+  // Load diet info
+  const dietInfo = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('vida_custom_diet');
+      if (!raw) return null;
+      const diet = JSON.parse(raw);
+      const mealCount = diet.meals?.length || 0;
+
+      // Check today's progress
+      const todayStr = new Date().toISOString().split('T')[0];
+      const checked = JSON.parse(localStorage.getItem(`diet_completed_${todayStr}`) || '{}');
+      const totalFoods = diet.meals.reduce((sum, m) => sum + m.foods.length, 0);
+      const checkedCount = Object.values(checked).reduce((sum, arr) => sum + arr.length, 0);
+
+      return {
+        name: diet.name || (language === 'pt-BR' ? 'Minha Dieta' : 'My Diet'),
+        progress: totalFoods > 0 ? `${checkedCount}/${totalFoods}` : `${mealCount} ${language === 'pt-BR' ? 'refeições' : 'meals'}`,
+      };
+    } catch { return null; }
+  }, [language]);
 
   const dayData = schedule[selectedDay] || SCHEDULE[selectedDay];
 
@@ -131,6 +173,19 @@ export function SchedulePage() {
     }
   };
 
+  // Modality colors and icons
+  const getModColor = (type) => {
+    const colors = { gym: '#c8f55a', crossfit: '#ff6b6b', calisthenics: '#6bcfff', pilates: '#c899ff', running: '#ffc832', yoga: '#82dcb4' };
+    return colors[type] || '#c8f55a';
+  };
+
+  const getModIcon = (type) => {
+    const icons = { gym: 'dumbbell-1', crossfit: 'fire-1', calisthenics: 'bolt-alt', pilates: 'heart', running: 'direction-1', yoga: 'moon-half-right-5' };
+    return icons[type] || 'dumbbell-1';
+  };
+
+  const isToday = selectedDay === todayKey;
+
   return (
     <div className="schedule-page">
       {/* Day Tabs */}
@@ -154,15 +209,70 @@ export function SchedulePage() {
       <div className={`day-note ${getDayType(selectedDay)}`}>
         <Icon name={getDayNoteIcon(getDayType(selectedDay))} className="note-icon" />
         <span className="note-text">
+          {isToday && <strong>{language === 'pt-BR' ? 'Hoje' : 'Today'} · </strong>}
           {getDayTypeNote(getDayType(selectedDay), language)}
         </span>
       </div>
 
-      {/* Timeline */}
-      <div className="timeline">
-        {dayData.blocks.map((block, index) => (
-          <TimeBlock key={index} block={block} language={language} />
-        ))}
+      {/* Action Cards */}
+      <div className="schedule-cards">
+        {workoutInfo ? (
+          <button className="schedule-card" onClick={() => onTabChange?.('training')} style={{ borderLeftColor: getModColor(workoutInfo.type) }}>
+            <div className="schedule-card-icon" style={{ background: `${getModColor(workoutInfo.type)}20` }}>
+              <Icon name={getModIcon(workoutInfo.type)} style={{ color: getModColor(workoutInfo.type) }} />
+            </div>
+            <div className="schedule-card-info">
+              <span className="schedule-card-title">{workoutInfo.name}</span>
+              <span className="schedule-card-sub">{workoutInfo.detail}</span>
+            </div>
+            <Icon name="chevron-right" className="schedule-card-arrow" />
+          </button>
+        ) : (
+          <button className="schedule-card empty" onClick={() => onTabChange?.('training')}>
+            <div className="schedule-card-icon">
+              <Icon name="dumbbell-1" />
+            </div>
+            <div className="schedule-card-info">
+              <span className="schedule-card-title">{language === 'pt-BR' ? 'Sem treino hoje' : 'No workout today'}</span>
+              <span className="schedule-card-sub">{language === 'pt-BR' ? 'Configurar treino' : 'Set up workout'}</span>
+            </div>
+            <Icon name="chevron-right" className="schedule-card-arrow" />
+          </button>
+        )}
+
+        <button className="schedule-card" onClick={() => onTabChange?.('meals')} style={{ borderLeftColor: 'var(--color-accent-secondary, #6bcfff)' }}>
+          <div className="schedule-card-icon" style={{ background: 'rgba(107, 207, 255, 0.15)' }}>
+            <Icon name="knife-fork-1" style={{ color: 'var(--color-accent-secondary, #6bcfff)' }} />
+          </div>
+          <div className="schedule-card-info">
+            <span className="schedule-card-title">
+              {dietInfo ? dietInfo.name : (language === 'pt-BR' ? 'Alimentação' : 'Nutrition')}
+            </span>
+            <span className="schedule-card-sub">
+              {dietInfo ? dietInfo.progress : (language === 'pt-BR' ? 'Configurar dieta' : 'Set up diet')}
+            </span>
+          </div>
+          <Icon name="chevron-right" className="schedule-card-arrow" />
+        </button>
+      </div>
+
+      {/* Daily Blocks - simplified flat list */}
+      <h3 className="schedule-blocks-title">
+        {language === 'pt-BR' ? 'Rotina do dia' : 'Daily routine'}
+      </h3>
+      <div className="schedule-blocks">
+        {dayData.blocks.map((block, index) => {
+          const color = DESIGN.blockTypeColors[block.type] || '#666';
+          const iconName = BLOCK_ICONS[block.type] || 'star-fat';
+          return (
+            <div key={index} className={`schedule-block ${block.type}`}>
+              <span className="schedule-block-time">{block.time}</span>
+              <Icon name={iconName} className="schedule-block-icon" style={{ color }} />
+              <span className="schedule-block-label">{getBlockLabel(block, language)}</span>
+              {block.tag && <span className="schedule-block-tag">{block.tag}</span>}
+            </div>
+          );
+        })}
       </div>
 
       <p className="office-hint">
@@ -189,56 +299,5 @@ function DayTab({ day, displayName, isSelected, isToday, type, isFlex, onSelect,
         {isFlex && <span className="indicator flex" />}
       </div>
     </button>
-  );
-}
-
-function TimeBlock({ block, language }) {
-  const isApproximate = block.time.startsWith('~');
-  const color = DESIGN.blockTypeColors[block.type] || '#666';
-  const iconName = BLOCK_ICONS[block.type] || 'star-fat';
-  const label = getBlockLabel(block, language);
-  const sub = getBlockSub(block, language);
-
-  return (
-    <div className={`time-block ${isApproximate ? 'approximate' : ''} ${block.type}`}>
-      <div className="block-time" style={{ fontFamily: 'var(--font-mono)' }}>
-        {block.time}
-      </div>
-      <div className="block-line">
-        <span className="block-dot" style={{ backgroundColor: color }} />
-        <span className="block-connector" />
-      </div>
-      <div className="block-content">
-        <div className="block-header">
-          <Icon name={iconName} className="block-icon" style={{ color }} />
-          <span className="block-label">{label}</span>
-          {block.tag && <TagBadge tag={block.tag} />}
-        </div>
-        <p className="block-sub">{sub}</p>
-      </div>
-    </div>
-  );
-}
-
-function TagBadge({ tag }) {
-  const tagColors = {
-    gym: { bg: 'rgba(217, 255, 0, 0.2)', color: '#d9ff00' },
-    office: { bg: 'rgba(107, 207, 255, 0.2)', color: '#6bcfff' },
-    chore: { bg: 'rgba(136, 136, 136, 0.2)', color: '#888' },
-    social: { bg: 'rgba(255, 107, 107, 0.2)', color: '#ff6b6b' },
-    flex: { bg: 'rgba(170, 170, 170, 0.2)', color: '#aaa' },
-    meal: { bg: 'rgba(107, 207, 255, 0.2)', color: '#6bcfff' },
-    sport: { bg: 'rgba(200, 153, 255, 0.2)', color: '#c899ff' },
-  };
-
-  const style = tagColors[tag] || tagColors.chore;
-
-  return (
-    <span
-      className="tag-badge"
-      style={{ backgroundColor: style.bg, color: style.color }}
-    >
-      {tag.toUpperCase()}
-    </span>
   );
 }
