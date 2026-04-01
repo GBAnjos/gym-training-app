@@ -37,6 +37,30 @@
   }
 }
 
+/* Empty State */
+.meals-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.meals-empty-icon {
+  font-size: 2.5rem;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.meals-empty-text {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  max-width: 280px;
+  line-height: 1.5;
+  margin: 0;
+}
+
 /* Action Row */
 .meals-action-row {
   display: flex;
@@ -177,7 +201,6 @@
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   overflow: hidden;
-  cursor: pointer;
   transition: border-color var(--transition-fast);
 }
 
@@ -185,18 +208,6 @@
   .meal-card {
     border-radius: var(--radius-lg);
   }
-}
-
-.meal-card:hover {
-  border-color: var(--color-border-default);
-}
-
-.meal-card:active {
-  transform: scale(0.99);
-}
-
-.meal-card.expanded {
-  border-color: var(--color-accent-primary);
 }
 
 .meal-card.completed {
@@ -210,12 +221,12 @@
 }
 
 .meal-check {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 50%;
-  border: 2px dashed var(--color-border-default);
+  border: 2px solid var(--color-border-default);
   background: rgba(217, 255, 0, 0.05);
   display: flex;
   align-items: center;
@@ -229,15 +240,15 @@
   z-index: 2;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 @media (min-width: 480px) {
   .meal-check {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     font-size: 1.1rem;
   }
 }
@@ -319,23 +330,6 @@
   .meal-time {
     font-size: 0.875rem;
   }
-}
-
-.meal-arrow {
-  color: var(--color-border-default);
-  font-size: 0.7rem;
-  transition: transform var(--transition-fast);
-  flex-shrink: 0;
-}
-
-@media (min-width: 480px) {
-  .meal-arrow {
-    font-size: 0.75rem;
-  }
-}
-
-.meal-arrow.open {
-  transform: rotate(180deg);
 }
 
 .meal-content {
@@ -427,106 +421,61 @@
   }
 }
 
-/* Macros Panel */
-.macros-panel {
-  background: linear-gradient(135deg, var(--color-bg-surface), var(--color-bg-elevated));
+/* Macro Progress Bars */
+.meals-macro-bars {
+  background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: var(--space-md);
+  margin-bottom: var(--space-md);
 }
 
-@media (min-width: 480px) {
-  .macros-panel {
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-  }
-}
-
-.macros-title {
-  font-size: 0.9rem;
+.meals-macro-bars-title {
+  font-size: 0.85rem;
   color: var(--color-text-primary);
   margin-bottom: var(--space-sm);
 }
 
-@media (min-width: 480px) {
-  .macros-title {
-    font-size: 1rem;
-    margin-bottom: var(--space-md);
-  }
-}
-
-.macros-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-sm);
-}
-
-@media (min-width: 400px) {
-  .macros-grid {
-    gap: var(--space-md);
-  }
-}
-
-@media (min-width: 640px) {
-  .macros-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.macro-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
-@media (min-width: 480px) {
-  .macro-item {
-    gap: var(--space-sm);
-  }
-}
-
-.macro-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-@media (min-width: 480px) {
-  .macro-dot {
-    width: 8px;
-    height: 8px;
-  }
-}
-
-.macro-info {
+.macro-bar-item {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  gap: 4px;
+  margin-bottom: var(--space-xs);
 }
 
-.macro-label {
-  font-size: 0.65rem;
+.macro-bar-item:last-child {
+  margin-bottom: 0;
+}
+
+.macro-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.macro-bar-label {
+  font-size: 0.8rem;
   color: var(--color-text-secondary);
 }
 
-@media (min-width: 480px) {
-  .macro-label {
-    font-size: 0.75rem;
-  }
-}
-
-.macro-value {
-  font-size: 0.75rem;
+.macro-bar-value {
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-text-primary);
   font-family: var(--font-mono);
 }
 
-@media (min-width: 480px) {
-  .macro-value {
-    font-size: 0.875rem;
-  }
+.macro-bar-track {
+  height: 6px;
+  background: var(--color-bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.macro-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width var(--transition-normal);
 }
 
 /* ===== Custom Diet View ===== */
@@ -600,11 +549,11 @@
 }
 
 .meals-diet-food-check {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
   border-radius: 50%;
-  border: 2px dashed var(--color-border-default);
+  border: 2px solid var(--color-border-default);
   background: rgba(217, 255, 0, 0.05);
   display: flex;
   align-items: center;
@@ -612,7 +561,7 @@
   flex-shrink: 0;
   color: var(--color-border-default);
   font-size: 0.7rem;
-  opacity: 0.4;
+  opacity: 0.5;
   transition: all var(--transition-fast);
 }
 

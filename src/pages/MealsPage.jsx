@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import { MEAL_PLAN, MACRO_TARGETS, getMealName, getMealTime, getMealNote, getMealOptions } from '../data/meals';
 import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
@@ -8,7 +7,6 @@ import './MealsPage.css';
 export function MealsPage({ onTabChange }) {
   const { t, language } = useLanguage();
   const toast = useToast();
-  const [expandedMeal, setExpandedMeal] = useState(null);
 
   // Load custom diet from localStorage
   const customDiet = useMemo(() => {
@@ -37,87 +35,29 @@ export function MealsPage({ onTabChange }) {
       language={language}
       toast={toast}
       onTabChange={onTabChange}
-      expandedMeal={expandedMeal}
-      setExpandedMeal={setExpandedMeal}
     />
   );
 }
 
-function DefaultMealsView({ t, language, toast, onTabChange, expandedMeal, setExpandedMeal }) {
-  const today = new Date().toISOString().split('T')[0];
-  const storageKey = `meals_completed_${today}`;
-
-  const [completedMeals, setCompletedMeals] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem(storageKey) || '[]');
-    } catch {
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(completedMeals));
-  }, [completedMeals, storageKey]);
-
-  const { macros, profile } = useMemo(() => {
-    try {
-      const savedMeals = localStorage.getItem('vida_user_meals');
-      const savedProfile = localStorage.getItem('vida_user_profile');
-      if (savedMeals) {
-        const meals = JSON.parse(savedMeals);
-        return {
-          macros: meals.macros || MACRO_TARGETS,
-          profile: savedProfile ? JSON.parse(savedProfile) : null
-        };
-      }
-    } catch (e) {
-      console.error('Error loading meals:', e);
-    }
-    return { macros: MACRO_TARGETS, profile: null };
-  }, []);
-
-  const getGoalLabel = (goal) => {
-    const labels = {
-      muscle_gain: language === 'pt-BR' ? 'Foco em ganho de massa' : 'Focus on muscle gain',
-      weight_loss: language === 'pt-BR' ? 'Foco em perda de gordura' : 'Focus on fat loss',
-      maintain: language === 'pt-BR' ? 'Manutenção de peso' : 'Weight maintenance',
-      general: language === 'pt-BR' ? 'Saúde e bem-estar' : 'Health and wellness'
-    };
-    return labels[goal] || labels.general;
-  };
-
-  const toggleMeal = (index) => {
-    setExpandedMeal(expandedMeal === index ? null : index);
-  };
-
-  const toggleMealComplete = (index, e) => {
-    e.stopPropagation();
-    const isCompleting = !completedMeals.includes(index);
-
-    if (isCompleting) {
-      setCompletedMeals([...completedMeals, index]);
-      if (navigator.vibrate) navigator.vibrate(50);
-
-      if (completedMeals.length + 1 === MEAL_PLAN.length) {
-        toast.success(language === 'pt-BR' ? 'Todas as refeições concluídas!' : 'All meals completed!');
-      }
-    } else {
-      setCompletedMeals(completedMeals.filter(i => i !== index));
-    }
-  };
-
-  const progress = Math.round((completedMeals.length / MEAL_PLAN.length) * 100);
-
+function DefaultMealsView({ t, language, toast, onTabChange }) {
   return (
     <div className="meals-page">
       <h2 className="meals-title">
         {language === 'pt-BR' ? 'Plano Alimentar' : 'Meal Plan'}
       </h2>
       <p className="meals-subtitle">
-        {macros.calorias} · {profile ? getGoalLabel(profile.goal) : getGoalLabel('muscle_gain')}
+        {language === 'pt-BR' ? 'Configure sua dieta personalizada' : 'Set up your personalized diet'}
       </p>
 
-      {/* Action Buttons */}
+      <div className="meals-empty-state">
+        <Icon name="knife-fork-1" className="meals-empty-icon" />
+        <p className="meals-empty-text">
+          {language === 'pt-BR'
+            ? 'Crie sua dieta personalizada ou importe de outra fonte'
+            : 'Create your personalized diet or import from another source'}
+        </p>
+      </div>
+
       <div className="meals-action-row">
         <button className="meals-create-diet-btn" onClick={() => onTabChange?.('diet-builder')}>
           <Icon name="plus-circle" className="meals-create-diet-icon" />
@@ -129,72 +69,12 @@ function DefaultMealsView({ t, language, toast, onTabChange, expandedMeal, setEx
           <span>{t('meals_import_diet')}</span>
         </button>
       </div>
-
-      {/* Daily Progress */}
-      <div className="meals-progress">
-        <div className="meals-progress-header">
-          <span className="meals-progress-label">
-            {language === 'pt-BR' ? 'Progresso de hoje' : "Today's progress"}
-          </span>
-          <span className="meals-progress-count">
-            {completedMeals.length}/{MEAL_PLAN.length}
-          </span>
-        </div>
-        <div className="meals-progress-bar">
-          <div className="meals-progress-fill" style={{ width: `${progress}%` }} />
-        </div>
-      </div>
-
-      <div className="meals-list">
-        {MEAL_PLAN.map((meal, index) => (
-          <MealCard
-            key={index}
-            meal={meal}
-            index={index}
-            isExpanded={expandedMeal === index}
-            isCompleted={completedMeals.includes(index)}
-            onClick={() => toggleMeal(index)}
-            onToggleComplete={(e) => toggleMealComplete(index, e)}
-            language={language}
-          />
-        ))}
-      </div>
-
-      <div className="macros-panel">
-        <h3 className="macros-title">
-          {language === 'pt-BR' ? 'Metas Diárias' : 'Daily Goals'}
-        </h3>
-        <div className="macros-grid">
-          <MacroItem
-            label={language === 'pt-BR' ? 'Calorias' : 'Calories'}
-            value={macros.calorias}
-            color="var(--color-accent)"
-          />
-          <MacroItem
-            label={language === 'pt-BR' ? 'Proteína' : 'Protein'}
-            value={macros.proteina}
-            color="var(--color-red)"
-          />
-          <MacroItem
-            label={language === 'pt-BR' ? 'Carboidrato' : 'Carbs'}
-            value={macros.carboidrato}
-            color="var(--color-blue)"
-          />
-          <MacroItem
-            label={language === 'pt-BR' ? 'Gordura' : 'Fat'}
-            value={macros.gordura}
-            color="var(--color-orange)"
-          />
-        </div>
-      </div>
     </div>
   );
 }
 
 /* ===== Custom Diet View ===== */
 function CustomDietView({ diet, t, language, toast, onTabChange }) {
-  const [expandedMeal, setExpandedMeal] = useState(diet.meals[0]?.id || null);
-
   const today = new Date().toISOString().split('T')[0];
   const dietStorageKey = `diet_completed_${today}`;
 
@@ -277,42 +157,24 @@ function CustomDietView({ diet, t, language, toast, onTabChange }) {
         </div>
       </div>
 
-      {/* Consumed vs Targets */}
+      {/* Consumed vs Targets — as progress bars */}
       {(targets.calories || targets.protein || targets.carbs || targets.fat) && (
-        <div className="macros-panel">
-          <h3 className="macros-title">
+        <div className="meals-macro-bars">
+          <h3 className="meals-macro-bars-title">
             {language === 'pt-BR' ? 'Consumo de Hoje' : "Today's Intake"}
           </h3>
-          <div className="macros-grid">
-            {targets.calories && (
-              <MacroItem
-                label={language === 'pt-BR' ? 'Calorias' : 'Calories'}
-                value={`${consumed.calories} / ${targets.calories}`}
-                color="var(--color-accent)"
-              />
-            )}
-            {targets.protein && (
-              <MacroItem
-                label={language === 'pt-BR' ? 'Proteína' : 'Protein'}
-                value={`${consumed.protein}g / ${targets.protein}g`}
-                color="var(--color-red)"
-              />
-            )}
-            {targets.carbs && (
-              <MacroItem
-                label={language === 'pt-BR' ? 'Carboidrato' : 'Carbs'}
-                value={`${consumed.carbs}g / ${targets.carbs}g`}
-                color="var(--color-blue)"
-              />
-            )}
-            {targets.fat && (
-              <MacroItem
-                label={language === 'pt-BR' ? 'Gordura' : 'Fat'}
-                value={`${consumed.fat}g / ${targets.fat}g`}
-                color="var(--color-orange)"
-              />
-            )}
-          </div>
+          {targets.calories && (
+            <MacroBar label={language === 'pt-BR' ? 'Calorias' : 'Calories'} current={consumed.calories} target={targets.calories} unit="cal" color="var(--color-accent-primary)" />
+          )}
+          {targets.protein && (
+            <MacroBar label={language === 'pt-BR' ? 'Proteína' : 'Protein'} current={consumed.protein} target={targets.protein} unit="g" color="var(--color-red, #ff3b30)" />
+          )}
+          {targets.carbs && (
+            <MacroBar label={language === 'pt-BR' ? 'Carboidrato' : 'Carbs'} current={consumed.carbs} target={targets.carbs} unit="g" color="var(--color-blue, #007aff)" />
+          )}
+          {targets.fat && (
+            <MacroBar label={language === 'pt-BR' ? 'Gordura' : 'Fat'} current={consumed.fat} target={targets.fat} unit="g" color="var(--color-orange, #ff9f0a)" />
+          )}
         </div>
       )}
 
@@ -321,11 +183,10 @@ function CustomDietView({ diet, t, language, toast, onTabChange }) {
         {diet.meals.map(meal => {
           const mealChecked = checkedFoods[meal.id] || [];
           const allChecked = meal.foods.length > 0 && mealChecked.length === meal.foods.length;
-          const isExpanded = expandedMeal === meal.id;
 
           return (
-            <div key={meal.id} className={`meal-card ${isExpanded ? 'expanded' : ''} ${allChecked ? 'completed' : ''}`}>
-              <div className="meal-header" onClick={() => setExpandedMeal(isExpanded ? null : meal.id)}>
+            <div key={meal.id} className={`meal-card ${allChecked ? 'completed' : ''}`}>
+              <div className="meal-header">
                 <div className={`meal-check ${allChecked ? 'checked' : ''}`}>
                   <Icon name="checkmark-1" />
                 </div>
@@ -335,43 +196,41 @@ function CustomDietView({ diet, t, language, toast, onTabChange }) {
                     {mealChecked.length}/{meal.foods.length} {language === 'pt-BR' ? 'alimentos' : 'foods'}
                   </span>
                 </div>
-                <Icon name={isExpanded ? 'chevron-up-1' : 'chevron-down-1'} className="meal-arrow" />
               </div>
 
-              {isExpanded && (
-                <div className="meal-content">
-                  {meal.foods.length === 0 ? (
-                    <p className="meals-diet-empty">{t('diet_builder_empty')}</p>
-                  ) : (
-                    <div className="meals-diet-foods">
-                      {meal.foods.map(food => {
-                        const isChecked = mealChecked.includes(food.id);
-                        return (
-                          <div
-                            key={food.id}
-                            className={`meals-diet-food-row ${isChecked ? 'checked' : ''}`}
-                            onClick={() => toggleFood(meal.id, food.id)}
-                          >
-                            <div className={`meals-diet-food-check ${isChecked ? 'checked' : ''}`}>
-                              <Icon name="checkmark-1" />
-                            </div>
-                            <div className="meals-diet-food-info">
-                              <span className="meals-diet-food-name">{food.name}</span>
-                              <span className="meals-diet-food-meta">
-                                {food.quantity && `${food.quantity} · `}
-                                {food.calories && `${food.calories} cal`}
-                                {food.protein && ` · ${food.protein}g P`}
-                                {food.carbs && ` · ${food.carbs}g C`}
-                                {food.fat && ` · ${food.fat}g ${language === 'pt-BR' ? 'G' : 'F'}`}
-                              </span>
-                            </div>
+              {/* Always visible foods */}
+              <div className="meal-content">
+                {meal.foods.length === 0 ? (
+                  <p className="meals-diet-empty">{t('diet_builder_empty')}</p>
+                ) : (
+                  <div className="meals-diet-foods">
+                    {meal.foods.map(food => {
+                      const isChecked = mealChecked.includes(food.id);
+                      return (
+                        <div
+                          key={food.id}
+                          className={`meals-diet-food-row ${isChecked ? 'checked' : ''}`}
+                          onClick={() => toggleFood(meal.id, food.id)}
+                        >
+                          <div className={`meals-diet-food-check ${isChecked ? 'checked' : ''}`}>
+                            <Icon name="checkmark-1" />
                           </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
+                          <div className="meals-diet-food-info">
+                            <span className="meals-diet-food-name">{food.name}</span>
+                            <span className="meals-diet-food-meta">
+                              {food.quantity && `${food.quantity} · `}
+                              {food.calories && `${food.calories} cal`}
+                              {food.protein && ` · ${food.protein}g P`}
+                              {food.carbs && ` · ${food.carbs}g C`}
+                              {food.fat && ` · ${food.fat}g ${language === 'pt-BR' ? 'G' : 'F'}`}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
@@ -380,58 +239,16 @@ function CustomDietView({ diet, t, language, toast, onTabChange }) {
   );
 }
 
-function MealCard({ meal, index, isExpanded, isCompleted, onClick, onToggleComplete, language }) {
-  const mealName = getMealName(meal, language);
-  const mealTime = getMealTime(meal, language);
-  const mealNote = getMealNote(meal, language);
-  const mealOptions = getMealOptions(meal, language);
-
+function MacroBar({ label, current, target, unit, color }) {
+  const pct = Math.min(Math.round((current / target) * 100), 100);
   return (
-    <div className={`meal-card ${isExpanded ? 'expanded' : ''} ${isCompleted ? 'completed' : ''}`}>
-      <div className="meal-header" onClick={onClick}>
-        <button
-          type="button"
-          className={`meal-check ${isCompleted ? 'checked' : ''}`}
-          onClick={onToggleComplete}
-          aria-label={isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
-        >
-          <Icon name="checkmark-1" />
-        </button>
-        <Icon name={meal.icon} className="meal-icon" />
-        <div className="meal-info">
-          <span className="meal-name">{mealName}</span>
-          <span className="meal-time">{mealTime}</span>
-        </div>
-        <Icon
-          name={isExpanded ? 'chevron-up-1' : 'chevron-down-1'}
-          className="meal-arrow"
-        />
+    <div className="macro-bar-item">
+      <div className="macro-bar-header">
+        <span className="macro-bar-label">{label}</span>
+        <span className="macro-bar-value">{current}{unit} / {target}{unit}</span>
       </div>
-
-      {isExpanded && (
-        <div className="meal-content">
-          <p className="meal-note">{mealNote}</p>
-          <div className="meal-options">
-            {mealOptions.map((option, i) => (
-              <div key={i} className="meal-option">
-                <span className="option-number">{i + 1}</span>
-                <span className="option-text">{option}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function MacroItem({ label, value, color }) {
-  return (
-    <div className="macro-item">
-      <span className="macro-dot" style={{ backgroundColor: color }} />
-      <div className="macro-info">
-        <span className="macro-label">{label}</span>
-        <span className="macro-value">{value}</span>
+      <div className="macro-bar-track">
+        <div className="macro-bar-fill" style={{ width: `${pct}%`, backgroundColor: color }} />
       </div>
     </div>
   );
