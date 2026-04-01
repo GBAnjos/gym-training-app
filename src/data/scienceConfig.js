@@ -358,6 +358,14 @@ export const PROGRESSION_MODELS = {
 // ─── Duration Constraints ───
 // Approximate minutes per exercise (including rest between sets)
 export const MINUTES_PER_EXERCISE = {
-  compound: 7,   // ~4 sets x 90s work + 120s rest
-  isolation: 5,  // ~3 sets x 60s work + 60s rest
+  compound: 10,  // ~4 sets, 45s work + 120s rest + 30s transition
+  isolation: 6,  // ~3 sets, 30s work + 60s rest + 30s transition
 };
+
+// Calculate realistic minutes per exercise based on sets and rest
+export function estimateExerciseMinutes(sets, restSeconds, isCompound) {
+  const setDuration = isCompound ? 45 : 30; // seconds per working set
+  const transitionTime = 30; // seconds to set up / move between exercises
+  const totalSeconds = (sets * (setDuration + restSeconds)) + transitionTime;
+  return totalSeconds / 60;
+}

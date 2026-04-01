@@ -25,6 +25,7 @@ import {
   MINUTES_PER_EXERCISE,
   classifyExercise,
   MOVEMENT_PATTERNS,
+  estimateExerciseMinutes,
 } from '../data/scienceConfig';
 
 // ─── Seeded random for deterministic but varied plans ───
@@ -151,8 +152,9 @@ function selectExercisesForSession(sessionMuscles, sessionVolume, pool, goal, le
   const setsConfig = SETS_CONFIG[goal] || SETS_CONFIG.general;
   const progressionModel = PROGRESSION_MODELS[level] || PROGRESSION_MODELS.beginner;
 
-  // How many exercises can we fit in the time budget?
-  const maxExercises = Math.floor(duration / 5); // conservative: avg 5 min/exercise
+  // Time-budget approach: subtract warmup, track running total
+  const availableMinutes = Math.max(duration - 5, 15); // 5 min warmup
+  let timeSpent = 0;
 
   // Group pool by muscle
   const poolByMuscle = {};
@@ -199,41 +201,50 @@ function selectExercisesForSession(sessionMuscles, sessionVolume, pool, goal, le
     let setsRemaining = targetSets;
 
     // Pick a compound first if available
-    if (compounds.length > 0 && selectedExercises.length < maxExercises) {
+    if (compounds.length > 0) {
       const pick = compounds.find(e => !usedIds.has(e.id)) || compounds[0];
       const sets = Math.min(setsConfig.compound, setsRemaining);
+      const estTime = estimateExerciseMinutes(sets, goalConfig.compound.rest, true);
+      if (timeSpent + estTime > availableMinutes) return; // skip this muscle if no time
       const repRange = goalConfig.compound;
       selectedExercises.push(formatExercise(pick, sets, repRange, progressionModel, true));
       usedIds.add(pick.id);
       setsRemaining -= sets;
       totalSetsAllocated += sets;
+      timeSpent += estTime;
     }
 
     // Fill remaining volume with isolation
     let isoIdx = 0;
-    while (setsRemaining > 0 && isoIdx < isolations.length && selectedExercises.length < maxExercises) {
+    while (setsRemaining > 0 && isoIdx < isolations.length) {
       const pick = isolations[isoIdx];
       if (!usedIds.has(pick.id)) {
         const sets = Math.min(setsConfig.isolation, setsRemaining);
+        const estTime = estimateExerciseMinutes(sets, goalConfig.isolation.rest, false);
+        if (timeSpent + estTime > availableMinutes) break; // time budget exceeded
         const repRange = goalConfig.isolation;
         selectedExercises.push(formatExercise(pick, sets, repRange, progressionModel, false));
         usedIds.add(pick.id);
         setsRemaining -= sets;
         totalSetsAllocated += sets;
+        timeSpent += estTime;
       }
       isoIdx++;
     }
 
     // If still sets remaining and we have unused compounds
-    if (setsRemaining > 0 && selectedExercises.length < maxExercises) {
+    if (setsRemaining > 0) {
       for (const pick of compounds) {
-        if (usedIds.has(pick.id) || setsRemaining <= 0 || selectedExercises.length >= maxExercises) continue;
+        if (usedIds.has(pick.id) || setsRemaining <= 0) continue;
         const sets = Math.min(setsConfig.compound, setsRemaining);
+        const estTime = estimateExerciseMinutes(sets, goalConfig.compound.rest, true);
+        if (timeSpent + estTime > availableMinutes) break;
         const repRange = goalConfig.compound;
         selectedExercises.push(formatExercise(pick, sets, repRange, progressionModel, true));
         usedIds.add(pick.id);
         setsRemaining -= sets;
         totalSetsAllocated += sets;
+        timeSpent += estTime;
       }
     }
   });
