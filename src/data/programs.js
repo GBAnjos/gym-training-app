@@ -22,6 +22,41 @@ export const PROGRAMS = [
       en: 'The classic PPL split: chest/shoulders/triceps, back/biceps, legs. Two rotations per week for maximum volume.',
     },
     icon: 'dumbbell-1',
+    days: [
+      {
+        name: { 'pt-BR': 'Push (Peito/Ombro/Tríceps)', en: 'Push (Chest/Shoulder/Triceps)' },
+        exercises: [
+          { id: 'barbell_bench_press_medium_grip', sets: 4, reps: '6-10', rest: 150 },
+          { id: 'barbell_shoulder_press', sets: 4, reps: '6-10', rest: 120 },
+          { id: 'incline_dumbbell_press', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'dumbbell_raise', sets: 3, reps: '12-15', rest: 60 },
+          { id: 'bench_dips', sets: 3, reps: '10-12', rest: 60 },
+          { id: 'decline_close_grip_bench_to_skull_crusher', sets: 3, reps: '10-12', rest: 60 },
+        ],
+      },
+      {
+        name: { 'pt-BR': 'Pull (Costas/Bíceps)', en: 'Pull (Back/Biceps)' },
+        exercises: [
+          { id: 'bent_over_barbell_row', sets: 4, reps: '6-10', rest: 150 },
+          { id: 'pullups', sets: 4, reps: '6-10', rest: 120 },
+          { id: 'elevated_cable_rows', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'face_pull', sets: 3, reps: '12-15', rest: 60 },
+          { id: 'barbell_curl', sets: 3, reps: '8-12', rest: 60 },
+          { id: 'alternate_hammer_curl', sets: 3, reps: '10-12', rest: 60 },
+        ],
+      },
+      {
+        name: { 'pt-BR': 'Legs (Pernas)', en: 'Legs' },
+        exercises: [
+          { id: 'barbell_squat', sets: 4, reps: '6-10', rest: 180 },
+          { id: 'romanian_deadlift', sets: 4, reps: '8-10', rest: 150 },
+          { id: 'calf_press_on_the_leg_press_machine', sets: 3, reps: '10-12', rest: 90 },
+          { id: 'glute_ham_raise', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'rocking_standing_calf_raise', sets: 4, reps: '12-15', rest: 60 },
+          { id: 'dumbbell_lunges', sets: 3, reps: '10-12', rest: 90 },
+        ],
+      },
+    ],
   },
   {
     id: 'upper-lower',
@@ -36,6 +71,30 @@ export const PROGRAMS = [
       en: 'Upper/lower split with 4 workouts per week. Balance between volume and recovery.',
     },
     icon: 'dumbbell-1',
+    days: [
+      {
+        name: { 'pt-BR': 'Upper (Superior)', en: 'Upper Body' },
+        exercises: [
+          { id: 'barbell_bench_press_medium_grip', sets: 4, reps: '6-10', rest: 150 },
+          { id: 'bent_over_barbell_row', sets: 4, reps: '6-10', rest: 150 },
+          { id: 'barbell_shoulder_press', sets: 3, reps: '8-12', rest: 120 },
+          { id: 'close_grip_front_lat_pulldown', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'dumbbell_raise', sets: 3, reps: '12-15', rest: 60 },
+          { id: 'barbell_curl', sets: 3, reps: '8-12', rest: 60 },
+        ],
+      },
+      {
+        name: { 'pt-BR': 'Lower (Inferior)', en: 'Lower Body' },
+        exercises: [
+          { id: 'barbell_squat', sets: 4, reps: '6-10', rest: 180 },
+          { id: 'romanian_deadlift', sets: 4, reps: '8-10', rest: 150 },
+          { id: 'calf_press_on_the_leg_press_machine', sets: 3, reps: '10-12', rest: 90 },
+          { id: 'glute_ham_raise', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'rocking_standing_calf_raise', sets: 4, reps: '12-15', rest: 60 },
+          { id: 'barbell_hip_thrust', sets: 3, reps: '8-12', rest: 90 },
+        ],
+      },
+    ],
   },
   {
     id: 'full-body-3x',
@@ -50,6 +109,41 @@ export const PROGRAMS = [
       en: 'Ideal program for beginners. 3 full body workouts per week focusing on compound movements.',
     },
     icon: 'dumbbell-1',
+    days: [
+      {
+        name: { 'pt-BR': 'Dia A', en: 'Day A' },
+        exercises: [
+          { id: 'barbell_squat', sets: 4, reps: '6-10', rest: 180 },
+          { id: 'barbell_bench_press_medium_grip', sets: 4, reps: '6-10', rest: 150 },
+          { id: 'bent_over_barbell_row', sets: 3, reps: '8-12', rest: 120 },
+          { id: 'dumbbell_raise', sets: 3, reps: '12-15', rest: 60 },
+          { id: 'barbell_curl', sets: 3, reps: '8-12', rest: 60 },
+          { id: 'bench_dips', sets: 3, reps: '10-12', rest: 60 },
+        ],
+      },
+      {
+        name: { 'pt-BR': 'Dia B', en: 'Day B' },
+        exercises: [
+          { id: 'clean_deadlift', sets: 4, reps: '5-8', rest: 180 },
+          { id: 'barbell_shoulder_press', sets: 4, reps: '6-10', rest: 120 },
+          { id: 'close_grip_front_lat_pulldown', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'glute_ham_raise', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'face_pull', sets: 3, reps: '12-15', rest: 60 },
+          { id: 'alternate_hammer_curl', sets: 3, reps: '10-12', rest: 60 },
+        ],
+      },
+      {
+        name: { 'pt-BR': 'Dia C', en: 'Day C' },
+        exercises: [
+          { id: 'calf_press_on_the_leg_press_machine', sets: 4, reps: '8-12', rest: 120 },
+          { id: 'incline_dumbbell_press', sets: 4, reps: '8-12', rest: 90 },
+          { id: 'elevated_cable_rows', sets: 3, reps: '8-12', rest: 90 },
+          { id: 'dumbbell_raise', sets: 3, reps: '12-15', rest: 60 },
+          { id: 'rocking_standing_calf_raise', sets: 4, reps: '12-15', rest: 60 },
+          { id: 'decline_close_grip_bench_to_skull_crusher', sets: 3, reps: '10-12', rest: 60 },
+        ],
+      },
+    ],
   },
   {
     id: 'strength-5x5',
@@ -268,6 +362,72 @@ export const PROGRAMS = [
       en: 'Start from zero and run 5K in 8 weeks with gradual progression.',
     },
     icon: 'direction-1',
+    plan: [
+      {
+        week: 1,
+        sessions: [
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 1 min corrida / 2 min caminhada × 8', en: 'Alternate 1 min run / 2 min walk × 8' }, duration: 24, zone: 1 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 1 min corrida / 2 min caminhada × 8', en: 'Alternate 1 min run / 2 min walk × 8' }, duration: 24, zone: 1 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 1 min corrida / 2 min caminhada × 8', en: 'Alternate 1 min run / 2 min walk × 8' }, duration: 24, zone: 1 },
+        ],
+      },
+      {
+        week: 2,
+        sessions: [
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 2 min corrida / 2 min caminhada × 6', en: 'Alternate 2 min run / 2 min walk × 6' }, duration: 24, zone: 1 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 2 min corrida / 2 min caminhada × 6', en: 'Alternate 2 min run / 2 min walk × 6' }, duration: 24, zone: 1 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 2 min corrida / 2 min caminhada × 6', en: 'Alternate 2 min run / 2 min walk × 6' }, duration: 24, zone: 1 },
+        ],
+      },
+      {
+        week: 3,
+        sessions: [
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 3 min corrida / 1.5 min caminhada × 5', en: 'Alternate 3 min run / 1.5 min walk × 5' }, duration: 22, zone: 2 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 3 min corrida / 1.5 min caminhada × 5', en: 'Alternate 3 min run / 1.5 min walk × 5' }, duration: 22, zone: 2 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 3 min corrida / 1.5 min caminhada × 5', en: 'Alternate 3 min run / 1.5 min walk × 5' }, duration: 22, zone: 2 },
+        ],
+      },
+      {
+        week: 4,
+        sessions: [
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 4 min corrida / 1 min caminhada × 5', en: 'Alternate 4 min run / 1 min walk × 5' }, duration: 25, zone: 2 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 4 min corrida / 1 min caminhada × 5', en: 'Alternate 4 min run / 1 min walk × 5' }, duration: 25, zone: 2 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 4 min corrida / 1 min caminhada × 5', en: 'Alternate 4 min run / 1 min walk × 5' }, duration: 25, zone: 2 },
+        ],
+      },
+      {
+        week: 5,
+        sessions: [
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 5 min corrida / 1 min caminhada × 4', en: 'Alternate 5 min run / 1 min walk × 4' }, duration: 24, zone: 2 },
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 8 min corrida / 2 min caminhada × 2 + 4 min corrida', en: 'Alternate 8 min run / 2 min walk × 2 + 4 min run' }, duration: 24, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 20 min contínuos em ritmo confortável', en: 'Run 20 min continuously at comfortable pace' }, duration: 20, zone: 2 },
+        ],
+      },
+      {
+        week: 6,
+        sessions: [
+          { type: 'walk_run', description: { 'pt-BR': 'Alternar 8 min corrida / 1 min caminhada × 3', en: 'Alternate 8 min run / 1 min walk × 3' }, duration: 27, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 22 min contínuos', en: 'Run 22 min continuously' }, duration: 22, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 25 min contínuos', en: 'Run 25 min continuously' }, duration: 25, zone: 2 },
+        ],
+      },
+      {
+        week: 7,
+        sessions: [
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 25 min contínuos', en: 'Run 25 min continuously' }, duration: 25, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 28 min contínuos', en: 'Run 28 min continuously' }, duration: 28, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 25 min contínuos', en: 'Run 25 min continuously' }, duration: 25, zone: 2 },
+        ],
+      },
+      {
+        week: 8,
+        sessions: [
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 28 min contínuos', en: 'Run 28 min continuously' }, duration: 28, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 30 min contínuos', en: 'Run 30 min continuously' }, duration: 30, zone: 2 },
+          { type: 'easy_run', description: { 'pt-BR': 'Correr 30 min contínuos — Parabéns, você conseguiu! 🎉', en: 'Run 30 min continuously — Congratulations, you did it!' }, duration: 30, zone: 2 },
+        ],
+      },
+    ],
   },
   {
     id: 'half-marathon',
