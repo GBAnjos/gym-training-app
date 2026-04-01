@@ -715,3 +715,40 @@
 .training-action-btn:active {
   transform: scale(0.98);
 }
+
+/* Running Progress */
+.run-progress-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-sm);
+}
+
+.run-progress-target {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.run-progress-icon {
+  color: #ffc832;
+  font-size: 1.1rem;
+}
+
+.run-progress-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.run-progress-stats {
+  display: flex;
+  gap: var(--space-sm);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+}

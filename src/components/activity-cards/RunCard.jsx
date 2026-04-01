@@ -94,6 +94,24 @@ export function RunCard({ dayActivity, day, language, toast }) {
       </div>
 
       <div className="activity-training-card-body">
+        {/* Run Structure */}
+        <div className="run-structure">
+          <div className="run-phase">
+            <span className="run-phase-label">{language === 'pt-BR' ? 'Aquecimento' : 'Warm-up'}</span>
+            <span className="run-phase-detail">5 min · Z1</span>
+          </div>
+          <div className="run-phase main">
+            <span className="run-phase-label">{language === 'pt-BR' ? 'Principal' : 'Main'}</span>
+            <span className="run-phase-detail">
+              {session?.distance || '5K'} · Z{session?.zone || 2}
+            </span>
+          </div>
+          <div className="run-phase">
+            <span className="run-phase-label">{language === 'pt-BR' ? 'Volta à calma' : 'Cool-down'}</span>
+            <span className="run-phase-detail">5 min · Z1</span>
+          </div>
+        </div>
+
         <div className="activity-training-card-field">
           <span style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
             {language === 'pt-BR' ? 'Distância alvo' : 'Target Distance'}

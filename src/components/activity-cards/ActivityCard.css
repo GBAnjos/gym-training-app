@@ -412,6 +412,40 @@
   color: var(--color-text-secondary);
 }
 
+/* Run Structure Phases */
+.run-structure {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-sm);
+}
+
+.run-phase {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(255, 200, 50, 0.05);
+  border-radius: var(--radius-sm);
+}
+
+.run-phase.main {
+  background: rgba(255, 200, 50, 0.12);
+  border-left: 3px solid #ffc832;
+}
+
+.run-phase-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.run-phase-detail {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+}
+
 /* Yoga specific */
 .yoga-poses {
   list-style: none;

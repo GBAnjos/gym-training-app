@@ -374,6 +374,11 @@ export function TrainingPage({ onTabChange }) {
         </div>
       )}
 
+      {/* Progress for running days */}
+      {workoutPlan?.dayActivities?.[selectedDay]?.type === 'running' && (
+        <RunProgress day={selectedDay} session={workoutPlan.dayActivities[selectedDay].session} language={language} />
+      )}
+
       {/* Exercise List / Activity Card */}
       {workoutPlan?.dayActivities?.[selectedDay] && workoutPlan.dayActivities[selectedDay].type !== 'gym' ? (
         <div className="exercise-list">
@@ -443,6 +448,30 @@ export function TrainingPage({ onTabChange }) {
               />
             </div>
           )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RunProgress({ day, session, language }) {
+  const today = new Date().toISOString().split('T')[0];
+  const storageKey = `run_${day}_${today}`;
+  const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+  return (
+    <div className="run-progress-section">
+      <div className="run-progress-target">
+        <Icon name="direction-1" className="run-progress-icon" />
+        <span className="run-progress-label">
+          {session?.distance || '5K'} · Zone {session?.zone || 2}
+        </span>
+      </div>
+      {saved.completed && (
+        <div className="run-progress-stats">
+          {saved.distance && <span>{saved.distance} km</span>}
+          {saved.pace && <span>{saved.pace} /km</span>}
+          {saved.duration && <span>{saved.duration} min</span>}
         </div>
       )}
     </div>
