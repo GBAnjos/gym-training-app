@@ -214,20 +214,40 @@ export function useOnboarding() {
     if (!user) return false;
 
     try {
-      const merged = { ...userProfile, ...profileData };
+      // Prepare data for Supabase, ensuring complex types are handled
+      const supabaseData = {
+        ...profileData,
+        updated_at: new Date().toISOString(),
+        // Ensure addon_activities is stringified for JSONB compatibility
+        addon_activities: profileData.addOnActivities ? JSON.stringify(profileData.addOnActivities) : undefined,
+        // Ensure main_activities is handled correctly
+        main_activities: profileData.mainActivities ? profileData.mainActivities : undefined,
+        // Handle addon_abilities if present (new feature)
+        addon_abilities: profileData.addonAbilities ? JSON.stringify(profileData.addonAbilities) : undefined
+      };
+
+      // Remove undefined keys from the update object
+      Object.keys(supabaseData).forEach(key => {
+        if (supabaseData[key] === undefined) {
+          delete supabaseData[key];
+        }
+      });
 
       const { error } = await supabase
         .from('user_profiles')
-        .update({
-          ...profileData,
-          updated_at: new Date().toISOString()
-        })
+        .update(supabaseData)
         .eq('user_id', user.id);
 
-      if (error) console.error('Update error:', error);
+      if (error) {
+        console.error('Update error:', error);
+        return false;
+      }
 
-      localStorage.setItem(PROFILE_KEY, JSON.stringify(merged));
+      // Update local state and localStorage
+      const merged = { ...userProfile, ...profileData };
       setUserProfile(merged);
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(merged));
+      
       return true;
     } catch (err) {
       console.error('Error updating profile:', err);
