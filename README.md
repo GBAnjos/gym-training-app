@@ -37,4 +37,4 @@ Automatic deployment to GitHub Pages via GitHub Actions on push to `main`.
 
 ---
 
-Built with [Claude Code](https://claude.ai/claude-code)
+Built with Love
