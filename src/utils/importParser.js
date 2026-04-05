@@ -11,50 +11,87 @@ export function parseTrainingText(text) {
   const errors = [];
   if (!text || typeof text !== 'string') return { days: [], errors: ['Empty input'] };
 
-  const lines = text.split(/\n/);
+  // Pre-process: normalize Portuguese PDF format where sets and "séries" are on separate lines
+  // "4\nséries 8-10 reps" → "4 séries 8-10 reps"
+  // "séries reps 15" → "séries 15 reps"
+  const processed = text
+    .replace(/(\d+)\n(séries?|sets?)/gi, '$1 $2')
+    .replace(/séries?\s+reps?\s+(\d+(?:[-–]\d+)?)/gi, 'séries $1 reps')
+    .replace(/(\d+)\s*séries?\s+reps?\s+(\d+)/gi, '$1 séries $2 reps');
+
+  const lines = processed.split(/\n/);
   const days = [];
   let currentDay = null;
+  let pendingExerciseName = null;
 
-  const dayHeaderRegex = /^#{1,3}\s+(.+)|^\*\*(.+?)\*\*\s*$|^(?:day|dia|monday|tuesday|wednesday|thursday|friday|saturday|sunday|segunda|terça|quarta|quinta|sexta|sábado|domingo|push|pull|leg|legs|upper|lower|full\s*body|chest|back|shoulders?|arms?|treino)\b.*$/im;
+  // Expanded day header patterns — handles "01 Segunda-feira — PUSH", "## Push Day", etc.
+  const dayPatterns = [
+    /^#{1,3}\s+(.+)/,
+    /^\*\*(.+?)\*\*\s*$/,
+    /^\d{1,2}\s+(?:segunda|terça|quarta|quinta|sexta|sábado|domingo|monday|tuesday|wednesday|thursday|friday|saturday|sunday).+$/i,
+    /^(?:segunda|terça|quarta|quinta|sexta|sábado|domingo|monday|tuesday|wednesday|thursday|friday|saturday|sunday)[- —–]+.+$/i,
+    /^(?:day|dia)\s+\d+.*/i,
+    /^(?:push|pull|legs?|upper|lower|full\s*body|peito|costas|pernas?|ombros?|braços?)\s*(?:day|dia|—|–|-|\s*$)/i,
+  ];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
 
-    // Check if this is a day header
-    const headerMatch = line.match(/^#{1,3}\s+(.+)/) || line.match(/^\*\*(.+?)\*\*\s*$/);
-    const isStructuralHeader = headerMatch && !isExerciseLine(line);
+    // Check day header
+    let isDay = false;
+    let dayName = '';
+    for (const pattern of dayPatterns) {
+      const m = line.match(pattern);
+      if (m) {
+        isDay = true;
+        dayName = (m[1] || line).replace(/[*#]/g, '').trim();
+        break;
+      }
+    }
 
-    if (isStructuralHeader) {
-      const name = (headerMatch[1] || headerMatch[2] || '').replace(/[*#]/g, '').trim();
-      if (name && !isMetaLine(name)) {
-        currentDay = { name, exercises: [] };
+    if (isDay && !isExerciseLine(line)) {
+      pendingExerciseName = null;
+      currentDay = { name: dayName || line, exercises: [] };
+      days.push(currentDay);
+      continue;
+    }
+
+    // Skip muscle/subtitle descriptions (contains · or is short ALL CAPS badge like "PUSH"/"PULL")
+    if (/·/.test(line)) continue;
+    if (/^[A-Z\s]{2,15}$/.test(line) && !/\d/.test(line) && !line.includes('Max')) continue;
+
+    if (!currentDay) {
+      if (isExerciseLine(line) || looksLikeExerciseName(line)) {
+        currentDay = { name: 'Day 1', exercises: [] };
         days.push(currentDay);
+      } else {
         continue;
       }
     }
 
-    // If no day created yet, create a default one
-    if (!currentDay && isExerciseLine(line)) {
-      currentDay = { name: 'Day 1', exercises: [] };
-      days.push(currentDay);
-    }
-
-    if (!currentDay) continue;
-
-    // Try to parse as exercise
+    // Try to parse as exercise (may or may not include name)
     const exercise = parseExerciseLine(line);
     if (exercise) {
-      const match = matchExerciseToBundle(exercise.name);
-      currentDay.exercises.push({
-        ...exercise,
-        matched: match.exercise,
-        confidence: match.confidence,
-      });
+      // If name was on a previous line, use it
+      if (!exercise.name && pendingExerciseName) {
+        exercise.name = pendingExerciseName;
+      }
+      pendingExerciseName = null;
+      if (exercise.name && exercise.name.length >= 3) {
+        const match = matchExerciseToBundle(exercise.name);
+        currentDay.exercises.push({
+          ...exercise,
+          matched: match.exercise,
+          confidence: match.confidence,
+        });
+      }
+    } else if (looksLikeExerciseName(line)) {
+      // Store name — sets/reps will come on following lines
+      pendingExerciseName = line.replace(/^[-*•\d.)\s]+/, '').trim();
     }
   }
 
-  // Filter out days with no exercises
   const validDays = days.filter(d => d.exercises.length > 0);
 
   if (validDays.length === 0) {
@@ -174,7 +211,20 @@ function parseExerciseLine(line) {
     return { name, sets: parseInt(tableMatch[2]), reps: tableMatch[3].trim() };
   }
 
-  // Sets×reps pattern: "Bench Press 4x12" or "Bench Press: 4 x 12" or "4 sets x 12 reps"
+  // Portuguese PDF format: "Exercise Name 4 séries 8-10 reps"
+  const ptWithName = clean.match(/^(.+?)\s+(\d+)\s+séries?\s+(\d+(?:[-–]\d+)?)\s*(?:reps?)?/i);
+  if (ptWithName && ptWithName[1].length >= 3 && !/^Max/i.test(ptWithName[3])) {
+    return { name: ptWithName[1].trim(), sets: parseInt(ptWithName[2]), reps: ptWithName[3].trim() };
+  }
+
+  // Portuguese PDF format (name on previous line): "4 séries 8-10 reps" or "4 séries Max. reps"
+  const ptNoName = clean.match(/^(\d+)\s+séries?\s+(Max\.?|\d+(?:[-–]\d+)?)\s*(?:reps?)?/i);
+  if (ptNoName) {
+    const reps = /max/i.test(ptNoName[2]) ? 'Max' : ptNoName[2].trim();
+    return { name: '', sets: parseInt(ptNoName[1]), reps };
+  }
+
+  // Sets×reps pattern: "Bench Press 4x12" or "Bench Press: 4 x 12"
   const setsRepsMatch = clean.match(/^(.+?)\s*[:\-–—]?\s*(\d+)\s*(?:sets?\s*)?[x×]\s*(\d+(?:\s*[-–]\s*\d+)?)\s*(?:reps?)?/i);
   if (setsRepsMatch) {
     const name = setsRepsMatch[1].replace(/[:\-–—]+$/, '').trim();
@@ -193,6 +243,19 @@ function parseExerciseLine(line) {
   }
 
   return null;
+}
+
+function looksLikeExerciseName(line) {
+  const clean = line.replace(/^[-*•\d.)\s]+/, '').trim();
+  return (
+    clean.length >= 3 &&
+    clean.length <= 80 &&
+    /^[A-ZÀ-Ü]/.test(clean) &&
+    !/·/.test(clean) &&
+    !/\d+\s*(?:séries?|sets?|reps?|x)\b/i.test(clean) &&
+    !/^(?:segunda|terça|quarta|quinta|sexta|sábado|domingo|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/i.test(clean) &&
+    !/^(?:PUSH|PULL|LEGS|UPPER|LOWER)$/.test(clean)
+  );
 }
 
 function isFoodLine(line) {
