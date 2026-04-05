@@ -192,7 +192,7 @@
   flex-shrink: 0;
 }
 
-/* Daily Blocks — simplified flat list */
+/* Daily Blocks — section title */
 .schedule-blocks-title {
   font-size: 0.8rem;
   font-weight: 600;
@@ -202,60 +202,90 @@
   margin-bottom: var(--space-sm);
 }
 
-.schedule-blocks {
+/* Timeline — card list */
+.timeline {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  margin-bottom: var(--space-md);
+  gap: 6px;
+  padding: 0 0 var(--space-xl);
 }
 
-.schedule-block {
-  display: flex;
+.time-block {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
+  padding: 10px var(--space-sm);
+  background: var(--color-bg-elevated);
   border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-border-default);
 }
 
-.schedule-block:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
+.time-block.type-morning  { border-left-color: #ff9f0a; }
+.time-block.type-work     { border-left-color: #007aff; }
+.time-block.type-meal     { border-left-color: #34c759; }
+.time-block.type-food     { border-left-color: #34c759; }
+.time-block.type-gym,
+.time-block.type-sport    { border-left-color: var(--color-accent-primary); }
+.time-block.type-evening  { border-left-color: #5e5ce6; }
+.time-block.type-night    { border-left-color: #636366; }
+.time-block.type-sleep    { border-left-color: #636366; }
+.time-block.type-free     { border-left-color: #5e5ce6; }
+.time-block.type-chore    { border-left-color: #ff6b6b; }
+.time-block.type-social   { border-left-color: #c899ff; }
+.time-block.type-flex     { border-left-color: #ffc832; }
 
-.schedule-block-time {
-  font-size: 0.7rem;
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  min-width: 40px;
+.time-block-time {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono, monospace);
   text-align: right;
 }
 
-.schedule-block-icon {
-  font-size: 0.85rem;
-  flex-shrink: 0;
+.time-block-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
-.schedule-block-label {
-  font-size: 0.85rem;
+.time-block-label {
+  font-size: 0.9rem;
+  font-weight: 500;
   color: var(--color-text-primary);
-  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.schedule-block-tag {
+.time-block-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tag badges */
+.tag-badge {
   font-size: 0.6rem;
   font-weight: 600;
-  padding: 1px 5px;
+  padding: 2px 6px;
   border-radius: 3px;
-  background: rgba(217, 255, 0, 0.15);
-  color: var(--color-accent-primary);
   text-transform: uppercase;
   letter-spacing: 0.3px;
+  flex-shrink: 0;
+  background: rgba(217, 255, 0, 0.15);
+  color: var(--color-accent-primary);
 }
 
-@media (min-width: 480px) {
-  .schedule-block-time { font-size: 0.75rem; min-width: 48px; }
-  .schedule-block-icon { font-size: 1rem; }
-  .schedule-block-label { font-size: 0.9rem; }
-}
+.tag-badge.tag-gym     { background: rgba(200, 245, 90, 0.15); color: var(--color-accent-primary); }
+.tag-badge.tag-office  { background: rgba(0, 122, 255, 0.15); color: #007aff; }
+.tag-badge.tag-chore   { background: rgba(255, 107, 107, 0.15); color: #ff6b6b; }
+.tag-badge.tag-meal    { background: rgba(52, 199, 89, 0.15); color: #34c759; }
+.tag-badge.tag-social  { background: rgba(200, 153, 255, 0.15); color: #c899ff; }
+.tag-badge.tag-flex    { background: rgba(255, 200, 50, 0.15); color: #ffc832; }
 
 /* Office Hint */
 .office-hint {

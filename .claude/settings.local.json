@@ -12,7 +12,8 @@
       "Bash(git -C /Users/guilhermeanjos/Desktop/AI/gym-training-app show --stat ffe75f7)",
       "Bash(python3 -c \":*)",
       "Bash(node -e \"const m = require\\(''./src/data/programs.js''\\); console.log\\(''Programs loaded:'', m.PROGRAMS.length\\); const ppl = m.PROGRAMS.find\\(p => p.id === ''ppl-classic''\\); console.log\\(''PPL days:'', ppl.days.length, ppl.days.map\\(d => d.name.en\\)\\); const ul = m.PROGRAMS.find\\(p => p.id === ''upper-lower''\\); console.log\\(''UL days:'', ul.days.length, ul.days.map\\(d => d.name.en\\)\\); const fb = m.PROGRAMS.find\\(p => p.id === ''full-body-3x''\\); console.log\\(''FB days:'', fb.days.length, fb.days.map\\(d => d.name.en\\)\\); const c5k = m.PROGRAMS.find\\(p => p.id === ''couch-to-5k''\\); console.log\\(''C5K weeks:'', c5k.plan.length, c5k.plan.map\\(w => w.week\\)\\);\")",
-      "Bash(node -e \":*)"
+      "Bash(node -e \":*)",
+      "Bash(node -e ':*)"
     ]
   }
 }

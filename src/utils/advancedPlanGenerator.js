@@ -152,8 +152,63 @@ function selectExercisesForSession(sessionMuscles, sessionVolume, pool, goal, le
   const setsConfig = SETS_CONFIG[goal] || SETS_CONFIG.general;
   const progressionModel = PROGRESSION_MODELS[level] || PROGRESSION_MODELS.beginner;
 
-  // Time-budget approach: subtract warmup, track running total
-  const availableMinutes = Math.max(duration - 5, 15); // 5 min warmup
+  // Real time budget:
+  // - 5 min warm-up
+  // - compound: setsPerExercise × (45s work + restSeconds)
+  // - isolation: setsPerExercise × (40s work + restSeconds)
+  // - 3 min cooldown
+
+  const WARM_UP_MIN = 5;
+  const COOL_DOWN_MIN = 3;
+  const availableMin = duration - WARM_UP_MIN - COOL_DOWN_MIN;
+
+  // Determine sets per exercise from goal
+  const goalSetsMap = {
+    muscle:    { compound: 4, isolation: 3 },
+    strength:  { compound: 5, isolation: 3 },
+    fat_loss:  { compound: 3, isolation: 3 },
+    endurance: { compound: 3, isolation: 2 },
+    general:   { compound: 3, isolation: 3 },
+  };
+  const goalSets = goalSetsMap[goal] || goalSetsMap.general;
+
+  // Rest times based on goal
+  const restMin = {
+    strength:  { compound: 3,   isolation: 2   },
+    muscle:    { compound: 2,   isolation: 1.5 },
+    fat_loss:  { compound: 1,   isolation: 1   },
+    endurance: { compound: 1,   isolation: 0.75},
+    general:   { compound: 2,   isolation: 1.5 },
+  }[goal] || { compound: 2, isolation: 1.5 };
+
+  // Minutes per exercise = sets × (work_time + rest)
+  const compoundMin = goalSets.compound * (0.75 + restMin.compound);   // ~45s work
+  const isolationMin = goalSets.isolation * (0.67 + restMin.isolation); // ~40s work
+
+  // Greedy budget: try to fit as many exercises as possible
+  // Start with compounds (always first), then fill with isolations
+  let budget = availableMin;
+  let maxCompounds = 0;
+  let maxIsolations = 0;
+
+  // First, figure out how many compounds we can fit (target 2-4 per session)
+  const targetCompounds = level === 'beginner' ? 2 : level === 'advanced' ? 4 : 3;
+  for (let c = targetCompounds; c >= 1; c--) {
+    if (c * compoundMin <= budget * 0.65) { // compounds take max 65% of time
+      maxCompounds = c;
+      break;
+    }
+  }
+  budget -= maxCompounds * compoundMin;
+
+  // Fill rest with isolations
+  maxIsolations = Math.floor(budget / isolationMin);
+  maxIsolations = Math.min(maxIsolations, 4); // cap at 4 isolations
+
+  const maxExercises = maxCompounds + maxIsolations;
+
+  // Keep availableMinutes for the live time-tracking guard below
+  const availableMinutes = Math.max(duration - WARM_UP_MIN, 15);
   let timeSpent = 0;
 
   // Group pool by muscle
@@ -201,7 +256,7 @@ function selectExercisesForSession(sessionMuscles, sessionVolume, pool, goal, le
     let setsRemaining = targetSets;
 
     // Pick a compound first if available
-    if (compounds.length > 0) {
+    if (compounds.length > 0 && selectedExercises.length < maxExercises) {
       const pick = compounds.find(e => !usedIds.has(e.id)) || compounds[0];
       const sets = Math.min(setsConfig.compound, setsRemaining);
       const estTime = estimateExerciseMinutes(sets, goalConfig.compound.rest, true);
@@ -216,7 +271,7 @@ function selectExercisesForSession(sessionMuscles, sessionVolume, pool, goal, le
 
     // Fill remaining volume with isolation
     let isoIdx = 0;
-    while (setsRemaining > 0 && isoIdx < isolations.length) {
+    while (setsRemaining > 0 && isoIdx < isolations.length && selectedExercises.length < maxExercises) {
       const pick = isolations[isoIdx];
       if (!usedIds.has(pick.id)) {
         const sets = Math.min(setsConfig.isolation, setsRemaining);
@@ -235,7 +290,7 @@ function selectExercisesForSession(sessionMuscles, sessionVolume, pool, goal, le
     // If still sets remaining and we have unused compounds
     if (setsRemaining > 0) {
       for (const pick of compounds) {
-        if (usedIds.has(pick.id) || setsRemaining <= 0) continue;
+        if (usedIds.has(pick.id) || setsRemaining <= 0 || selectedExercises.length >= maxExercises) continue;
         const sets = Math.min(setsConfig.compound, setsRemaining);
         const estTime = estimateExerciseMinutes(sets, goalConfig.compound.rest, true);
         if (timeSpent + estTime > availableMinutes) break;

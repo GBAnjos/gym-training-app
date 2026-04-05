@@ -269,10 +269,94 @@
 }
 
 /* Running specific */
+.run-session-summary {
+  padding: var(--space-sm) 0 var(--space-md);
+  border-bottom: 1px solid var(--color-border-default);
+  margin-bottom: var(--space-sm);
+}
+
+.run-summary-goal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: 6px;
+}
+
+.run-summary-distance {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.run-summary-zone-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.run-summary-desc {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 4px;
+}
+
+.run-summary-pace-hint {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.run-distance-progress {
+  margin-bottom: var(--space-md);
+}
+
+.run-distance-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.run-distance-label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.run-distance-value {
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-mono, monospace);
+}
+
+.run-distance-bar {
+  height: 6px;
+  background: var(--color-bg-elevated);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.run-distance-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
 .run-inputs {
   display: flex;
   gap: var(--space-md);
   margin-bottom: var(--space-md);
+}
+
+.run-inputs-prominent .run-input-group input {
+  padding: 12px 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .run-input-group {
@@ -413,37 +497,43 @@
 }
 
 /* Run Structure Phases */
-.run-structure {
+.run-structure,
+.run-phases {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  margin-bottom: var(--space-sm);
+  gap: 4px;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--color-border-default);
+  border-bottom: 1px solid var(--color-border-default);
+  margin: var(--space-sm) 0;
 }
 
 .run-phase {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-xs) var(--space-sm);
-  background: rgba(255, 200, 50, 0.05);
+  padding: 6px var(--space-xs);
   border-radius: var(--radius-sm);
+  background: transparent;
 }
 
-.run-phase.main {
-  background: rgba(255, 200, 50, 0.12);
-  border-left: 3px solid #ffc832;
+.run-phase.main,
+.run-phase:nth-child(2) {
+  background: var(--color-bg-elevated);
 }
 
+/* run-phase-name is the new class; run-phase-label is kept for backward compat */
+.run-phase-name,
 .run-phase-label {
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
 }
 
 .run-phase-detail {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono, monospace);
 }
 
 /* Yoga specific */

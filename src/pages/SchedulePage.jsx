@@ -1,6 +1,5 @@
 import { useState, useMemo, useRef, useCallback } from 'react';
-import { SCHEDULE, DAY_ORDER, getBlockLabel, getBlockSub, getDayName } from '../data/schedule';
-import { DESIGN } from '../data/design';
+import { SCHEDULE, DAY_ORDER, getDayName } from '../data/schedule';
 import { useOfficeDays } from '../hooks/useOfficeDays';
 import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
@@ -24,20 +23,6 @@ const getDayTypeNote = (type, language = 'pt-BR') => {
     }
   };
   return notes[type]?.[language] || notes[type]?.['pt-BR'] || '';
-};
-
-// Map block types to LineIcon names
-const BLOCK_ICONS = {
-  morning: 'sun-1',
-  coffee: 'coffee-cup-2',
-  gym: 'dumbbell-1',
-  food: 'knife-fork-1',
-  work: 'briefcase-1',
-  free: 'book-1',
-  sleep: 'moon-half-right-5',
-  chore: 'home-2',
-  social: 'heart',
-  sport: 'busket-ball',
 };
 
 // Custom hook for long press detection
@@ -256,23 +241,14 @@ export function SchedulePage({ onTabChange }) {
         </button>
       </div>
 
-      {/* Daily Blocks - simplified flat list */}
+      {/* Daily Blocks */}
       <h3 className="schedule-blocks-title">
         {language === 'pt-BR' ? 'Rotina do dia' : 'Daily routine'}
       </h3>
-      <div className="schedule-blocks">
-        {dayData.blocks.map((block, index) => {
-          const color = DESIGN.blockTypeColors[block.type] || '#666';
-          const iconName = BLOCK_ICONS[block.type] || 'star-fat';
-          return (
-            <div key={index} className={`schedule-block ${block.type}`}>
-              <span className="schedule-block-time">{block.time}</span>
-              <Icon name={iconName} className="schedule-block-icon" style={{ color }} />
-              <span className="schedule-block-label">{getBlockLabel(block, language)}</span>
-              {block.tag && <span className="schedule-block-tag">{block.tag}</span>}
-            </div>
-          );
-        })}
+      <div className="timeline">
+        {dayData.blocks.map((block, index) => (
+          <TimeBlock key={index} block={block} language={language} />
+        ))}
       </div>
 
       <p className="office-hint">
@@ -281,6 +257,26 @@ export function SchedulePage({ onTabChange }) {
           ? 'Segure num dia da semana para alternar escritório/home'
           : 'Long-press a weekday to toggle office/home'}
       </p>
+    </div>
+  );
+}
+
+function TagBadge({ tag }) {
+  return <span className={`tag-badge tag-${tag}`}>{tag}</span>;
+}
+
+function TimeBlock({ block, language }) {
+  const label = typeof block.label === 'object' ? block.label[language] : block.label;
+  const sub = typeof block.sub === 'object' ? block.sub?.[language] : block.sub;
+
+  return (
+    <div className={`time-block type-${block.type || 'default'}`}>
+      <div className="time-block-time">{block.time}</div>
+      <div className="time-block-body">
+        <span className="time-block-label">{label}</span>
+        {sub && <span className="time-block-sub">{sub}</span>}
+      </div>
+      {block.tag && <TagBadge tag={block.tag} />}
     </div>
   );
 }

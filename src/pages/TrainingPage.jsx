@@ -14,6 +14,7 @@ import { CalisthenicsCard } from '../components/activity-cards/CalisthenicsCard'
 import { PilatesCard } from '../components/activity-cards/PilatesCard';
 import { RunCard } from '../components/activity-cards/RunCard';
 import { YogaCard } from '../components/activity-cards/YogaCard';
+import { ProgramsPage } from './ProgramsPage';
 import './TrainingPage.css';
 
 // Load workout plan from localStorage (re-reads on each mount/navigation)
@@ -92,6 +93,7 @@ export function TrainingPage({ onTabChange }) {
   const workoutPlan = useWorkoutPlan();
   const trainingMap = useMemo(() => buildTrainingMap(workoutPlan), [workoutPlan]);
   const activeDays = useMemo(() => getActiveDays(workoutPlan), [workoutPlan]);
+  const [subTab, setSubTab] = useState('workout');
 
   const [selectedDay, setSelectedDay] = useState(() => {
     const days = workoutPlan ? getActiveDays(workoutPlan) : TRAINING_DAYS;
@@ -257,10 +259,38 @@ export function TrainingPage({ onTabChange }) {
 
   const isNonGymDay = workoutPlan?.dayActivities?.[selectedDay] && workoutPlan.dayActivities[selectedDay].type !== 'gym';
 
+  const subTabBar = (
+    <div className="training-subtabs">
+      <button
+        className={`training-subtab ${subTab === 'workout' ? 'active' : ''}`}
+        onClick={() => setSubTab('workout')}
+      >
+        {language === 'pt-BR' ? 'Treino' : 'Workout'}
+      </button>
+      <button
+        className={`training-subtab ${subTab === 'programs' ? 'active' : ''}`}
+        onClick={() => setSubTab('programs')}
+      >
+        {language === 'pt-BR' ? 'Programas' : 'Programs'}
+      </button>
+    </div>
+  );
+
+  // Programs sub-tab
+  if (subTab === 'programs') {
+    return (
+      <div className="training-page">
+        {subTabBar}
+        <ProgramsPage onComplete={() => setSubTab('workout')} onTabChange={onTabChange} />
+      </div>
+    );
+  }
+
   // No plan at all — show plan selection empty state
   if (!workoutPlan) {
     return (
       <div className="training-page">
+        {subTabBar}
         <div className="training-empty-state">
           <Icon name="dumbbell-1" className="training-empty-icon" />
           <h2 className="training-empty-title">{t('training_empty_title')}</h2>
@@ -289,7 +319,7 @@ export function TrainingPage({ onTabChange }) {
               <Icon name="chevron-right" className="training-option-arrow" />
             </button>
 
-            <button className="training-option-card" onClick={() => onTabChange?.('programs')}>
+            <button className="training-option-card" onClick={() => setSubTab('programs')}>
               <div className="training-option-icon programs">
                 <Icon name="list-3" />
               </div>
@@ -308,6 +338,7 @@ export function TrainingPage({ onTabChange }) {
   if (!treino && !isNonGymDay) {
     return (
       <div className="training-page">
+        {subTabBar}
         <p className="no-training">
           {language === 'pt-BR' ? 'Sem treino para este dia' : 'No workout for this day'}
         </p>
@@ -317,13 +348,14 @@ export function TrainingPage({ onTabChange }) {
 
   return (
     <div className="training-page">
+      {subTabBar}
       {/* Active Plan Header */}
       <div className="training-plan-header">
         <div className="training-plan-info">
           <span className="training-plan-label">{t('training_active_plan')}</span>
           <span className="training-plan-name">{(typeof workoutPlan.name === 'object' ? (workoutPlan.name[language] || workoutPlan.name['pt-BR']) : workoutPlan.name) || (language === 'pt-BR' ? 'Meu Plano' : 'My Plan')}</span>
         </div>
-        <button className="training-change-plan" onClick={() => onTabChange?.('programs')}>
+        <button className="training-change-plan" onClick={() => setSubTab('programs')}>
           {t('training_change_plan')}
         </button>
       </div>
@@ -402,7 +434,7 @@ export function TrainingPage({ onTabChange }) {
 
       {/* Quick Actions */}
       <div className="training-actions">
-        <button className="training-action-btn" onClick={() => onTabChange?.('programs')}>
+        <button className="training-action-btn" onClick={() => setSubTab('programs')}>
           <Icon name="list-3" />
           <span>{language === 'pt-BR' ? 'Programas' : 'Programs'}</span>
         </button>
@@ -459,19 +491,39 @@ function RunProgress({ day, session, language }) {
   const storageKey = `run_${day}_${today}`;
   const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
 
+  // Parse target distance e.g. "5K" → 5
+  const targetMatch = String(session?.distance || '').match(/([\d.]+)\s*[Kk]/);
+  const targetKm = targetMatch ? parseFloat(targetMatch[1]) : null;
+  const enteredKm = parseFloat(saved.distance) || 0;
+  const pct = targetKm && enteredKm > 0 ? Math.min(100, (enteredKm / targetKm) * 100) : 0;
+
   return (
     <div className="run-progress-section">
-      <div className="run-progress-target">
-        <Icon name="direction-1" className="run-progress-icon" />
-        <span className="run-progress-label">
-          {session?.distance || '5K'} · Zone {session?.zone || 2}
-        </span>
+      <div className="run-progress-header">
+        <div className="run-progress-target">
+          <Icon name="direction-1" className="run-progress-icon" />
+          <span className="run-progress-label">
+            {session?.distance || '5K'} · Zone {session?.zone || 2}
+          </span>
+        </div>
+        {saved.completed && (
+          <div className="run-progress-stats">
+            {saved.distance && <span>{saved.distance} km</span>}
+            {saved.pace && <span>{saved.pace} /km</span>}
+            {saved.duration && <span>{saved.duration} min</span>}
+          </div>
+        )}
       </div>
-      {saved.completed && (
-        <div className="run-progress-stats">
-          {saved.distance && <span>{saved.distance} km</span>}
-          {saved.pace && <span>{saved.pace} /km</span>}
-          {saved.duration && <span>{saved.duration} min</span>}
+      {targetKm && (
+        <div className="run-progress-bar-wrap">
+          <div className="run-progress-bar">
+            <div className="run-progress-fill" style={{ width: `${pct}%` }} />
+          </div>
+          <span className="run-progress-bar-label">
+            {enteredKm > 0
+              ? `${enteredKm.toFixed(1)} / ${targetKm} km`
+              : `${language === 'pt-BR' ? '— de' : '— of'} ${targetKm} km`}
+          </span>
         </div>
       )}
     </div>

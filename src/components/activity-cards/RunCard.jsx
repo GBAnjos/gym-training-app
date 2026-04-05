@@ -15,6 +15,43 @@ function formatPace(durationMin, distanceKm) {
   return `${minutes}'${String(seconds).padStart(2, '0')}"`;
 }
 
+// Parse a distance string like "5K" or "10K" into a number
+function parseDistanceKm(distanceStr) {
+  if (!distanceStr) return null;
+  const match = String(distanceStr).match(/([\d.]+)\s*[Kk]/);
+  if (match) return parseFloat(match[1]);
+  const num = parseFloat(distanceStr);
+  return isNaN(num) ? null : num;
+}
+
+// Derive phases from session data
+function derivePhases(session, language) {
+  const zoneInfo = ZONE_INFO.find(z => z.zone === session?.zone) || ZONE_INFO[1];
+  const zoneLabel = zoneInfo.label;
+  const distanceKm = parseDistanceKm(session?.distance);
+  const warmupLabel = language === 'pt-BR' ? 'Aquecimento' : 'Warm-up';
+  const mainLabel = language === 'pt-BR' ? 'Principal' : 'Main';
+  const cooldownLabel = language === 'pt-BR' ? 'Volta à calma' : 'Cool-down';
+
+  if (session?.type === 'intervals') {
+    return [
+      { name: warmupLabel, detail: '10 min · Z1', isMain: false },
+      { name: mainLabel, detail: session?.targetPace?.[language] || session?.targetPace?.['pt-BR'] || `${session?.distance} · ${zoneLabel}`, isMain: true },
+      { name: cooldownLabel, detail: '10 min · Z1', isMain: false },
+    ];
+  }
+
+  const warmupDist = distanceKm ? `${(distanceKm * 0.1).toFixed(1)} km` : '10%';
+  const mainDist = distanceKm ? `${(distanceKm * 0.8).toFixed(1)} km` : '80%';
+  const cooldownDist = distanceKm ? `${(distanceKm * 0.1).toFixed(1)} km` : '10%';
+
+  return [
+    { name: warmupLabel, detail: `${warmupDist} · Z1`, isMain: false },
+    { name: mainLabel, detail: `${mainDist} · ${zoneLabel}`, isMain: true },
+    { name: cooldownLabel, detail: `${cooldownDist} · Z1`, isMain: false },
+  ];
+}
+
 export function RunCard({ dayActivity, day, language, toast }) {
   const today = new Date().toISOString().split('T')[0];
   const session = dayActivity?.session;
@@ -49,6 +86,21 @@ export function RunCard({ dayActivity, day, language, toast }) {
     || session.type;
   const sessionName = session.name?.[language] || session.name?.['pt-BR'] || runTypeName;
   const pace = formatPace(parseFloat(duration), parseFloat(distance));
+
+  // Zone info for color
+  const zoneInfo = ZONE_INFO.find(z => z.zone === session.zone) || ZONE_INFO[1];
+  const zoneColor = zoneInfo.color;
+  const zoneName = zoneInfo.name[language] || zoneInfo.name['en'];
+
+  // Distance progress
+  const targetDistanceKm = parseDistanceKm(session.distance);
+  const enteredDistance = parseFloat(distance) || 0;
+  const distanceProgress = targetDistanceKm && enteredDistance > 0
+    ? Math.min(100, (enteredDistance / targetDistanceKm) * 100)
+    : 0;
+
+  // Phases
+  const phases = derivePhases(session, language);
 
   const saveToStorage = (newDistance, newDuration, newCompleted) => {
     const paceCalc = formatPace(parseFloat(newDuration), parseFloat(newDistance));
@@ -94,34 +146,58 @@ export function RunCard({ dayActivity, day, language, toast }) {
       </div>
 
       <div className="activity-training-card-body">
-        {/* Run Structure */}
-        <div className="run-structure">
-          <div className="run-phase">
-            <span className="run-phase-label">{language === 'pt-BR' ? 'Aquecimento' : 'Warm-up'}</span>
-            <span className="run-phase-detail">5 min · Z1</span>
-          </div>
-          <div className="run-phase main">
-            <span className="run-phase-label">{language === 'pt-BR' ? 'Principal' : 'Main'}</span>
-            <span className="run-phase-detail">
-              {session?.distance || '5K'} · Z{session?.zone || 2}
+
+        {/* Session Summary Header */}
+        <div className="run-session-summary">
+          <div className="run-summary-goal">
+            <span className="run-summary-distance">{session.distance}</span>
+            <span
+              className="run-summary-zone-badge"
+              style={{ background: zoneColor + '22', color: zoneColor, border: `1px solid ${zoneColor}55` }}
+            >
+              {zoneInfo.label} · {zoneName}
             </span>
           </div>
-          <div className="run-phase">
-            <span className="run-phase-label">{language === 'pt-BR' ? 'Volta à calma' : 'Cool-down'}</span>
-            <span className="run-phase-detail">5 min · Z1</span>
+          <p className="run-summary-desc">
+            {zoneInfo.description[language] || zoneInfo.description['en']}
+          </p>
+          {session.targetPace?.[language] && (
+            <p className="run-summary-pace-hint">{session.targetPace[language]}</p>
+          )}
+        </div>
+
+        {/* Workout Phases Breakdown */}
+        <div className="run-phases">
+          {phases.map((phase, i) => (
+            <div key={i} className={`run-phase${phase.isMain ? ' main' : ''}`}>
+              <span className="run-phase-name">{phase.name}</span>
+              <span className="run-phase-detail">{phase.detail}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Distance Progress Bar */}
+        {targetDistanceKm && (
+          <div className="run-distance-progress">
+            <div className="run-distance-progress-info">
+              <span className="run-distance-label">
+                {language === 'pt-BR' ? 'Distância' : 'Distance'}
+              </span>
+              <span className="run-distance-value" style={{ color: distanceProgress > 0 ? colors.primary : 'var(--color-text-muted)' }}>
+                {enteredDistance > 0 ? `${enteredDistance.toFixed(1)} / ${targetDistanceKm} km` : `— / ${targetDistanceKm} km`}
+              </span>
+            </div>
+            <div className="run-distance-bar">
+              <div
+                className="run-distance-fill"
+                style={{ width: `${distanceProgress}%`, background: zoneColor }}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
-        <div className="activity-training-card-field">
-          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-            {language === 'pt-BR' ? 'Distância alvo' : 'Target Distance'}
-          </span>
-          <span className="activity-training-card-badge" style={{ background: colors.bg, color: colors.primary }}>
-            {session.distance}
-          </span>
-        </div>
-
-        <div className="run-inputs">
+        {/* Pace/Distance Inputs */}
+        <div className="run-inputs run-inputs-prominent">
           <div className="run-input-group">
             <label>{language === 'pt-BR' ? 'Distância (km)' : 'Distance (km)'}</label>
             <input
