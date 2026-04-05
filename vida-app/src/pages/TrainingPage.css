@@ -1,0 +1,289 @@
+.training-page {
+  padding: var(--space-md);
+  padding-bottom: 100px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.no-training {
+  text-align: center;
+  color: var(--color-text-dim);
+  padding: var(--space-2xl);
+}
+
+/* Day Selector */
+.training-day-selector {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.training-day-selector::-webkit-scrollbar {
+  display: none;
+}
+
+.training-day-btn {
+  flex: 1;
+  min-width: 50px;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.training-day-btn:hover {
+  border-color: var(--color-muted);
+}
+
+.training-day-btn.active {
+  border-color: var(--color-accent);
+  background-color: rgba(200, 245, 90, 0.1);
+  color: var(--color-accent);
+}
+
+/* Workout Header */
+.workout-header {
+  margin-bottom: var(--space-md);
+}
+
+.workout-name {
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.workout-groups {
+  color: var(--color-text-dim);
+  font-size: 0.875rem;
+}
+
+/* Progress Section */
+.progress-section {
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-border);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  font-size: 0.875rem;
+  color: var(--color-text-dim);
+}
+
+.progress-percent {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: var(--color-card-alt);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-dim));
+  border-radius: 4px;
+  transition: width var(--transition-normal);
+}
+
+/* Exercise List */
+.exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+/* Exercise Card */
+.exercise-card {
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  transition: border-color var(--transition-fast);
+}
+
+.exercise-card:hover {
+  border-color: var(--color-muted);
+}
+
+.exercise-card.completed {
+  background-color: rgba(200, 245, 90, 0.05);
+  border-color: rgba(200, 245, 90, 0.3);
+}
+
+.exercise-header {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.exercise-status {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.exercise-info {
+  flex: 1;
+}
+
+.exercise-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.exercise-meta {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
+}
+
+.exercise-sets {
+  padding: 2px 8px;
+  background-color: var(--color-card-alt);
+  color: var(--color-text-dim);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+}
+
+.exercise-obs {
+  padding: 2px 8px;
+  background-color: rgba(255, 184, 108, 0.2);
+  color: var(--color-orange);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+}
+
+.exercise-muscles {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.muscle-tag {
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Exercise Controls */
+.exercise-controls {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-end;
+}
+
+.weight-input-group {
+  flex: 1;
+}
+
+.weight-input-group label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-muted-light);
+  margin-bottom: var(--space-xs);
+}
+
+.weight-input-group input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.done-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-card-alt);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.done-checkbox:hover {
+  background-color: var(--color-muted);
+}
+
+.done-checkbox span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Timer Section */
+.timer-section {
+  background: linear-gradient(135deg, rgba(107, 207, 255, 0.1), rgba(200, 153, 255, 0.1));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+}
+
+.timer-title {
+  font-size: 1.125rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.timer-buttons {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.timer-buttons button {
+  padding: var(--space-sm) var(--space-lg);
+  background-color: var(--color-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.timer-buttons button:hover {
+  border-color: var(--color-accent);
+  background-color: rgba(200, 245, 90, 0.1);
+}
+
+.timer-buttons button:active {
+  transform: scale(0.95);
+}
+
+.timer-display {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--color-blue);
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-display.done {
+  color: var(--color-accent);
+  animation: pulse 2s infinite;
+}

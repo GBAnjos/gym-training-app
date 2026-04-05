@@ -1,0 +1,92 @@
+// Workout Training Data (existing gym training app data)
+export const TREINOS = {
+  "segunda": {
+    "nome": "Push A",
+    "grupos": ["Peito", "Ombros", "Tríceps"],
+    "exercicios": [
+      { "id": "supino_reto", "nome": "Supino reto com barra", "series": "4", "reps": "6–8", "obs": "Carga pesada", "musculos": ["Peito"] },
+      { "id": "supino_inclinado_haltere", "nome": "Supino inclinado com halteres", "series": "3", "reps": "8–10", "obs": "Concêntrica explosiva", "musculos": ["Peito"] },
+      { "id": "desenvolvimento_militar", "nome": "Desenvolvimento militar", "series": "4", "reps": "6–8", "obs": "", "musculos": ["Ombros"] },
+      { "id": "elevacao_lateral", "nome": "Elevação lateral", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Ombros"] },
+      { "id": "triceps_testa", "nome": "Tríceps testa", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Tríceps"] },
+      { "id": "triceps_corda", "nome": "Tríceps corda", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Tríceps"] }
+    ]
+  },
+
+  "terca": {
+    "nome": "Pull A",
+    "grupos": ["Costas", "Bíceps"],
+    "exercicios": [
+      { "id": "barra_fixa", "nome": "Barra fixa / Pulldown", "series": "4", "reps": "6–8", "obs": "Adicionar peso se possível", "musculos": ["Costas"] },
+      { "id": "remada_curvada", "nome": "Remada curvada com barra", "series": "4", "reps": "6–8", "obs": "", "musculos": ["Costas"] },
+      { "id": "remada_unilateral", "nome": "Remada unilateral com halter", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Costas"] },
+      { "id": "pullover", "nome": "Pullover", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Costas", "Peito"] },
+      { "id": "rosca_direta", "nome": "Rosca direta com barra", "series": "3", "reps": "8–10", "obs": "", "musculos": ["Bíceps"] },
+      { "id": "rosca_martelo", "nome": "Rosca martelo", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Bíceps"] }
+    ]
+  },
+
+  "quarta": {
+    "nome": "Legs A",
+    "grupos": ["Quadríceps", "Glúteos", "Panturrilhas"],
+    "exercicios": [
+      { "id": "agachamento", "nome": "Agachamento livre", "series": "4", "reps": "6–8", "obs": "Carga pesada", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "jump_squat", "nome": "Jump squat", "series": "3", "reps": "8–10", "obs": "Explosivo", "musculos": ["Quadríceps"] },
+      { "id": "leg_press", "nome": "Leg press", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "afundo", "nome": "Afundo caminhando", "series": "3", "reps": "12 passos", "obs": "", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "extensora", "nome": "Extensora", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Quadríceps"] },
+      { "id": "panturrilha_pe", "nome": "Panturrilha em pé", "series": "4", "reps": "15–20", "obs": "", "musculos": ["Panturrilhas"] }
+    ]
+  },
+
+  "quinta": {
+    "nome": "Push B",
+    "grupos": ["Peito", "Ombros", "Tríceps"],
+    "exercicios": [
+      { "id": "supino_inclinado_barra", "nome": "Supino inclinado com barra", "series": "4", "reps": "6–8", "obs": "", "musculos": ["Peito"] },
+      { "id": "crucifixo_inclinado", "nome": "Crucifixo inclinado", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Peito"] },
+      { "id": "push_press", "nome": "Push press", "series": "3", "reps": "6–8", "obs": "Explosivo", "musculos": ["Ombros"] },
+      { "id": "elevacao_frontal", "nome": "Elevação frontal", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Ombros"] },
+      { "id": "paralelas", "nome": "Paralelas / Mergulho", "series": "3", "reps": "8–10", "obs": "", "musculos": ["Peito", "Tríceps"] },
+      { "id": "triceps_overhead", "nome": "Extensão de tríceps overhead", "series": "3", "reps": "12–15", "obs": "", "musculos": ["Tríceps"] }
+    ]
+  },
+
+  "sexta": {
+    "nome": "Pull B",
+    "grupos": ["Costas", "Bíceps", "Trapézio"],
+    "exercicios": [
+      { "id": "terra", "nome": "Levantamento terra", "series": "4", "reps": "5–6", "obs": "Carga máxima", "musculos": ["Costas", "Posterior"] },
+      { "id": "remada_cavalinho", "nome": "Remada cavalinho", "series": "3", "reps": "8–10", "obs": "", "musculos": ["Costas"] },
+      { "id": "pulldown_fechado", "nome": "Pulldown pegada fechada", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Costas"] },
+      { "id": "face_pull", "nome": "Face pull", "series": "3", "reps": "15–20", "obs": "", "musculos": ["Ombros", "Trapézio"] },
+      { "id": "encolhimento", "nome": "Encolhimento com barra", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Trapézio"] },
+      { "id": "rosca_scott", "nome": "Rosca Scott", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Bíceps"] }
+    ]
+  },
+
+  "sabado": {
+    "nome": "Legs B",
+    "grupos": ["Posterior", "Glúteos", "Panturrilhas"],
+    "exercicios": [
+      { "id": "stiff", "nome": "Stiff", "series": "4", "reps": "8–10", "obs": "", "musculos": ["Posterior", "Glúteos"] },
+      { "id": "mesa_flexora", "nome": "Mesa flexora", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Posterior"] },
+      { "id": "agachamento_bulgaro", "nome": "Agachamento búlgaro", "series": "3", "reps": "10–12", "obs": "", "musculos": ["Quadríceps", "Glúteos"] },
+      { "id": "hip_thrust", "nome": "Hip thrust", "series": "4", "reps": "10–12", "obs": "Explosivo na subida", "musculos": ["Glúteos"] },
+      { "id": "abdutora", "nome": "Cadeira abdutora", "series": "3", "reps": "15–20", "obs": "", "musculos": ["Glúteos"] },
+      { "id": "panturrilha_sentado", "nome": "Panturrilha sentado", "series": "3", "reps": "15–20", "obs": "", "musculos": ["Panturrilhas"] }
+    ]
+  }
+};
+
+export const DAY_MAP = {
+  "domingo": "domingo",
+  "segunda-feira": "segunda",
+  "terça-feira": "terca",
+  "quarta-feira": "quarta",
+  "quinta-feira": "quinta",
+  "sexta-feira": "sexta",
+  "sábado": "sabado"
+};
+
+export const TRAINING_DAYS = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
