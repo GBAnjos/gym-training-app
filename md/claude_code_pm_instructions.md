@@ -1,4 +1,4 @@
-# Project Management Instructions for Claude Code
+# Project Management Instructions
 
 ## Context for Claude Code
 You are taking over development for an application called **Vida**, a premium, holistic life and sports companion app. The planning phase has been completed by Antigravity (a planning AI) and the user. Your role is now **Lead Developer**.

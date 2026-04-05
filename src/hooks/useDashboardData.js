@@ -164,7 +164,7 @@ function computeGymStats(trainingDays) {
         let series = 3, reps = 10; // defaults
         Object.values(TREINOS).forEach(treino => {
           if (!treino?.exercicios) return;
-          const ex = treino.exercicios.find(e => e.id === exerciseId);
+          const ex = treino.execicios.find(e => e.id === exerciseId);
           if (ex) {
             series = parseInt(ex.series) || 3;
             reps = parseInt(ex.reps) || 10;
