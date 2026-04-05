@@ -69,7 +69,22 @@ export function ImportPage({ type = 'training', onBack, onComplete }) {
           for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
             const content = await page.getTextContent();
-            pages.push(content.items.map(item => item.str).join(' '));
+
+            // Group text items by Y position so we reconstruct real lines.
+            // PDF Y is bottom-up, transform[5] is the Y coordinate.
+            const buckets = new Map();
+            for (const item of content.items) {
+              if (!item.str.trim()) continue;
+              const y = Math.round(item.transform[5] / 3) * 3; // 3px tolerance bucket
+              if (!buckets.has(y)) buckets.set(y, []);
+              buckets.get(y).push(item.str);
+            }
+            // Sort descending Y (top of page first), join tokens per line with space
+            const pageLines = [...buckets.entries()]
+              .sort((a, b) => b[0] - a[0])
+              .map(([, tokens]) => tokens.join(' ').trim())
+              .filter(Boolean);
+            pages.push(pageLines.join('\n'));
           }
           const extracted = pages.join('\n');
           if (!extracted.trim()) {

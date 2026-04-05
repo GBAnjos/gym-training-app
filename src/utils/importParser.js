@@ -11,11 +11,18 @@ export function parseTrainingText(text) {
   const errors = [];
   if (!text || typeof text !== 'string') return { days: [], errors: ['Empty input'] };
 
-  // Pre-process: normalize Portuguese PDF format where sets and "séries" are on separate lines
-  // "4\nséries 8-10 reps" → "4 séries 8-10 reps"
-  // "séries reps 15" → "séries 15 reps"
-  const processed = text
-    .replace(/(\d+)\n(séries?|sets?)/gi, '$1 $2')
+  // Pre-process: normalize Portuguese PDF format.
+  // After Y-based PDF extraction, typical layout becomes:
+  //   "Supino Reto com Barra 4"          (exercise name + sets on same Y)
+  //   "Peito médio · Triceps séries 8-10 reps"  (description + séries on same Y)
+  // Step 1: strip the muscle description prefix from lines that contain "·" + "séries"
+  let processed = text.replace(/^[^\n]*·[^\n]*\b(séries?\s+[\w.-]+(?:\s+reps?)?)/gm, '$1');
+  // Step 2: join "ExerciseName N\nséries X reps" into one line
+  processed = processed.replace(/([A-Za-zÀ-ú][^\n]+\s+(\d+))\n(séries?\s+[\w.-]+(?:\s+reps?)?)/gi, '$1 $3');
+  // Step 3: join bare "N\nséries X reps"
+  processed = processed.replace(/(\d+)\n(séries?|sets?)/gi, '$1 $2');
+  // Step 4: normalise "séries reps 15" → "séries 15 reps"
+  processed = processed
     .replace(/séries?\s+reps?\s+(\d+(?:[-–]\d+)?)/gi, 'séries $1 reps')
     .replace(/(\d+)\s*séries?\s+reps?\s+(\d+)/gi, '$1 séries $2 reps');
 
