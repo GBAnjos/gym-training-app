@@ -3,11 +3,17 @@ import { useLanguage } from '../hooks/useLanguage';
 import { useToast } from '../components/Toast';
 import { Icon } from '../components/Icon';
 import { parseTrainingText, parseDietText } from '../utils/importParser';
+import * as pdfjsLib from 'pdfjs-dist';
 import './ImportPage.css';
 
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
+
 const MAX_TEXT_LENGTH = 50000;
-const MAX_FILE_SIZE = 500 * 1024; // 500KB
-const ALLOWED_EXTENSIONS = ['.txt', '.md', '.csv'];
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB (PDFs can be larger)
+const ALLOWED_EXTENSIONS = ['.txt', '.md', '.csv', '.pdf'];
 
 export function ImportPage({ type = 'training', onBack, onComplete }) {
   const { t, language } = useLanguage();
@@ -51,15 +57,39 @@ export function ImportPage({ type = 'training', onBack, onComplete }) {
 
     setError('');
     setFileName(file.name);
+    setParsed(null);
 
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const content = ev.target.result;
-      setText(content);
-      setParsed(null);
-    };
-    reader.readAsText(file);
-  }, [t]);
+    if (ext === '.pdf') {
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        try {
+          const typedArray = new Uint8Array(ev.target.result);
+          const pdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+          const pages = [];
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            pages.push(content.items.map(item => item.str).join(' '));
+          }
+          const extracted = pages.join('\n');
+          if (!extracted.trim()) {
+            setError(language === 'pt-BR' ? 'PDF sem texto extraível (pode ser uma imagem)' : 'PDF has no extractable text (may be image-based)');
+            return;
+          }
+          setText(extracted);
+        } catch {
+          setError(language === 'pt-BR' ? 'Erro ao ler o PDF' : 'Failed to read PDF');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    } else {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setText(ev.target.result);
+      };
+      reader.readAsText(file);
+    }
+  }, [t, language]);
 
   const handleParse = useCallback(() => {
     if (!text.trim()) return;
@@ -197,7 +227,7 @@ export function ImportPage({ type = 'training', onBack, onComplete }) {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".txt,.md,.csv"
+                accept=".txt,.md,.csv,.pdf"
                 onChange={handleFileUpload}
                 style={{ display: 'none' }}
               />
